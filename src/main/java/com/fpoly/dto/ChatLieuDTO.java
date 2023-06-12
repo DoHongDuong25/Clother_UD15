@@ -9,16 +9,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class ChatLieuDTO {
-	private Long chat_lieu_id;
+public class ChatLieuDTO extends BaseDTO{
+	private Long id;
 	
-	private String ten_chat_lieu;
+	private String tenChatLieu;
 	
-	private String nguoi_tao;
-	
-	private Date ngay_tao;
-	
-	private String nguoi_chinh_sua;
-	
-	private Date ngay_chinh_sua;
+	private Boolean daXoa;
 }

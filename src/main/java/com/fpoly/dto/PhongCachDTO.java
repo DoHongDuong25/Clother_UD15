@@ -9,16 +9,10 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PhongCachDTO {
-	private Long phong_cach_id;
+public class PhongCachDTO extends BaseDTO{
+	private Long id;
 	
-	private String ten_phong_cach;
+	private String tenPhongCach;
 	
-	private String nguoi_tao;
-	
-	private Date ngay_tao;
-	
-	private String nguoi_chinh_sua;
-	
-	private Date ngay_chinh_sua;
+	private Boolean daXoa;
 }

@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 public class GiaoDichDTO {
     private Long giao_dich_id;
 
-
     private Long nguoi_dung_id;
 
     private String ngay_tao;

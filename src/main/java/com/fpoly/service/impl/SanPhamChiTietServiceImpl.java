@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.fpoly.dto.search.SPAndSPCTSearchDto;
 import com.fpoly.entity.SanPhamChiTiet;
 import com.fpoly.repository.SanPhamChiTietRepository;
+import com.fpoly.repository.SanPhamChiTietSearchRepository;
 import com.fpoly.service.SanPhamChiTietService;
 
 import lombok.AllArgsConstructor;
@@ -16,13 +17,10 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class SanPhamChiTietServiceImpl implements SanPhamChiTietService{
 	private final SanPhamChiTietRepository sanPhamChiTietRepository;
+	private final SanPhamChiTietSearchRepository sanPhamChiTietSearchRepository;
 
 	@Override
 	public List<SanPhamChiTiet> getLstSanPhamChiTietExist() {
-//		String andStr = " AND c.co_hien_thi = ";
-//		if(and.equalsIgnoreCase(andStr)) {
-//			andStr.concat(and);
-//		}
 		return sanPhamChiTietRepository.getLstSanPhamChiTietExist();
 	}
 
@@ -43,6 +41,6 @@ public class SanPhamChiTietServiceImpl implements SanPhamChiTietService{
 
 	@Override
 	public List<SanPhamChiTiet> searchProductDetailExist(SPAndSPCTSearchDto data) {
-		return sanPhamChiTietRepository.searchProductDetailExist(data);
+		return sanPhamChiTietSearchRepository.searchProductDetailExist(data);
 	}
 }

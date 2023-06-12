@@ -23,7 +23,7 @@ public class LoaiSanPhamServiceImpl implements LoaiSanPhamService{
 	
 	@Override
 	public List<LoaiSanPham> selectAllLoaiHangExist() {
-		return loaiSanPhamRepository.selectAllLoaiHangExist();
+		return loaiSanPhamRepository.selectAllLoaiSanPhamExist();
 	}		
 	
 	@Override

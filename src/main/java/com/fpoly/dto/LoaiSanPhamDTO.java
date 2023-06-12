@@ -9,10 +9,10 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class KieuDangDTO extends BaseDTO{
+public class LoaiSanPhamDTO extends BaseDTO{
 	private Long id;
 	
-	private String tenKieuDang;
+	private String tenLoaiSanPham;
 	
 	private Boolean daXoa;
 }

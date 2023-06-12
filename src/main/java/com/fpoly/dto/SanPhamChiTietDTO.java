@@ -1,5 +1,10 @@
 package com.fpoly.dto;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.fpoly.entity.HinhAnh;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,16 +12,18 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class SanPhamChiTietDTO {
-	private Long san_pham_chi_tiet_id;
+public class SanPhamChiTietDTO extends BaseDTO{
+	private Long id;
 
-	private Long san_pham_id;
+	private Long sanPhamId;
+	
+	private Long kichCoId;
 
-	private Long kich_co_id;
-
-	private Long mau_sac_id;
+	private Long mauSacId;
 	
 	private int soLuong;
 	
-	private Boolean trangThai;
+	private List<HinhAnhDTO> hinhAnhs = new ArrayList<HinhAnhDTO>();
+	
+	private Boolean daXoa;
 }

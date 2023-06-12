@@ -24,8 +24,8 @@ public class HinhAnh extends BaseEntity implements Serializable{
 	@Column(name = "ten_anh", columnDefinition = "nvarchar(200) not null")
 	private String tenAnh;
 	
-	@Column(name = "is_anh_chinh")
-	private Boolean isAnhChinh;
+	@Column(name = "la_anh_chinh")
+	private Boolean laAnhChinh;
 	
 	@Column(name = "co_hien_thi")
 	private Boolean coHienThi;

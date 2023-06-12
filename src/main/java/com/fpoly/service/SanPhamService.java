@@ -8,12 +8,8 @@ import com.fpoly.entity.SanPham;
 
 
 public interface SanPhamService {
-	List<SanPham> selectSanPhamExist();
-
 	Optional<SanPham> findById(Long id);
 
 	<S extends SanPham> S save(S entity);
-
-	List<SanPham> selectSanPhamExistById(Long id);
 
 }

@@ -161,8 +161,7 @@ public class SanPhamChiTietController {
 		sanPham.setDaXoa(false);
 		sanPham.setGiaHienHanh(data.getGiaHienHanh());
 		sanPham.setTenSanPham(data.getTenSanPham());	
-		
-		sanPham.setMoTa("");
+		sanPham.setMoTa(data.getMoTa());
 		
 		ChatLieu chatLieu = new ChatLieu();
 		chatLieu.setId(data.getChatLieuId());;
@@ -212,11 +211,17 @@ public class SanPhamChiTietController {
 			opt.get().setCoHienThi(status);
 			sanPhamChiTietService.save(opt.get());
 			model.addAttribute("messageSuccess", "Sửa trạng thái hiển thị của sản phẩm thành công");
+			List<SanPhamChiTiet> result = sanPhamChiTietService.getLstSanPhamChiTietExist();
+			model.addAttribute("sanPhamChiTiets", result);
+			model.addAttribute("dataSearch", new SPAndSPCTSearchDto());
+			return "admin/product/productManage";
+		}else {
+			model.addAttribute("messageSuccess", "Không tìm thấy sản phẩm!");
+			List<SanPhamChiTiet> result = sanPhamChiTietService.getLstSanPhamChiTietExist();
+			model.addAttribute("sanPhamChiTiets", result);
+			model.addAttribute("dataSearch", new SPAndSPCTSearchDto());
+			return "admin/product/productManage";
 		}
-		List<SanPhamChiTiet> result = sanPhamChiTietService.getLstSanPhamChiTietExist();
-		model.addAttribute("sanPhamChiTiets", result);
-		model.addAttribute("dataSearch", new SPAndSPCTSearchDto());
-		return "admin/product/productManage";
 	}
 	
 	@GetMapping("changeIsShowFormAddOrEdit/{id}/{status}")

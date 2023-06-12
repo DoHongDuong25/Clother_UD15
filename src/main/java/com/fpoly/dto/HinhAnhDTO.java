@@ -7,13 +7,14 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class HinhAnhDTO {
-	private Long hinh_anh_id;
+public class HinhAnhDTO extends BaseDTO{
+	private Long id;
 	
-	private Long san_pham_chi_tiet_id;
+	private Long sanPhamChiTietId;
 	
-	private String ten_anh;
+	private String tenAnh;
 	
-	private short la_anh_chinh;
+	private Boolean laAnhChinh;
 
+	private Boolean coHienThi;
 }

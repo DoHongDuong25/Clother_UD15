@@ -23,11 +23,6 @@ public class SanPhamServiceImpl implements SanPhamService{
 	private final SanPhamRepository sanPhamRepository;
 	
 	@Override
-	public List<SanPham> selectSanPhamExistById(Long id) {
-		return sanPhamRepository.selectSanPhamExistById(id);
-	}
-	
-	@Override
 	public <S extends SanPham> S save(S entity) {
 		return sanPhamRepository.save(entity);
 	}
@@ -37,8 +32,4 @@ public class SanPhamServiceImpl implements SanPhamService{
 		return sanPhamRepository.findById(id);
 	}
 
-	@Override
-	public List<SanPham> selectSanPhamExist() {
-		return sanPhamRepository.selectSanPhamExist();
-	}
 }
