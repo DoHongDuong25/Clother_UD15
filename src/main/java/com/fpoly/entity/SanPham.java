@@ -46,8 +46,8 @@ public class SanPham extends BaseEntity implements Serializable{
 	private ChatLieu chatLieu;
 	
 	@ManyToOne
-	@JoinColumn(name = "loai_hang_id", nullable = false)
-	private LoaiHang loaiHang;
+	@JoinColumn(name = "loai_san_pham_id", nullable = false)
+	private LoaiSanPham loaiSanPham;
 	
 	@ManyToOne
 	@JoinColumn(name = "phong_cach_id", nullable = false)

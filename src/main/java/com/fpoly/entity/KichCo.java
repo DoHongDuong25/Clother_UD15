@@ -29,6 +29,12 @@ import org.springframework.data.annotation.LastModifiedDate;
 @Entity
 @Table(name = "kich_co")
 public class KichCo extends BaseEntity implements Serializable{
+	
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	@OneToMany(mappedBy = "kichCo", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Set<SanPhamChiTiet> SanPhamChiTiets;

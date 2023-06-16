@@ -10,40 +10,33 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class HoaDonDTO {
-    private long hoa_don_id;
+public class HoaDonDTO extends BaseDTO<HoaDonDTO> {
 
-    private Long khuyen_mai_id;
+    private Long khuyenMaiId;
 
-    private Long nguoi_dung_id;
+    private Long nguoiDungId;
 
-    private Long khach_hang_id;
+    private Long khachHangId;
 
-    private Long giao_dich_id;
+    private Long giaoDichId;
 
-    private String nguoi_nhan;
+    private String nguoiNhan;
 
-    private String sdt_nguoi_nhan;
+    private String sdtNguoiNhan;
 
-    private String dia_chi_giao_hang;
+    private String diaChiGiaoHang;
 
-    private String thoi_gian_giao_hang;
+    private String thoiGianGiaoHang;
 
-    private String ghi_chu;
+    private String ghiChu;
 
-    private BigDecimal tong_tien_hoa_don;
+    private BigDecimal tongTienHoaDon;
 
-    private BigDecimal tien_ship;
+    private BigDecimal tienShip;
 
-    private BigDecimal tong_tien_don_hang;
+    private BigDecimal tongTienDonHang;
 
-    private String loai_hoa_don;
+    private String loaiDonHang;
 
-    private Date ngayTao;
 
-    private String nguoiTao;
-
-    private Date ngayChinhSua;
-
-    private String nguoiChinhSua;
 }
