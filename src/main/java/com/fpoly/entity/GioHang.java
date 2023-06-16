@@ -2,6 +2,7 @@ package com.fpoly.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -16,24 +17,24 @@ import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
-@Entity
+@Data@Entity
 @Table(name = "gio_hang")
+@EqualsAndHashCode(callSuper=false)
 public class GioHang extends BaseEntity implements Serializable {
     
 
-    @Column(name = "ngay_tao",columnDefinition = "nvarchar(256)  unique")
+    @Column(name = "ngay_tao",columnDefinition = "nvarchar(256)  ")
     @CreatedDate
     private Date ngayTao;
 
-    @Column(name = "ngay_cap_nhat",columnDefinition = "nvarchar(256)  unique")
+    @Column(name = "ngay_cap_nhat",columnDefinition = "nvarchar(256)  ")
     private Date ngayCapNhat;
 
     @OneToOne
     @JoinColumn(name = "khach_hang_id", insertable = false, updatable = false)
     private KhachHang khachHang;
 
-    @Column(name = "trang_thai",columnDefinition = "int not null unique")
+    @Column(name = "trang_thai",columnDefinition = "int not null")
     private int trangThai;
 
     @Column(name = "tong_tien", columnDefinition = "int")

@@ -20,6 +20,7 @@ import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Data
@@ -27,7 +28,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @Table(name = "san_pham_chi_tiet")
-
+@EqualsAndHashCode(callSuper=false)
 public class SanPhamChiTiet extends BaseEntity implements Serializable{
 	@ManyToOne
 	@JoinColumn(name = "kich_co_id", nullable = false)

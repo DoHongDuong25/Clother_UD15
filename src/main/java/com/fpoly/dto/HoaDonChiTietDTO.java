@@ -9,18 +9,17 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class HoaDonChiTietDTO {
-	    private Long hoa_don_chi_tiet_id;
+public class HoaDonChiTietDTO extends BaseDTO<HoaDonChiTietDTO> {
 
-	    private Long hoa_don_id;
+	    private Long hoaDonId;
 
-	    private Long san_pham_chi_tiet_id;
+	    private Long sanPhamChiTietId;
 
-	    private BigDecimal don_gia;
+	    private BigDecimal donGia;
 
-	    private int so_luong;
+	    private int soLuong;
 
-	    private BigDecimal tong_tien;
+	    private BigDecimal tongTien;
 
-	    private int da_xoa;
+	    private int daXoa;
 }

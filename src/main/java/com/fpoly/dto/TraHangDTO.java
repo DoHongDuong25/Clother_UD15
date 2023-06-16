@@ -10,25 +10,17 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class TraHangDTO {
-    private Long tra_hang_id;
+public class TraHangDTO extends BaseDTO<TraHangDTO> {
 
-    private Long khach_hang_id;
+    private Long khachHangId;
 
+    private String ngayTra;
 
-    private String ngay_tra;
+    private BigDecimal tongTien;
 
-    private BigDecimal tong_tien;
+    private String ghiChu;
 
-    private String ghi_chu;
+    private Long lyDoTraHang;
 
-    private Long ly_do_tra_hang_id;
-
-    private String nguoi_tao;
-
-    private Date ngay_tao;
-
-    private String nguoi_chinh_sua;
-
-    private Date ngay_chinh_sua;
+    
 }

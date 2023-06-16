@@ -10,32 +10,21 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class SanPhamDTO {
-	private Long san_pham_id;
-
+public class SanPhamDTO extends BaseDTO<SanPhamDTO> {
 	
+	private Long kieuDangId;
 	
-	private Long kieu_dang_id;
+	private Long chatLieuId;
 	
-	private Long chat_lieu_id;
+	private Long loaiHangId;
 	
-	private Long loai_hang_id;
-	
-	private Long phong_cach_id;
+	private Long phongCachId;
 	
 	private String tenSanPham;
 	
-	private BigDecimal gia_ban;
+	private BigDecimal giaBan;
 
-	private String mo_ta;
+	private String moTa;
 
-	private String nguoiTao;
-	
-	private Date ngayTao;
-	
-	private String nguoiChinhSua;
-	
-	private Date ngayChinhSua;
-
-	private Boolean da_xoa;
+	private Boolean daXoa;
 }

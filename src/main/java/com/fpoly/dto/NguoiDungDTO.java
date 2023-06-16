@@ -11,30 +11,23 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class NguoiDungDTO {
-	private Long nguoi_dung_id;
+public class NguoiDungDTO extends BaseDTO<NguoiDungDTO> {
 	
-	private String ten_dang_nhap;
+	private String tenDangNhap;
 	
-	private String mat_khau;
+	private String matKhau;
 	
 	private String email;
 	
-	private String ten_nguoi_dung;
+	private String tenNguoiDung;
 
-	private String so_dien_thoai;
+	private String soDienThoai;
 	
 	private Role role;
 
-	private int trang_thai;
+	private int trangThai;
 
-	private Boolean da_xoa;
+	private Boolean daXoa;
 	
-	private String nguoi_tao;
 	
-	private Date ngay_tao;
-	
-	private String nguoi_chinh_sua;
-	
-	private Date ngay_chinh_sua;
 }

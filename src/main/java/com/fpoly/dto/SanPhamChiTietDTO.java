@@ -7,14 +7,14 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class SanPhamChiTietDTO {
-	private Long san_pham_chi_tiet_id;
+public class SanPhamChiTietDTO extends BaseDTO<SanPhamChiTietDTO> {
+	
 
-	private Long san_pham_id;
+	private Long sanPhamId;
 
-	private Long kich_co_id;
+	private Long kichCoId;
 
-	private Long mau_sac_id;
+	private Long mauSacId;
 	
 	private int soLuong;
 	
