@@ -1,5 +1,6 @@
 package com.fpoly.dto;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,12 +8,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class GiaoDichDTO extends BaseDTO<GiaoDichDTO> {
-
-
-    private Long nguoiDungId;
-
-
-
-    private int trangThai;
+public class DiaChiDTO extends BaseDTO<DiaChiDTO> {
+	
+	private String diaChi;
+	
+	
 }

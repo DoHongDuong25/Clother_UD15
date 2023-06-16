@@ -1,34 +1,15 @@
 package com.fpoly.entity;
 
-import java.io.Serializable;
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-
-import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedBy;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import javax.persistence.*;
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -46,8 +27,8 @@ public class SanPham extends BaseEntity implements Serializable{
 	private ChatLieu chatLieu;
 	
 	@ManyToOne
-	@JoinColumn(name = "loai_hang_id", nullable = false)
-	private LoaiHang loaiHang;
+	@JoinColumn(name = "loai_san_pham_id", nullable = false)
+	private LoaiSanPham loaiSanPham;
 	
 	@ManyToOne
 	@JoinColumn(name = "phong_cach_id", nullable = false)
@@ -57,7 +38,7 @@ public class SanPham extends BaseEntity implements Serializable{
 	private Boolean daXoa;
 	
 	@OneToMany(mappedBy = "sanPham",cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<SanPhamChiTiet> sanPhamChiTiets = new ArrayList<SanPhamChiTiet>();
+	private List<SanPhamChiTiet> sanPhamChiTiets = new ArrayList<>();
 	
 	@Column(columnDefinition = "nvarchar(256)", nullable = false)
 	private String tenSanPham;

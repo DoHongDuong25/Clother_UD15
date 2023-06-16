@@ -1,7 +1,5 @@
 package com.fpoly.dto;
 
-import java.util.Date;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,18 +7,9 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class TrangThaiHoaDonDTO {
-    private Long trang_thai_hoa_don_id;
+public class TrangThaiHoaDonDTO extends BaseDTO<TrangThaiHoaDonDTO> {
 
-    private Long hoa_don_id;
+    private Long hoaDonId;
 
-    private Date ngayTao;
-
-    private String nguoiTao;
-
-    private Date ngayChinhSua;
-
-    private String nguoiChinhSua;
-
-    private int trang_thai;
+    private int trangThai;
 }

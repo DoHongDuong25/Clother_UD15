@@ -1,29 +1,28 @@
 package com.fpoly.dto;
 
-import java.math.BigDecimal;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.math.BigDecimal;
 
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class GioHangChiTietDTO {
-    private Long gio_hang_chi_tiet_id;
+public class GioHangChiTietDTO extends BaseDTO<GioHangChiTietDTO> {
 
-    private Long san_pham_chi_tiet_id;
+    private Long sanPhamChiTietId;
 
-    private Long gio_hang_id;
+    private Long gioHangId;
 
     private int soLuong;
 
-    private int don_gia;
+    private int donGia;
 
     private BigDecimal thanhTien;
 
     private int trangThai;
 
-    private Boolean da_xoa;
+    private Boolean daXoa;
 }

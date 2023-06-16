@@ -1,32 +1,25 @@
 package com.fpoly.dto;
 
-import java.util.Date;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class KhuyenMaiDTO {
-    private long giam_gia_id;
+public class KhuyenMaiDTO extends BaseDTO<KhuyenMaiDTO> {
 
-    private String ten_khuyen_mai;
+    private String tenKhuyenMai;
 
-    private Date ngay_bat_dau;
+    private Date ngayBatDau;
 
-    private Date ngay_ket_thuc;
+    private Date ngayKetThuc;
 
-    private int phan_tram_giam;
+    private int phanTramGiam;
 
     private int giaTriToiThieu;
 
-    private Date ngayTao;
 
-    private String nguoiTao;
-
-    private Date ngayChinhSua;
-
-    private String nguoiChinhSua;
 }

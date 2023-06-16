@@ -1,33 +1,21 @@
 package com.fpoly.entity;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "san_pham_chi_tiet")
-
+@EqualsAndHashCode(callSuper=false)
 public class SanPhamChiTiet extends BaseEntity implements Serializable{
 	@ManyToOne
 	@JoinColumn(name = "kich_co_id", nullable = false)
@@ -42,7 +30,7 @@ public class SanPhamChiTiet extends BaseEntity implements Serializable{
 	private SanPham sanPham;
 	
 	@OneToMany(mappedBy = "sanPhamChiTiet", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<HinhAnh> hinhAnhs = new ArrayList<HinhAnh>();
+	private List<HinhAnh> hinhAnhs = new ArrayList<>();
 	
 	@Column
 	private int soLuong;
@@ -57,6 +45,6 @@ public class SanPhamChiTiet extends BaseEntity implements Serializable{
 	private Boolean daXoa;
 	
 	@OneToMany(mappedBy="sanPhamChiTiet")
-	private List<GioHangChiTiet> gioHangChiTiet = new ArrayList<GioHangChiTiet>();
+	private List<GioHangChiTiet> gioHangChiTiet = new ArrayList<>();
 	
 }

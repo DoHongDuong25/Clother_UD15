@@ -1,20 +1,22 @@
 package com.fpoly.dto;
 
-import java.util.Date;
-
+import com.fpoly.entity.DiaChi;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class KhachHangDTO {
-	    private Long khach_hang_id;
+public class KhachHangDTO extends BaseDTO<KhachHangDTO> {
 
 	    private String email;
 
-	    private String mat_Khau;
+	    private String matKhau;
 
 	    private String hoTen;
 
@@ -24,11 +26,13 @@ public class KhachHangDTO {
 
 	    private int trangThai;
 	    
-		private String nguoi_tao;
+		private String nguoiTao;
 		
-		private Date ngay_tao;
+		private Date ngayTao;
 		
-		private String nguoi_chinh_sua;
+		private String nguoiChinhSua;
 		
-		private Date ngay_chinh_sua;
+		private Date ngayChinhSua;
+		
+		private List<DiaChi> listDiaChi = new ArrayList<DiaChi>();
 }

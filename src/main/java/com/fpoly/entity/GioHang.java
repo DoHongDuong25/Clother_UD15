@@ -2,12 +2,11 @@ package com.fpoly.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-
-import javax.persistence.*;
-
 import org.springframework.data.annotation.CreatedDate;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -19,6 +18,7 @@ import java.util.List;
 @Data
 @Entity
 @Table(name = "gio_hang")
+@EqualsAndHashCode(callSuper=false)
 public class GioHang extends BaseEntity implements Serializable {
     
 
@@ -40,5 +40,5 @@ public class GioHang extends BaseEntity implements Serializable {
     private int tongTien;
     
     @OneToMany(mappedBy="gioHang")
-    private List<GioHangChiTiet> gioHangChiTiets = new ArrayList<GioHangChiTiet>();
+    private List<GioHangChiTiet> gioHangChiTiets = new ArrayList<>();
 }
