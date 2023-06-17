@@ -72,7 +72,7 @@ public class KhuyenMaiServiceImp implements KhuyenMaiService{
     @Override
     public void deleteVoucher(Long id) {
         KhuyenMai khuyenMai = khuyenMaiRepository.findById(id).orElseThrow(() -> new RuntimeException("NOTFOUND"));
-        khuyenMai.setEnable(false);
+        khuyenMai.setXoa(false);
         khuyenMaiRepository.save(khuyenMai);
     }
 

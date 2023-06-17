@@ -40,8 +40,8 @@ public class KhuyenMai extends BaseEntity implements Serializable {
     @Column(name = "trang_thai", columnDefinition = "boolean default true")
     private boolean trangThai;
 
-    @Column(name = "enable", columnDefinition = "boolean default true")
-    private boolean enable;
+    @Column(name = "xoa", columnDefinition = "boolean default true")
+    private boolean xoa;
 
 
 }
