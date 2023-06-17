@@ -9,6 +9,7 @@ import javax.persistence.Table;
 
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -17,6 +18,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @Table(name = "giam_gia")
+@Builder
 public class KhuyenMai extends BaseEntity implements Serializable {
     
 
@@ -35,5 +37,11 @@ public class KhuyenMai extends BaseEntity implements Serializable {
     @Column(name = "gia_tri_toi_thieu",columnDefinition = "int not null unique")
     private int giaTriToiThieu;
 
-    
+    @Column(name = "trang_thai", columnDefinition = "boolean default true")
+    private boolean trangThai;
+
+    @Column(name = "enable", columnDefinition = "boolean default true")
+    private boolean enable;
+
+
 }
