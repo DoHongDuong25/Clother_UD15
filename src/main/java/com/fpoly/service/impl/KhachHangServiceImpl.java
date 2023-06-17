@@ -1,6 +1,5 @@
 package com.fpoly.service.impl;
 
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -193,6 +192,7 @@ public class KhachHangServiceImpl implements KhachHangService{
 				dto.setListDiaChi(listDiaChiDTO);
 				listKhachHangDTO.add(dto);
 		 }
+		 
 		 return listKhachHangDTO ;
 	}
 
@@ -257,5 +257,27 @@ public class KhachHangServiceImpl implements KhachHangService{
 				}
 		}
 		return listKhachHangDTO ;
+	}
+
+
+
+	@Override
+	public int countAll() {
+		return (int) khachHangRepository.count();
+	}
+
+
+
+	@Override
+	public int countByTrangThai(Integer trangThai) {
+		return khachHangRepository.countByTrangThai(trangThai);
+	}
+
+
+
+	@Override
+	public int countBySoDienThoai(String soDienThoai) {
+		// TODO Auto-generated method stub
+		return khachHangRepository.countBySoDienThoai(soDienThoai);
 	}
 }
