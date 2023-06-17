@@ -38,4 +38,10 @@ public interface KhachHangRepository extends JpaRepository<KhachHang,Long> {
 	
 	@Query(value="SELECT k FROM KhachHang k WHERE k.soDienThoai LIKE %:dienThoai%")
 	Page<KhachHang> findAllBySoDienThoaiCoPhanTrang(@Param("dienThoai")String dienThoai , Pageable pageable);
+
+	@Query(value="SELECT count(k) FROM KhachHang k WHERE k.trangThai=?1")
+	int countByTrangThai(Integer trangThai);
+
+	@Query(value="SELECT count(k) FROM KhachHang k WHERE k.soDienThoai=?1")
+	int countBySoDienThoai(String soDienThoai);
 }

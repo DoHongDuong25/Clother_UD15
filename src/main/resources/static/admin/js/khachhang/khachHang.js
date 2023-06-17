@@ -173,7 +173,7 @@ function themKhachHang(data) {
 		data : JSON.stringify(data) ,
 		dataType : 'json' ,
 		success : function(result) {
-			window.location.href = "http://localhost:8080/admin/khach-hang/danh-sach/chinh-sua?id="+result.id+"&message=create_success" ;
+			window.location.href = "http://localhost:8080/admin/khach-hang/danh-sach/chinh-sua?id="+result.id+"&page=1&message=create_success" ;
 		},
 		error : function (error) {
 			console.log(error);
@@ -189,7 +189,7 @@ function capNhatKhachHang(data) {
 		data : JSON.stringify(data) ,
 		dataType : 'json' ,
 		success : function(result) {
-			window.location.href = "http://localhost:8080/admin/khach-hang/danh-sach/chinh-sua?id="+result.id+"&message=update_success"  ;
+			window.location.href = "http://localhost:8080/admin/khach-hang/danh-sach/chinh-sua?id="+result.id+"&page=1&message=update_success"  ;
 		},
 		error : function (error) {
 			window.location.href = "http://localhost:8080/admin/khach-hang/danh-sach/chinh-sua?id="+data.id+"&message=update_duplicate_email&email="+data.email ;
@@ -216,7 +216,7 @@ function themDiaChi(data) {
 		data : JSON.stringify(data) ,
 		dataType : 'json' ,
 		success : function(result) {
-			window.location.href = "http://localhost:8080/admin/khach-hang/danh-sach/chinh-sua?id="+result.khachHangId+"&message=create_address_success" ;
+			window.location.href = "http://localhost:8080/admin/khach-hang/danh-sach/chinh-sua?id="+result.khachHangId+"&page=1&message=create_address_success" ;
 		},
 		error : function (error) {
 			window.location.href = "http://localhost:8080/admin/khach-hang/danh-sach/1?message=error_system" ;

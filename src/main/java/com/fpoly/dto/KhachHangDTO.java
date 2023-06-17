@@ -25,7 +25,13 @@ public class KhachHangDTO extends BaseDTO<KhachHangDTO> {
 
 	    private int trangThai;
 	    
+	    private int page ;
 	    
+	    private int limit ;
+	    
+	    private int totalPages; 
+	    
+	    private int totalItems;
 	    
 	    
 	    private List<KhachHangDTO> listKhachHangDTO = new ArrayList<KhachHangDTO>();

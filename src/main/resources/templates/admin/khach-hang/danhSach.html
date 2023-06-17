@@ -8,7 +8,7 @@
 	 <title>Danh sách khách hàng</title>
 </head>
 <body>
-	<div class="container-fluid" layout:fragment="content">
+	<div class="container-fluid" layout:fragment="content" th:object="${khachHangDTO}">
 					<h1 class="h3 mb-2 text-gray-800">QUẢN LÝ KHÁCH HÀNG</h1>
 					<th:block th:if="${message == 'change_success'}">
 						<h1 class="h3 mb-2 text-gray-800 "><span class="text-success">Chuyển đổi thành công !</span></h1>
@@ -119,50 +119,50 @@
                                         </tr>
                                     </thead>
                                     
-                                    <tbody th:each="item : ${listKhachHangDTO}">
+                                    <tbody th:each="item : *{listKhachHangDTO}">
                                         <tr>
-                                        	<th:block th:if="*{item != null}">
+                                        	<th:block th:if="${item != null}">
                                         		<td>
-                                        			<input  type="checkbox" th:value="*{item.id}" id="checkbox_*{item.id}"/>
+                                        			<input  type="checkbox" th:value="${item.id}" id="checkbox_${item.id}"/>
                                         		</td>
 	                                            <td>[[${itemStat.index}]]</td>
-	                                            <td>[[*{item.email}]]</td>
-	                                            <td>[[*{item.matKhau}]]</td>
-	                                            <td>[[*{item.hoTen}]]</td>
-	                                            <td>[[*{item.soDienThoai}]]</td>
+	                                            <td>[[${item.email}]]</td>
+	                                            <td>[[${item.matKhau}]]</td>
+	                                            <td>[[${item.hoTen}]]</td>
+	                                            <td>[[${item.soDienThoai}]]</td>
 	                                            <td>
-	                                            	<th:block th:if="*{item.trangThai == 1}">
+	                                            	<th:block th:if="${item.trangThai == 1}">
 	                                            		<span class="text-success">Đang hoạt động</span>
 	                                            	</th:block>
-	                                            	<th:block th:if="*{item.trangThai == 0}">
+	                                            	<th:block th:if="${item.trangThai == 0}">
 	                                            		<span class="text-danger">Ngừng hoạt động</span>
 	                                            	</th:block>
 	                                            </td>
 	                                            <td>
 		                                            <div class="input-group mb-3" >
 													  	  <select class="custom-select" >
-														    <option th:each="itemDiaChi : *{item.listDiaChi}">[[*{itemDiaChi.diaChi}]]</option>
+														    <option th:each="itemDiaChi : ${item.listDiaChi}">[[${itemDiaChi.diaChi}]]</option>
 														  </select>
 													</div>
 												</td>
 												
 												
 												<td>
-													<a th:href="@{|/admin/khach-hang/danh-sach/chinh-sua?id=*{item.id}|}" class="btn btn-outline-primary" title="Cập nhật"
+													<a th:href="@{|/admin/khach-hang/danh-sach/chinh-sua?id=${item.id}&page=1|}" class="btn btn-outline-primary" title="Cập nhật"
 													>
 														<i class="fas fa-user-edit"></i>
 													</a>
 													
 												</td>
 											</th:block>
-											<th:block th:if="*{item == null}">
+											<th:block th:if="${item == null}">
 	                                            <span>Không có dữ liệu !</span>
 											</th:block>
                                         </tr>
                                     </tbody>
                                 </table>
                                 <div>
-									Tổng số khách hàng : [[${totalItems}]] - Trang [[${currentPage}]] trong [[${totalPages}]] 
+									Tổng số khách hàng : [[*{totalItems}]] - Trang [[*{page}]] trong [[*{totalPages}]] 
 								</div>
 								<div class="row">
 									<div class="col-md-12 text-center offset-2">
@@ -170,41 +170,41 @@
 								
                                 <nav aria-label="Page navigation example">
 								  <ul class="pagination">
-									    <li th:class="${currentPage > 1 ? 'page-item' : 'page-item disabled'}">
+									    <li th:class="*{page > 1 ? 'page-item' : 'page-item disabled'}">
 									      <a class="page-link" th:href="@{|/admin/khach-hang/danh-sach/1|}" aria-label="First">
 									        <span aria-hidden="true">Đầu tiên</span>
 									      </a>
 									    </li>
-									    <li th:class="${currentPage > 1 ? 'page-item' : 'page-item disabled'}">
-									      <a class="page-link" th:href="@{|/admin/khach-hang/danh-sach/${currentPage - 1}|}" aria-label="Previous">
+									    <li th:class="*{page > 1 ? 'page-item' : 'page-item disabled'}">
+									      <a class="page-link" th:href="@{|/admin/khach-hang/danh-sach/*{page - 1}|}" aria-label="Previous">
 									        <span aria-hidden="true">Quay lại</span>
 									      </a>
 									    </li>
 									    
-								    <th:block th:if="${totalPages <= 10}">
-								    	<li th:each="i :${#numbers.sequence(1,totalPages)}" th:class="${currentPage != i ? 'page-item' : 'page-item disabled'}">
+								    <th:block th:if="*{totalPages <= 10}">
+								    	<li th:each="i :*{#numbers.sequence(1,totalPages)}" th:class="${khachHangDTO.page != i ? 'page-item' : 'page-item disabled'}">
 								    		<a class="page-link" th:href="@{|/admin/khach-hang/danh-sach/${i}|}">[[${i}]]</a>
 								    	</li>
 								    </th:block>
-								    <th:block th:if="${totalPages > 10}">
-								    	<th:block th:if="${currentPage <= 5 || currentPage > totalPages - 4}">
-								    		<li th:each="i :${#numbers.sequence(1,5)}" th:class="${currentPage != i ? 'page-item' : 'page-item disabled'}">
+								    <th:block th:if="*{totalPages > 10}">
+								    	<th:block th:if="*{page <= 5 || page > totalPages - 4}">
+								    		<li th:each="i :*{#numbers.sequence(1,5)}" th:class="${khachHangDTO.page != i ? 'page-item' : 'page-item disabled'}">
 									    		<a class="page-link" th:href="@{|/admin/khach-hang/danh-sach/${i}|}">[[${i}]]</a>
 									    	</li>
 									    	<a class="page-link" th:href="@{|/admin/khach-hang/danh-sach/6|}">....</a>
-									    	<li th:each="i :${#numbers.sequence(totalPages - 4,totalPages)}" th:class="${currentPage != i ? 'page-item' : 'page-item disabled'}">
+									    	<li th:each="i :*{#numbers.sequence(totalPages - 4,totalPages)}" th:class="${khachHangDTO.page != i ? 'page-item' : 'page-item disabled'}">
 									    		<a class="page-link" th:href="@{|/admin/khach-hang/danh-sach/${i}|}">[[${i}]]</a>
 									    	</li>
 								    	</th:block>
 								    </th:block>
 								    
-									    <li th:class="${currentPage < totalPages ? 'page-item' : 'page-item disabled'}">
-									      <a class="page-link" th:href="@{|/admin/khach-hang/danh-sach/${currentPage + 1}|}" aria-label="Next">
+									    <li th:class="*{page < totalPages ? 'page-item' : 'page-item disabled'}">
+									      <a class="page-link" th:href="@{|/admin/khach-hang/danh-sach/*{page + 1}|}" aria-label="Next">
 									        <span aria-hidden="true">Đi tiếp</span>
 									      </a>
 									    </li>
-									    <li th:class="${currentPage < totalPages ? 'page-item' : 'page-item disabled'}">
-									      <a class="page-link" th:href="@{|/admin/khach-hang/danh-sach/${totalPages}|}" aria-label="Next">
+									    <li th:class="*{page < totalPages ? 'page-item' : 'page-item disabled'}">
+									      <a class="page-link" th:href="@{|/admin/khach-hang/danh-sach/*{totalPages}|}" aria-label="Next">
 									        <span aria-hidden="true">Cuối cùng</span>
 									      </a>
 									    </li>
@@ -212,45 +212,67 @@
 								</nav>
 								</th:block>
 								
+								
+								
+								
+								
+								
+								
+								
+								
+								
+								
+								
+								
+								
+								
+								
+								
+								
+								
+								
+								
+								
+								
 								<th:block th:if="${trangThai != null}">
                                 <nav aria-label="Page navigation example">
 								  <ul class="pagination">
-									    <li th:class="${currentPage > 1 ? 'page-item' : 'page-item disabled'}">
+									    <li th:class="*{page > 1 ? 'page-item' : 'page-item disabled'}">
 									      <a class="page-link" th:href="@{|/admin/khach-hang/danh-sach/chuyen-doi-trang-thai/1?trangThai=${trangThai}|}" aria-label="First">
 									        <span aria-hidden="true">Đầu tiên</span>
 									      </a>
 									    </li>
-									    <li th:class="${currentPage > 1 ? 'page-item' : 'page-item disabled'}">
-									      <a class="page-link" th:href="@{|/admin/khach-hang/danh-sach/chuyen-doi-trang-thai/${currentPage - 1}/?trangThai=${trangThai}|}" aria-label="Previous">
+									    <li th:class="*{page > 1 ? 'page-item' : 'page-item disabled'}">
+									      <a class="page-link" th:href="@{|/admin/khach-hang/danh-sach/chuyen-doi-trang-thai/*{page - 1}/?trangThai=${trangThai}|}" aria-label="Previous">
 									        <span aria-hidden="true">Quay lại</span>
 									      </a>
 									    </li>
 									    
 								    <th:block th:if="${totalPages <= 10}">
-								    	<li th:each="i :${#numbers.sequence(1,totalPages)}" th:class="${currentPage != i ? 'page-item' : 'page-item disabled'}">
+								    	<li th:each="i :*{#numbers.sequence(1,totalPages)}" th:class="${khachHangDTO.page != i ? 'page-item' : 'page-item disabled'}">
 								    		<a class="page-link" th:href="@{|/admin/khach-hang/danh-sach/chuyen-doi-trang-thai/${i}?trangThai=${trangThai}|}">[[${i}]]</a>
 								    	</li>
 								    </th:block>
 								    <th:block th:if="${totalPages > 10}">
-								    	<th:block th:if="${currentPage <= 5 || currentPage > totalPages - 4}">
-								    		<li th:each="i :${#numbers.sequence(1,5)}" th:class="${currentPage != i ? 'page-item' : 'page-item disabled'}">
+								    	<th:block th:if="*{page <= 5 || *{page > totalPages - 4}">
+								    		<li th:each="i :*{#numbers.sequence(1,5)}" th:class="${khachHangDTO.page != i ? 'page-item' : 'page-item disabled'}">
 									    		<a class="page-link" th:href="@{|/admin/khach-hang/danh-sach/chuyen-doi-trang-thai/${i}?trangThai=${trangThai}|}">[[${i}]]</a>
 									    	</li>
 									    	<a class="page-link" th:href="@{|/admin/khach-hang/danh-sach/chuyen-doi-trang-thai/6?trangThai=${trangThai}|}">....</a>
-									    	<li th:each="i :${#numbers.sequence(totalPages - 4,totalPages)}" th:class="${currentPage != i ? 'page-item' : 'page-item disabled'}">
+									    	<li th:each="i :*{#numbers.sequence(totalPages - 4,totalPages)}" th:class="${khachHangDTO.page != i ? 'page-item' : 'page-item disabled'}">
 									    		<a class="page-link" th:href="@{|/admin/khach-hang/danh-sach/chuyen-doi-trang-thai/${i}?trangThai=${trangThai}|}">[[${i}]]</a>
 									    	</li>
 								    	</th:block>
 								    </th:block>
 								    
-									    <li th:class="${currentPage < totalPages ? 'page-item' : 'page-item disabled'}">
-									      <a class="page-link" th:href="@{|/admin/khach-hang/danh-sach/chuyen-doi-trang-thai/${currentPage + 1}?trangThai=${trangThai}|}" aria-label="Next">
+									    <li th:class="*{page < totalPages ? 'page-item' : 'page-item disabled'}">
+									      <a class="page-link" th:href="@{|/admin/khach-hang/danh-sach/chuyen-doi-trang-thai/*{page + 1}?trangThai=${trangThai}|}" aria-label="Next">
 									        <span aria-hidden="true">Đi tiếp</span>
 									      </a>
 									    </li>
-									    <li th:class="${currentPage < totalPages ? 'page-item' : 'page-item disabled'}">
-									      <a class="page-link" th:href="@{|/admin/khach-hang/danh-sach/chuyen-doi-trang-thai/${totalPages}?trangThai=${trangThai}|}" aria-label="Next">
-									        <span aria-hidden="true">Cuối cùng</span>
+									    <li th:class="*{page < totalPages ? 'page-item' : 'page-item disabled'}">
+									      <a class="page-link" th:href="@{|/admin/khach-hang/danh-sach/chuyen-doi-trang-thai/*{totalPages}?trangThai=${trangThai}|}" aria-label="Next">
+									      	<span aria-hidden="true">Cuối cùng</span>
 									      </a>
 									    </li>
 								  </ul>
@@ -259,41 +281,41 @@
 								<th:block th:if="${soDienThoai != null}">
                                 <nav aria-label="Page navigation example">
 								  <ul class="pagination">
-									    <li th:class="${currentPage > 1 ? 'page-item' : 'page-item disabled'}">
+									    <li th:class="*{page > 1 ? 'page-item' : 'page-item disabled'}">
 									      <a class="page-link" th:href="@{|/admin/khach-hang/danh-sach/tim-kiem/1?soDienThoai=${soDienThoai}|}" aria-label="First">
 									        <span aria-hidden="true">Đầu tiên</span>
 									      </a>
 									    </li>
-									    <li th:class="${currentPage > 1 ? 'page-item' : 'page-item disabled'}">
-									      <a class="page-link" th:href="@{|/admin/khach-hang/danh-sach/tim-kiem/${currentPage - 1}/?soDienThoai=${soDienThoai}|}" aria-label="Previous">
+									    <li th:class="*{page > 1 ? 'page-item' : 'page-item disabled'}">
+									      <a class="page-link" th:href="@{|/admin/khach-hang/danh-sach/tim-kiem/*{page - 1}/?soDienThoai=${soDienThoai}|}" aria-label="Previous">
 									        <span aria-hidden="true">Quay lại</span>
 									      </a>
 									    </li>
 									    
 								    <th:block th:if="${totalPages <= 10}">
-								    	<li th:each="i :${#numbers.sequence(1,totalPages)}" th:class="${currentPage != i ? 'page-item' : 'page-item disabled'}">
+								    	<li th:each="i :*{#numbers.sequence(1,totalPages)}" th:class="${khachHangDTO.page != i ? 'page-item' : 'page-item disabled'}">
 								    		<a class="page-link" th:href="@{|/admin/khach-hang/danh-sach/tim-kiem/${i}?soDienThoai=${soDienThoai}|}">[[${i}]]</a>
 								    	</li>
 								    </th:block>
 								    <th:block th:if="${totalPages > 10}">
-								    	<th:block th:if="${currentPage <= 5 || currentPage > totalPages - 4}">
-								    		<li th:each="i :${#numbers.sequence(1,5)}" th:class="${currentPage != i ? 'page-item' : 'page-item disabled'}">
+								    	<th:block th:if="*{page <= 5 || currentPage > totalPages - 4}">
+								    		<li th:each="i :*{#numbers.sequence(1,5)}" th:class="${khachHangDTO.page != i 'page-item' : 'page-item disabled'}">
 									    		<a class="page-link" th:href="@{|/admin/khach-hang/danh-sach/tim-kiem/${i}?soDienThoai=${soDienThoai}|}">[[${i}]]</a>
 									    	</li>
 									    	<a class="page-link" th:href="@{|/admin/khach-hang/danh-sach/tim-kiem/6?soDienThoai=${soDienThoai}|}">....</a>
-									    	<li th:each="i :${#numbers.sequence(totalPages - 4,totalPages)}" th:class="${currentPage != i ? 'page-item' : 'page-item disabled'}">
+									    	<li th:each="i :*{#numbers.sequence(totalPages - 4,totalPages)}" th:class="${khachHangDTO.page != i  ? 'page-item' : 'page-item disabled'}">
 									    		<a class="page-link" th:href="@{|/admin/khach-hang/danh-sach/tim-kiem/${i}?soDienThoai=${soDienThoai}|}">[[${i}]]</a>
 									    	</li>
 								    	</th:block>
 								    </th:block>
 								    
-									    <li th:class="${currentPage < totalPages ? 'page-item' : 'page-item disabled'}">
-									      <a class="page-link" th:href="@{|/admin/khach-hang/danh-sach/tim-kiem/${currentPage + 1}?soDienThoai=${soDienThoai}|}" aria-label="Next">
+									    <li th:class="*{page < totalPages ? 'page-item' : 'page-item disabled'}">
+									      <a class="page-link" th:href="@{|/admin/khach-hang/danh-sach/tim-kiem/*{page + 1}?soDienThoai=${soDienThoai}|}" aria-label="Next">
 									        <span aria-hidden="true">Đi tiếp</span>
 									      </a>
 									    </li>
-									    <li th:class="${currentPage < totalPages ? 'page-item' : 'page-item disabled'}">
-									      <a class="page-link" th:href="@{|/admin/khach-hang/danh-sach/tim-kiem/${totalPages}?soDienThoai=${soDienThoai}|}" aria-label="Next">
+									    <li th:class="*{page < totalPages ? 'page-item' : 'page-item disabled'}">
+									      <a class="page-link" th:href="@{|/admin/khach-hang/danh-sach/tim-kiem/*{totalPages}?soDienThoai=${soDienThoai}|}" aria-label="Next">
 									        <span aria-hidden="true">Cuối cùng</span>
 									      </a>
 									    </li>

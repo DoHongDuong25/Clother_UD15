@@ -1,8 +1,12 @@
 package com.fpoly.service.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.fpoly.dto.DiaChiDTO;
@@ -41,6 +45,25 @@ public class DiaChiServiceImpl implements DiaChiService {
 		for (long id : ids) {
 			diaChiRepository.deleteById(id);
 		}
+	}
+	@Override
+	public int countByMaKhachHang(Long id ) {
+		return diaChiRepository.countByMaKhachHang(id);
+	}
+	@SuppressWarnings("null")
+	@Override
+	public List<DiaChiDTO> findAllDiaChiByMaKhachHang(Long id, Pageable pageale) {
+		List<DiaChiDTO> listDiaChiDTO = new ArrayList<DiaChiDTO>();
+		List<DiaChi> listDiaChiEntity = new ArrayList<DiaChi>();
+		DiaChiDTO diaChiDTO = null;
+		listDiaChiEntity = diaChiRepository.findAllByMaKhachHang(id,pageale).getContent();
+		for (DiaChi diaChi : listDiaChiEntity) {
+			diaChiDTO = new DiaChiDTO();
+			diaChiDTO.setId(diaChi.getId());
+			diaChiDTO.setDiaChi(diaChi.getDiaChi());
+			listDiaChiDTO.add(diaChiDTO);
+		}
+		return listDiaChiDTO;
 	}
 
 }

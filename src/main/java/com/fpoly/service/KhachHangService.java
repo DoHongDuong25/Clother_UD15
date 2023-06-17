@@ -8,7 +8,7 @@ import com.fpoly.dto.KhachHangDTO;
 
 public interface KhachHangService {
 	
-	List<KhachHangDTO> findAllByTrangThaiCoPhanTrang(Integer trangThai,Pageable pageable);
+List<KhachHangDTO> findAllByTrangThaiCoPhanTrang(Integer trangThai,Pageable pageable);
 	
 	List<KhachHangDTO> locDanhSachTheoTrangThai(Integer trangThai );
 
@@ -25,5 +25,11 @@ public interface KhachHangService {
 	List<KhachHangDTO> findAll();
 
 	List<KhachHangDTO> findAllBySoDienThoaiCoPhanTrang(String soDienThoai,Pageable pageable);
+
+	int countAll();
+
+	int countByTrangThai(Integer trangThai);
+
+	int countBySoDienThoai(String soDienThoai);
 
 }

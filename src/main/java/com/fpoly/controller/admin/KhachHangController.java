@@ -16,9 +16,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.fpoly.dto.DiaChiDTO;
 import com.fpoly.dto.KhachHangDTO;
 import com.fpoly.entity.KhachHang;
-import com.fpoly.repository.KhachHangRepository;
+import com.fpoly.service.DiaChiService;
 import com.fpoly.service.KhachHangService;
 
 @Controller(value="KhachHangControllerOfAdmin")
@@ -28,7 +29,7 @@ public class KhachHangController {
 	private KhachHangService khachHangService ;
 	
 	@Autowired
-	private KhachHangRepository khachHangRepository ;
+	private DiaChiService diaChiService ;
 	
 	
 	@RequestMapping("/danh-sach")
@@ -45,27 +46,25 @@ public class KhachHangController {
 	
 	@RequestMapping("/danh-sach/{pageNumber}")
 	public String layDanhSach( 
-			@PathVariable(name="pageNumber") Integer currentPage ,
+			@PathVariable(name="pageNumber") Integer page ,
 			@RequestParam(name="soDienThoai",required=false) String soDienThoai,
 			@RequestParam(name="trangThai",required=false ) Integer trangThai,
 			Model model , HttpServletRequest request ) {
+		KhachHangDTO dto = new KhachHangDTO();
+		dto.setPage(page);
+		Pageable pageable = PageRequest.of(page-1,5);
+		dto.setListKhachHangDTO(khachHangService.findAll(pageable));
+		dto.setTotalItems((int) khachHangService.countAll());
+		dto.setTotalPages((int) Math.ceil((double)dto.getTotalItems()/5));
 		
-		
-		Pageable pageable = PageRequest.of(currentPage-1,5);
-		Page<KhachHang> page = khachHangRepository.findAll(pageable);
-		
-		List<KhachHangDTO> listkhachHangDTO = khachHangService.findAll(pageable);
 		String message = request.getParameter("message");
 		model.addAttribute("message",message);
-		
-		model.addAttribute("totalPages",page.getTotalPages());
-		model.addAttribute("totalItems",page.getTotalElements());
-		model.addAttribute("currentPage",currentPage);
 		
 		
 		model.addAttribute("soDienThoai",soDienThoai);
 		model.addAttribute("trangThai",trangThai);
-		model.addAttribute("listKhachHangDTO",listkhachHangDTO);
+		
+		model.addAttribute("khachHangDTO",dto);
 		return  "/admin/khach-hang/danhSach";
 	}
 	
@@ -73,13 +72,14 @@ public class KhachHangController {
 	@PostMapping("/danh-sach")
 	public String locDanhSach(@RequestParam(name="trangThai",required=false ) Integer trangThai ,
 			Model model , HttpServletRequest request ) {
+			KhachHangDTO dto = new KhachHangDTO();
 			if(trangThai == 2) {
 				return  "redirect:/admin/khach-hang/danh-sach/1";
 			}else {
-				List<KhachHangDTO> listkhachHangDTO = khachHangService.locDanhSachTheoTrangThai(trangThai);
+				dto.setListKhachHangDTO(khachHangService.locDanhSachTheoTrangThai(trangThai));
 				String message = request.getParameter("message");
 				model.addAttribute("message",message);
-				model.addAttribute("listKhachHangDTO",listkhachHangDTO);
+				model.addAttribute("khachHangDTO",dto);
 				return  "redirect:/admin/khach-hang/danh-sach/chuyen-doi-trang-thai/1?trangThai="+trangThai;
 			}
 	}
@@ -93,17 +93,17 @@ public class KhachHangController {
 									@RequestParam(name="soDienThoai",required=false) String soDienThoai ,
 									@PathVariable(name="pageNumber") Integer currentPage ,
 			Model model , HttpServletRequest request) {
+		String message = request.getParameter("message");
+		KhachHangDTO dto = new KhachHangDTO();
+		dto.setPage(currentPage);
+		
 		
 		Pageable pageable = PageRequest.of(currentPage-1,5);
-		Page<KhachHang> page = khachHangRepository.findAllByTrangThaiCoPhanTrang(trangThai,pageable);
-		List<KhachHangDTO> listkhachHangDTO = khachHangService.findAllByTrangThaiCoPhanTrang(trangThai,pageable);
-		String message = request.getParameter("message");
-		model.addAttribute("listKhachHangDTO",listkhachHangDTO);
+		dto.setListKhachHangDTO(khachHangService.findAllByTrangThaiCoPhanTrang(trangThai,pageable));
+		dto.setTotalItems((int) khachHangService.countByTrangThai(trangThai));
+		dto.setTotalPages((int) Math.ceil((double)dto.getTotalItems()/5));
 		
-		model.addAttribute("totalPages",page.getTotalPages());
-		model.addAttribute("totalItems",page.getTotalElements());
-		model.addAttribute("currentPage",currentPage);
-		
+		model.addAttribute("khachHangDTO",dto);
 		
 		model.addAttribute("soDienThoai",soDienThoai);
 		model.addAttribute("trangThai",trangThai);
@@ -113,37 +113,52 @@ public class KhachHangController {
 	
 	@RequestMapping("danh-sach/chinh-sua")
 	public ModelAndView chinhSuaKhachHangForm(
+			@RequestParam(value="page",required=true) Integer page,
 			@RequestParam(value="id",required=false) Long id ,
 			@RequestParam(value="email",required=false) String email ,
 			HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView("/admin/khach-hang/chinhSua");
-		KhachHangDTO model = new KhachHangDTO();
 		String message = request.getParameter("message");
+		KhachHangDTO model = new KhachHangDTO();
+		DiaChiDTO diaChiDTO = new DiaChiDTO();
+		diaChiDTO.setPage(page);
+		
+		Pageable pageable = PageRequest.of(page-1,6);
 		if(id != null) {
 			model = khachHangService.findById(id);
+ 			diaChiDTO.setListDiaChi(diaChiService.findAllDiaChiByMaKhachHang(model.getId(),pageable));
+			diaChiDTO.setTotalItems((int) diaChiService.countByMaKhachHang(model.getId()));
+			diaChiDTO.setTotalPages((int) Math.ceil((double)diaChiDTO.getTotalItems()/6));
+			
 		}
 		mav.addObject("message",message);
 		mav.addObject("model",model);
+		mav.addObject("diaChiDTO",diaChiDTO);
 		mav.addObject("email",email);
 		return mav ;
 	}
 	
 	
+	
 	@RequestMapping("danh-sach/tim-kiem/{pageNumber}")
-	public ModelAndView timKiemKhachHangTheoSoDienThoai(@RequestParam(name="soDienThoai",required=false) String soDienThoai 
+	public ModelAndView timKiemKhachHangTheoSoDienThoai(
+			@RequestParam(name="soDienThoai",required=false) String soDienThoai 
+			,@RequestParam(name="trangThai",required=false) Integer trangThai 
 			,@PathVariable(name="pageNumber") Integer currentPage  ) {
 		ModelAndView mav = new ModelAndView("/admin/khach-hang/danhSach");
-		Pageable pageable = PageRequest.of(currentPage-1,2);
-		Page<KhachHang> page = khachHangRepository.findAllBySoDienThoaiCoPhanTrang(soDienThoai,pageable);
-		List<KhachHangDTO> listKhachHangDTO = khachHangService.findAllBySoDienThoaiCoPhanTrang(soDienThoai,pageable);
 		
-		mav.addObject("totalPages",page.getTotalPages());
-		mav.addObject("totalItems",page.getTotalElements());
-		mav.addObject("currentPage",currentPage);
+		KhachHangDTO dto = new KhachHangDTO();
+		dto.setPage(currentPage);
 		
+		
+		Pageable pageable = PageRequest.of(currentPage-1,5);
+		dto.setListKhachHangDTO(khachHangService.findAllBySoDienThoaiCoPhanTrang(soDienThoai,pageable));
+		dto.setTotalItems((int) khachHangService.countBySoDienThoai(soDienThoai));
+		dto.setTotalPages((int) Math.ceil((double)dto.getTotalItems()/5));
+		
+		mav.addObject("khachHangDTO",dto);
 		mav.addObject("soDienThoai",soDienThoai);
-		mav.addObject("listKhachHangDTO",listKhachHangDTO);
-		
+		mav.addObject("trangThai",trangThai);
 		return mav ;
 	}
 	

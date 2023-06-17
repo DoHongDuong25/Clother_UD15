@@ -115,7 +115,7 @@
 										<div class="col-md-12">
 									
                         			<div class="table-responsive">
-                                <table class="table table-bordered"  width="100%" cellspacing="0">
+                                <table class="table table-bordered"  width="100%" cellspacing="0" th:object="${diaChiDTO}">
                                     <thead>
                                         <tr>
                                         	<th><input  type="checkbox"
@@ -124,15 +124,70 @@
                                             <th>Địa chỉ</th>
                                         </tr>
                                     </thead>
-                                    <tbody th:each="item : ${model.listDiaChi}" >
+                                    <tbody th:each="item : *{listDiaChi}" >
                                            <tr >
                                         		<td>
-                                        			<input  type="checkbox" th:value="*{item.id}" id="checkbox_*{item.id}" />
+                                        			<input  type="checkbox" th:value="${item.id}" id="checkbox_${item.id}" />
                                         		</td>
 	                                            <td>[[${itemStat.index}]]</td>
-	                                            <td>[[*{item.diaChi}]]</td>
+	                                            <td>[[${item.diaChi}]]</td>
 	                                       </tr>
                                     </tbody>
+                                    <tfoot>
+                                    	
+                                    	
+                                    	
+                                    	
+                                    	
+                                    	
+                                    	
+                                    	<nav aria-label="Page navigation example">
+								  <ul class="pagination">
+									    <li th:class="*{page > 1 ? 'page-item' : 'page-item disabled'}">
+									      <a class="page-link" th:href="@{|/admin/khach-hang/danh-sach/chinh-sua?id=${model.id}&page=1|}" aria-label="First">
+									        <span aria-hidden="true">Đầu tiên</span>
+									      </a>
+									    </li>
+									    <li th:class="*{page > 1 ? 'page-item' : 'page-item disabled'}">
+									      <a class="page-link" th:href="@{|/admin/khach-hang/danh-sach/chinh-sua?id=${model.id}&page=*{page - 1}|}" aria-label="Previous">
+									        <span aria-hidden="true">Quay lại</span>
+									      </a>
+									    </li>
+									    
+								    <th:block th:if="${totalPages <= 10}">
+								    	<li th:each="i :*{#numbers.sequence(1,totalPages)}" th:class="${diaChiDTO.page != i ? 'page-item' : 'page-item disabled'}">
+								    		<a class="page-link" th:href="@{|/admin/khach-hang/danh-sach/chinh-sua?id=${model.id}&page=${i}|}">[[${i}]]</a>
+								    	</li>
+								    </th:block>
+								    <th:block th:if="${totalPages > 10}">
+								    	<th:block th:if="*{page <= 5 || *{page > totalPages - 4}">
+								    		<li th:each="i :*{#numbers.sequence(1,5)}" th:class="${diaChiDTO.page != i ? 'page-item' : 'page-item disabled'}">
+									    		<a class="page-link" th:href="@{|/admin/khach-hang/danh-sach/chinh-sua?id=${model.id}&page=${i}|}">[[${i}]]</a>
+									    	</li>
+									    	<a class="page-link" th:href="@{|/admin/khach-hang/danh-sach/danh-sach?id=${model.id}&page=6|}">....</a>
+									    	<li th:each="i :*{#numbers.sequence(totalPages - 4,totalPages)}" th:class="${diaChiDTO.page != i ? 'page-item' : 'page-item disabled'}">
+									    		<a class="page-link" th:href="@{|/admin/khach-hang/danh-sach/chinh-sua?id=${model.id}&page=${i}|}">[[${i}]]</a>
+									    	</li>
+								    	</th:block>
+								    </th:block>
+								    
+									    <li th:class="*{page < totalPages ? 'page-item' : 'page-item disabled'}">
+									      <a class="page-link" th:href="@{|/admin/khach-hang/danh-sach/chinh-sua?id=${model.id}&page=*{page + 1}|}" aria-label="Next">
+									        <span aria-hidden="true">Đi tiếp</span>
+									      </a>
+									    </li>
+									    <li th:class="*{page < totalPages ? 'page-item' : 'page-item disabled'}">
+									      <a class="page-link" th:href="@{|/admin/khach-hang/danh-sach/chinh-sua?id=${model.id}&page=*{totalPages}|}" aria-label="Next">
+									      	<span aria-hidden="true">Cuối cùng</span>
+									      </a>
+									    </li>
+								  </ul>
+								</nav>
+                                    	
+                                    	
+                                    	
+                                    	
+                                    </tfoot>
                                 </table>
                         		</div>
                         		</div>
