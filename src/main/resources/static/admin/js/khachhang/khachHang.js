@@ -1,30 +1,35 @@
 
 
-$('#timKiemSoDienThoai').click(function(){
+
+$('#soDienThoai').on('change',function(){
+	var limit = $('#limitForSearch').val();
+	var trangThai = $('#trangThaiForSearch').val();
 	var soDienThoai = $('#soDienThoai').val();
+	
 	if(soDienThoai == ""){
 		alert("Vui lòng nhập số điện thoại");
 	}else{
-		window.location.href="http://localhost:8080/admin/khach-hang/danh-sach/tim-kiem/1?soDienThoai="+soDienThoai;
+		window.location.href="http://localhost:8080/admin/khach-hang/danh-sach/tim-kiem/1?soDienThoai="+soDienThoai+"&trangThai="+trangThai+"&limit="+limit;
 	}
-	
-	
 });
 
 
 function fun()
 {
-    if(document.getElementById("trangThaiSelect").value!="")
+    if(document.getElementById("trangThaiSelect").value!="" || document.getElementById("limit").value!="")
         document.getElementById("loc").disabled=false;
     else
     document.getElementById("loc").disabled=true;
 }
 
 
-$('#trangThaiSelect').on('change',function (e) {
-				var conceptName = $('#trangThaiSelect').find(":selected").val();
-				$('#trangThai').val(conceptName);
-				
+$('#trangThaiSelect').on('change',function fun() {
+	var optionTrangThai = $('#trangThaiSelect').find(":selected").val();
+	$('#trangThai').val(optionTrangThai);
+});
+$('#limitSelect').on('change',function fun() {
+	var optionLimit = $('#limitSelect').find(":selected").val();
+	$('#limit').val(optionLimit);
 });
 
 

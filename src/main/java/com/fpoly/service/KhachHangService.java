@@ -25,11 +25,15 @@ List<KhachHangDTO> findAllByTrangThaiCoPhanTrang(Integer trangThai,Pageable page
 	List<KhachHangDTO> findAll();
 
 	List<KhachHangDTO> findAllBySoDienThoaiCoPhanTrang(String soDienThoai,Pageable pageable);
+	
+	List<KhachHangDTO> findAllBySoDienThoaiVaTrangThaiCoPhanTrang(String soDienThoai,Integer trangThai,Pageable pageable);
 
 	int countAll();
 
 	int countByTrangThai(Integer trangThai);
 
 	int countBySoDienThoai(String soDienThoai);
+
+	int countBySoDienThoaiVaTrangThai(String soDienThoai, Integer trangThai);
 
 }

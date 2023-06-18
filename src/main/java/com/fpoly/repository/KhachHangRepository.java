@@ -20,6 +20,9 @@ public interface KhachHangRepository extends JpaRepository<KhachHang,Long> {
 	@Query(value="SELECT k FROM KhachHang k WHERE k.trangThai=?1")
 	Page<KhachHang> findAllByTrangThaiCoPhanTrang(int trangThai,Pageable pageable);
 	
+	@Query(value="SELECT k FROM KhachHang k WHERE k.trangThai =:trangThai AND k.soDienThoai LIKE %:soDienThoai%")
+	Page<KhachHang> findAllByTrangThaiVaSoDienThoaiCoPhanTrang(@Param("trangThai")int trangThai,@Param("soDienThoai") String soDienThoai, Pageable pageable);
+	
 	@Query(value="SELECT k FROM KhachHang k WHERE k.trangThai=?1")
 	List<KhachHang> findAllByTrangThaiKhongCoPhanTrang(int trangThai);
 	
@@ -42,6 +45,9 @@ public interface KhachHangRepository extends JpaRepository<KhachHang,Long> {
 	@Query(value="SELECT count(k) FROM KhachHang k WHERE k.trangThai=?1")
 	int countByTrangThai(Integer trangThai);
 
-	@Query(value="SELECT count(k) FROM KhachHang k WHERE k.soDienThoai=?1")
-	int countBySoDienThoai(String soDienThoai);
+	@Query(value="SELECT count(k) FROM KhachHang k WHERE k.soDienThoai LIKE %:soDienThoai%")
+	int countBySoDienThoai(@Param("soDienThoai")String soDienThoai);
+
+	@Query(value="SELECT count(k) FROM KhachHang k WHERE  k.soDienThoai LIKE %:soDienThoai%  AND k.trangThai =:trangThai")
+	int countBySoDienThoaiVaTrangThai(@Param("soDienThoai")String soDienThoai, @Param("trangThai")Integer trangThai);
 }
