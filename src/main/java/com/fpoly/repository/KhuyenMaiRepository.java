@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface KhuyenMaiRepository extends JpaRepository<KhuyenMai,Long> {
-    @Query("select p from KhuyenMai p WHERE (:keyword IS NULL OR p.tenKhuyenMai LIKE :keyword) and p.xoa = true")
+    @Query("select p from KhuyenMai p WHERE (:keyword IS NULL OR p.tenKhuyenMai LIKE :keyword) and p.xoa = false")
     Page<KhuyenMai> findVoucher(String keyword, Pageable pageable);
 
 }

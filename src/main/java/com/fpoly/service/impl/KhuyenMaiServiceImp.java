@@ -27,6 +27,11 @@ public class KhuyenMaiServiceImp implements KhuyenMaiService{
     private KhuyenMaiDTO toDto(KhuyenMai e) {
         if (e == null) return null;
         return KhuyenMaiDTO.builder()
+                .id(e.getId())
+                .ngayTao(e.getNgayTao())
+                .nguoiTao(e.getNguoiTao())
+                .nguoiCapNhat(e.getNguoiCapNhat())
+                .ngayCapNhat(e.getNgayCapNhat())
                 .tenKhuyenMai(e.getTenKhuyenMai())
                 .giaTriToiThieu(e.getGiaTriToiThieu())
                 .phanTramGiam(e.getPhanTramGiam())
@@ -43,6 +48,8 @@ public class KhuyenMaiServiceImp implements KhuyenMaiService{
                 .phanTramGiam(e.getPhanTramGiam())
                 .ngayBatDau(e.getNgayBatDau())
                 .ngayKetThuc(e.getNgayKetThuc())
+                .xoa(false)
+                .trangThai(true)
                 .build();
     }
 
@@ -79,7 +86,7 @@ public class KhuyenMaiServiceImp implements KhuyenMaiService{
     @Override
     public void deleteVoucher(Long id) {
         KhuyenMai khuyenMai = khuyenMaiRepository.findById(id).orElseThrow(() -> new RuntimeException("NOTFOUND"));
-        khuyenMai.setXoa(false);
+        khuyenMai.setXoa(true);
         khuyenMaiRepository.save(khuyenMai);
     }
 
