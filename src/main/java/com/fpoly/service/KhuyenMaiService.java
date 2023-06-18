@@ -7,6 +7,7 @@ public interface KhuyenMaiService {
     Page<KhuyenMaiDTO> getListKhuyenMai(int page, int size, String keyword);
     KhuyenMaiDTO createVoucher(KhuyenMaiDTO khuyenMaiDTO);
     KhuyenMaiDTO editVoucher(Long id, KhuyenMaiDTO khuyenMaiDTO);
+    KhuyenMaiDTO getVoucher(Long id);
     void deleteVoucher(Long id);
     void toggleDisableVoucher(Long id);
 }

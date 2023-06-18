@@ -59,6 +59,13 @@ public class KhuyenMaiServiceImp implements KhuyenMaiService{
         khuyenMaiRepository.save(khuyenMai);
         return toDto(khuyenMai);
     }
+
+    @Override
+    public KhuyenMaiDTO getVoucher(Long id) {
+        KhuyenMai khuyenMai = khuyenMaiRepository.findById(id).orElseThrow(() -> new RuntimeException("NOTFOUND"));
+        return toDto(khuyenMai);
+    }
+
     private void mapDto(KhuyenMai entity, KhuyenMaiDTO dto){
         if (dto == null) return;
         entity.setTenKhuyenMai(dto.getTenKhuyenMai());

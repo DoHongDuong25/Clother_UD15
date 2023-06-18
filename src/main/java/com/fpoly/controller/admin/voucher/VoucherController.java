@@ -13,7 +13,9 @@ import javax.validation.Valid;
 @RequiredArgsConstructor
 @RequestMapping("/admin")
 public class VoucherController {
-    public static final String REDIRECT_GET_VOUCHER = "redirect:/admin/voucher";
+    private static final String REDIRECT_GET_VOUCHER = "redirect:/admin/voucher";
+    private static final String ADMIN_VOUCHER_INDEX = "admin/voucher/index";
+    private static final String ADMIN_VOUCHER_EDIT = "admin/voucher/edit";
     private final KhuyenMaiService khuyenMaiService;
     @GetMapping("/voucher")
     public String getVoucher(Model model,
@@ -21,7 +23,18 @@ public class VoucherController {
                              @RequestParam(value = "size", defaultValue = "10") int size,
                              @RequestParam(value = "keyword", required = false) String keyword){
         model.addAttribute("vouchers",khuyenMaiService.getListKhuyenMai(page, size, keyword));
-        return "admin/voucher/index";
+        return ADMIN_VOUCHER_INDEX;
+    }
+    @GetMapping("/voucher/edit/{id}")
+    public String editVoucher(Model model,
+                             @PathVariable Long id){
+        model.addAttribute("vouchers",khuyenMaiService.getVoucher(id));
+        return ADMIN_VOUCHER_EDIT;
+    }
+    @GetMapping("/voucher/create")
+    public String createVoucherForm(Model model){
+        model.addAttribute("voucher", new KhuyenMaiDTO());
+        return ADMIN_VOUCHER_EDIT;
     }
     @PostMapping("/voucher")
     public String createVoucher(@ModelAttribute @Valid KhuyenMaiDTO dto){
@@ -33,7 +46,7 @@ public class VoucherController {
         khuyenMaiService.editVoucher(id, dto);
         return REDIRECT_GET_VOUCHER;
     }
-    @PostMapping("/voucher/{id}")
+    @PostMapping("/voucher/delete/{id}")
     public String deleteVoucher(@PathVariable Long id){
         khuyenMaiService.deleteVoucher(id);
         return REDIRECT_GET_VOUCHER;
