@@ -54,6 +54,39 @@ public class KhachHangServiceImpl implements KhachHangService{
 		return listKhachHangDTO ;
 	}
 	
+	@Override
+	public List<KhachHangDTO> findAllBySoDienThoaiVaTrangThaiCoPhanTrang(String soDienThoai, Integer trangThai,
+			Pageable pageable) {
+		List<KhachHangDTO> listKhachHangDTO = new ArrayList<KhachHangDTO>() ;
+		List<KhachHang> listKhachHang = new ArrayList<KhachHang>();
+		KhachHangDTO dto = null ;
+		DiaChiDTO diaChiDTO = null;
+		if(trangThai != null) {
+			 if(trangThai != 2) {
+				 listKhachHang = khachHangRepository.findAllByTrangThaiVaSoDienThoaiCoPhanTrang(trangThai,soDienThoai, pageable).getContent();
+					for (KhachHang khachHang : listKhachHang) {
+						dto = new KhachHangDTO();
+						dto.setId(khachHang.getId());
+						dto.setEmail(khachHang.getEmail());
+						dto.setMatKhau(khachHang.getMatKhau());
+						dto.setHoTen(khachHang.getHoTen());
+						dto.setSoDienThoai(khachHang.getSoDienThoai());
+						dto.setTrangThai(khachHang.getTrangThai());
+						List<DiaChiDTO> listDiaChiDTO = new ArrayList<DiaChiDTO>();
+						for (DiaChi diaChi : khachHang.getListDiaChi()) {
+							diaChiDTO = new DiaChiDTO();
+							diaChiDTO.setId(diaChi.getId());
+							diaChiDTO.setDiaChi(diaChi.getDiaChi());
+							listDiaChiDTO.add(diaChiDTO);
+						}
+						dto.setListDiaChi(listDiaChiDTO);
+						listKhachHangDTO.add(dto);
+					}
+			 }
+		}
+		return listKhachHangDTO ;
+	}
+	
 	
 	
 	@Override
@@ -277,7 +310,15 @@ public class KhachHangServiceImpl implements KhachHangService{
 
 	@Override
 	public int countBySoDienThoai(String soDienThoai) {
-		// TODO Auto-generated method stub
 		return khachHangRepository.countBySoDienThoai(soDienThoai);
 	}
+
+	@Override
+	public int countBySoDienThoaiVaTrangThai(String soDienThoai, Integer trangThai) {
+		return khachHangRepository.countBySoDienThoaiVaTrangThai(soDienThoai,trangThai);
+	}
+
+
+
+	
 }
