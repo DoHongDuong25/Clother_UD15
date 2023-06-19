@@ -15,7 +15,7 @@
             <div class="col-6">
                 <div class="input-group mb-3">
                     <input type="text" class="form-control" placeholder="Tìm kiếm" id="search" th:value="${keyword}">
-                    <button class="btn btn-primary" type="button" onclick="submitForm()">Tìm kiếm</button>
+                    <button class="btn btn-primary" type="button" onclick="search()">Tìm kiếm</button>
                 </div>
             </div>
             <div class="col-4"></div>
@@ -24,7 +24,16 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-4"></div>
+            <div class="col-2">
+                <label for="size">Số lượng trong một trang</label>
+            </div>
+            <div class="col-2">
+                <select class="form-select" aria-label="Default select example" id="size" >
+                    <option value="10" selected>10</option>
+                    <option value="20" th:selected="${size == 20}">20</option>
+                    <option value="50" th:selected="${size == 50}">50</option>
+                </select>
+            </div>
             <div class="col-2">
                 <label class="col-form-label" for="status">Trạng thái:</label>
             </div>
@@ -93,7 +102,7 @@
                         <li th:if="${vouchers.totalPages > 0}" class="page-link"
                             th:each="pageNumber : ${pageNumbers}">
                             <a href="#"
-                               th:onclick="'submitForm('+${pageNumber} + ',' +  ${vouchers.size} + ')'"
+                               th:onclick="'search('+${pageNumber}')'"
                                th:text="${pageNumber}"
                                th:class="${pageNumber==vouchers.number + 1} ? active"
                                class="page-link"

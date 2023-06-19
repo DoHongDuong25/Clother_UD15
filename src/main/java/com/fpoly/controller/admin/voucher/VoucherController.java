@@ -33,6 +33,7 @@ public class VoucherController {
         model.addAttribute("keyword", keyword);
         model.addAttribute("status", status);
         model.addAttribute("date", date);
+        model.addAttribute("size", size);
         int totalPages = list.getTotalPages();
         if (totalPages > 0) {
             List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
