@@ -14,7 +14,7 @@
         <div class="row">
             <div class="col-6">
                 <div class="input-group mb-3">
-                    <input type="text" class="form-control" placeholder="Tìm kiếm" id="search">
+                    <input type="text" class="form-control" placeholder="Tìm kiếm" id="search" th:value="${keyword}">
                     <button class="btn btn-primary" type="button" onclick="submitForm()">Tìm kiếm</button>
                 </div>
             </div>
@@ -31,8 +31,8 @@
             <div class="col-2">
                 <select class="form-select" aria-label="Default select example" id="status">
                     <option value="ALL" selected>Tất cả</option>
-                    <option value="ON">Đang Bật</option>
-                    <option value="OFF">Đang Tắt</option>
+                    <option value="ON" th:selected="${status == 'ON'}">Đang Bật</option>
+                    <option value="OFF" th:selected="${status == 'OFF'}">Đang Tắt</option>
                 </select>
             </div>
             <div class="col-2">
@@ -41,22 +41,23 @@
             <div class="col-2">
                 <select class="form-select" aria-label="Default select example" id="time">
                     <option value="ALL" selected>Tất cả</option>
-                    <option value="ON">Khả dụng</option>
-                    <option value="OFF">Hết hạn</option>
+                    <option value="ON" th:selected="${date == 'ON'}">Khả dụng</option>
+                    <option value="OFF" th:selected="${date == 'OFF'}">Hết hạn</option>
+                    <option value="PENDING" th:selected="${date == 'PENDING'}">Chưa mở</option>
                 </select>
             </div>
         </div>
         <div class="row mt-4">
             <div class="col-12">
-                <table class="table">
+                <table class="table" id="voucherTable">
                     <thead>
                     <tr>
-                        <th>Mã giảm giá</th>
-                        <th>Phần trăm giảm</th>
-                        <th>Giá trị tối thiểu</th>
-                        <th>Thời gian</th>
-                        <th>Trạng thái</th>
-                        <th>Hành động</th>
+                        <th class="text-center">Mã giảm giá</th>
+                        <th class="text-center">Phần trăm giảm</th>
+                        <th class="text-center">Giá trị tối thiểu</th>
+                        <th class="text-center">Thời gian</th>
+                        <th class="text-center">Trạng thái</th>
+                        <th class="text-center">Hành động</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -65,6 +66,7 @@
                         <td th:text="${voucher.tenKhuyenMai}" class="text-center"></td>
                         <td th:text="${voucher.phanTramGiam + '%'}" class="text-center"></td>
                         <td th:text="${voucher.giaTriToiThieu}" class="text-center"></td>
+                        <!--                        <td th:text="${#numbers.formatCurrency(voucher.giaTriToiThieu)}" class="text-center"></td>-->
                         <td class="text-center">
                             <span th:text="${#dates.format(voucher.ngayBatDau, 'dd/MM/yyyy')}"></span>
                             <span> - </span>
@@ -86,12 +88,19 @@
                     </tbody>
                     </tbody>
                 </table>
-<!--                <div th:if="${vouchers.totalPages > 0}" class="pagination"-->
-<!--                     th:each="pageNumber : ${pageNumbers}">-->
-<!--                    <a th:href="@{/voucher(size=${bookPage.size}, page=${pageNumber})}"-->
-<!--                       th:text="${pageNumber}"-->
-<!--                       th:class="${pageNumber==bookPage.number + 1} ? active"></a>-->
-<!--                </div>-->
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center pagination-sm">
+                        <li th:if="${vouchers.totalPages > 0}" class="page-link"
+                            th:each="pageNumber : ${pageNumbers}">
+                            <a href="#"
+                               th:onclick="'submitForm('+${pageNumber} + ',' +  ${vouchers.size} + ')'"
+                               th:text="${pageNumber}"
+                               th:class="${pageNumber==vouchers.number + 1} ? active"
+                               class="page-link"
+                            ></a>
+                        </li>
+                    </ul>
+                </nav>
             </div>
         </div>
     </div>
@@ -101,16 +110,4 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
 
 </body>
-<script>
-    function submitForm() {
-        var keyword = document.getElementById('search').value;
-        var status = document.getElementById('status').value;
-        var date = document.getElementById('time').value;
-        var url = '/voucher?page=1&size=10&keyword=' + encodeURIComponent(keyword) + '&status=' + encodeURIComponent(status) + '&date=' + encodeURIComponent(date);
-        console.log(url);
-        var link = document.createElement('a');
-        link.href = url;
-        link.click();
-    }
-</script>
 </html>

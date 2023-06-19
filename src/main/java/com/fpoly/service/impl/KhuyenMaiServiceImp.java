@@ -20,7 +20,7 @@ public class KhuyenMaiServiceImp implements KhuyenMaiService{
     public Page<KhuyenMaiDTO> getListKhuyenMai(int page, int size, String keyword, String status, String date) {
         Sort sort = Sort.by("ngayBatDau").descending();
         PageRequest pageRequest = PageRequest.of(page-1, size, sort);
-        Page<KhuyenMai> entities = khuyenMaiRepository.findVoucher(keyword, pageRequest);
+        Page<KhuyenMai> entities = khuyenMaiRepository.findVoucher(keyword, status, date, pageRequest);
         return entities.map(this::toDto);
     }
 
