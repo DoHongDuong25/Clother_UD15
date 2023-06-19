@@ -124,22 +124,22 @@ public class SanPhamChiTietSearchRepositoryImpl implements SanPhamChiTietSearchR
 			where.and(qSanPhamChiTiet.soLuong.loe(dataSearch.getSoLuongMax()));
 		}
 		
-		if(!dataSearch.getGiaHienHanhMin().toString().equalsIgnoreCase("-1") &&
-				!dataSearch.getGiaHienHanhMax().toString().equalsIgnoreCase("-1") ) {
-			if(!dataSearch.getGiaHienHanhMin().toString().isEmpty() && 
-					!dataSearch.getGiaHienHanhMax().toString().isEmpty()) {
-				where.and(qSanPham.giaHienHanh.between(dataSearch.getGiaHienHanhMin(), dataSearch.getGiaHienHanhMax()));
+		if(!dataSearch.getGiaMin().toString().equalsIgnoreCase("-1") &&
+				!dataSearch.getGiaMax().toString().equalsIgnoreCase("-1") ) {
+			if(!dataSearch.getGiaMin().toString().isEmpty() && 
+					!dataSearch.getGiaMax().toString().isEmpty()) {
+				where.and(qSanPham.gia.between(dataSearch.getGiaMin(), dataSearch.getGiaMax()));
 			}
 		}
-		if(!dataSearch.getGiaHienHanhMin().toString().equalsIgnoreCase("-1") &&
-				dataSearch.getGiaHienHanhMax().toString().equalsIgnoreCase("-1")) {
-			if(!dataSearch.getGiaHienHanhMin().toString().isEmpty()) {
-				where.and(qSanPham.giaHienHanh.goe(dataSearch.getGiaHienHanhMin()));
+		if(!dataSearch.getGiaMin().toString().equalsIgnoreCase("-1") &&
+				dataSearch.getGiaMax().toString().equalsIgnoreCase("-1")) {
+			if(!dataSearch.getGiaMin().toString().isEmpty()) {
+				where.and(qSanPham.gia.goe(dataSearch.getGiaMin()));
 			}
-		}else if(dataSearch.getGiaHienHanhMin().toString().equalsIgnoreCase("-1") &&
-				!dataSearch.getGiaHienHanhMax().toString().equalsIgnoreCase("-1")) {
-			if(!dataSearch.getGiaHienHanhMax().toString().isEmpty()) {
-				where.and(qSanPham.giaHienHanh.loe(dataSearch.getGiaHienHanhMax()));
+		}else if(dataSearch.getGiaMin().toString().equalsIgnoreCase("-1") &&
+				!dataSearch.getGiaMax().toString().equalsIgnoreCase("-1")) {
+			if(!dataSearch.getGiaMax().toString().isEmpty()) {
+				where.and(qSanPham.gia.loe(dataSearch.getGiaMax()));
 			}
 		}
 		
@@ -202,8 +202,8 @@ public class SanPhamChiTietSearchRepositoryImpl implements SanPhamChiTietSearchR
 		List<Long> lstKichCoId = typeHelperService.convertObjectTypeListLong(dataSearch.getKichCoIds());
 		List<Long> lstMauSacId = typeHelperService.convertObjectTypeListLong(dataSearch.getMauSacIds());
 		String tenSanPham = typeHelperService.convertObjectTypeString(dataSearch.getTenSanPham());
-		BigDecimal giaHienHanhMin = typeHelperService.convertObjectTypeBigDecimal(dataSearch.getGiaHienHanhMin());
-		BigDecimal giaHienHanhMax = typeHelperService.convertObjectTypeBigDecimal(dataSearch.getGiaHienHanhMax());
+		BigDecimal giaHienHanhMin = typeHelperService.convertObjectTypeBigDecimal(dataSearch.getGiaMin());
+		BigDecimal giaHienHanhMax = typeHelperService.convertObjectTypeBigDecimal(dataSearch.getGiaMax());
 		int soLuongMin = typeHelperService.convertObjectTypeListInt(dataSearch.getSoLuongMin());
 		int soLuongMax = typeHelperService.convertObjectTypeListInt(dataSearch.getSoLuongMax());
 		List<Boolean> coHienThi = typeHelperService.convertObjectTypeListBoolean(dataSearch.getCoHienThi());

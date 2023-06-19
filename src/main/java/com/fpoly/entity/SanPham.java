@@ -19,6 +19,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
 
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
@@ -60,11 +61,12 @@ public class SanPham extends BaseEntity implements Serializable{
 	private List<SanPhamChiTiet> sanPhamChiTiets = new ArrayList<SanPhamChiTiet>();
 	
 	@Column(columnDefinition = "nvarchar(256)", nullable = false)
+	@NotEmpty(message = "Tên sản phẩm không được để trống")
 	private String tenSanPham;
 	
 	@Column(columnDefinition = "nvarchar(512)", nullable = true)
 	private String moTa;
 	
 	@Column(precision = 10)
-	private BigDecimal giaHienHanh;
+	private BigDecimal gia;
 }

@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class KieuDangDTO extends BaseDTO{
-	private Long id;
 	
 	private String tenKieuDang;
 	

@@ -9,6 +9,7 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,6 +18,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -27,8 +30,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @Table(name = "san_pham_chi_tiet")
-
+@EntityListeners(AuditingEntityListener.class)
 public class SanPhamChiTiet extends BaseEntity implements Serializable{
+	@Column(nullable = false)
+	private String maSanPhamChiTiet;
+	
 	@ManyToOne
 	@JoinColumn(name = "kich_co_id", nullable = false)
 	private KichCo kichCo;

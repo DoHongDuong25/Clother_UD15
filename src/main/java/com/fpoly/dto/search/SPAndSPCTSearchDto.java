@@ -4,6 +4,9 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Min;
+
 import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.AllArgsConstructor;
@@ -29,12 +32,16 @@ public class SPAndSPCTSearchDto {
 	
 	private String tenSanPham;
 	
-	private BigDecimal giaHienHanhMin;
+	@DecimalMin(value = "0", message = "Giá nhỏ nhất không được nhỏ hơn 0")
+	private BigDecimal giaMin;
 	
-	private BigDecimal giaHienHanhMax;
+	@DecimalMin(value = "0", message = "Giá lớn nhất không được nhỏ hơn 0")
+	private BigDecimal giaMax;
 	
+	@Min(value = 0, message = "Số lượng nhỏ nhất không được nhỏ hơn 0")
 	private Integer soLuongMin;
 	
+	@Min(value = 0, message = "Số lượng lớn nhất không được nhỏ hơn 0")
 	private Integer soLuongMax;
 	
 	private List<Boolean> coHienThi;

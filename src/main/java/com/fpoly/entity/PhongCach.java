@@ -2,6 +2,7 @@ package com.fpoly.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -36,7 +37,7 @@ public class PhongCach extends BaseEntity implements Serializable{
 	private String tenPhongCach;
 		
 	@OneToMany(mappedBy = "phongCach", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private Set<SanPham> sanPhams;
+	private List<SanPham> sanPhams;
 	
 	@Column
 	private Boolean daXoa;

@@ -2,6 +2,7 @@ package com.fpoly.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -39,5 +40,5 @@ public class ChatLieu extends BaseEntity implements Serializable {
 	private Boolean daXoa;
 	
 	@OneToMany(mappedBy = "chatLieu", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private Set<SanPham> sanPhams;
+	private List<SanPham> sanPhams;	
 }

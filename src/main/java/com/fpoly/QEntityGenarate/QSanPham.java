@@ -31,7 +31,7 @@ public class QSanPham extends EntityPathBase<SanPham> {
 
     public final BooleanPath daXoa = createBoolean("daXoa");
 
-    public final NumberPath<java.math.BigDecimal> giaHienHanh = createNumber("giaHienHanh", java.math.BigDecimal.class);
+    public final NumberPath<java.math.BigDecimal> gia = createNumber("gia", java.math.BigDecimal.class);
 
     //inherited
     public final NumberPath<Long> id = _super.id;

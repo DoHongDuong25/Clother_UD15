@@ -1,3 +1,4 @@
+// product manage
 VirtualSelect.init({
   ele: "select",
 });
@@ -25,8 +26,10 @@ function showConfirmModalDialogDeleteAllbyId() {
   $("#confirmationDeleteIds").modal("show");
 }
 
-function deleteAll() {
-  document.getElementById("formDeleteAllByIds").submit();
+function flexUrlSubmit(url, method, formName) {
+  $("#flexUrlTableForm" + formName).attr("action", "/admin/product/" + url);
+  $("#flexUrlTableForm" + formName).attr("method", method);
+  document.getElementById("flexUrlTableForm" + formName).submit();
 }
 
 function toggleProductIds(source) {
@@ -40,6 +43,24 @@ function toggleProductIds(source) {
 //   if (document.getElementById(id).isCheck === true) {
 //   }
 // }
+function showInfoProductDetailById(
+  nguoiTao,
+  ngayTao,
+  nguoiCapNhat,
+  NgayCapNhat,
+  moTa
+) {
+  $("#infoProductDetail").modal("show");
+  document.getElementById("infoProductDetailContentString0").innerHTML =
+    nguoiTao;
+  document.getElementById("infoProductDetailContentString1").innerHTML =
+    ngayTao;
+  document.getElementById("infoProductDetailContentString2").innerHTML =
+    nguoiCapNhat;
+  document.getElementById("infoProductDetailContentString3").innerHTML =
+    NgayCapNhat;
+  document.getElementById("infoProductDetailContentString4").innerHTML = moTa;
+}
 
 $("#multiple-select-field").select2({
   theme: "bootstrap-5",

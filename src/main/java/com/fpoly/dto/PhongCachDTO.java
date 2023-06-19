@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PhongCachDTO extends BaseDTO{
-	private Long id;
 	
 	private String tenPhongCach;
 	

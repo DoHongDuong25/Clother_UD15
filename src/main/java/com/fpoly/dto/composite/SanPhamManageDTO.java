@@ -1,5 +1,6 @@
 package com.fpoly.dto.composite;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,10 +26,6 @@ import lombok.NoArgsConstructor;
 public class SanPhamManageDTO {
 	private Long sanPhamId;
 	
-	private Boolean isAnhChinh;
-	
-	private String tenAnh;
-	
 	@Min(value = 0, message = "Kiểu dáng sản phẩm không được để trống")
 	private Long kieuDangId;
 	
@@ -49,18 +46,20 @@ public class SanPhamManageDTO {
 	@NotEmpty(message = "Mô tả sản phẩm không được để trống")
 	private String moTa;
 	
-	@DecimalMin(value = "1", message = "Giá hiện hành không được để trống")
-	@NotNull(message = "Giá hiện hành không được để trống")
-	private BigDecimal giaHienHanh;
+	@NotNull(message = "Số lượng không được để trống")
+	@Min(value = 0, message = "Số lượng không được nhỏ hơn 0")
+	private Integer soLuong;
+	
+	@DecimalMin(value = "1000", message = "Giá không được nhỏ hơn 1.000")
+	@NotNull(message = "Giá không được để trống")
+	private BigDecimal gia;
 	
 	@NotEmpty(message = "Danh sách kích cỡ sản phẩm không được để trống")
 	private List<@Valid Long> kichCoIds;
 	
 	@NotEmpty(message = "Danh sách màu sắc sản phẩm không được để trống")
 	private List<@Valid Long> mauSacIds;
-	//@param idSPCT, MultipartFile
-	private HashMap<Long, MultipartFile> imgFiles = new HashMap<Long, MultipartFile>();
-		
+	
 	private List<SanPhamChiTietDTO> spctDTO = new ArrayList<SanPhamChiTietDTO>();
 	
 	private Boolean isEdit = false;

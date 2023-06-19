@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class MauSacDTO extends BaseDTO{
-	private Long id;
 	
 	private String tenMauSac;
 	

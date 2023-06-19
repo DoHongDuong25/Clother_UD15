@@ -10,8 +10,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class KichCoDTO extends BaseDTO{
-	private Long id;
-
 	private String tenKichCo;
 	
 	private Boolean daXoa;

@@ -19,4 +19,7 @@ public interface SanPhamChiTietRepository extends JpaRepository<SanPhamChiTiet,L
 	
 	@Query(value = "SELECT * FROM san_pham_chi_tiet c WHERE c.da_xoa = false AND c.san_pham_id = :id", nativeQuery = true)
 	List<SanPhamChiTiet> getLstSanPhamChiTietBySanPhamId(@Param("id") Long id);
+	
+	@Query(value = "SELECT * FROM san_pham_chi_tiet c WHERE c.da_xoa = false AND c.san_pham_id = :id", nativeQuery = true)
+	List<SanPhamChiTiet> getLstSanPhamChiTietBySanPhamId(@Param("id") Long id);
 }
