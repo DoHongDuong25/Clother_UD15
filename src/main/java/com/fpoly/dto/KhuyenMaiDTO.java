@@ -15,11 +15,11 @@ import java.util.Date;
 public class KhuyenMaiDTO extends BaseDTO<KhuyenMaiDTO> {
 
     private String tenKhuyenMai;
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date ngayBatDau;
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date ngayKetThuc;
 
     private int phanTramGiam;

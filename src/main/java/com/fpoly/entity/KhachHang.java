@@ -1,15 +1,21 @@
 package com.fpoly.entity;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
-import javax.persistence.*;
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -34,7 +40,7 @@ public class KhachHang extends BaseEntity implements Serializable {
 
     @Column(name = "ho_ten",columnDefinition = "nvarchar(256) not null ")
     private String hoTen;
-
+    
     @Column(name = "so_lan_mua",columnDefinition = "int not null ")
     private int soLanMua;
 

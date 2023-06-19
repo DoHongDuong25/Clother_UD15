@@ -1,11 +1,13 @@
 package com.fpoly.dto;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import java.util.Collection;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
-import java.util.Collection;
+
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 
 @Data

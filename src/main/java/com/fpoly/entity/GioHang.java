@@ -22,23 +22,23 @@ import java.util.List;
 public class GioHang extends BaseEntity implements Serializable {
     
 
-    @Column(name = "ngay_tao",columnDefinition = "nvarchar(256)  unique")
+    @Column(name = "ngay_tao",columnDefinition = "nvarchar(256)  ")
     @CreatedDate
     private Date ngayTao;
 
-    @Column(name = "ngay_cap_nhat",columnDefinition = "nvarchar(256)  unique")
+    @Column(name = "ngay_cap_nhat",columnDefinition = "nvarchar(256)  ")
     private Date ngayCapNhat;
 
     @OneToOne
     @JoinColumn(name = "khach_hang_id", insertable = false, updatable = false)
     private KhachHang khachHang;
 
-    @Column(name = "trang_thai",columnDefinition = "int not null unique")
+    @Column(name = "trang_thai",columnDefinition = "int not null")
     private int trangThai;
 
     @Column(name = "tong_tien", columnDefinition = "int")
     private int tongTien;
     
     @OneToMany(mappedBy="gioHang")
-    private List<GioHangChiTiet> gioHangChiTiets = new ArrayList<>();
+    private List<GioHangChiTiet> gioHangChiTiets = new ArrayList<GioHangChiTiet>();
 }

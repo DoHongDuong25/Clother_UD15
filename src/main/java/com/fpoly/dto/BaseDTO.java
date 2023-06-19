@@ -11,6 +11,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
+@EqualsAndHashCode(callSuper=false)
 public class BaseDTO<DTO> {
 	private Long id ;
 	
