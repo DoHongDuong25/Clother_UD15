@@ -3,11 +3,15 @@ package com.fpoly.controller.admin.voucher;
 import com.fpoly.dto.KhuyenMaiDTO;
 import com.fpoly.service.KhuyenMaiService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Controller
 @RequiredArgsConstructor
@@ -21,8 +25,18 @@ public class VoucherController {
     public String getVoucher(Model model,
                              @RequestParam(value = "page", defaultValue = "1") int page,
                              @RequestParam(value = "size", defaultValue = "10") int size,
-                             @RequestParam(value = "keyword", required = false) String keyword){
-        model.addAttribute("vouchers",khuyenMaiService.getListKhuyenMai(page, size, keyword));
+                             @RequestParam(value = "keyword", required = false) String keyword,
+                             @RequestParam(value = "status", required = false) String status,
+                             @RequestParam(value = "date", required = false) String date){
+        Page<KhuyenMaiDTO> list = khuyenMaiService.getListKhuyenMai(page, size, keyword, status, date);
+        model.addAttribute("vouchers", list);
+        int totalPages = list.getTotalPages();
+        if (totalPages > 0) {
+            List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
+                    .boxed()
+                    .collect(Collectors.toList());
+            model.addAttribute("pageNumbers", pageNumbers);
+        }
         return ADMIN_VOUCHER_INDEX;
     }
     @GetMapping("/voucher/create")

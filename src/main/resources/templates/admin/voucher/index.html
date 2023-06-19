@@ -14,29 +14,43 @@
         <div class="row">
             <div class="col-6">
                 <div class="input-group mb-3">
-                    <input type="text" class="form-control" placeholder="Tìm kiếm">
-                    <button class="btn btn-primary" type="button">Tìm kiếm</button>
+                    <input type="text" class="form-control" placeholder="Tìm kiếm" id="search">
+                    <button class="btn btn-primary" type="button" onclick="submitForm()">Tìm kiếm</button>
                 </div>
             </div>
-            <div class="col-6 text-end">
+            <div class="col-4"></div>
+            <div class="col-2 text-end">
                 <a th:href="@{/admin/voucher/create}" class="btn btn-success">Tạo mã giảm giá</a>
             </div>
         </div>
         <div class="row">
-            <div class="col-12">
-                <label for="filter">Filter:</label>
-                <select id="filter" multiple class="form-select mb-3">
-                    <option value="1">Đang giảm</option>
-                    <option value="2">Đã hết</option>
+            <div class="col-4"></div>
+            <div class="col-2">
+                <label class="col-form-label" for="status">Trạng thái:</label>
+            </div>
+            <div class="col-2">
+                <select class="form-select" aria-label="Default select example" id="status">
+                    <option value="ALL" selected>Tất cả</option>
+                    <option value="ON">Đang Bật</option>
+                    <option value="OFF">Đang Tắt</option>
+                </select>
+            </div>
+            <div class="col-2">
+                <label class="col-form-label " for="time">Thời gian:</label>
+            </div>
+            <div class="col-2">
+                <select class="form-select" aria-label="Default select example" id="time">
+                    <option value="ALL" selected>Tất cả</option>
+                    <option value="ON">Khả dụng</option>
+                    <option value="OFF">Hết hạn</option>
                 </select>
             </div>
         </div>
-        <div class="row">
+        <div class="row mt-4">
             <div class="col-12">
                 <table class="table">
                     <thead>
                     <tr>
-                        <th>id</th>
                         <th>Mã giảm giá</th>
                         <th>Phần trăm giảm</th>
                         <th>Giá trị tối thiểu</th>
@@ -48,17 +62,16 @@
                     <tbody>
                     <tbody>
                     <tr th:each="voucher : ${vouchers}">
-                        <td th:text="${voucher.id}"></td>
-                        <td th:text="${voucher.tenKhuyenMai}"></td>
-                        <td th:text="${voucher.phanTramGiam + '%'}"></td>
-                        <td th:text="${voucher.giaTriToiThieu}"></td>
-                        <td>
+                        <td th:text="${voucher.tenKhuyenMai}" class="text-center"></td>
+                        <td th:text="${voucher.phanTramGiam + '%'}" class="text-center"></td>
+                        <td th:text="${voucher.giaTriToiThieu}" class="text-center"></td>
+                        <td class="text-center">
                             <span th:text="${#dates.format(voucher.ngayBatDau, 'dd/MM/yyyy')}"></span>
                             <span> - </span>
                             <span th:text="${#dates.format(voucher.ngayKetThuc, 'dd/MM/yyyy')}"></span>
                         </td>
-                        <td th:text="${voucher.trangThai ? 'Bật': 'Tắt'}"></td>
-                        <td>
+                        <td th:text="${voucher.trangThai ? 'Bật': 'Tắt'}" class="text-center"></td>
+                        <td class="text-center">
                             <a th:href="@{/admin/voucher/edit/{id}(id=${voucher.id})}">
                                 <i class="bi bi-pencil"></i>
                             </a>
@@ -73,12 +86,31 @@
                     </tbody>
                     </tbody>
                 </table>
+<!--                <div th:if="${vouchers.totalPages > 0}" class="pagination"-->
+<!--                     th:each="pageNumber : ${pageNumbers}">-->
+<!--                    <a th:href="@{/voucher(size=${bookPage.size}, page=${pageNumber})}"-->
+<!--                       th:text="${pageNumber}"-->
+<!--                       th:class="${pageNumber==bookPage.number + 1} ? active"></a>-->
+<!--                </div>-->
             </div>
         </div>
     </div>
 </section>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
 
 </body>
+<script>
+    function submitForm() {
+        var keyword = document.getElementById('search').value;
+        var status = document.getElementById('status').value;
+        var date = document.getElementById('time').value;
+        var url = '/voucher?page=1&size=10&keyword=' + encodeURIComponent(keyword) + '&status=' + encodeURIComponent(status) + '&date=' + encodeURIComponent(date);
+        console.log(url);
+        var link = document.createElement('a');
+        link.href = url;
+        link.click();
+    }
+</script>
 </html>
