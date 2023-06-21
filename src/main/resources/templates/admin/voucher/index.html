@@ -61,6 +61,7 @@
                 <table class="table" id="voucherTable">
                     <thead>
                     <tr>
+                        <th class="text-center">Số thứ tự</th>
                         <th class="text-center">Mã giảm giá</th>
                         <th class="text-center">Phần trăm giảm</th>
                         <th class="text-center">Giá trị tối thiểu</th>
@@ -72,6 +73,7 @@
                     <tbody>
                     <tbody>
                     <tr th:each="voucher : ${vouchers}">
+                        <td th:text="${voucher.id}" class="text-center"></td>
                         <td th:text="${voucher.tenKhuyenMai}" class="text-center"></td>
                         <td th:text="${voucher.phanTramGiam + '%'}" class="text-center"></td>
                         <td th:text="${voucher.giaTriToiThieu}" class="text-center"></td>
