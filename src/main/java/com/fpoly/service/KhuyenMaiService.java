@@ -4,7 +4,7 @@ import com.fpoly.dto.KhuyenMaiDTO;
 import org.springframework.data.domain.Page;
 
 public interface KhuyenMaiService {
-    Page<KhuyenMaiDTO> getListKhuyenMai(int page, int size, String keyword, String status, String date);
+    Page<KhuyenMaiDTO> getListKhuyenMai(int page, int size, String keyword, String status, Integer startStr, Integer endStr);
     KhuyenMaiDTO createVoucher(KhuyenMaiDTO khuyenMaiDTO);
     KhuyenMaiDTO editVoucher(Long id, KhuyenMaiDTO khuyenMaiDTO);
     KhuyenMaiDTO getVoucher(Long id);

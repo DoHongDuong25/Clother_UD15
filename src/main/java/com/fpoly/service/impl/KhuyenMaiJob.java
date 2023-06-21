@@ -17,10 +17,11 @@ import java.util.stream.Collectors;
 public class KhuyenMaiJob {
     private final KhuyenMaiRepository khuyenMaiRepository;
 
-    @Scheduled(cron = "*/15 * * * *", zone = "Asia/Ho_Chi_Minh") //every 30 mins
-//    @Scheduled(cron = "0 1 * * *", zone = "Asia/Ho_Chi_Minh") // everyday at 1am
+    @Scheduled(cron = "* */15 * * * *", zone = "Asia/Ho_Chi_Minh") //every 15 min
+//    @Scheduled(cron = "0 1 * * * *", zone = "Asia/Ho_Chi_Minh") // everyday at 1am
     @Transactional
     public void updateStatusVoucher() {
+        System.out.println("start scheduling");
         List<KhuyenMai> list = khuyenMaiRepository.findAll();
         Date currentDate = new Date();
 
@@ -37,5 +38,6 @@ public class KhuyenMaiJob {
                 .map(BaseEntity::getId)
                 .collect(Collectors.toList());
         khuyenMaiRepository.updateStatusByDate(enable, true);
+        System.out.println("end of scheduling");
     }
 }

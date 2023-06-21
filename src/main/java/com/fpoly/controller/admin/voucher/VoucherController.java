@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -27,13 +28,19 @@ public class VoucherController {
                              @RequestParam(value = "size", defaultValue = "10") int size,
                              @RequestParam(value = "keyword", required = false) String keyword,
                              @RequestParam(value = "status", defaultValue = "ALL") String status,
-                             @RequestParam(value = "date", defaultValue = "ALL") String date){
-        Page<KhuyenMaiDTO> list = khuyenMaiService.getListKhuyenMai(page, size, keyword, status, date);
+                             @RequestParam(value = "discountStart", defaultValue = "0") String startStr,
+                             @RequestParam(value = "discountEnd", defaultValue = "100") String endStr){
+        Integer start = Integer.parseInt(startStr);
+        Integer end = Integer.parseInt(endStr);
+        Page<KhuyenMaiDTO> list = khuyenMaiService.getListKhuyenMai(page, size, keyword, status, start, end);
         model.addAttribute("vouchers", list);
         model.addAttribute("keyword", keyword);
         model.addAttribute("status", status);
-        model.addAttribute("date", date);
+        model.addAttribute("start", start);
+        model.addAttribute("end", end);
         model.addAttribute("size", size);
+        model.addAttribute("dateFrom", new Date());
+        model.addAttribute("dateTo", new Date());
         int totalPages = list.getTotalPages();
         if (totalPages > 0) {
             List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)

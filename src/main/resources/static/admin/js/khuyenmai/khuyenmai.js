@@ -4,9 +4,39 @@ function search(pageNum) {
     var size = document.getElementById('size').value || 10;
     var keyword = document.getElementById('search').value;
     var status = document.getElementById('status').value || "ALL";
-    var date = document.getElementById('time').value || "ALL";
-    var url = '/admin/voucher?page=' + encodeURIComponent(page) + '&size=' + encodeURIComponent(size) + '&keyword=' + encodeURIComponent(keyword) + '&status=' + encodeURIComponent(status) + '&date=' + encodeURIComponent(date);
+    var discountStart = Math.floor(document.getElementById('startRange').value);
+    var discountEnd = Math.floor(document.getElementById('endRange').value);
+    var url = '/admin/voucher?page=' + encodeURIComponent(page) + '&size=' + encodeURIComponent(size) + '&keyword=' + encodeURIComponent(keyword) + '&status=' + encodeURIComponent(status) + '&discountStart=' + encodeURIComponent(discountStart) + '&discountEnd=' + encodeURIComponent(discountEnd);
     var link = document.createElement('a');
     link.href = url;
     link.click();
 }
+// Create the range slider
+var discountRange = document.getElementById('discountRange');
+var discountStart = document.getElementById('startRange');
+var discountEnd = document.getElementById('endRange');
+var start = discountStart.value || 0;
+var end = discountEnd.value || 30;
+noUiSlider.create(discountRange, {
+    start: [start, end], // Initial range values
+    connect: true, // Connect the handles with a colored line
+    range: {
+        'min': 0,
+        'max': 100
+    }
+});
+
+// Get the selected range values and display them
+var selectedRange = document.getElementById('selectedRange');
+discountRange.noUiSlider.on('update', function (values, handle) {
+    selectedRange.textContent = values.join(' - ');
+    discountStart.value = Math.floor(values[0]);
+    discountEnd.value = Math.floor(values[1]);
+});
+var $dateRange = $('#dateRange');
+
+$dateRange.daterangepicker();
+$dateRange.on('apply.daterangepicker', function (ev, picker) {
+    $('input[name="dateFrom"]').val(picker.startDate.format('DD/MM/YYYY'));
+    $('input[name="dateTo"]').val(picker.endDate.format('DD/MM/YYYY'));
+});
