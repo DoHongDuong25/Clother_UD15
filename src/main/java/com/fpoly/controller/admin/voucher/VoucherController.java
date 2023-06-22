@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -58,7 +59,10 @@ public class VoucherController {
         return ADMIN_VOUCHER_EDIT;
     }
     @PostMapping("/voucher/create")
-    public String handleCreate(@ModelAttribute @Valid KhuyenMaiDTO dto){
+    public String handleCreate(@ModelAttribute @Valid KhuyenMaiDTO dto, BindingResult result){
+        if (result.hasErrors()){
+            return REDIRECT_GET_VOUCHER;
+        }
         khuyenMaiService.createVoucher(dto);
         return REDIRECT_GET_VOUCHER;
     }
