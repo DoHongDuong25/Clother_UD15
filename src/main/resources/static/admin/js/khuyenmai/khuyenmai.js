@@ -1,5 +1,5 @@
 
-function search(pageNum) {
+function submit(pageNum) {
     var page = pageNum || 1;
     var size = document.getElementById('size').value || 10;
     var keyword = document.getElementById('search').value;

@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
@@ -25,9 +26,9 @@ public class KhuyenMaiDTO extends BaseDTO<KhuyenMaiDTO> {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date ngayKetThuc;
 
-    @NotNull
+    @Min(0)
     private int phanTramGiam;
-    @NotNull
+    @Min(0)
     private int giaTriToiThieu;
 
     private boolean trangThai;

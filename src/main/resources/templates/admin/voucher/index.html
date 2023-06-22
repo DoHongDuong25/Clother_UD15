@@ -16,7 +16,7 @@
             <div class="col-6">
                 <div class="input-group mb-3">
                     <input type="text" class="form-control" placeholder="Tìm kiếm" id="search" th:value="${keyword}">
-                    <button class="btn btn-primary" type="button" onclick="search()">Tìm kiếm</button>
+                    <button class="btn btn-primary" type="button" onclick="submit()">Tìm kiếm</button>
                 </div>
             </div>
             <div class="col-3"></div>
@@ -115,7 +115,7 @@
                         <li th:if="${vouchers.totalPages > 0}" class="page-link"
                             th:each="pageNumber : ${pageNumbers}">
                             <a href="#"
-                               th:onclick="'search('+${pageNumber}+')'"
+                               th:onclick="'submit('+${pageNumber}+')'"
                                th:text="${pageNumber}"
                                th:class="${pageNumber==vouchers.number + 1} ? active"
                                class="page-link"

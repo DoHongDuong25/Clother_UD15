@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.util.Date;
@@ -59,9 +60,13 @@ public class VoucherController {
         return ADMIN_VOUCHER_EDIT;
     }
     @PostMapping("/voucher/create")
-    public String handleCreate(@ModelAttribute @Valid KhuyenMaiDTO dto, BindingResult result){
+    public String handleCreate(@ModelAttribute @Valid KhuyenMaiDTO dto,
+                               BindingResult result,
+                               Model model){
         if (result.hasErrors()){
-            return REDIRECT_GET_VOUCHER;
+            model.addAttribute("voucher", new KhuyenMaiDTO());
+
+            return ADMIN_VOUCHER_EDIT;
         }
         khuyenMaiService.createVoucher(dto);
         return REDIRECT_GET_VOUCHER;
@@ -73,7 +78,15 @@ public class VoucherController {
         return ADMIN_VOUCHER_EDIT;
     }
     @PostMapping("/voucher/edit/{id}")
-    public String handleEdit(@PathVariable Long id, @ModelAttribute @Valid KhuyenMaiDTO dto){
+    public String handleEdit(@PathVariable Long id,
+                             @ModelAttribute @Valid KhuyenMaiDTO dto ,
+                             BindingResult result,
+                             Model model){
+        if (result.hasErrors()){
+            model.addAttribute("voucher",khuyenMaiService.getVoucher(id));
+            return ADMIN_VOUCHER_EDIT;
+        }
+
         khuyenMaiService.editVoucher(id, dto);
         return REDIRECT_GET_VOUCHER;
     }
