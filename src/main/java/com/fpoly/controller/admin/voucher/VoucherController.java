@@ -29,18 +29,20 @@ public class VoucherController {
                              @RequestParam(value = "keyword", required = false) String keyword,
                              @RequestParam(value = "status", defaultValue = "ALL") String status,
                              @RequestParam(value = "discountStart", defaultValue = "0") String startStr,
+                             @RequestParam(value = "dateFrom", required = false) String dateFromStr,
+                             @RequestParam(value = "dateTo", required = false) String dateToStr,
                              @RequestParam(value = "discountEnd", defaultValue = "100") String endStr){
         Integer start = Integer.parseInt(startStr);
         Integer end = Integer.parseInt(endStr);
-        Page<KhuyenMaiDTO> list = khuyenMaiService.getListKhuyenMai(page, size, keyword, status, start, end);
+        Page<KhuyenMaiDTO> list = khuyenMaiService.getListKhuyenMai(page, size, keyword, status, start, end, dateFromStr, dateToStr);
         model.addAttribute("vouchers", list);
         model.addAttribute("keyword", keyword);
         model.addAttribute("status", status);
         model.addAttribute("start", start);
         model.addAttribute("end", end);
         model.addAttribute("size", size);
-        model.addAttribute("dateFrom", new Date());
-        model.addAttribute("dateTo", new Date());
+        model.addAttribute("dateFrom", dateFromStr);
+        model.addAttribute("dateTo", dateToStr);
         int totalPages = list.getTotalPages();
         if (totalPages > 0) {
             List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)

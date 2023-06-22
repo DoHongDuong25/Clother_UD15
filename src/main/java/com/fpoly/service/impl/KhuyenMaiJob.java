@@ -8,6 +8,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,11 +18,12 @@ import java.util.stream.Collectors;
 public class KhuyenMaiJob {
     private final KhuyenMaiRepository khuyenMaiRepository;
 
-    @Scheduled(cron = "* */15 * * * *", zone = "Asia/Ho_Chi_Minh") //every 15 min
+    @Scheduled(cron = "0 */30 * ? * *", zone = "Asia/Ho_Chi_Minh") //every 15 min
 //    @Scheduled(cron = "0 1 * * * *", zone = "Asia/Ho_Chi_Minh") // everyday at 1am
     @Transactional
     public void updateStatusVoucher() {
         System.out.println("start scheduling");
+        System.out.println(LocalDateTime.now());
         List<KhuyenMai> list = khuyenMaiRepository.findAll();
         Date currentDate = new Date();
 
@@ -39,5 +41,6 @@ public class KhuyenMaiJob {
                 .collect(Collectors.toList());
         khuyenMaiRepository.updateStatusByDate(enable, true);
         System.out.println("end of scheduling");
+        System.out.println(LocalDateTime.now());
     }
 }

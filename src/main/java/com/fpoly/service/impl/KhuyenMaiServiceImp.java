@@ -11,17 +11,44 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 @Service
 @RequiredArgsConstructor
 @Slf4j
 public class KhuyenMaiServiceImp implements KhuyenMaiService{
     private final KhuyenMaiRepository khuyenMaiRepository;
     @Override
-    public Page<KhuyenMaiDTO> getListKhuyenMai(int page, int size, String keyword, String status, Integer start, Integer end) {
+    public Page<KhuyenMaiDTO> getListKhuyenMai(int page,
+                                               int size,
+                                               String keyword,
+                                               String status,
+                                               Integer start,
+                                               Integer end,
+                                               String dateFromStr,
+                                               String dateToStr) {
         Sort sort = Sort.by("ngayBatDau").descending();
         PageRequest pageRequest = PageRequest.of(page-1, size, sort);
-        Page<KhuyenMai> entities = khuyenMaiRepository.findVoucher(keyword, status, start, end, pageRequest);
+        Date startDate = convertStringToDate(dateFromStr);
+        Date endDate = convertStringToDate(dateToStr);
+        Page<KhuyenMai> entities = khuyenMaiRepository
+                .findVoucher(keyword, status, start, end, startDate, endDate,pageRequest);
         return entities.map(this::toDto);
+    }
+    private Date convertStringToDate(String input){
+        if (input == null || input.isEmpty()){
+            return null;
+        }
+        else{
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            try{
+                return format.parse(input);
+            } catch (ParseException e){
+                return null;
+            }
+        }
     }
 
     private KhuyenMaiDTO toDto(KhuyenMai e) {

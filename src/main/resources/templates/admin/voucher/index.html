@@ -17,8 +17,8 @@
                     <button class="btn btn-primary" type="button" onclick="search()">Tìm kiếm</button>
                 </div>
             </div>
-            <div class="col-4"></div>
-            <div class="col-2 text-end">
+            <div class="col-3"></div>
+            <div class="col-3 text-end">
                 <a th:href="@{/admin/voucher/create}" class="btn btn-success">Tạo mã giảm giá</a>
             </div>
         </div>
@@ -27,7 +27,7 @@
                 <label for="size">Số lượng trong một trang</label>
             </div>
             <div class="col-1">
-                <select class="form-select" aria-label="Default select example" id="size" >
+                <select class="form-select" aria-label="Default select example" id="size">
                     <option value="10" selected>10</option>
                     <option value="20" th:selected="${size == 20}">20</option>
                     <option value="50" th:selected="${size == 50}">50</option>
@@ -53,14 +53,17 @@
                 <input id="endRange" type="hidden" th:value="${end}">
             </div>
             <div class="col-2">
-<!--                <div class="input-group">-->
-<!--                    <input type="text" class="form-control" id="dateRange" autocomplete="off"/>-->
-<!--                    <div class="input-group-append">-->
-<!--                        <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>-->
-<!--                    </div>-->
-<!--                    <input type="hidden" name="dateFrom" th:field="*{dateFrom}"/>-->
-<!--                    <input type="hidden" name="dateTo" th:field="*{dateTo}"/>-->
-<!--                </div>-->
+                <div class="input-group date">
+                    <label class="col-form-label " for="dateFrom">Từ:</label>
+                    <input type="date" class="form-control" id="dateFrom" th:value="${dateFrom}"/>
+                </div>
+            </div>
+            <div class="col-2">
+                <div class="input-group date" >
+                    <label class="col-form-label " for="dateTo">Đến:</label>
+                    <input type="date" class="form-control" id="dateTo" th:value="${dateTo}"/>
+                </div>
+            </div>
         </div>
         <div class="row mt-4">
             <div class="col-12">

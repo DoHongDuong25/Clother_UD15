@@ -6,7 +6,19 @@ function search(pageNum) {
     var status = document.getElementById('status').value || "ALL";
     var discountStart = Math.floor(document.getElementById('startRange').value);
     var discountEnd = Math.floor(document.getElementById('endRange').value);
-    var url = '/admin/voucher?page=' + encodeURIComponent(page) + '&size=' + encodeURIComponent(size) + '&keyword=' + encodeURIComponent(keyword) + '&status=' + encodeURIComponent(status) + '&discountStart=' + encodeURIComponent(discountStart) + '&discountEnd=' + encodeURIComponent(discountEnd);
+    var dateFrom = document.getElementById('dateFrom').value;
+    var dateTo = document.getElementById('dateTo').value;
+
+    var url = '/admin/voucher?' +
+        'page=' + encodeURIComponent(page) +
+        '&size=' + encodeURIComponent(size) +
+        '&keyword=' + encodeURIComponent(keyword) +
+        '&status=' + encodeURIComponent(status) +
+        '&discountStart=' + encodeURIComponent(discountStart) +
+        '&discountEnd=' + encodeURIComponent(discountEnd) +
+        '&dateFrom=' + encodeURIComponent(dateFrom) +
+        '&dateTo=' + encodeURIComponent(dateTo);
+
     var link = document.createElement('a');
     link.href = url;
     link.click();
@@ -32,11 +44,4 @@ discountRange.noUiSlider.on('update', function (values, handle) {
     selectedRange.textContent = values.join(' - ');
     discountStart.value = Math.floor(values[0]);
     discountEnd.value = Math.floor(values[1]);
-});
-var $dateRange = $('#dateRange');
-
-$dateRange.daterangepicker();
-$dateRange.on('apply.daterangepicker', function (ev, picker) {
-    $('input[name="dateFrom"]').val(picker.startDate.format('DD/MM/YYYY'));
-    $('input[name="dateTo"]').val(picker.endDate.format('DD/MM/YYYY'));
 });
