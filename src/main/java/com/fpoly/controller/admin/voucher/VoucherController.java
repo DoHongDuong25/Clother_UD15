@@ -60,13 +60,14 @@ public class VoucherController {
         return ADMIN_VOUCHER_EDIT;
     }
     @PostMapping("/voucher/create")
-    public String handleCreate(@ModelAttribute @Valid KhuyenMaiDTO dto,
+    public String handleCreate(@ModelAttribute("voucher") @Valid KhuyenMaiDTO dto,
                                BindingResult result,
                                Model model){
         if (result.hasErrors()){
-            model.addAttribute("voucher", new KhuyenMaiDTO());
-
+//            model.addAttribute("voucher", new KhuyenMaiDTO());
             return ADMIN_VOUCHER_EDIT;
+//            return "redirect:/admin/voucher/create";
+
         }
         khuyenMaiService.createVoucher(dto);
         return REDIRECT_GET_VOUCHER;
@@ -79,12 +80,13 @@ public class VoucherController {
     }
     @PostMapping("/voucher/edit/{id}")
     public String handleEdit(@PathVariable Long id,
-                             @ModelAttribute @Valid KhuyenMaiDTO dto ,
+                             @ModelAttribute("voucher") @Valid KhuyenMaiDTO dto ,
                              BindingResult result,
                              Model model){
         if (result.hasErrors()){
-            model.addAttribute("voucher",khuyenMaiService.getVoucher(id));
-            return ADMIN_VOUCHER_EDIT;
+//            model.addAttribute("voucher",khuyenMaiService.getVoucher(id));
+//            return ADMIN_VOUCHER_EDIT;
+            return "redirect:/admin/voucher/edit/" + id;
         }
 
         khuyenMaiService.editVoucher(id, dto);

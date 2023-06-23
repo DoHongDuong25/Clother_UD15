@@ -17,18 +17,20 @@ import java.util.Date;
 @SuperBuilder
 public class KhuyenMaiDTO extends BaseDTO<KhuyenMaiDTO> {
 
-    @NotBlank
+    @NotBlank(message = "Tên không được để trống")
     private String tenKhuyenMai;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @NotNull(message = "Ngày bắt đầu không được để trống")
     private Date ngayBatDau;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @NotNull(message = "Ngày kết thúc không được để trống")
     private Date ngayKetThuc;
 
-    @Min(0)
+    @Min(value = 0, message = "Phần trăm không được nhỏ hơn 0")
     private int phanTramGiam;
-    @Min(0)
+    @Min(value = 0, message = "Giá trị không được nhỏ hơn 0")
     private int giaTriToiThieu;
 
     private boolean trangThai;
