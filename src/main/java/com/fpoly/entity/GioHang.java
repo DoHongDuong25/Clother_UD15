@@ -1,8 +1,6 @@
 package com.fpoly.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -14,9 +12,10 @@ import java.util.Date;
 import java.util.List;
 
 
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
 @Entity
 @Table(name = "gio_hang")
 public class GioHang extends BaseEntity implements Serializable {
@@ -41,4 +40,16 @@ public class GioHang extends BaseEntity implements Serializable {
     
     @OneToMany(mappedBy="gioHang")
     private List<GioHangChiTiet> gioHangChiTiets = new ArrayList<GioHangChiTiet>();
+
+    @Override
+    public String toString() {
+        return "GioHang{" +
+                "ngayTao=" + ngayTao +
+                ", ngayCapNhat=" + ngayCapNhat +
+                ", khachHang=" + khachHang.getId() +
+                ", trangThai=" + trangThai +
+                ", tongTien=" + tongTien +
+                ", gioHangChiTiets=" + gioHangChiTiets.size() +
+                '}';
+    }
 }

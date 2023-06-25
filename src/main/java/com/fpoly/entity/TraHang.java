@@ -1,8 +1,6 @@
 package com.fpoly.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
@@ -16,14 +14,14 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Set;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "tra_hang")
 @EntityListeners(AuditingEntityListener.class)
 public class TraHang extends BaseEntity implements Serializable {
-   
 
     @ManyToOne
     @JoinColumn(name = "khach_hang_id", insertable = false, updatable = false)
@@ -46,5 +44,15 @@ public class TraHang extends BaseEntity implements Serializable {
     @JoinColumn(name = "ly_do_tra_hang_id", insertable = false, updatable = false)
     private LyDoTraHang lyDoTraHang;
 
-    
+    @Override
+    public String toString() {
+        return "TraHang{" +
+                "khachHang=" + khachHang.getId() +
+                ", hoaDonChiTiet=" + hoaDonChiTiet.getId() +
+                ", ngayTra='" + ngayTra + '\'' +
+                ", tongTien=" + tongTien +
+                ", ghiChu='" + ghiChu + '\'' +
+                ", lyDoTraHang=" + lyDoTraHang.getId() +
+                '}';
+    }
 }

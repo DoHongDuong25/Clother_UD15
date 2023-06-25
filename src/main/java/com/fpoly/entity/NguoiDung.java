@@ -20,6 +20,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import lombok.*;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -28,11 +29,8 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -58,8 +56,8 @@ public class NguoiDung extends BaseEntity implements Serializable{
 	@Column(name = "so_dien_thoai",columnDefinition = "nvarchar(20) not null")
 	private String soDienThoai;
 	
-	@Enumerated(EnumType.STRING)
-	private Role role;
+//	@Enumerated(EnumType.STRING)
+//	private Role role;
 
 	@Column(name = "trang_thai", columnDefinition = "int default(0)")
 	private int trangThai;
@@ -70,4 +68,17 @@ public class NguoiDung extends BaseEntity implements Serializable{
 	@OneToMany(mappedBy="nguoiDung")
 	private List<GiaoDich> giaoDichs = new ArrayList<GiaoDich>() ;
 
+	@Override
+	public String toString() {
+		return "NguoiDung{" +
+				"tenDangNhap='" + tenDangNhap + '\'' +
+				", matKhau='" + matKhau + '\'' +
+				", email='" + email + '\'' +
+				", tenNguoiDung='" + tenNguoiDung + '\'' +
+				", soDienThoai='" + soDienThoai + '\'' +
+				", trangThai=" + trangThai +
+				", daXoa=" + daXoa +
+				", giaoDichs=" + giaoDichs.size() +
+				'}';
+	}
 }

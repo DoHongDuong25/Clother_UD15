@@ -1,8 +1,6 @@
 package com.fpoly.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -10,13 +8,13 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "hoa_don_chi_tiet")
 public class HoaDonChiTiet extends BaseEntity implements Serializable {
-    
 
     @ManyToOne
     @JoinColumn(name = "hoa_don_id", insertable = false, updatable = false)
@@ -36,10 +34,21 @@ public class HoaDonChiTiet extends BaseEntity implements Serializable {
     private BigDecimal tongTien;
 
     @Column(name = "da_xoa", columnDefinition = "BIT")
-    private int daXoa;
-    
+    private String daXoa;
     
     @OneToMany(mappedBy = "hoaDonChiTiet", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<TraHang> traHangs = new ArrayList<TraHang>();
-    
+
+    @Override
+    public String toString() {
+        return "HoaDonChiTiet{" +
+                "hoaDon=" + hoaDon.getId() +
+                ", sanPhamChiTiet=" + sanPhamChiTiet.getId() +
+                ", donGia=" + donGia +
+                ", soLuong=" + soLuong +
+                ", tongTien=" + tongTien +
+                ", daXoa='" + daXoa + '\'' +
+                ", traHangs=" + traHangs.size() +
+                '}';
+    }
 }

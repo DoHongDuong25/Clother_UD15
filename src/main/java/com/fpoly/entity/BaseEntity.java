@@ -31,7 +31,7 @@ public abstract class BaseEntity  {
 	
 	@Column
 	@CreatedDate
-	private Date ngayChinhSua ;
+	private Date ngayTao ;
 	
 	@Column
 	@CreatedBy

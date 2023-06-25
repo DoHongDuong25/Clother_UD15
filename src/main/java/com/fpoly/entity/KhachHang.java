@@ -1,8 +1,6 @@
 package com.fpoly.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -15,14 +13,14 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import java.io.Serializable;
 import java.util.Date;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "khach_hang")
 @EntityListeners(AuditingEntityListener.class)
 public class KhachHang extends BaseEntity implements Serializable {
-    
 
     @Column(name = "email",columnDefinition = "nvarchar(256) not null unique")
     private String email;
@@ -41,7 +39,16 @@ public class KhachHang extends BaseEntity implements Serializable {
 
     @Column(name = "trang_thai",columnDefinition = "int not null unique")
     private int trangThai;
-    
-    
-    
+
+    @Override
+    public String toString() {
+        return "KhachHang{" +
+                "email='" + email + '\'' +
+                ", matKhau='" + matKhau + '\'' +
+                ", hoTen='" + hoTen + '\'' +
+                ", soLanMua=" + soLanMua +
+                ", soDienThoai='" + soDienThoai + '\'' +
+                ", trangThai=" + trangThai +
+                '}';
+    }
 }

@@ -15,15 +15,13 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -40,4 +38,13 @@ public class ChatLieu extends BaseEntity implements Serializable {
 	
 	@OneToMany(mappedBy = "chatLieu", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Set<SanPham> sanPhams;
+
+	@Override
+	public String toString() {
+		return "ChatLieu{" +
+				"tenChatLieu='" + tenChatLieu + '\'' +
+				", daXoa=" + daXoa +
+				", sanPhams=" + sanPhams.size() +
+				'}';
+	}
 }

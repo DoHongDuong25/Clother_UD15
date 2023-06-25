@@ -2,7 +2,7 @@ package com.fpoly.dto;
 
 import java.util.Date;
 
-import com.fpoly.entity.Role;
+//import com.fpoly.entity.Role;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,7 +24,7 @@ public class NguoiDungDTO {
 
 	private String so_dien_thoai;
 	
-	private Role role;
+//	private Role role;
 
 	private int trang_thai;
 

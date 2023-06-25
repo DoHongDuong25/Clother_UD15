@@ -1,8 +1,6 @@
 package com.fpoly.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -14,23 +12,21 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import java.io.Serializable;
 import java.util.Set;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "giao_dich")
-@EntityListeners(AuditingEntityListener.class)
-public class GiaoDich extends BaseEntity implements Serializable {
-    
+public class GiaoDich extends BaseEntity {
 
-    @OneToMany(mappedBy="giaoDich")
-    private Set<HoaDon> hoaDon;
+    private Long nguoiDung;
 
     @ManyToOne
-    @JoinColumn(name = "nguoi_dung_id")
-    private NguoiDung nguoiDung;
+    @JoinColumn(name = "hoa_don_id")
+    private HoaDon hoaDon;
 
-
-    @Column(name = "trang_thai", columnDefinition = "int default(0) not null")
-    private int trangThai;
+    @OneToOne
+    @JoinColumn(name = "trang_thai_id")
+    private TrangThai trangThai;
 }

@@ -5,18 +5,16 @@ import java.util.Set;
 
 import javax.persistence.*;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "hinh_anh")
 public class HinhAnh extends BaseEntity implements Serializable{
-	
-	
+
 	@ManyToOne
 	@JoinColumn(name = "san_pham_chi_tiet_id")
 	private SanPhamChiTiet sanPhamChiTiet;
@@ -32,4 +30,15 @@ public class HinhAnh extends BaseEntity implements Serializable{
 	
 	@OneToMany(mappedBy = "hinhAnhTraHang", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Set<LyDoTraHang> lyDoTraHang;
+
+	@Override
+	public String toString() {
+		return "HinhAnh{" +
+				"sanPhamChiTiet=" + sanPhamChiTiet.getId() +
+				", tenAnh='" + tenAnh + '\'' +
+				", isAnhChinh=" + isAnhChinh +
+				", coHienThi=" + coHienThi +
+				", lyDoTraHang=" + lyDoTraHang.size() +
+				'}';
+	}
 }

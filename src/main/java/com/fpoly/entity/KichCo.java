@@ -14,16 +14,15 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -39,5 +38,12 @@ public class KichCo extends BaseEntity implements Serializable{
 	@Column
 	private Boolean daXoa;
 
-	
+	@Override
+	public String toString() {
+		return "KichCo{" +
+				"SanPhamChiTiets=" + SanPhamChiTiets.size() +
+				", tenKichCo='" + tenKichCo + '\'' +
+				", daXoa=" + daXoa +
+				'}';
+	}
 }

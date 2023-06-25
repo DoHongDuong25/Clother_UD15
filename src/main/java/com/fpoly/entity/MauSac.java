@@ -15,26 +15,22 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import lombok.*;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "mau_sac")
 @EntityListeners(AuditingEntityListener.class)
 public class MauSac extends BaseEntity implements Serializable{
-	
-	
-	
+
 	@OneToMany(mappedBy = "mauSac", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Set<SanPhamChiTiet> sanPhamChiTiets;
 	
@@ -44,7 +40,12 @@ public class MauSac extends BaseEntity implements Serializable{
 	@Column
 	private Boolean daXoa;
 
-	
-
-	
+	@Override
+	public String toString() {
+		return "MauSac{" +
+				"sanPhamChiTiets=" + sanPhamChiTiets.size() +
+				", tenMauSac='" + tenMauSac + '\'' +
+				", daXoa=" + daXoa +
+				'}';
+	}
 }

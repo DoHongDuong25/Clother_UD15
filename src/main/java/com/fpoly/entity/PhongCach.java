@@ -15,17 +15,15 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import lombok.*;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -40,4 +38,13 @@ public class PhongCach extends BaseEntity implements Serializable{
 	
 	@Column
 	private Boolean daXoa;
+
+	@Override
+	public String toString() {
+		return "PhongCach{" +
+				"tenPhongCach='" + tenPhongCach + '\'' +
+				", sanPhams=" + sanPhams.size() +
+				", daXoa=" + daXoa +
+				'}';
+	}
 }

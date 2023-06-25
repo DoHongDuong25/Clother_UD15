@@ -18,11 +18,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -58,5 +57,19 @@ public class SanPhamChiTiet extends BaseEntity implements Serializable{
 	
 	@OneToMany(mappedBy="sanPhamChiTiet")
 	private List<GioHangChiTiet> gioHangChiTiet = new ArrayList<GioHangChiTiet>();
-	
+
+	@Override
+	public String toString() {
+		return "SanPhamChiTiet{" +
+				"kichCo=" + kichCo.getId() +
+				", mauSac=" + mauSac.getId() +
+				", sanPham=" + sanPham.getId() +
+				", hinhAnhs=" + hinhAnhs.size() +
+				", soLuong=" + soLuong +
+				", hoaDonChiTiets=" + hoaDonChiTiets.size() +
+				", coHienThi=" + coHienThi +
+				", daXoa=" + daXoa +
+				", gioHangChiTiet=" + gioHangChiTiet.size() +
+				'}';
+	}
 }

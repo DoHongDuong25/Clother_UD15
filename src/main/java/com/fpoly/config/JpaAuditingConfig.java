@@ -20,24 +20,10 @@ public class JpaAuditingConfig {
 	
 	
 	public static class AuditorAwareImpl implements AuditorAware<String>{
-		
-		
+
 		@Override
 		public Optional<String> getCurrentAuditor() {
-			
-//			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//			if(authentication == null || !authentication.isAuthenticated()) {
-//				return null ;
-//			}
-//			return Optional.of(authentication.getName());
-		    return Optional.of("thanh") ;
+			return Optional.empty();
 		}
-
-		
-
-		
-
-		
-		
 	}
 }	

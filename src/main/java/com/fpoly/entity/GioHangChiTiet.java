@@ -12,17 +12,15 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "gio_hang_chi_tiet")
 public class GioHangChiTiet extends BaseEntity implements Serializable {
-   
 
     @ManyToOne
     @JoinColumn(name = "san_pham_chi_tiet_id", insertable = false, updatable = false)
@@ -45,5 +43,18 @@ public class GioHangChiTiet extends BaseEntity implements Serializable {
     private int trangThai;
 
     @Column(name = "da_xoa", columnDefinition = "Bit")
-    private Boolean daXoa ;
+    private Boolean daXoa;
+
+    @Override
+    public String toString() {
+        return "GioHangChiTiet{" +
+                "sanPhamChiTiet=" + sanPhamChiTiet.getId() +
+                ", gioHang=" + gioHang.getId() +
+                ", soLuong=" + soLuong +
+                ", donGia=" + donGia +
+                ", thanhTien=" + thanhTien +
+                ", trangThai=" + trangThai +
+                ", daXoa=" + daXoa +
+                '}';
+    }
 }
