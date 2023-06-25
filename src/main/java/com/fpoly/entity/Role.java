@@ -1,5 +1,5 @@
-package com.fpoly.entity;
-
-public enum Role {
-	ADMIN, STAFF
-}
+//package com.fpoly.entity;
+//
+//public enum Role {
+//	ADMIN, STAFF
+//}
