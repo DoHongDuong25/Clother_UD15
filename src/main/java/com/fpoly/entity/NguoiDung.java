@@ -40,20 +40,16 @@ public class NguoiDung extends BaseEntity implements Serializable{
 
 	private static final long serialVersionUID = -6627502088104297623L;
 
+	@Column(columnDefinition = "nvarchar(255) null")
+	private String maNguoiDung;
 	
-	@Column(name = "ten_dang_nhap",columnDefinition = "nvarchar(256) not null unique")
-	private String tenDangNhap;
-	
-	@Column(name = "mat_khau",columnDefinition = "nvarchar(256) not null")
-	private String matKhau;
-	
-	@Column(columnDefinition = "nvarchar(255) not null")
+	@Column(columnDefinition = "nvarchar(255) null")
 	private String email;
 	
-	@Column(name = "ten_nguoi_dung", columnDefinition = "nvarchar(200) not null")
+	@Column(name = "ten_nguoi_dung", columnDefinition = "nvarchar(200) null")
 	private String tenNguoiDung;
 
-	@Column(name = "so_dien_thoai",columnDefinition = "nvarchar(20) not null")
+	@Column(name = "so_dien_thoai",columnDefinition = "nvarchar(20) null")
 	private String soDienThoai;
 	
 //	@Enumerated(EnumType.STRING)
@@ -61,6 +57,17 @@ public class NguoiDung extends BaseEntity implements Serializable{
 
 	@Column(name = "trang_thai", columnDefinition = "int default(0)")
 	private int trangThai;
+
+
+	public String TrangThai2(){
+		String TrangThai2;
+		if(trangThai == 0){
+			TrangThai2 = "Đang Hoạt Động";
+		}else {
+			TrangThai2 = "Không Hoạt Động";
+		}
+		return TrangThai2;
+	}
 
 	@Column(name = "da_xoa")
 	private Boolean daXoa;

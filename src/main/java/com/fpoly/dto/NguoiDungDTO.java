@@ -1,13 +1,6 @@
 package com.fpoly.dto;
 
-<<<<<<< HEAD
-import java.util.Date;
-
-//import com.fpoly.entity.Role;
-
-=======
 import com.fpoly.entity.Role;
->>>>>>> Hung_Voucher
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

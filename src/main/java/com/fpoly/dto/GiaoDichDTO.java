@@ -9,12 +9,8 @@ import lombok.NoArgsConstructor;
 @Data
 public class GiaoDichDTO extends BaseDTO<GiaoDichDTO> {
 
-<<<<<<< HEAD
-    private Long nguoi_dung_id;
-=======
 
     private Long nguoiDungId;
->>>>>>> Hung_Voucher
 
 
 

@@ -1,16 +1,9 @@
 package com.fpoly.entity;
 
-<<<<<<< HEAD
-import lombok.*;
-
-import javax.persistence.*;
-
-=======
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
->>>>>>> Hung_Voucher
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;

@@ -8,14 +8,10 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 
-<<<<<<< HEAD
-import lombok.*;
-=======
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
->>>>>>> Hung_Voucher
 
 @Getter
 @Setter
