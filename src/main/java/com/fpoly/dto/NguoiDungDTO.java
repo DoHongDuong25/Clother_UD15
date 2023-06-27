@@ -1,6 +1,6 @@
 package com.fpoly.dto;
 
-import com.fpoly.entity.Role;
+//import com.fpoly.entity.Role;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

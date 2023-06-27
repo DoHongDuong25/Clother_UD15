@@ -43,7 +43,7 @@ public class HinhAnh extends BaseEntity implements Serializable{
 		return "HinhAnh{" +
 				"sanPhamChiTiet=" + sanPhamChiTiet.getId() +
 				", tenAnh='" + tenAnh + '\'' +
-				", isAnhChinh=" + isAnhChinh +
+//				", isAnhChinh=" + isAnhChinh +
 				", coHienThi=" + coHienThi +
 				", lyDoTraHang=" + lyDoTraHang.size() +
 				'}';

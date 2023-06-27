@@ -76,12 +76,9 @@ public class NguoiDung extends BaseEntity implements Serializable{
 	private List<GiaoDich> giaoDichs = new ArrayList<GiaoDich>() ;
 	
 
-<<<<<<< HEAD
 	@Override
 	public String toString() {
 		return "NguoiDung{" +
-				"tenDangNhap='" + tenDangNhap + '\'' +
-				", matKhau='" + matKhau + '\'' +
 				", email='" + email + '\'' +
 				", tenNguoiDung='" + tenNguoiDung + '\'' +
 				", soDienThoai='" + soDienThoai + '\'' +
@@ -90,7 +87,5 @@ public class NguoiDung extends BaseEntity implements Serializable{
 				", giaoDichs=" + giaoDichs.size() +
 				'}';
 	}
-=======
-	
->>>>>>> Hung_Voucher
+
 }

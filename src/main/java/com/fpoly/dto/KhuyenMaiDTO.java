@@ -6,6 +6,9 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -34,5 +37,4 @@ public class KhuyenMaiDTO extends BaseDTO<KhuyenMaiDTO> {
     private int giaTriToiThieu;
 
     private boolean trangThai;
-
 }

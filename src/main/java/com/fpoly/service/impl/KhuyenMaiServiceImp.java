@@ -67,6 +67,7 @@ public class KhuyenMaiServiceImp implements KhuyenMaiService{
                 .trangThai(e.isTrangThai())
                 .build();
     }
+
     private KhuyenMai toEntity(KhuyenMaiDTO e) {
         if (e == null) return null;
         return KhuyenMai.builder()

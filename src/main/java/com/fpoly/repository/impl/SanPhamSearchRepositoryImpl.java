@@ -7,19 +7,12 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 
+import com.fpoly.QEntityGenarate.*;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.fpoly.QEntityGenarate.QChatLieu;
-import com.fpoly.QEntityGenarate.QKichCo;
-import com.fpoly.QEntityGenarate.QKieuDang;
-import com.fpoly.QEntityGenarate.QMauSac;
-import com.fpoly.QEntityGenarate.QPhongCach;
-import com.fpoly.QEntityGenarate.QSanPham;
-import com.fpoly.QEntityGenarate.QSanPhamChiTiet;
 import com.fpoly.dto.search.SPAndSPCTSearchDto;
-import com.fpoly.entity.QLoaiSanPham;
 import com.fpoly.entity.SanPham;
 import com.fpoly.repository.SanPhamSearchRepository;
 import com.fpoly.service.TypeHelperService;

@@ -44,7 +44,7 @@ public class LoaiSanPham extends BaseEntity implements Serializable{
 	@Override
 	public String toString() {
 		return "LoaiHang{" +
-				"tenLoaiHang='" + tenLoaiHang + '\'' +
+				"tenLoaiSanPham='" + tenLoaiSanPham + '\'' +
 				", sanPhams=" + sanPhams.size() +
 				", daXoa=" + daXoa +
 				'}';

@@ -9,7 +9,7 @@ import javax.annotation.Generated;
 
 import com.fpoly.entity.GiaoDich;
 import com.fpoly.entity.NguoiDung;
-import com.fpoly.entity.Role;
+//import com.fpoly.entity.Role;
 import com.querydsl.core.types.Path;
 import com.querydsl.core.types.dsl.PathInits;
 
@@ -49,7 +49,7 @@ public class QNguoiDung extends EntityPathBase<NguoiDung> {
     //inherited
     public final StringPath nguoiTao = _super.nguoiTao;
 
-    public final EnumPath<Role> role = createEnum("role", Role.class);
+//    public final EnumPath<Role> role = createEnum("role", Role.class);
 
     public final StringPath soDienThoai = createString("soDienThoai");
 
