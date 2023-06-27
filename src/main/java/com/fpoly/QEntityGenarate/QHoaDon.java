@@ -8,7 +8,7 @@ import com.querydsl.core.types.PathMetadata;
 import javax.annotation.Generated;
 
 import com.fpoly.entity.HoaDon;
-import com.fpoly.entity.TrangThaiHoaDon;
+//import com.fpoly.entity.TrangThaiHoaDon;
 import com.querydsl.core.types.Path;
 import com.querydsl.core.types.dsl.PathInits;
 
@@ -67,8 +67,6 @@ public class QHoaDon extends EntityPathBase<HoaDon> {
     public final NumberPath<java.math.BigDecimal> tongTienDonHang = createNumber("tongTienDonHang", java.math.BigDecimal.class);
 
     public final NumberPath<java.math.BigDecimal> tongTienHoaDon = createNumber("tongTienHoaDon", java.math.BigDecimal.class);
-
-    public final ListPath<TrangThaiHoaDon, QTrangThaiHoaDon> trangThaiHoaDons = this.<TrangThaiHoaDon, QTrangThaiHoaDon>createList("trangThaiHoaDons", TrangThaiHoaDon.class, QTrangThaiHoaDon.class, PathInits.DIRECT2);
 
     public QHoaDon(String variable) {
         this(HoaDon.class, forVariable(variable), INITS);
