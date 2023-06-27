@@ -67,7 +67,9 @@ public class NguoiDung extends BaseEntity implements Serializable{
 	
 	@OneToMany(mappedBy="nguoiDung")
 	private List<GiaoDich> giaoDichs = new ArrayList<GiaoDich>() ;
+	
 
+<<<<<<< HEAD
 	@Override
 	public String toString() {
 		return "NguoiDung{" +
@@ -81,4 +83,7 @@ public class NguoiDung extends BaseEntity implements Serializable{
 				", giaoDichs=" + giaoDichs.size() +
 				'}';
 	}
+=======
+	
+>>>>>>> Hung_Voucher
 }

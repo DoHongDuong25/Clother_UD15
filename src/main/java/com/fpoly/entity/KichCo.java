@@ -1,5 +1,6 @@
 package com.fpoly.entity;
 
+<<<<<<< HEAD
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
@@ -15,11 +16,15 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.*;
+=======
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+>>>>>>> Hung_Voucher
 
-import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedBy;
-import org.springframework.data.annotation.LastModifiedDate;
+import javax.persistence.*;
+import java.io.Serializable;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -28,6 +33,12 @@ import org.springframework.data.annotation.LastModifiedDate;
 @Entity
 @Table(name = "kich_co")
 public class KichCo extends BaseEntity implements Serializable{
+	
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	@OneToMany(mappedBy = "kichCo", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Set<SanPhamChiTiet> SanPhamChiTiets;

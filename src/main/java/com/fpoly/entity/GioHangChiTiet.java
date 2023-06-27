@@ -1,5 +1,6 @@
 package com.fpoly.entity;
 
+<<<<<<< HEAD
 import java.io.Serializable;
 import java.math.BigDecimal;
 
@@ -16,10 +17,23 @@ import lombok.*;
 
 @Getter
 @Setter
+=======
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
+import java.io.Serializable;
+import java.math.BigDecimal;
+
+@Data
+>>>>>>> Hung_Voucher
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "gio_hang_chi_tiet")
+@EqualsAndHashCode(callSuper=false)
 public class GioHangChiTiet extends BaseEntity implements Serializable {
 
     @ManyToOne

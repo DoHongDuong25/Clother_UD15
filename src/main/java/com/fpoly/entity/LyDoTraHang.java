@@ -12,7 +12,6 @@ import java.util.Set;
 @NoArgsConstructor
 @Entity
 @Table(name = "ly_do_tra_hang")
-
 public class LyDoTraHang extends BaseEntity implements Serializable {
 
     @Column(name = "ly_do", columnDefinition = "text")

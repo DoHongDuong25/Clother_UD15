@@ -1,5 +1,6 @@
 package com.fpoly.entity;
 
+<<<<<<< HEAD
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -22,11 +23,24 @@ import lombok.*;
 
 @Getter
 @Setter
+=======
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+@Data
+>>>>>>> Hung_Voucher
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "san_pham_chi_tiet")
-
+@EqualsAndHashCode(callSuper=false)
 public class SanPhamChiTiet extends BaseEntity implements Serializable{
 	@ManyToOne
 	@JoinColumn(name = "kich_co_id", nullable = false)
@@ -41,7 +55,7 @@ public class SanPhamChiTiet extends BaseEntity implements Serializable{
 	private SanPham sanPham;
 	
 	@OneToMany(mappedBy = "sanPhamChiTiet", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<HinhAnh> hinhAnhs = new ArrayList<HinhAnh>();
+	private List<HinhAnh> hinhAnhs = new ArrayList<>();
 	
 	@Column
 	private int soLuong;
@@ -56,6 +70,7 @@ public class SanPhamChiTiet extends BaseEntity implements Serializable{
 	private Boolean daXoa;
 	
 	@OneToMany(mappedBy="sanPhamChiTiet")
+<<<<<<< HEAD
 	private List<GioHangChiTiet> gioHangChiTiet = new ArrayList<GioHangChiTiet>();
 
 	@Override
@@ -72,4 +87,8 @@ public class SanPhamChiTiet extends BaseEntity implements Serializable{
 				", gioHangChiTiet=" + gioHangChiTiet.size() +
 				'}';
 	}
+=======
+	private List<GioHangChiTiet> gioHangChiTiet = new ArrayList<>();
+	
+>>>>>>> Hung_Voucher
 }

@@ -7,10 +7,9 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class LyDoTraHangDTO {
-    private Long ly_do_tra_hang_id;
+public class LyDoTraHangDTO extends BaseDTO<LyDoTraHangDTO> {
 
-    private String ly_do;
+    private String lyDo;
 
-    private Long hinh_anh_id;
+    private Long hinhAnhId;
 }

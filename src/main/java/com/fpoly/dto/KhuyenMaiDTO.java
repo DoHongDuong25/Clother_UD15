@@ -1,32 +1,38 @@
 package com.fpoly.dto;
 
-import java.util.Date;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import java.util.Date;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class KhuyenMaiDTO {
-    private long giam_gia_id;
+@SuperBuilder
+public class KhuyenMaiDTO extends BaseDTO<KhuyenMaiDTO> {
 
-    private String ten_khuyen_mai;
+    @NotBlank(message = "Tên không được để trống")
+    private String tenKhuyenMai;
 
-    private Date ngay_bat_dau;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @NotNull(message = "Ngày bắt đầu không được để trống")
+    private Date ngayBatDau;
 
-    private Date ngay_ket_thuc;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @NotNull(message = "Ngày kết thúc không được để trống")
+    private Date ngayKetThuc;
 
-    private int phan_tram_giam;
-
+    @Min(value = 0, message = "Phần trăm không được nhỏ hơn 0")
+    private int phanTramGiam;
+    @Min(value = 0, message = "Giá trị không được nhỏ hơn 0")
     private int giaTriToiThieu;
 
-    private Date ngayTao;
+    private boolean trangThai;
 
-    private String nguoiTao;
-
-    private Date ngayChinhSua;
-
-    private String nguoiChinhSua;
 }
