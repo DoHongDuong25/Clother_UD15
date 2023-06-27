@@ -12,4 +12,8 @@ public interface SanPhamService {
 
 	<S extends SanPham> S save(S entity);
 
+	List<SanPham> getSanPhamExist();
+
+	List<SanPham> searchProductExist(SPAndSPCTSearchDto data);
+
 }

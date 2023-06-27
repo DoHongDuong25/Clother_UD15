@@ -34,7 +34,7 @@ import lombok.NoArgsConstructor;
 public class KieuDang extends BaseEntity implements Serializable{
 	
 	
-	@Column(name = "ten_kieu_dang",columnDefinition = "nvarchar(256) not null")
+	@Column(name = "ten_kieu_dang",columnDefinition = "nvarchar(50) not null")
 	private String tenKieuDang;
 	
 	@Column

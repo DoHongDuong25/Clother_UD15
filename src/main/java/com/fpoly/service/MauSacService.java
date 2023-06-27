@@ -15,4 +15,6 @@ public interface MauSacService {
 
 	<S extends MauSac> S save(S entity);
 
+	List<MauSac> getAllMauSacExistBySPId(Long spId);
+
 }

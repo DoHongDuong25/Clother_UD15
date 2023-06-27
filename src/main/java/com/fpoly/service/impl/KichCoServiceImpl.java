@@ -28,6 +28,7 @@ public class KichCoServiceImpl implements KichCoService{
 	
 	@Override
 	public <S extends KichCo> S save(S entity) {
+		entity.setDaXoa(false);
 		return kichCoRepository.save(entity);
 	}
 	

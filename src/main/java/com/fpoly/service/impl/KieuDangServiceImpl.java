@@ -29,6 +29,7 @@ public class KieuDangServiceImpl implements KieuDangService{
 	}
 	@Override
 	public <S extends KieuDang> S save(S entity) {
+		entity.setDaXoa(false);
 		return kieuDangRepository.save(entity);
 	}
 	

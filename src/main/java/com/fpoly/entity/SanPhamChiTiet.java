@@ -23,9 +23,12 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -47,14 +50,14 @@ public class SanPhamChiTiet extends BaseEntity implements Serializable{
 	@JoinColumn(name = "san_pham_id", nullable = false)
 	private SanPham sanPham;
 	
-	@OneToMany(mappedBy = "sanPhamChiTiet", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<HinhAnh> hinhAnhs = new ArrayList<HinhAnh>();
-	
 	@Column
 	private int soLuong;
 	
 	@OneToMany(mappedBy = "sanPhamChiTiet", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<HoaDonChiTiet> hoaDonChiTiets;
+	
+	@OneToMany(mappedBy = "sanPhamChiTiet", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<HinhAnh> hinhAnhs;
 	
 	@Column
 	private Boolean coHienThi;
@@ -64,5 +67,13 @@ public class SanPhamChiTiet extends BaseEntity implements Serializable{
 	
 	@OneToMany(mappedBy="sanPhamChiTiet")
 	private List<GioHangChiTiet> gioHangChiTiet = new ArrayList<GioHangChiTiet>();
-	
+
+	@Override
+	public String toString() {
+		return "SanPhamChiTiet [maSanPhamChiTiet=" + maSanPhamChiTiet + ", kichCo=" + kichCo + ", mauSac=" + mauSac
+				+ ", sanPham=" + sanPham + ", soLuong=" + soLuong + ", hoaDonChiTiets=" + hoaDonChiTiets + ", hinhAnhs="
+				+ hinhAnhs + ", coHienThi=" + coHienThi + ", daXoa=" + daXoa + ", gioHangChiTiet=" + gioHangChiTiet
+				+ "]";
+	}
+
 }

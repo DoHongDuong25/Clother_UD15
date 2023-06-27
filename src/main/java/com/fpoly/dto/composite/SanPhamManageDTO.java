@@ -60,7 +60,9 @@ public class SanPhamManageDTO {
 	@NotEmpty(message = "Danh sách màu sắc sản phẩm không được để trống")
 	private List<@Valid Long> mauSacIds;
 	
-	private List<SanPhamChiTietDTO> spctDTO = new ArrayList<SanPhamChiTietDTO>();
-	
 	private Boolean isEdit = false;
+	
+	private Boolean isCreatedImg = false;
+	
+	private List<HinhAnhMauSacDTO> lstHinhAnhMauSacDTO;
 }

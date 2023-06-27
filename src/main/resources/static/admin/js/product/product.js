@@ -62,6 +62,12 @@ function showInfoProductDetailById(
   document.getElementById("infoProductDetailContentString4").innerHTML = moTa;
 }
 
+function openPopupIsShowSpeedAddProduct(tenThuocTinh, tenField) {
+  document.getElementById("tenThuocTinh").innerHTML = tenThuocTinh;
+  document.getElementById("fieldthuocTinhInput").value = tenField;
+  $("#iShowSpeedModalId").modal("show");
+}
+
 $("#multiple-select-field").select2({
   theme: "bootstrap-5",
   width: $(this).data("width")

@@ -12,7 +12,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class HinhAnhDTO extends BaseDTO{
-	private Long sanPhamChiTietId;
+	
+	private Long mauSacId;
 	
 	private MultipartFile imgFile;
 	

@@ -28,6 +28,7 @@ public class PhongCachServiceImpl implements PhongCachService{
 	}
 	@Override
 	public <S extends PhongCach> S save(S entity) {
+		entity.setDaXoa(false);
 		return phongCachRepository.save(entity);
 	}
 	

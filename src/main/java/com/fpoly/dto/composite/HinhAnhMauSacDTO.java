@@ -6,6 +6,7 @@ import java.util.List;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
+import org.springframework.context.annotation.Primary;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fpoly.dto.HinhAnhDTO;
@@ -18,14 +19,14 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class HinhAnhSanPhamChiTietDTO {
-	private Long spctId;
-		
+public class HinhAnhMauSacDTO {
+	private Long mauSacAddImagesId;
+	
 	private List<MultipartFile> imgFiles;
 	
-	private Boolean laAnhChinh;
-
-	private Boolean coHienThi;
+	private Integer laAnhChinh;
 	
-	private Boolean isOpenPopupAddImage = false;
+	private String tenMauSacAddImg;
+
+	private Integer coHienThiHinhAnh;
 }

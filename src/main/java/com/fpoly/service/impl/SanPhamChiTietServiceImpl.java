@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import javax.transaction.Transactional;
 
+import org.springframework.context.annotation.Primary;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +25,6 @@ public class SanPhamChiTietServiceImpl implements SanPhamChiTietService{
 	private final SanPhamChiTietRepository sanPhamChiTietRepository;
 	private final SanPhamChiTietSearchRepository sanPhamChiTietSearchRepository;
 
-	
 	@Override
 	public List<SanPhamChiTiet> getLstSanPhamChiTietExist() {
 		return sanPhamChiTietRepository.getLstSanPhamChiTietExist();
@@ -47,6 +47,7 @@ public class SanPhamChiTietServiceImpl implements SanPhamChiTietService{
 
 	@Override
 	public <S extends SanPhamChiTiet> S save(S entity) {
+		entity.setDaXoa(false);
 		return sanPhamChiTietRepository.save(entity);
 	}
 
@@ -56,4 +57,14 @@ public class SanPhamChiTietServiceImpl implements SanPhamChiTietService{
 		entity.setDaXoa(false);
 		sanPhamChiTietRepository.save(entity);
 	}
+
+	@Override
+	public List<SanPhamChiTiet> getLstSanPhamChiTietAddImg(Long id) {
+		return sanPhamChiTietRepository.getLstSanPhamChiTietAddImg(id);
+	}
+
+//	@Override
+//	public List<SanPhamChiTietMauSacKichCo> getLstProductDetailsWithColorSize(Long id) {
+//		return sanPhamChiTietRepository.getLstProductDetailsWithColorSize(id);
+//	}
 }

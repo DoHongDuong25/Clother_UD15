@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import com.fpoly.entity.MauSac;
@@ -28,6 +29,7 @@ public class MauSacServiceImpl implements MauSacService{
 
 	@Override
 	public <S extends MauSac> S save(S entity) {
+		entity.setDaXoa(false);
 		return mauSacRepository.save(entity);
 	}
 
@@ -36,5 +38,9 @@ public class MauSacServiceImpl implements MauSacService{
 		return mauSacRepository.findById(id);
 	}
 	
-	
+	@Override
+	public List<MauSac> getAllMauSacExistBySPId(Long spId) {
+		return mauSacRepository.getAllMauSacExistBySPId(spId);
+	}
+		
 }

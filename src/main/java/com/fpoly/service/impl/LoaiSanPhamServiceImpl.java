@@ -28,6 +28,7 @@ public class LoaiSanPhamServiceImpl implements LoaiSanPhamService{
 	
 	@Override
 	public <S extends LoaiSanPham> S save(S entity) {
+		entity.setDaXoa(false);
 		return loaiSanPhamRepository.save(entity);
 	}
 	

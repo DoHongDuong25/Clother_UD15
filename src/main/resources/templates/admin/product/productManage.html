@@ -79,7 +79,7 @@
                                 <label for="mauSacIds">Tên màu sắc:</label>
                                 <select class="selectpicker" name="mauSacIds" id="mauSacIds" th:field="*{mauSacIds}"
                                     multiple>
-                                    <option th:each="item : ${lstMauSac}" th:value="${item.id}"
+                                    <option th:each="item, istat : ${lstMauSac}" th:value="${item.id}"
                                         th:text="${item.tenMauSac}">
                                     </option>
                                 </select>
@@ -139,30 +139,14 @@
                                 <label>Giá:</label>
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <input type="number" list="lstGiaMin" id="giaMin"
-                                            class="custom-select custom-select-xl" th:field="*{giaMin}" th:classappend="${#fields.hasErrors('giaMin')}?
-                                            is-invalid : ''"
-                                            placeholder="Giá trị đầu">
-                                        <datalist id="lstGiaMin">
-                                            <option value="100000"></option>
-                                            <option value="200000"></option>
-                                            <option value="300000"></option>
-                                            <option value="500000"></option>
-                                        </datalist>
+                                        <input type="number" class="form-control" th:field="*{giaMin}" th:classappend="${#fields.hasErrors('giaMin')}?
+                                        is-invalid : ''" placeholder="Giá trị đầu">
                                         <small id="giaMin" th:if="${#fields.hasErrors('giaMin')}" th:class="${#fields.hasErrors('giaMin')}?
                                             invalid-feedback : ''" th:errors="*{giaMin}"></small>
                                     </div>
                                     <div class="col-sm-6">
-                                        <input type="number" list="lstGiaMax" id="giaMax"
-                                            class="custom-select custom-select-xl" th:field="*{giaMax}" th:classappend="${#fields.hasErrors('giaMax')}?
-                                            is-invalid : ''"
-                                            placeholder="Giá trị cuối">
-                                        <datalist id="lstGiaMax">
-                                            <option value="200000"></option>
-                                            <option value="300000"></option>
-                                            <option value="500000"></option>
-                                            <option value="800000"></option>
-                                        </datalist>
+                                        <input type="number" class="form-control" th:field="*{giaMax}" th:classappend="${#fields.hasErrors('giaMax')}?
+                                        is-invalid : ''" placeholder="Giá trị đầu">
                                         <small id="giaMax" th:if="${#fields.hasErrors('giaMax')}" th:class="${#fields.hasErrors('giaMax')}?
                                             invalid-feedback : ''" th:errors="*{giaMax}"></small>
                                     </div>
@@ -172,13 +156,15 @@
                                 <label>Số lượng sản phẩm:</label>
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <input type="number" class="form-control" th:field="*{soLuongMin}"  th:classappend="${#fields.hasErrors('soLuongMin')}?
+                                        <input type="number" class="form-control" th:field="*{soLuongMin}"
+                                            th:classappend="${#fields.hasErrors('soLuongMin')}?
                                         is-invalid : ''" placeholder="Giá trị đầu">
                                         <small id="soLuongMin" th:if="${#fields.hasErrors('soLuongMin')}" th:class="${#fields.hasErrors('soLuongMin')}?
                                             invalid-feedback : ''" th:errors="*{soLuongMin}"></small>
                                     </div>
                                     <div class="col-sm-6">
-                                        <input type="number" class="form-control" th:field="*{soLuongMax}" th:classappend="${#fields.hasErrors('soLuongMax')}?
+                                        <input type="number" class="form-control" th:field="*{soLuongMax}"
+                                            th:classappend="${#fields.hasErrors('soLuongMax')}?
                                         is-invalid : ''" placeholder="Giá trị cuối">
                                         <small id="soLuongMax" th:if="${#fields.hasErrors('soLuongMax')}" th:class="${#fields.hasErrors('soLuongMax')}?
                                             invalid-feedback : ''" th:errors="*{soLuongMax}"></small>
@@ -232,10 +218,10 @@
                                         </th>
                                         <th>#</th>
                                         <th>Tên sản phẩm</th>
-                                        <th>Số lượng</th>
+                                        <!-- <th>Số lượng</th> -->
                                         <th>Giá</th>
-                                        <th>Kích cỡ</th>
-                                        <th>Màu sắc</th>
+                                        <!-- <th>Kích cỡ</th>
+                                        <th>Màu sắc</th> -->
                                         <th>Kiểu dáng</th>
                                         <th>Chất liệu</th>
                                         <th>Loại sản phẩm</th>
@@ -245,12 +231,12 @@
                                         <th>Ngày tạo</th>
                                         <th>Người chỉnh sửa</th>
                                         <th>Ngày chỉnh sửa</th> -->
-                                        <th>Có hiển thị</th>
+                                        <!-- <th>Có hiển thị</th> -->
                                         <th>Thao tác</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr th:each="item, istat : ${sanPhamChiTiets}">
+                                    <tr th:each="item, istat : ${sanPhams}">
                                         <th>
                                             <div class="checkbox-wrapper-30">
                                                 <span class="checkbox">
@@ -267,21 +253,21 @@
                                                 </svg>
                                             </div>
                                         </th>
-                                        <td th:text="${istat.index}"></td>
-                                        <td th:text="${item.sanPham.tenSanPham}"></td>
-                                        <td th:text="${item.soLuong}"></td>
-                                        <td th:text="${item.sanPham.gia}"></td>
-                                        <td th:text="${item.kichCo.tenKichCo}"></td>
-                                        <td th:text="${item.mauSac.tenMauSac}"></td>
-                                        <td th:text="${item.sanPham.kieuDang.tenKieuDang}"></td>
-                                        <td th:text="${item.sanPham.chatLieu.tenChatLieu}"></td>
-                                        <td th:text="${item.sanPham.loaiSanPham.TenLoaiSanPham}"></td>
-                                        <td th:text="${item.sanPham.phongCach.tenPhongCach}"></td>
+                                        <td th:text="${istat.index + 1}"></td>
+                                        <td th:text="${item.tenSanPham}"></td>
+                                        <!-- <td th:text="${item.soLuong}"></td> -->
+                                        <td th:text="${item.gia}"></td>
+                                        <!-- <td th:text="${item.kichCo.tenKichCo}"></td>
+                                        <td th:text="${item.mauSac.tenMauSac}"></td> -->
+                                        <td th:text="${item.kieuDang.tenKieuDang}"></td>
+                                        <td th:text="${item.chatLieu.tenChatLieu}"></td>
+                                        <td th:text="${item.loaiSanPham.TenLoaiSanPham}"></td>
+                                        <td th:text="${item.phongCach.tenPhongCach}"></td>
                                         <!-- <td th:text="${item.nguoiTao}"></td>
                                         <td th:text="${item.ngayTao}"></td>
                                         <td th:text="${item.nguoiCapNhat}"></td>
                                         <td th:text="${item.ngayCapNhat}"></td> -->
-                                        <td class="text-center">
+                                        <!-- <td class="text-center">
                                             <div class="custom-control custom-switch align-items-center">
                                                 <input type="checkbox" class="custom-control-input"
                                                     th:id="customSwitch + ${item.id}" th:data-id="${item.id}"
@@ -290,21 +276,23 @@
                                                 <label class="custom-control-label"
                                                     th:for="customSwitch +  ${item.id}"></label>
                                             </div>
-                                        </td>
+                                        </td> -->
                                         <td>
                                             <div class="btn-group">
-                                                <a class="btn btn-outline-info btn-sm" id="info"><img
+                                                <a class="btn btn-outline-info btn-sm" id="info" data-toggle="popover" data-trigger="hover" data-placement="top" data-content="Sản phẩm chi tiết"><img
                                                         th:src="@{/admin/img/icons/info.svg}"
                                                         th:data-text0="${item.nguoiTao}" th:data-text1="${item.ngayTao}"
                                                         th:data-text2="${item.nguoiCapNhat}"
                                                         th:data-text3="${item.ngayCapNhat}"
-                                                        th:data-text4="${item.sanPham.moTa}"
+                                                        th:data-text4="${item.moTa}"
                                                         onclick="showInfoProductDetailById(this.getAttribute('data-text0'), this.getAttribute('data-text1'),this.getAttribute('data-text2'),this.getAttribute('data-text3'), this.getAttribute('data-text4'))"></a>
-                                                <a class="btn btn-outline-primary btn-sm"
-                                                    th:href="@{'/admin/product/edit/' + ${item.id}}"><img
-                                                        th:src="@{/admin/img/icons/edit.svg}"></a>
-                                                <a class="btn btn-outline-danger btn-sm" th:data-id="${item.id}"
-                                                    th:data-name="${item.sanPham.tenSanPham}"
+
+                                                    <a class="btn btn-outline-primary btn-sm" data-toggle="popover" data-trigger="hover" data-placement="top" data-content="Cập nhật sản phẩm"
+                                                        th:href="@{'/admin/product/edit/' + ${item.id}}" disabled><img
+                                                            th:src="@{/admin/img/icons/edit.svg}"></a>
+
+                                                <a class="btn btn-outline-danger btn-sm" th:data-id="${item.id}" data-toggle="popover" data-trigger="hover" data-placement="top" data-content="Xóa sản phẩm"
+                                                    th:data-name="${item.tenSanPham}"
                                                     onclick="showConfirmModalDialog(this.getAttribute('data-id'), this.getAttribute('data-name'))"><img
                                                         th:src="@{/admin/img/icons/trash.svg}"></a>
                                             </div>
@@ -422,7 +410,11 @@
                 </div>
             </div>
         </div>
-
+        <script>
+            $(document).ready(function () {
+                $('[data-toggle="popover"]').popover();
+            });
+        </script>
     </section>
 </body>
 

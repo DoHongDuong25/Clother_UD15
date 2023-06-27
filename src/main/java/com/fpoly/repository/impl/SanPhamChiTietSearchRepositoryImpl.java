@@ -179,7 +179,7 @@ public class SanPhamChiTietSearchRepositoryImpl implements SanPhamChiTietSearchR
 //			}
 //		}
 		
-		List<SanPhamChiTiet> result = query.from(qSanPhamChiTiet)
+		List<SanPhamChiTiet> result = query.select(qSanPhamChiTiet).from(qSanPhamChiTiet)
 				.innerJoin(qMauSac).on(qSanPhamChiTiet.mauSac.id.eq(qMauSac.id))
 				.innerJoin(qKichCo).on(qSanPhamChiTiet.kichCo.id.eq(qKichCo.id))
 				.leftJoin(qSanPham).on(qSanPhamChiTiet.sanPham.id.eq(qSanPham.id))

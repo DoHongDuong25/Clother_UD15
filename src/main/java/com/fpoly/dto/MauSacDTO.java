@@ -13,5 +13,7 @@ public class MauSacDTO extends BaseDTO{
 	
 	private String tenMauSac;
 	
+	private String maMauSac;
+	
 	private Boolean daXoa;
 }

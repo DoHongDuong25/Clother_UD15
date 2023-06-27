@@ -30,6 +30,7 @@ public class ChatLieuServiceImpl implements ChatLieuService{
 	
 	@Override
 	public <S extends ChatLieu> S save(S entity) {
+		entity.setDaXoa(false);
 		return chatLieuRepository.save(entity);
 	}
 

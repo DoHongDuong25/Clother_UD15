@@ -34,12 +34,13 @@ import lombok.NoArgsConstructor;
 @EntityListeners(AuditingEntityListener.class)
 public class MauSac extends BaseEntity implements Serializable{
 	
-	
-	
 	@OneToMany(mappedBy = "mauSac", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<SanPhamChiTiet> sanPhamChiTiets;
 	
-	@Column(columnDefinition = "nvarchar(255) not null")
+	@OneToMany(mappedBy = "mauSac", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<HinhAnh> hinhAnhs;
+	
+	@Column(columnDefinition = "nvarchar(50) not null")
 	private String tenMauSac;
 	
 	@Column

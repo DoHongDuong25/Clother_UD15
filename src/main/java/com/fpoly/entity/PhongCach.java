@@ -33,7 +33,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "phong_cach")
 @EntityListeners(AuditingEntityListener.class)
 public class PhongCach extends BaseEntity implements Serializable{
-	@Column(name = "ten_phong_cach",columnDefinition = "nvarchar(256) not null")
+	@Column(name = "ten_phong_cach",columnDefinition = "nvarchar(50) not null")
 	private String tenPhongCach;
 		
 	@OneToMany(mappedBy = "phongCach", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
