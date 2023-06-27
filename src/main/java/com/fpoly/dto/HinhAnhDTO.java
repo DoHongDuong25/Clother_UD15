@@ -1,5 +1,7 @@
 package com.fpoly.dto;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,12 +9,13 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class HinhAnhDTO extends BaseDTO<HinhAnhDTO> {
+public class HinhAnhDTO extends BaseDTO<BaseDTO> {
 	
-	private Long sanPhamChiTietId;
+	private Long mauSacId;
 	
-	private String tenAnh;
+	private MultipartFile imgFile;
 	
-	private short laAnhChinh;
+	private Boolean laAnhChinh;
 
+	private Boolean coHienThi;
 }

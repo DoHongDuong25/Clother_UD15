@@ -2,6 +2,7 @@ package com.fpoly.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -30,11 +31,14 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Table(name = "mau_sac")
 @EntityListeners(AuditingEntityListener.class)
 public class MauSac extends BaseEntity implements Serializable{
-
-	@OneToMany(mappedBy = "mauSac", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private Set<SanPhamChiTiet> sanPhamChiTiets;
 	
-	@Column(columnDefinition = "nvarchar(255) not null")
+	@OneToMany(mappedBy = "mauSac", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<SanPhamChiTiet> sanPhamChiTiets;
+	
+	@OneToMany(mappedBy = "mauSac", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<HinhAnh> hinhAnhs;
+	
+	@Column(columnDefinition = "nvarchar(50) not null")
 	private String tenMauSac;
 	
 	@Column

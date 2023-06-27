@@ -8,9 +8,11 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class MauSacDTO  extends BaseDTO<MauSacDTO>{
+public class MauSacDTO extends BaseDTO<BaseDTO> {
 	
 	private String tenMauSac;
-
-
+	
+	private String maMauSac;
+	
+	private Boolean daXoa;
 }

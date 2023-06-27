@@ -7,8 +7,9 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class KieuDangDTO extends BaseDTO<KieuDangDTO> {
+public class KieuDangDTO extends BaseDTO<BaseDTO> {
 	
 	private String tenKieuDang;
 	
+	private Boolean daXoa;
 }

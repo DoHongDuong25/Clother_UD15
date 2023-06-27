@@ -9,7 +9,8 @@ import java.math.BigDecimal;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class SanPhamDTO extends BaseDTO<SanPhamDTO> {
+public class SanPhamDTO {
+	private Long id;
 	
 	private Long kieuDangId;
 	
@@ -22,7 +23,7 @@ public class SanPhamDTO extends BaseDTO<SanPhamDTO> {
 	private String tenSanPham;
 	
 	private BigDecimal giaBan;
-
+	private BigDecimal gia;
 	private String moTa;
 
 	private Boolean daXoa;

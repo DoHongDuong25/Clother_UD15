@@ -1,5 +1,11 @@
 package com.fpoly.dto;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,16 +13,19 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class SanPhamChiTietDTO extends BaseDTO<SanPhamChiTietDTO> {
-	
+public class SanPhamChiTietDTO extends BaseDTO<BaseDTO> {
 
 	private Long sanPhamId;
-
+	
 	private Long kichCoId;
 
 	private Long mauSacId;
 	
-	private int soLuong;
+	@NotNull(message = "Số lượng không được để trống")
+	@Min(value = 0, message = "Số lượng không được nhỏ hơn 0")
+	private Integer soLuong;
 	
-	private Boolean trangThai;
+	private List<HinhAnhDTO> hinhAnhs = new ArrayList<HinhAnhDTO>();
+	
+	private Boolean daXoa;
 }

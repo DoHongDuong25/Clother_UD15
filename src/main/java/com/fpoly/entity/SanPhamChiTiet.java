@@ -1,9 +1,31 @@
 package com.fpoly.entity;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -15,8 +37,11 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "san_pham_chi_tiet")
-@EqualsAndHashCode(callSuper=false)
+@EntityListeners(AuditingEntityListener.class)
 public class SanPhamChiTiet extends BaseEntity implements Serializable{
+	@Column(nullable = false)
+	private String maSanPhamChiTiet;
+	
 	@ManyToOne
 	@JoinColumn(name = "kich_co_id", nullable = false)
 	private KichCo kichCo;
@@ -29,14 +54,14 @@ public class SanPhamChiTiet extends BaseEntity implements Serializable{
 	@JoinColumn(name = "san_pham_id", nullable = false)
 	private SanPham sanPham;
 	
-	@OneToMany(mappedBy = "sanPhamChiTiet", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<HinhAnh> hinhAnhs = new ArrayList<>();
-	
 	@Column
 	private int soLuong;
 	
 	@OneToMany(mappedBy = "sanPhamChiTiet", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<HoaDonChiTiet> hoaDonChiTiets;
+	
+	@OneToMany(mappedBy = "sanPhamChiTiet", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<HinhAnh> hinhAnhs;
 	
 	@Column
 	private Boolean coHienThi;
@@ -45,7 +70,6 @@ public class SanPhamChiTiet extends BaseEntity implements Serializable{
 	private Boolean daXoa;
 	
 	@OneToMany(mappedBy="sanPhamChiTiet")
-<<<<<<< HEAD
 	private List<GioHangChiTiet> gioHangChiTiet = new ArrayList<GioHangChiTiet>();
 
 	@Override
@@ -62,8 +86,4 @@ public class SanPhamChiTiet extends BaseEntity implements Serializable{
 				", gioHangChiTiet=" + gioHangChiTiet.size() +
 				'}';
 	}
-=======
-	private List<GioHangChiTiet> gioHangChiTiet = new ArrayList<>();
-	
->>>>>>> Hung_Voucher
 }

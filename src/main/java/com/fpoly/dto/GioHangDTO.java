@@ -1,11 +1,7 @@
 package com.fpoly.dto;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-
-import com.fpoly.entity.DiaChi;
-import com.fpoly.entity.GioHangChiTiet;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

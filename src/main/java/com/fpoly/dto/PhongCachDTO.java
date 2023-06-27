@@ -7,8 +7,9 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PhongCachDTO extends BaseDTO<PhongCachDTO> {
+public class PhongCachDTO extends BaseDTO<BaseDTO> {
 	
 	private String tenPhongCach;
 	
+	private Boolean daXoa;
 }

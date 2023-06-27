@@ -8,9 +8,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class ChatLieuDTO extends BaseDTO<ChatLieuDTO> {
+public class ChatLieuDTO extends BaseDTO<BaseDTO> {
+	private String tenChatLieu;
 	
-	private String chatLieu;
-	
-	
+	private Boolean daXoa;
 }
