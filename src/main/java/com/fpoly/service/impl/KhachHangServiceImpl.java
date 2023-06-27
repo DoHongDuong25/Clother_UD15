@@ -55,7 +55,7 @@ public class KhachHangServiceImpl implements KhachHangService{
 	}
 	
 	@Override
-	public List<KhachHangDTO> findAllBySoDienThoaiVaTrangThaiCoPhanTrang(String soDienThoai, Integer trangThai,
+	public List<KhachHangDTO> findAllByInputVaTrangThaiCoPhanTrang(String input, Integer trangThai,
 			Pageable pageable) {
 		List<KhachHangDTO> listKhachHangDTO = new ArrayList<KhachHangDTO>() ;
 		List<KhachHang> listKhachHang = new ArrayList<KhachHang>();
@@ -63,7 +63,8 @@ public class KhachHangServiceImpl implements KhachHangService{
 		DiaChiDTO diaChiDTO = null;
 		if(trangThai != null) {
 			 if(trangThai != 2) {
-				 listKhachHang = khachHangRepository.findAllByTrangThaiVaSoDienThoaiCoPhanTrang(trangThai,soDienThoai, pageable).getContent();
+				 listKhachHang = khachHangRepository.
+						 findAllByTrangThaiVaSoDienThoaiCoPhanTrang(trangThai,input, pageable).getContent();
 					for (KhachHang khachHang : listKhachHang) {
 						dto = new KhachHangDTO();
 						dto.setId(khachHang.getId());
@@ -89,37 +90,6 @@ public class KhachHangServiceImpl implements KhachHangService{
 	
 	
 	
-	@Override
-	public List<KhachHangDTO> locDanhSachTheoTrangThai(Integer trangThai) {
-		List<KhachHangDTO> listKhachHangDTO = new ArrayList<KhachHangDTO>() ;
-		List<KhachHang> listKhachHang = new ArrayList<KhachHang>();
-		KhachHangDTO dto = null ;
-		DiaChiDTO diaChiDTO = null;
-		if(trangThai != null) {
-			if(trangThai != 2) {
-			 listKhachHang = khachHangRepository.findAllByTrangThaiKhongCoPhanTrang(trangThai);
-			for (KhachHang khachHang : listKhachHang) {
-				dto = new KhachHangDTO();
-				dto.setId(khachHang.getId());
-				dto.setEmail(khachHang.getEmail());
-				dto.setMatKhau(khachHang.getMatKhau());
-				dto.setHoTen(khachHang.getHoTen());
-				dto.setSoDienThoai(khachHang.getSoDienThoai());
-				dto.setTrangThai(khachHang.getTrangThai());
-				List<DiaChiDTO> listDiaChiDTO = new ArrayList<DiaChiDTO>();
-					for (DiaChi diaChi : khachHang.getListDiaChi()) {
-						diaChiDTO = new DiaChiDTO();
-						diaChiDTO.setId(diaChi.getId());
-						diaChiDTO.setDiaChi(diaChi.getDiaChi());
-						listDiaChiDTO.add(diaChiDTO);
-					}
-				dto.setListDiaChi(listDiaChiDTO);
-				listKhachHangDTO.add(dto);
-				}
-		    }
-		}
-		return listKhachHangDTO ;
-	}
 	
 	
 
@@ -154,6 +124,8 @@ public class KhachHangServiceImpl implements KhachHangService{
 				DiaChiDTO dto1 = new DiaChiDTO();
 				dto1.setId(diaChi.getId());
 				dto1.setDiaChi(diaChi.getDiaChi());
+				dto1.setSoDienThoai(diaChi.getSoDienThoai());
+				dto1.setHoTen(diaChi.getHoTen());
 				listDiaChidTO.add(dto1);
 			}
 			dto.setListDiaChi(listDiaChidTO);
@@ -162,41 +134,53 @@ public class KhachHangServiceImpl implements KhachHangService{
 	}
 
 	@Override
+	@Transactional
 	public KhachHangDTO save(KhachHangDTO dto) {
 		KhachHangDTO khachHangDTO = new KhachHangDTO();
 		KhachHang khachHangEntity = new KhachHang();
-//		List<KhachHang> list = khachHangRepository.findAll();
-//		for (KhachHang khachHang : list) {
-//			if (!khachHang.getEmail().equals(dto.getEmail())) {
-					if(dto.getId() != null){
-						KhachHang khachHangTonTai = khachHangRepository.findByEmail(dto.getEmail());
-						khachHangTonTai.setId(dto.getId());
-						khachHangTonTai.setEmail(dto.getEmail());
-						khachHangTonTai.setHoTen(dto.getHoTen());
-						khachHangTonTai.setMatKhau(dto.getMatKhau());
-						khachHangTonTai.setSoDienThoai(dto.getSoDienThoai());
-						khachHangTonTai.setTrangThai(dto.getTrangThai());
-						khachHangEntity = khachHangTonTai ;
-					}else {
-						KhachHang khachHangMoi = new KhachHang();
-						khachHangMoi.setEmail(dto.getEmail());
-						khachHangMoi.setHoTen(dto.getHoTen());
-						khachHangMoi.setMatKhau(dto.getMatKhau());
-						khachHangMoi.setSoDienThoai(dto.getSoDienThoai());
-						khachHangMoi.setTrangThai(1);
-						khachHangEntity = khachHangMoi ;
+		List<KhachHang> listKhachHang = khachHangRepository.findAll();
+					try {
+						if(dto.getId() != null){
+								KhachHang khachHangTonTai = khachHangRepository.getOne(dto.getId());
+								if(!dto.getEmail().equalsIgnoreCase(khachHangTonTai.getEmail())) {
+									for (KhachHang khachHang : listKhachHang) {
+										if(khachHang.getEmail().equalsIgnoreCase(dto.getEmail())) {
+											return null ;
+										}
+									}
+								}else {
+									khachHangTonTai.setId(dto.getId());
+									khachHangTonTai.setEmail(dto.getEmail());
+									khachHangTonTai.setHoTen(dto.getHoTen());
+									khachHangTonTai.setMatKhau(dto.getMatKhau());
+									khachHangTonTai.setSoDienThoai(dto.getSoDienThoai());
+									khachHangTonTai.setTrangThai(dto.getTrangThai());
+									khachHangEntity = khachHangTonTai ;
+								}
+						}else {
+							KhachHang khachHangMoi = new KhachHang();
+							for (KhachHang khachHang : listKhachHang) {
+								if(khachHang.getEmail().equalsIgnoreCase(dto.getEmail())) {
+									return null ;
+								}
+							}
+							khachHangMoi.setEmail(dto.getEmail());
+							khachHangMoi.setHoTen(dto.getHoTen());
+							khachHangMoi.setMatKhau(dto.getMatKhau());
+							khachHangMoi.setSoDienThoai(dto.getSoDienThoai());
+							khachHangMoi.setTrangThai(1);
+							khachHangEntity = khachHangMoi ;
+						}
+						khachHangEntity = khachHangRepository.save(khachHangEntity);
+						khachHangDTO.setId(khachHangEntity.getId());
+						khachHangDTO.setEmail(khachHangEntity.getEmail());
+						khachHangDTO.setHoTen(khachHangEntity.getHoTen());
+						khachHangDTO.setMatKhau(khachHangEntity.getMatKhau());
+						khachHangDTO.setSoDienThoai(khachHangEntity.getSoDienThoai());
+						return khachHangDTO;
+					}catch(Exception e) {
+						return null ;
 					}
-					khachHangEntity = khachHangRepository.save(khachHangEntity);
-					khachHangDTO.setId(khachHangEntity.getId());
-					khachHangDTO.setEmail(khachHangEntity.getEmail());
-					khachHangDTO.setHoTen(khachHangEntity.getHoTen());
-					khachHangDTO.setMatKhau(khachHangEntity.getMatKhau());
-					khachHangDTO.setSoDienThoai(khachHangEntity.getSoDienThoai());
-//				}else {
-//					 new SQLIntegrityConstraintViolationException();
-//				}
-					return khachHangDTO;
-				
 		}
 
 	@Override
@@ -263,7 +247,7 @@ public class KhachHangServiceImpl implements KhachHangService{
 
 
 	@Override
-	public List<KhachHangDTO> findAllBySoDienThoaiCoPhanTrang(String soDienThoai,Pageable pageable) {
+	public List<KhachHangDTO> findAllByInputCoPhanTrang(String soDienThoai,Pageable pageable) {
 		List<KhachHangDTO> listKhachHangDTO = new ArrayList<KhachHangDTO>() ;
 		List<KhachHang> listKhachHang = new ArrayList<KhachHang>();
 		KhachHangDTO dto = null ;
@@ -309,16 +293,29 @@ public class KhachHangServiceImpl implements KhachHangService{
 
 
 	@Override
-	public int countBySoDienThoai(String soDienThoai) {
-		return khachHangRepository.countBySoDienThoai(soDienThoai);
+	public int countByInput(String input) {
+		return khachHangRepository.countByInput(input);
 	}
 
 	@Override
-	public int countBySoDienThoaiVaTrangThai(String soDienThoai, Integer trangThai) {
-		return khachHangRepository.countBySoDienThoaiVaTrangThai(soDienThoai,trangThai);
+	public int countByInputVaTrangThai(String input, Integer trangThai) {
+		return khachHangRepository.countByInputVaTrangThai(input,trangThai);
 	}
 
+	@Override
+	@Transactional
+	public void capNhatTrangThaiTheoId(Long id) {
+		KhachHang entity = khachHangRepository.getOne(id);
+		if(entity != null) {
+			if(entity.getTrangThai() == 1) {
+				khachHangRepository.capNhatTrangThaiThanhKhongHoatDongTheoMa(entity.getId());
+			}
+			if(entity.getTrangThai() == 0) {
+				khachHangRepository.capNhatTrangThaiThanhHoatDongTheoMa(entity.getId());
+			}
+		}
+	}
 
-
+	
 	
 }

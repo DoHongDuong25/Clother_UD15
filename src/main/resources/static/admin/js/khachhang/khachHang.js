@@ -1,36 +1,54 @@
+$(document).ready(function(){
+  $("#myBtn").click(function(){
+    $('.toast').toast('show');
+  });
+});
 
 
-
-$('#soDienThoai').on('change',function(){
+$('#input').on('change',function(){
 	var limit = $('#limitForSearch').val();
 	var trangThai = $('#trangThaiForSearch').val();
-	var soDienThoai = $('#soDienThoai').val();
+	var input = $('#input').val();
 	
-	if(soDienThoai == ""){
-		alert("Vui lòng nhập số điện thoại");
+	
+	
+	
+	if(input == ""){
+//		window.location.href=""+trangThai+"&limit="+limit;
+		setTimeout("location.href = 'http://localhost:8080/admin/khach-hang/danh-sach/tim-kiem/1?trangThai="+trangThai+"&limit="+limit+" ' ", 2000);
 	}else{
-		window.location.href="http://localhost:8080/admin/khach-hang/danh-sach/tim-kiem/1?soDienThoai="+soDienThoai+"&trangThai="+trangThai+"&limit="+limit;
+		$('#liveToast').html('<div class="toast-header"><strong class="mr-auto">Thông báo !</strong><small>1 giây trước </small><button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close"><span aria-hidden="true">&times;</span></button></div><div class="toast-body"><p class="fw-bold text-primary">Đang tìm kiếm...</p></div>');
+		$('#liveToast').toast('show');
+		setTimeout("location.href = 'http://localhost:8080/admin/khach-hang/danh-sach/tim-kiem/1?input="+input+"&trangThai="+trangThai+"&limit="+limit+"     ' ", 1000);
+//		window.location.href="http://localhost:8080/admin/khach-hang/danh-sach/tim-kiem/1?input="+input+"&trangThai="+trangThai+"&limit="+limit;
 	}
 });
 
 
-function fun()
-{
-    if(document.getElementById("trangThaiSelect").value!="" || document.getElementById("limit").value!="")
-        document.getElementById("loc").disabled=false;
-    else
-    document.getElementById("loc").disabled=true;
-}
+//function fun()
+//{
+//    if(document.getElementById("trangThaiSelect").value!="" || document.getElementById("limit").value!="")
+//        document.getElementById("loc").disabled=false;
+//    	
+//    else
+//    document.getElementById("loc").disabled=true;
+//    
+//}
 
 
-$('#trangThaiSelect').on('change',function fun() {
+$('#trangThaiSelect').on('change',function fun(e) {
 	var optionTrangThai = $('#trangThaiSelect').find(":selected").val();
 	$('#trangThai').val(optionTrangThai);
 });
-$('#limitSelect').on('change',function fun() {
+$('#limitSelect').on('change',function fun(e) {
 	var optionLimit = $('#limitSelect').find(":selected").val();
 	$('#limit').val(optionLimit);
 });
+
+
+
+
+
 
 
 $('#checkAll').click(function(event) {   
@@ -50,7 +68,7 @@ $('#checkAll').click(function(event) {
 
 
 
-function xacNhanChuyenDoiTrangThaiThanhHoatDong() {
+function xacNhanChuyenDoiTrangThaiDaChonThanhHoatDong() {
 	Swal.fire({
 		  title: 'Xác nhận chuyển đổi',
 		  text: "Bạn có chắc chắn muốn chuyển đổi các trạng thái ?",
@@ -65,35 +83,39 @@ function xacNhanChuyenDoiTrangThaiThanhHoatDong() {
 			  var ids = $('tbody input[type=checkbox]:checked').map(function name() {
 				return $(this).val();
 			  }).get();
+			  var pageCurrent= $('#pageCurrent').val();
 			  if(ids != ''){
 				  if(result.value){
-					  capNhatTrangThaiThanhHoatDong(ids);
+					  capNhatTrangThaiThanhHoatDong(ids,pageCurrent);
 				  }
 			  }else{
-				  window.location.href = "http://localhost:8080/admin/khach-hang/danh-sach/1?message=change_error" ;
+				   $('#liveToast').html('<div class="toast-header"><strong class="mr-auto">Thông báo !</strong><small>1 giây trước </small><button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close"><span aria-hidden="true">&times;</span></button></div><div class="toast-body"><p class="fw-bold text-danger">Chuyển đổi thất bại !</p></div>');
+					$('#liveToast').toast('show');
+					setTimeout("location.href = 'http://localhost:8080/admin/khach-hang/danh-sach/"+pageCurrent+"?message=change_error' ", 2000);
 			  }
 		  }
 		})
 };
-function capNhatTrangThaiThanhHoatDong(ids) {
+function capNhatTrangThaiThanhHoatDong(ids,pageCurrent) {
 	$.ajax({
 		url : 'http://localhost:8080/admin/api/khach-hang/trang-thai-dang-hoat-dong' ,
-		type : 'DELETE' ,
+		type : 'PUT' ,
 		contentType : 'application/json' ,
 		data : JSON.stringify(ids),
 		success : function(result) {
-			window.location.href = "http://localhost:8080/admin/khach-hang/danh-sach/1?message=change_success" ;
+			$('#liveToast').html('<div class="toast-header"><strong class="mr-auto">Thông báo !</strong><small>1 giây trước </small><button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close"><span aria-hidden="true">&times;</span></button></div><div class="toast-body"><p class="fw-bold text-success">Chuyển đổi thành công !</p></div>');
+			$('#liveToast').toast('show');
+			setTimeout("location.href = 'http://localhost:8080/admin/khach-hang/danh-sach/"+pageCurrent+"?message=change_success' ", 2000);
 		},
 		error : function (error) {
-			window.location.href = "http://localhost:8080/admin/khach-hang/danh-sach/1?message=change_error" ;
+			setTimeout("location.href = 'http://localhost:8080/admin/khach-hang/danh-sach/"+pageCurrent+"?message=change_error' ", 2000);
 		}
 	});
 }
 
 
 
-
-function xacNhanChuyenDoiTrangThaiThanhKhongHoatDong() {
+function xacNhanChuyenDoiTrangThaiDaChonThanhKhongHoatDong() {
 	Swal.fire({
 		  title: 'Xác nhận chuyển đổi',
 		  text: "Bạn có chắc chắn muốn chuyển đổi các trạng thái ?",
@@ -108,43 +130,66 @@ function xacNhanChuyenDoiTrangThaiThanhKhongHoatDong() {
 			  var ids = $('tbody input[type=checkbox]:checked').map(function name() {
 				return $(this).val();
 			  }).get();
+			  var pageCurrent= $('#pageCurrent').val();
 			  if(ids != ''){
 				  if(result.value){
-					  capNhatTrangThaiThanhKhongHoatDong(ids);
+					  capNhatTrangThaiThanhKhongHoatDong(ids,pageCurrent);
 				  }
 			  }else{
-				  window.location.href = "http://localhost:8080/admin/khach-hang/danh-sach/1?message=change_error" ;
+				  $('#liveToast').html('<div class="toast-header"><strong class="mr-auto">Thông báo !</strong><small>1 giây trước </small><button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close"><span aria-hidden="true">&times;</span></button></div><div class="toast-body"><p class="fw-bold text-danger">Chuyển đổi thất bại !</p></div>');
+					$('#liveToast').toast('show');
+					setTimeout("location.href = 'http://localhost:8080/admin/khach-hang/danh-sach/"+pageCurrent+"?message=change_error' ", 2000);
 			  }
 		  }
 		})
 };
 
-function capNhatTrangThaiThanhKhongHoatDong(ids) {
+function capNhatTrangThaiThanhKhongHoatDong(ids,pageCurrent) {
 	$.ajax({
 		url : 'http://localhost:8080/admin/api/khach-hang/trang-thai-khong-hoat-dong' ,
-		type : 'DELETE' ,
+		type : 'PUT' ,
 		contentType : 'application/json' ,
 		data : JSON.stringify(ids),
 		success : function(result) {
-			window.location.href = "http://localhost:8080/admin/khach-hang/danh-sach/1?message=change_success" ;
+			$('#liveToast').html('<div class="toast-header"><strong class="mr-auto">Thông báo !</strong><small>1 giây trước </small><button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close"><span aria-hidden="true">&times;</span></button></div><div class="toast-body"><p class="fw-bold text-success">Chuyển đổi thành công !</p></div>');
+			$('#liveToast').toast('show');
+			setTimeout("location.href = 'http://localhost:8080/admin/khach-hang/danh-sach/"+pageCurrent+"?message=change_success' ", 2000);
 		},
 		error : function (error) {
-			window.location.href = "http://localhost:8080/admin/khach-hang/danh-sach/1?message=change_error" ;
+			setTimeout("location.href = 'http://localhost:8080/admin/khach-hang/danh-sach/"+pageCurrent+"?message=change_error' ", 2000);
 		}
 	});
 }
+
+
+
 $('#formSubmitKhachHang').validate({
 	rules: {
-		email : "required" ,
+		email : {
+			required :true ,
+			email :true 
+		} ,
 		matKhau : "required",
 		hoTen : "required",
-		soDienThoai : "required"
+		soDienThoai : {
+			required: true ,
+			number : true ,
+			minlength:10,
+	        maxlength:10
+		}
 	},
 	messages: {
-		email : "Vui lòng nhập email ! ",
+		email : {
+			required :"Vui lòng nhập email !" ,
+			email :"Email không đúng định dạng !" 
+		},
 		matKhau : "Vui lòng nhập mật khẩu !",
 		hoTen : "Vui lòng nhập họ tên !",
-		soDienThoai : "Vui lòng nhập số điện thoại !"
+		soDienThoai : {
+			required : "Vui lòng nhập số điện thoại !",
+			number :  "Số điện thoại không được chứa ký tự !",
+			minlength : "Số điện thoại phải 10 số ! "
+		}
 	}
 });
 
@@ -164,9 +209,8 @@ $('#btnCapNhatHoacThemMoiKhachHang').click(function (e) {
 			capNhatKhachHang(data);
 		}
 	}
-	
-	
 });
+
 
 
 
@@ -178,11 +222,16 @@ function themKhachHang(data) {
 		data : JSON.stringify(data) ,
 		dataType : 'json' ,
 		success : function(result) {
-			window.location.href = "http://localhost:8080/admin/khach-hang/danh-sach/chinh-sua?id="+result.id+"&page=1&message=create_success" ;
+			$('#liveToast').html('<div class="toast-header"><strong class="mr-auto">Thông báo !</strong><small>1 giây trước </small><button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close"><span aria-hidden="true">&times;</span></button></div><div class="toast-body"><p class="fw-bold text-success">Thêm mới  thành công !</p></div>');
+			$('#liveToast').toast('show');
+//			window.location.href = "http://localhost:8080/admin/khach-hang/danh-sach/chinh-sua?id="+result.id+"&page=1&message=create_success" ;
+			setTimeout("location.href = 'http://localhost:8080/admin/khach-hang/danh-sach/chinh-sua?id="+result.id+"&page=1&message=create_success '      ", 2000);
 		},
 		error : function (error) {
-			console.log(error);
-			window.location.href = "http://localhost:8080/admin/khach-hang/danh-sach/chinh-sua?message=duplicate_email&email="+data.email ;
+			$('#liveToast').html('<div class="toast-header"><strong class="mr-auto">Thông báo !</strong><small>1 giây trước </small><button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close"><span aria-hidden="true">&times;</span></button></div><div class="toast-body"><p class="fw-bold text-danger">Thêm mới thất bại !</p></div>');
+			$('#liveToast').toast('show');
+			//window.location.href = "http://localhost:8080/admin/khach-hang/danh-sach/chinh-sua?message=duplicate_email&email="+data.email ;
+			setTimeout("location.href = 'http://localhost:8080/admin/khach-hang/danh-sach/chinh-sua?email="+data.email+"&message=duplicate_email '      ", 2000);
 		}
 	});
 };
@@ -194,38 +243,28 @@ function capNhatKhachHang(data) {
 		data : JSON.stringify(data) ,
 		dataType : 'json' ,
 		success : function(result) {
-			window.location.href = "http://localhost:8080/admin/khach-hang/danh-sach/chinh-sua?id="+result.id+"&page=1&message=update_success"  ;
+			$('#liveToast').html('<div class="toast-header"><strong class="mr-auto">Thông báo !</strong><small>1 giây trước </small><button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close"><span aria-hidden="true">&times;</span></button></div><div class="toast-body"><p class="fw-bold text-success">Cập nhật  thành công !</p></div>');
+			$('#liveToast').toast('show');
+//			window.location.href = "http://localhost:8080/admin/khach-hang/danh-sach/chinh-sua?id="+result.id+"&page=1&message=update_success"  ;
+			setTimeout("location.href = 'http://localhost:8080/admin/khach-hang/danh-sach/chinh-sua?id="+result.id+"&page=1&message=update_success '      ", 2000);
 		},
 		error : function (error) {
-			window.location.href = "http://localhost:8080/admin/khach-hang/danh-sach/chinh-sua?id="+data.id+"&message=update_duplicate_email&email="+data.email ;
+			$('#liveToast').html('<div class="toast-header"><strong class="mr-auto">Thông báo !</strong><small>1 giây trước </small><button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close"><span aria-hidden="true">&times;</span></button></div><div class="toast-body"><p class="fw-bold text-danger">Cập nhật thất bại !</p></div>');
+			$('#liveToast').toast('show');
+//			window.location.href = "http://localhost:8080/admin/khach-hang/danh-sach/chinh-sua?id="+data.id+"&message=update_duplicate_email&email="+data.email ;
+			setTimeout("location.href = 'http://localhost:8080/admin/khach-hang/danh-sach/chinh-sua?id="+data.id+"&email="+data.email+"&message=update_duplicate_email'     ", 2000);
 		}
 	});
 }
 
 
-$('#btnThemMoiDiaChi').click(function (e) {
-	//Ko co cai nay la no se submit vao url no dang dung
-	e.preventDefault();
-	var data = {};
-	var formData = $('#formSubmitDiaChi').serializeArray();
-	$.each(formData,function(i,v){
-		data[""+v.name+""] = v.value;
-	});
-	themDiaChi(data);
+
+$('#btnThemMoiDanhSachKhachHang').click(function (e) {
+	$('#liveToast').html('<div class="toast-header"><strong class="mr-auto">Thông báo !</strong><small>1 giây trước </small><button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close"><span aria-hidden="true">&times;</span></button></div><div class="toast-body"><p class="fw-bold text-danger">Đang xử lý.... </p></div>');
+	$('#liveToast').toast('show');
+		
 });
-function themDiaChi(data) {
-	$.ajax({
-		url : 'http://localhost:8080/admin/api/dia-chi' ,
-		type : 'POST' ,
-		contentType : 'application/json' ,
-		data : JSON.stringify(data) ,
-		dataType : 'json' ,
-		success : function(result) {
-			window.location.href = "http://localhost:8080/admin/khach-hang/danh-sach/chinh-sua?id="+result.khachHangId+"&page=1&message=create_address_success" ;
-		},
-		error : function (error) {
-			window.location.href = "http://localhost:8080/admin/khach-hang/danh-sach/1?message=error_system" ;
-		}
-	});
-};
+
+
+
 

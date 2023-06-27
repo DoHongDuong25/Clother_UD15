@@ -10,7 +10,6 @@ public interface KhachHangService {
 	
 List<KhachHangDTO> findAllByTrangThaiCoPhanTrang(Integer trangThai,Pageable pageable);
 	
-	List<KhachHangDTO> locDanhSachTheoTrangThai(Integer trangThai );
 
 	void capNhatTrangThaiThanhDangHoatDongTheoMa(long[] ids);
 
@@ -24,16 +23,24 @@ List<KhachHangDTO> findAllByTrangThaiCoPhanTrang(Integer trangThai,Pageable page
 	
 	List<KhachHangDTO> findAll();
 
-	List<KhachHangDTO> findAllBySoDienThoaiCoPhanTrang(String soDienThoai,Pageable pageable);
+	List<KhachHangDTO> findAllByInputCoPhanTrang(String soDienThoai,Pageable pageable);
 	
-	List<KhachHangDTO> findAllBySoDienThoaiVaTrangThaiCoPhanTrang(String soDienThoai,Integer trangThai,Pageable pageable);
+	List<KhachHangDTO> findAllByInputVaTrangThaiCoPhanTrang(String soDienThoai,Integer trangThai,Pageable pageable);
 
 	int countAll();
 
 	int countByTrangThai(Integer trangThai);
 
-	int countBySoDienThoai(String soDienThoai);
+	int countByInput(String input);
 
-	int countBySoDienThoaiVaTrangThai(String soDienThoai, Integer trangThai);
+	int countByInputVaTrangThai(String input, Integer trangThai);
+
+
+	void capNhatTrangThaiTheoId(Long id);
+
+
+
+
+	
 
 }

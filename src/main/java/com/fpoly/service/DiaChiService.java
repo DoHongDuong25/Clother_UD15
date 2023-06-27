@@ -16,4 +16,8 @@ public interface DiaChiService {
 
 	List<DiaChiDTO> findAllDiaChiByMaKhachHang(Long id ,Pageable pageable);
 
+	DiaChiDTO findById(Long id);
+
+	void update(DiaChiDTO diaChiDTO);
+
 }
