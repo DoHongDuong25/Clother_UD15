@@ -365,7 +365,7 @@
                                                 <input type="checkbox" class="custom-control-input" th:id="customSwitch
                                                                 +
                                                                 ${data.id}" th:data-id="${data.id}" th:checked="${data.coHienThi?
-                                                                'true' : 'false'}" onclick="changeIsShowProductDetail('changeIsShowFormAddProduct',this.getAttribute('id'),this.getAttribute('data-id'),
+                                                                'true' : 'false'}" onclick="openPopupChangeIsShowFormAddProduct(this.getAttribute('id'),this.getAttribute('data-id'),
                                                                 this.getAttribute('checked'))" />
                                                 <label class="custom-control-label" th:for="customSwitch
                                                                 +

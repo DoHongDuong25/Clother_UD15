@@ -27,8 +27,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -67,13 +66,5 @@ public class SanPhamChiTiet extends BaseEntity implements Serializable{
 	
 	@OneToMany(mappedBy="sanPhamChiTiet")
 	private List<GioHangChiTiet> gioHangChiTiet = new ArrayList<GioHangChiTiet>();
-
-	@Override
-	public String toString() {
-		return "SanPhamChiTiet [maSanPhamChiTiet=" + maSanPhamChiTiet + ", kichCo=" + kichCo + ", mauSac=" + mauSac
-				+ ", sanPham=" + sanPham + ", soLuong=" + soLuong + ", hoaDonChiTiets=" + hoaDonChiTiets + ", hinhAnhs="
-				+ hinhAnhs + ", coHienThi=" + coHienThi + ", daXoa=" + daXoa + ", gioHangChiTiet=" + gioHangChiTiet
-				+ "]";
-	}
 
 }

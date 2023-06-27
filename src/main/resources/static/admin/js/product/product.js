@@ -78,3 +78,11 @@ $("#multiple-select-field").select2({
   placeholder: $(this).data("placeholder"),
   closeOnSelect: false,
 });
+
+function openPopupChangeIsShowFormAddProduct() {
+  $("#isShowModalId").modal("show");
+}
+
+function changeIsShowFormAddProduct() {
+  flexUrlSubmit("changeIsShowFormAddProduct", "post", "AddProduct");
+}

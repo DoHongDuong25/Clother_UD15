@@ -253,28 +253,7 @@ public class SanPhamChiTietController {
 			return "/admin/product/addProduct";
 		}
 	}
-	
-	@GetMapping("changeIsShow/{id}/{status}")
-	public String changeIsShow(ModelMap model, @PathVariable("id") Long id,
-			@PathVariable("status") Boolean status) {
-		Optional<SanPhamChiTiet> opt = sanPhamChiTietService.findById(id);
-		if(opt.isPresent()) {
-			opt.get().setCoHienThi(status);
-			sanPhamChiTietService.save(opt.get());
-			model.addAttribute("messageSuccess", "Sửa trạng thái hiển thị của sản phẩm thành công");
-			List<SanPhamChiTiet> result = sanPhamChiTietService.getLstSanPhamChiTietExist();
-			model.addAttribute("sanPhamChiTiets", result);
-			model.addAttribute("dataSearch", new SPAndSPCTSearchDto());
-			return "admin/product/productManage";
-		}else {
-			model.addAttribute("messageSuccess", "Không tìm thấy sản phẩm!");
-			List<SanPhamChiTiet> result = sanPhamChiTietService.getLstSanPhamChiTietExist();
-			model.addAttribute("sanPhamChiTiets", result);
-			model.addAttribute("dataSearch", new SPAndSPCTSearchDto());
-			return "admin/product/productManage";
-		}
-	}//sua lai
-	
+		
 	@GetMapping("changeIsShowFormAddProduct/{id}/{status}")
 	public ModelAndView changeIsShowFormAddProduct(ModelMap model, @PathVariable("id") Long id,
 			@PathVariable("status") Boolean status) {
@@ -391,7 +370,7 @@ public class SanPhamChiTietController {
 	}
 	
 	@PostMapping("saveImageProductDetail")
-	public String saveImageProductDetail(ModelMap model, @ModelAttribute("sanPhamManageDTO") SanPhamManageDTO sanPhamManageDTO) {
+	public ModelAndView saveImageProductDetail(ModelMap model, @ModelAttribute("sanPhamManageDTO") SanPhamManageDTO sanPhamManageDTO) {
 		sanPhamManageDTO.getLstHinhAnhMauSacDTO().stream().filter(m -> !m.getImgFiles().isEmpty()).forEach(i ->{
 			Optional<MauSac> optMS = mauSacService.findById(i.getMauSacAddImagesId());
 			sanPhamManageDTO.setIsEdit(true);
@@ -404,15 +383,15 @@ public class SanPhamChiTietController {
 				if(optMS.isPresent()) {
 					hinhAnh.setMauSac(optMS.get());
 					hinhAnhService.save(hinhAnh);
-					model.addAttribute("messageSuccess", "Hoàn tất thành công thêm sản phẩm");
 				}else {
 					model.addAttribute("messageDanger", "Thêm hình ảnh cho sản phẩm có màu: " + i.getMauSacAddImagesId()+" thất bại");		
 				}});
 			});
-		List<SanPhamChiTiet> result = sanPhamChiTietService.getLstSanPhamChiTietExist();
-		model.addAttribute("sanPhamChiTiets", result);
+		model.addAttribute("messageSuccess", "Thêm sản phẩm thành công");
+		List<SanPham> resultSP = sanPhamService.getSanPhamExist();
+		model.addAttribute("sanPhams", resultSP);
 		model.addAttribute("dataSearch", new SPAndSPCTSearchDto());
-		return "admin/product/productManage";
+		return new ModelAndView("admin/product/productManage", model);
 	}
 	
 	@PostMapping("saveOptionValue")

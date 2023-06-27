@@ -198,7 +198,7 @@
                     <div class="card-body">
                         <div class="table-responsive">
                             <table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
-                                <thead class="text-nowrap">
+                                <thead class="text-nowrap text-center">
                                     <tr>
                                         <th>
                                             <div class="checkbox-wrapper-30">
@@ -234,8 +234,13 @@
                                         <!-- <th>Có hiển thị</th> -->
                                         <th>Thao tác</th>
                                     </tr>
+                                    <tr th:if="${sanPhams.size() == 0}">
+                                        <td colspan="9">
+                                            <h4><i>Không có sản phẩm nào phù hợp</i></h4>
+                                        </td>
+                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody class="text-center">
                                     <tr th:each="item, istat : ${sanPhams}">
                                         <th>
                                             <div class="checkbox-wrapper-30">
