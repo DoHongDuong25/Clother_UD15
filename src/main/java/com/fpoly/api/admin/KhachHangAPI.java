@@ -3,7 +3,6 @@ package com.fpoly.api.admin;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -24,13 +23,13 @@ public class KhachHangAPI {
 		return KhachHangService.findAll();
 	}
 	
-	@DeleteMapping("/admin/api/khach-hang/trang-thai-dang-hoat-dong")
+	@PutMapping("/admin/api/khach-hang/trang-thai-dang-hoat-dong")
 	public void deleteKhachHangByTrangThaiDangHoatDong(@RequestBody long[] ids) {
 			KhachHangService.capNhatTrangThaiThanhDangHoatDongTheoMa(ids);
 	}
 	
 	
-	@DeleteMapping("/admin/api/khach-hang/trang-thai-khong-hoat-dong")
+	@PutMapping("/admin/api/khach-hang/trang-thai-khong-hoat-dong")
 	public void deleteKhachHangByTrangThaiKhongHoatDong(@RequestBody long[] ids) {
 			KhachHangService.capNhatTrangThaiThanhKhongHoatDongTheoMa(ids);
 	}

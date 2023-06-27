@@ -1,7 +1,5 @@
 package com.fpoly.repository;
 
-import java.util.List;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -17,14 +15,17 @@ public interface KhachHangRepository extends JpaRepository<KhachHang,Long> {
 	
 	
 	
-	@Query(value="SELECT k FROM KhachHang k WHERE k.trangThai=?1")
+	@Query(value="SELECT k FROM KhachHang k WHERE k.trangThai=?1 ")
 	Page<KhachHang> findAllByTrangThaiCoPhanTrang(int trangThai,Pageable pageable);
 	
-	@Query(value="SELECT k FROM KhachHang k WHERE k.trangThai =:trangThai AND k.soDienThoai LIKE %:soDienThoai%")
-	Page<KhachHang> findAllByTrangThaiVaSoDienThoaiCoPhanTrang(@Param("trangThai")int trangThai,@Param("soDienThoai") String soDienThoai, Pageable pageable);
+	@Query(value="SELECT k FROM KhachHang k WHERE k.trangThai =:trangThai "
+			+ "AND k.soDienThoai LIKE %:input% "
+			+ "OR  k.email LIKE %:input% "
+			+ "OR k.hoTen LIKE %:input% ")
+	Page<KhachHang> findAllByTrangThaiVaSoDienThoaiCoPhanTrang(@Param("trangThai")int trangThai
+			,@Param("input") String input 
+			, Pageable pageable);
 	
-	@Query(value="SELECT k FROM KhachHang k WHERE k.trangThai=?1")
-	List<KhachHang> findAllByTrangThaiKhongCoPhanTrang(int trangThai);
 	
 	@Query(value="SELECT k FROM KhachHang k WHERE k.email=?1")
 	KhachHang findByEmail(String  email);
@@ -39,15 +40,25 @@ public interface KhachHangRepository extends JpaRepository<KhachHang,Long> {
 	void capNhatTrangThaiThanhKhongHoatDongTheoMa(long id);
 	
 	
-	@Query(value="SELECT k FROM KhachHang k WHERE k.soDienThoai LIKE %:dienThoai%")
-	Page<KhachHang> findAllBySoDienThoaiCoPhanTrang(@Param("dienThoai")String dienThoai , Pageable pageable);
+	@Query(value="SELECT k FROM KhachHang k WHERE k.soDienThoai LIKE %:input% "
+			+ "OR  k.email LIKE %:input% "
+			+ "OR k.hoTen LIKE %:input% ")
+	Page<KhachHang> findAllBySoDienThoaiCoPhanTrang(@Param("input")String input , Pageable pageable);
 
 	@Query(value="SELECT count(k) FROM KhachHang k WHERE k.trangThai=?1")
 	int countByTrangThai(Integer trangThai);
 
-	@Query(value="SELECT count(k) FROM KhachHang k WHERE k.soDienThoai LIKE %:soDienThoai%")
-	int countBySoDienThoai(@Param("soDienThoai")String soDienThoai);
+	@Query(value="SELECT count(k) FROM KhachHang k WHERE"
+			+ " k.soDienThoai LIKE %:input% "
+			+ "OR  k.email LIKE %:input% "
+			+ "OR k.hoTen LIKE %:input% "
+			)
+	int countByInput(@Param("input")String input);
 
-	@Query(value="SELECT count(k) FROM KhachHang k WHERE  k.soDienThoai LIKE %:soDienThoai%  AND k.trangThai =:trangThai")
-	int countBySoDienThoaiVaTrangThai(@Param("soDienThoai")String soDienThoai, @Param("trangThai")Integer trangThai);
+	@Query(value="SELECT count(k) FROM KhachHang k WHERE k.trangThai =:trangThai AND "
+			+ "k.soDienThoai LIKE %:input%   "
+			+ "OR  k.email LIKE %:input% "
+			+ "OR k.hoTen LIKE %:input% "
+			)
+	int countByInputVaTrangThai(@Param("input")String input, @Param("trangThai")Integer trangThai);
 }

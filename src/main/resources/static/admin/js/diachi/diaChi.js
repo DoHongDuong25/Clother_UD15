@@ -1,3 +1,75 @@
+$('#formSubmitDiaChi').validate({
+	rules: {
+		city : {
+			required :true ,
+		} ,
+		ward : "required",
+		hoTen : "required",
+		district : {
+			required: true ,
+		},
+		soNha : {
+			required: true ,
+		},
+		soDienThoai : {
+			required: true ,
+		}
+	},
+	messages: {
+		city : {
+			required :"Vui lòng chọn thành phố !" ,
+		},
+		ward : "Vui lòng chọn xã !",
+		hoTen : "Vui lòng nhập họ tên !",
+		district : {
+			required : "Vui lòng chọn huyện !",
+		},
+		soNha : {
+			required : "Vui lòng nhập số nhài !",
+		},
+		soDienThoai : {
+			required : "Vui lòng nhập số điện thoại !",
+		}
+	}
+});
+
+$('#btnThemMoiDiaChi').click(function (e) {
+	//Ko co cai nay la no se submit vao url no dang dung
+	if($('#formSubmitDiaChi').valid()){
+		e.preventDefault();
+		var data = {};
+		var formData = $('#formSubmitDiaChi').serializeArray();
+		$.each(formData,function(i,v){
+			data[""+v.name+""] = v.value;
+		});
+			themDiaChi(data);
+	}
+});
+
+function themDiaChi(data) {
+	$.ajax({
+		url : 'http://localhost:8080/admin/api/dia-chi' ,
+		type : 'POST' ,
+		contentType : 'application/json' ,
+		data : JSON.stringify(data) ,
+		dataType : 'json' ,
+		success : function(result) {
+//				$('#liveToast').html('<div class="toast-header"><strong class="mr-auto">Thông báo !</strong><small>1 giây trước </small><button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close"><span aria-hidden="true">&times;</span></button></div><div class="toast-body"><p class="fw-bold text-success">Thêm mới  địa chỉ thành công !</p></div>');
+//				$('#liveToast').toast('show');
+				setTimeout("location.href = ' http://localhost:8080/admin/khach-hang/danh-sach/chinh-sua?id="+result.khachHangId+"&page=1&message=create_address_success'   ", 2000);
+//			window.location.href = "http://localhost:8080/admin/khach-hang/danh-sach/chinh-sua?id="+result.khachHangId+"&page=1&message=create_address_success" ;
+			
+		},
+		error : function (error) {
+			$('#liveToast').html('<div class="toast-header"><strong class="mr-auto">Thông báo !</strong><small>1 giây trước </small><button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close"><span aria-hidden="true">&times;</span></button></div><div class="toast-body"><p class="fw-bold text-danger">Thêm mới  địa chỉ thất bại !</p></div>');
+			$('#liveToast').toast('show');
+			
+//			window.location.href = "http://localhost:8080/admin/khach-hang/danh-sach/1?message=error_system" ;
+			setTimeout("location.href = ' http://localhost:8080/admin/khach-hang/danh-sach/1?message=error_system'   ", 2000);
+		}
+	});
+};
+
 
 $('#checkAllDiachi').click(function(event) {   
     if(this.checked) {
@@ -34,7 +106,8 @@ function xacNhanXoaDiaChi() {
 					  xoaDiaChi(ids);
 				  }
 			  }else{
-				  window.location.href = "http://localhost:8080/admin/khach-hang/danh-sach?message=error_system" ;
+				  $('#liveToast').html('<div class="toast-header"><strong class="mr-auto">Thông báo !</strong><small>1 giây trước </small><button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close"><span aria-hidden="true">&times;</span></button></div><div class="toast-body"><p class="fw-bold text-danger">Bạn chưa chọn địa chỉ !</p></div>');
+					$('#liveToast').toast('show');
 			  }
 		  }
 		})
@@ -49,7 +122,7 @@ function xoaDiaChi(ids) {
 			window.location.href = "http://localhost:8080/admin/khach-hang/danh-sach/1?message=delete_address_success" ;
 		},
 		error : function (error) {
-			window.location.href = "http://localhost:8080/admin/khach-hang/danh-sach?message=error_system" ;
+			
 		}
 	});
 }

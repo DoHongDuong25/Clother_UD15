@@ -33,6 +33,12 @@ public class DiaChi extends BaseEntity implements Serializable {
 	@Column(name = "dia_chi",columnDefinition = "nvarchar(255) not null")
 	private String diaChi;
 	
+	@Column(name="ho_ten")
+	private String hoTen ; 
+	
+	@Column(name="so_dien_thoai")
+	private String soDienThoai ; 
+	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="khach_hang_id")
 	private KhachHang khachHang ;
