@@ -148,15 +148,14 @@ public class KhachHangServiceImpl implements KhachHangService{
 											return null ;
 										}
 									}
-								}else {
+								}
 									khachHangTonTai.setId(dto.getId());
 									khachHangTonTai.setEmail(dto.getEmail());
 									khachHangTonTai.setHoTen(dto.getHoTen());
 									khachHangTonTai.setMatKhau(dto.getMatKhau());
 									khachHangTonTai.setSoDienThoai(dto.getSoDienThoai());
 									khachHangTonTai.setTrangThai(dto.getTrangThai());
-									khachHangEntity = khachHangTonTai ;
-								}
+								    khachHangEntity = khachHangTonTai ;
 						}else {
 							KhachHang khachHangMoi = new KhachHang();
 							for (KhachHang khachHang : listKhachHang) {
