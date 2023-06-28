@@ -383,6 +383,10 @@
             <button class="btn btn-primary" type="button" onclick="searchAllFields()">Tìm kiếm</button>
         </div>
     </div>
+    <form id="searchForm">
+        <input type="date" name="searchDate" id="searchDate">
+        <button type="submit" id="searchButton">Tìm kiếm</button>
+    </form>
 
     <table id="user-table-allHD" class="table">
         <thead>
@@ -546,7 +550,28 @@
                     note.indexOf(input) > -1
                 ) {
                     rows[i].style.display = "";
-                    found = true; // Đánh dấu đã tìm thấy kết quả
+                    found = true;
+
+                    // Hiển thị nội dung tìm kiếm cộng với loại tìm kiếm
+                    var searchLabel = input;
+                    if (orderId.indexOf(input) > -1) {
+                        searchLabel += " (mã đơn)";
+                    }
+                    if (customerName.indexOf(input) > -1) {
+                        searchLabel += " (khách hàng)";
+                    }
+                    if (phoneNumber.indexOf(input) > -1) {
+                        searchLabel += " (số điện thoại)";
+                    }
+                    if (totalPrice.toString().indexOf(input) > -1) {
+                        searchLabel += " (tổng tiền)";
+                    }
+                    if (note.indexOf(input) > -1) {
+                        searchLabel += " (ghi chú)";
+                    }
+
+                    // Hiển thị nội dung tìm kiếm trong ô input
+                    document.getElementById("search-input-allFields").value = searchLabel;
                 } else {
                     rows[i].style.display = "none";
                 }
@@ -565,6 +590,30 @@
                 timer: 1500
             });
         }
+    }
+</script>
+
+<script th:inline="javascript">
+    $(document).ready(function() {
+        $('#searchForm').submit(function(event) {
+            event.preventDefault(); // Ngăn chặn gửi request mặc định
+            var searchDate = $('#searchDate').val();
+            searchHoaDonByDate(searchDate);
+        });
+    });
+
+    function searchHoaDonByDate(searchDate) {
+        $.ajax({
+            url: '/search', // Đường dẫn đến phương thức xử lý tìm kiếm trong Controller
+            type: 'GET',
+            data: { searchDate: searchDate },
+            success: function(result) {
+                $('#user-table-allHD').html(result);
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });
     }
 </script>
 

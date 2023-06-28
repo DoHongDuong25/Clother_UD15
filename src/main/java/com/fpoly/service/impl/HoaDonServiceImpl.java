@@ -11,6 +11,7 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -36,5 +37,10 @@ public class HoaDonServiceImpl implements HoaDonService {
     @Override
     public Page<HoaDon> getAll(Pageable pageable) {
         return hoaDonRepository2.findAll(pageable);
+    }
+
+    @Override
+    public List<HoaDon> searchByDate(Date searchDate) {
+        return hoaDonRepository.findByNgayTao(searchDate);
     }
 }

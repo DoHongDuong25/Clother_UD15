@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.fpoly.entity.HoaDon;
 
+import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -18,6 +19,8 @@ public interface HoaDonRepository extends CrudRepository<HoaDon, Long> {
     List<HoaDon> findByTrangThaiHoaDonListTrangThai(int trangThai);
     @Query(value = "SELECT * FROM hoa_don WHERE loai_hoa_don = :loai", nativeQuery = true)
     List<HoaDon> finHDByLoaiHD(@Param("loai") Integer loai);
+
+    List<HoaDon> findByNgayTao(Date ngayTao);
 }
 
 
