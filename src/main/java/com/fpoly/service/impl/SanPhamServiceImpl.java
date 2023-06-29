@@ -37,13 +37,13 @@ public class SanPhamServiceImpl implements SanPhamService{
 	}
 
 	@Override
-	public List<SanPham> getSanPhamExist() {
-		return sanPhamRepository.getSanPhamExist();
+	public Page<SanPham> getSanPhamExist(Pageable pageable) {
+		return sanPhamRepository.getSanPhamExist(pageable);
 	}
 	
 	@Override
-	public List<SanPham> searchProductExist(SPAndSPCTSearchDto data) {
-		return sanPhamSearchRepository.searchProductExist(data);
+	public Page<SanPham> searchProductExist(SPAndSPCTSearchDto data, Pageable pageable) {
+		return sanPhamSearchRepository.searchProductExist(data, pageable);
 	}	
 	
 	

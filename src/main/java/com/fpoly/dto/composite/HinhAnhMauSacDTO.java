@@ -24,6 +24,8 @@ public class HinhAnhMauSacDTO {
 	
 	private List<MultipartFile> imgFiles;
 	
+	private List<String> imgFilesString;
+	
 	private Integer laAnhChinh;
 	
 	private String tenMauSacAddImg;

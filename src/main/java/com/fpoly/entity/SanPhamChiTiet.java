@@ -55,9 +55,6 @@ public class SanPhamChiTiet extends BaseEntity implements Serializable{
 	@OneToMany(mappedBy = "sanPhamChiTiet", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<HoaDonChiTiet> hoaDonChiTiets;
 	
-	@OneToMany(mappedBy = "sanPhamChiTiet", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<HinhAnh> hinhAnhs;
-	
 	@Column
 	private Boolean coHienThi;
 	
