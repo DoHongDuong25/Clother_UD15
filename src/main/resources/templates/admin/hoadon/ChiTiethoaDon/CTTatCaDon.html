@@ -316,29 +316,87 @@
 
     </style>
 
+    <style>
+        .card-title {
+            text-align: center;
+        }
+
+        body {
+            background: #eee;
+            margin-top: 20px;
+        }
+
+        .hori-timeline .events {
+            border-top: 3px solid #e9ecef;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .hori-timeline .events .event-list {
+            display: block;
+            position: relative;
+            text-align: center;
+            padding-top: 70px;
+            margin-right: 0;
+            width: 19.5%;
+            flex: 0 0 19.5%;
+            padding-bottom: 30px;
+        }
+
+        .hori-timeline .events .event-list:before {
+            content: "";
+            position: absolute;
+            height: 36px;
+            border-right: 2px dashed #dee2e6;
+            top: 0;
+        }
+
+        .hori-timeline .events .event-list .event-date {
+            position: absolute;
+            top: 20px;
+            left: 0;
+            right: 0;
+            width: 90px;
+            margin: 0 auto;
+            border-radius: 4px;
+            padding: 2px 4px;
+        }
+
+        @media (max-width: 900px) {
+            .hori-timeline .events .event-list {
+                width: 100%;
+                flex: 0 0 100%;
+            }
+        }
+
+        .bg-soft-primary {
+            background-color: rgba(64, 144, 203, 0.3) !important;
+        }
+
+        .bg-soft-success {
+            background-color: rgba(71, 189, 154, 0.3) !important;
+        }
+
+        .bg-soft-danger {
+            background-color: rgba(231, 76, 94, 0.3) !important;
+        }
+
+        .bg-soft-warning {
+            background-color: rgba(249, 213, 112, 0.3) !important;
+        }
+
+        .card {
+            border: none;
+            margin-bottom: 24px;
+            -webkit-box-shadow: 0 0 13px 0 rgba(236, 236, 241, 0.44);
+            box-shadow: 0 0 13px 0 rgba(236, 236, 241, 0.44);
+        }
+    </style>
+
     <script th:inline="javascript">
-        function redirectToTatCaDon() {
+        function quayLai() {
             window.location.href = "/admin/DonHang/TatCaDon";
-        }
-
-        function redirectToChoxacNhan() {
-            window.location.href = "/admin/DonHang/ChoXacNhanDonHang";
-        }
-
-        function redirectToChoGiaoHang() {
-            window.location.href = "/admin/DonHang/ChoGiaoHang";
-        }
-
-        function redirectToDangGiao() {
-            window.location.href = "/admin/DonHang/DangGiaoHang";
-        }
-
-        function redirectToDaGiao() {
-            window.location.href = "/admin/DonHang/DaGiaoHang";
-        }
-
-        function redirectToDahuy() {
-            window.location.href = "/admin/DonHang/DaHuyHang";
         }
     </script>
 
@@ -346,197 +404,115 @@
 
 <body>
 <div class="container" layout:fragment="content">
-    <div class="tab-buttons">
-        <button class="tab-button active" onclick="redirectToTatCaDon()">Tất cả đơn</button>
-        <button class="tab-button" onclick="redirectToChoxacNhan()">Chờ xác nhận</button>
-        <button class="tab-button" onclick="redirectToChoGiaoHang()">Chờ giao hàng</button>
-        <button class="tab-button" onclick="redirectToDangGiao()">Đang giao</button>
-        <button class="tab-button" onclick="redirectToDaGiao()">Đã giao</button>
-        <button class="tab-button" onclick="redirectToDahuy()">Đã hủy</button>
+    <h1>CHI TIẾT HÓA ĐƠN</h1>
+
+    <div th:object="${hoaDon}">
+        <p>Mã đơn: <span th:text="${hoaDon.maDon}"></span></p>
+        <p>Ngày tạo: <span th:text="${#dates.format(hoaDon.ngayTao, 'dd/MM/yyyy')}"></span></p>
+        <p>Tên khách hàng: <span th:text="${hoaDon.khachHang.hoTen}"></span></p>
+        <table class="table">
+            <thead>
+            <tr>
+                <th data-field="state" data-checkbox="true"></th>
+                <th scope="col">Tên sản phẩm</th>
+                <th scope="col">Đơn giá</th>
+                <th scope="col">Số lượng</th>
+                <th scope="col">Thành tiền</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr th:each="hdct : ${hoaDon.hoaDonChiTiets}">
+                <td></td>
+                <td
+                        th:text="${hdct.sanPhamChiTiet.sanPham.getTenSanPham()}">
+                </td>
+                <td th:text="${hdct.donGia}"></td>
+                <td th:text="${hdct.soLuong}"></td>
+                <td th:text="${hdct.tongTien}"></td>
+            </tr>
+            </tbody>
+        </table>
+
+        <p>Tổng tiền:
+            <span th:text="${hoaDon.tongTienDonHang}"></span>
+        </p>
     </div>
 
-    <h1>Tất cả đơn</h1>
-
-    <div class="input-group mb-3">
-        <input type="text" class="form-control" placeholder="Tìm kiếm..." id="search-input-allFields">
-        <div class="input-group-append">
-            <button class="btn btn-primary" type="button" onclick="searchAllFields()">Tìm kiếm</button>
-        </div>
-
-        <input type="date" class="form-control" id="search-input-date-allHD">
-        <button class="btn btn-primary" type="button" onclick="searchByCreationDate()">
-            <i class="fas fa-search"></i>
-        </button>
-
-        <select id="filterStatus">
-            <option value="">Tất cả</option>
-            <option value="Chờ xác nhận">Chờ xác nhận</option>
-            <option value="Chờ giao hàng">Chờ giao hàng</option>
-            <option value="Đang giao hàng">Đang giao hàng</option>
-            <option value="Đã giao">Đã giao</option>
-            <option value="Đã hủy">Đã hủy</option>
-        </select>
-    </div>
-
-    <table id="user-table-allHD" class="table">
-        <thead>
-        <tr>
-            <th data-field="state" data-checkbox="true"></th>
-            <th scope="col">Mã đơn</th>
-            <th scope="col">Khách hàng</th>
-            <th scope="col">Số điện thoại</th>
-            <th scope="col">Ngày tạo đơn</th>
-            <th scope="col">Tổng tiền</th>
-            <th scope="col">Ghi chú</th>
-            <th scope="col">Trạng thái đơn</th>
-            <th scope="col">Xem chi tiết</th>
-        </tr>
-
-        </thead>
-        <tbody>
-        <tr th:each="hoaDon : ${getAllHoaDon}">
-            <td class="bs-checkbox"><input data-index="0" name="btSelectItem" type="checkbox"></td>
-            <th scope="row" th:text="${hoaDon.maDon}"></th>
-            <td th:text="${hoaDon.khachHang.hoTen}"></td>
-            <td th:text="${hoaDon.sdtNguoiNhan}"></td>
-            <td th:text="${#dates.format(hoaDon.ngayTao, 'dd/MM/yyyy')}"></td>
-            <td th:text="${hoaDon.tongTienHoaDon}"></td>
-            <td th:text="${hoaDon.ghiChu}"></td>
-            <td th:text="${hoaDon.trangThai.name}"></td>
-            <td>
-                <div class="button-group-a">
-                    <!--XEM CHI TIẾT HÓA ĐƠN-->
-                    <div class="btn-group">
-                        <a th:href="@{'/ChiTietHoaDon/TatCaDon' + ${hoaDon.id}}" class="btn btn-warning btn-sm"
-                           type="submit">
-                            <i class="fas fa-info-circle"></i>
-                        </a>
+<!--    TIME LINE-->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="hori-timeline" dir="ltr">
+                            <ul class="list-inline events">
+                                <li class="list-inline-item event-list" th:each="giaoDich1 : ${timeLineChoXacNhan}">
+                                    <div class="px-4">
+                                        <div class="event-date bg-soft-primary text-primary"><span
+                                                th:text="${#dates.format(giaoDich1.ngayTao, 'dd/MM/yyyy')}"></span></div>
+                                        <h5 class="font-size-16">Chờ xác nhận</h5>
+                                        <p class="text-muted">Thao tác: Tạo đơn hàng</p>
+                                        <p class="text-muted">Người thao tác: <span th:text="${giaoDich1.nguoiTao}"></span>
+                                        </p>
+                                    </div>
+                                </li>
+                                <li class="list-inline-item event-list" th:each="giaoDich : ${timeLineChoGiaoHang}">
+                                    <div class="px-4">
+                                        <div class="event-date bg-soft-success text-success"><span
+                                                th:text="${#dates.format(giaoDich.ngayTao, 'dd/MM/yyyy')}"></span></div>
+                                        <h5 class="font-size-16">Chờ giao hàng</h5>
+                                        <p class="text-muted">Thao tác: Xác nhận đơn</p>
+                                        <p class="text-muted">Người thao tác: <span th:text="${giaoDich.nguoiTao}"></span>
+                                        </p>
+                                    </div>
+                                </li>
+                                <li class="list-inline-item event-list" th:each="giaoDich2 : ${timeLineDangGiaoHang}">
+                                    <div class="px-4">
+                                        <div class="event-date bg-soft-success text-success"><span
+                                                th:text="${#dates.format(giaoDich2.ngayTao, 'dd/MM/yyyy')}"></span></div>
+                                        <h5 class="font-size-16">Đang giao hàng</h5>
+                                        <p class="text-muted">Thao tác: Giao hàng cho đơn vị vận chuyển</p>
+                                        <p class="text-muted">Người thao tác: <span th:text="${giaoDich2.nguoiTao}"></span>
+                                        </p>
+                                    </div>
+                                </li>
+                                <li class="list-inline-item event-list" th:each="giaoDich3 : ${timeLineDaGiaoHang}">
+                                    <div class="px-4">
+                                        <div class="event-date bg-soft-success text-success"><span
+                                                th:text="${#dates.format(giaoDich3.ngayTao, 'dd/MM/yyyy')}"></span></div>
+                                        <h5 class="font-size-16">Đã giao hàng</h5>
+                                        <p class="text-muted">Đã giao hàng</p>
+                                        <p class="text-muted">Người thao tác: <span th:text="${giaoDich3.nguoiTao}"></span>
+                                        </p>
+                                    </div>
+                                </li>
+                                <li class="list-inline-item event-list" th:each="giaoDich4 : ${timeLineHuyDonHang}">
+                                    <div class="px-4">
+                                        <div class="event-date bg-soft-success text-success"><span th:text="${#dates.format(giaoDich4.ngayTao, 'dd/MM/yyyy')}"></span></div>
+                                        <h5 class="font-size-16">Đơn hàng bị hủy</h5>
+                                        <p class="text-muted">Thao tác: Hủy đơn hàng</p>
+                                        <p class="text-muted">Người thao tác: <span th:text="${giaoDich4.nguoiTao}"></span></p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-    <div>
-        <ul class="pagination" th:classappend="${totalPages > 0} ? '' : 'pagination-empty'">
-            <li th:each="pageNumber : ${#numbers.sequence(0, totalPages - 1)}">
-                <a th:href="@{/admin/DonHang/TatCaDon(page=${pageNumber})}" th:text="${pageNumber}"></a>
-            </li>
-        </ul>
+            </div>
+        </div>
     </div>
-    <div class="alert alert-warning container mt-3" th:if="${#lists.isEmpty(getAllHoaDon)}">
-        Không có dữ liệu
+
+    <div class="button-group">
+        <button class="action-button" onclick="quayLai()">Quay lại
+            <i class="fas fa-arrow-left"></i>
+        </button>
     </div>
 </div>
 
 </body>
 
 </html>
-
-<!--TÌM KIẾM TẤT CẢ ĐƠN-->
-<script th:inline="javascript">
-    function searchAllFields() {
-        var input = document.getElementById("search-input-allFields").value.trim().toLowerCase();
-        var table = document.getElementById("user-table-allHD");
-        var rows = table.getElementsByTagName("tr");
-
-        var found = false; // Biến kiểm tra xem đã tìm thấy kết quả hay chưa
-
-        for (var i = 0; i < rows.length; i++) {
-            var orderIdCell = rows[i].getElementsByTagName("th")[0];
-            var customerNameCell = rows[i].getElementsByTagName("td")[1];
-            var phoneNumberCell = rows[i].getElementsByTagName("td")[2];
-            var totalPriceCell = rows[i].getElementsByTagName("td")[4];
-            var noteCell = rows[i].getElementsByTagName("td")[5];
-
-            if (orderIdCell && customerNameCell && phoneNumberCell && totalPriceCell && noteCell) {
-                var orderId = orderIdCell.textContent.trim().toLowerCase();
-                var customerName = customerNameCell.textContent.trim().toLowerCase();
-                var phoneNumber = phoneNumberCell.textContent.trim().toLowerCase();
-                var totalPrice = parseFloat(totalPriceCell.textContent.replace(/[^0-9.]/g, ''));
-                var note = noteCell.textContent.trim().toLowerCase();
-
-                if (
-                    orderId.indexOf(input) > -1 ||
-                    customerName.indexOf(input) > -1 ||
-                    phoneNumber.indexOf(input) > -1 ||
-                    totalPrice.toString().indexOf(input) > -1 ||
-                    note.indexOf(input) > -1
-                ) {
-                    rows[i].style.display = "";
-                    found = true;
-                } else {
-                    rows[i].style.display = "none";
-                }
-            }
-        }
-
-        if (!found) {
-            Array.from(rows).forEach(function (row) {
-                row.style.display = ""; // Hiển thị lại tất cả các dòng
-            });
-
-            Swal.fire({
-                icon: 'warning',
-                title: 'Không tìm thấy',
-                showConfirmButton: false,
-                timer: 1500
-            });
-        }
-    }
-</script>
-
-<!--TÌM KIẾM THEO NGÀY-->
-<script th:inline="javascript">
-    function searchByCreationDate() {
-        var inputDate = document.getElementById("search-input-date-allHD").value;
-        var table = document.getElementById("user-table-allHD");
-        var rows = table.getElementsByTagName("tr");
-
-        for (var i = 0; i < rows.length; i++) {
-            var creationDateCell = rows[i].getElementsByTagName("td")[3]; // Điều chỉnh chỉ mục nếu cần thiết
-
-            if (creationDateCell) {
-                var creationDate = creationDateCell.innerText;
-                var formattedCreationDate = formatDate(creationDate);
-                console.log(formattedCreationDate);
-
-                if (formattedCreationDate === inputDate) {
-                    rows[i].style.display = "";
-                } else {
-                    rows[i].style.display = "none";
-                }
-            }
-        }
-    }
-
-    function formatDate(dateString) {
-        var parts = dateString.split("/");
-        var day = parts[0];
-        var month = parts[1];
-        var year = parts[2];
-        return year + "-" + month + "-" + day;
-    }
-</script>
-
-<!--TÌM KIẾM THEO TRẠNG THÁI-->
-<script th:inline="javascript">
-    // Lắng nghe sự kiện khi người dùng thay đổi giá trị của menu dropdown
-    $(document).ready(function () {
-        $('#filterStatus').on('change', function () {
-            var selectedStatus = $(this).val();
-            $('table#user-table-allHD tbody tr').each(function () {
-                var rowStatus = $(this).find('td:eq(6)').text(); // Lấy giá trị trạng thái từ cột thứ 8 (index 7)
-                if (selectedStatus === '' || rowStatus === selectedStatus) {
-                    $(this).show();
-                } else {
-                    $(this).hide();
-                }
-            });
-        });
-    });
-</script>
-
 
 
 

@@ -49,6 +49,7 @@
         .fas.fa-history:before {
             content: "\f1da"; /* Mã Unicode tương ứng với biểu tượng "fa-history" */
         }
+
         #modalChiTiet .modal-dialog {
             max-width: 1400px;
             width: 1400px;
@@ -57,6 +58,7 @@
         #modalChiTiet .modal-content {
             height: 450px;
         }
+
         .pagination {
             list-style-type: none;
             display: flex;
@@ -465,31 +467,83 @@
 
     </style>
 
-    <script th:inline="javascript">
-        function redirectToTatCaDon() {
-            window.location.href = "/admin/DonHang/TatCaDon";
+    <style>
+        .card-title {
+            text-align: center;
         }
 
-        function redirectToChoxacNhan() {
-            window.location.href = "/admin/DonHang/ChoXacNhanDonHang";
+        body {
+            background: #eee;
+            margin-top: 20px;
         }
 
-        function redirectToChoGiaoHang() {
-            window.location.href = "/admin/DonHang/ChoGiaoHang";
+        .hori-timeline .events {
+            border-top: 3px solid #e9ecef;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
         }
 
-        function redirectToDangGiao() {
-            window.location.href = "/admin/DonHang/DangGiaoHang";
+        .hori-timeline .events .event-list {
+            display: block;
+            position: relative;
+            text-align: center;
+            padding-top: 70px;
+            margin-right: 0;
+            width: 19.5%;
+            flex: 0 0 19.5%;
+            padding-bottom: 30px;
         }
 
-        function redirectToDaGiao() {
-            window.location.href = "/admin/DonHang/DaGiaoHang";
+        .hori-timeline .events .event-list:before {
+            content: "";
+            position: absolute;
+            height: 36px;
+            border-right: 2px dashed #dee2e6;
+            top: 0;
         }
 
-        function redirectToDahuy() {
-            window.location.href = "/admin/DonHang/DaHuyHang";
+        .hori-timeline .events .event-list .event-date {
+            position: absolute;
+            top: 20px;
+            left: 0;
+            right: 0;
+            width: 90px;
+            margin: 0 auto;
+            border-radius: 4px;
+            padding: 2px 4px;
         }
-    </script>
+
+        @media (max-width: 900px) {
+            .hori-timeline .events .event-list {
+                width: 100%;
+                flex: 0 0 100%;
+            }
+        }
+
+        .bg-soft-primary {
+            background-color: rgba(64, 144, 203, 0.3) !important;
+        }
+
+        .bg-soft-success {
+            background-color: rgba(71, 189, 154, 0.3) !important;
+        }
+
+        .bg-soft-danger {
+            background-color: rgba(231, 76, 94, 0.3) !important;
+        }
+
+        .bg-soft-warning {
+            background-color: rgba(249, 213, 112, 0.3) !important;
+        }
+
+        .card {
+            border: none;
+            margin-bottom: 24px;
+            -webkit-box-shadow: 0 0 13px 0 rgba(236, 236, 241, 0.44);
+            box-shadow: 0 0 13px 0 rgba(236, 236, 241, 0.44);
+        }
+    </style>
 
     <!-- JS ĐANG GIAO -> ĐÃ GIAO -->
     <script th:inline="javascript">
@@ -518,8 +572,7 @@
                             // Lưu trạng thái đã xác nhận vào sessionStorage
                             sessionStorage.setItem('isConfirmed', true);
 
-                            // Tải lại trang
-                            location.reload();
+                            window.location.href = "/admin/DonHang/DangGiaoHang";
                         });
                     });
 
@@ -536,107 +589,131 @@
         });
     </script>
 
-    <!-- JS HOÀN THÀNH TẤT CẢ-->
     <script th:inline="javascript">
-        $(document).ready(function () {
-            $('#HoanThanhTatCa').click(function () {
-                // Kiểm tra số lượng hàng trong bảng
-                var rowCount = $('#user-table-DangGiao tbody tr').length;
-
-                // Kiểm tra nếu không có dữ liệu
-                if (rowCount === 0) {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Lỗi',
-                        text: 'Không có dữ liệu',
-                        showConfirmButton: false,
-                        timer: 2000
-                    });
-                    return; // Dừng thực hiện các lệnh tiếp theo
-                }
-
-                var hoaDonId = $(this).data('id');
-
-                // Lưu trạng thái tab hiện tại vào sessionStorage
-                var activeTab = $('.nav-link.active').attr('href');
-                sessionStorage.setItem('activeTab', activeTab);
-
-                // Hiển thị modal xác nhận
-                $('.hoanThanhTatCaModal').modal('show');
-
-                // Xử lý sự kiện khi bấm nút Đồng ý
-                $('.hoanThanhTatCaModal .btn-dong-y').click(function () {
-                    // Gửi yêu cầu hoàn thành tất cả bằng Ajax
-                    $.get('/updateThanhCongAll', function (response) {
-                        // Hiển thị thông báo thành công
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Xác nhận đã giao thành công tất cả các đơn',
-                            showConfirmButton: false,
-                            timer: 2000
-                        }).then(function () {
-                            // Lưu trạng thái đã xác nhận vào sessionStorage
-                            sessionStorage.setItem('isConfirmed', true);
-
-                            // Tải lại trang
-                            location.reload();
-                        });
-                    });
-
-                    // Đóng modal
-                    $('.hoanThanhTatCaModal').modal('hide');
-                });
-
-                // Xử lý sự kiện khi bấm nút Không
-                $('.hoanThanhTatCaModal .btn-khong').click(function () {
-                    // Đóng modal
-                    $('.hoanThanhTatCaModal').modal('hide');
-                });
-            });
-        });
+        function quayLai() {
+            window.location.href = "/admin/DonHang/DangGiaoHang";
+        }
     </script>
-
 </head>
 
 <body>
 <div class="container" layout:fragment="content">
-    <div class="tab-buttons">
-        <button class="tab-button" onclick="redirectToTatCaDon()">Tất cả đơn</button>
-        <button class="tab-button" onclick="redirectToChoxacNhan()">Chờ xác nhận</button>
-        <button class="tab-button" onclick="redirectToChoGiaoHang()">Chờ giao hàng</button>
-        <button class="tab-button active" onclick="redirectToDangGiao()">Đang giao</button>
-        <button class="tab-button" onclick="redirectToDaGiao()">Đã giao</button>
-        <button class="tab-button" onclick="redirectToDahuy()">Đã hủy</button>
+    <h1>CHI TIẾT HÓA ĐƠN</h1>
+
+    <div th:object="${hoaDon}">
+        <p>Mã đơn: <span th:text="${hoaDon.maDon}"></span></p>
+        <p>Ngày tạo: <span th:text="${#dates.format(hoaDon.ngayTao, 'dd/MM/yyyy')}"></span></p>
+        <p>Tên khách hàng: <span th:text="${hoaDon.khachHang.hoTen}"></span></p>
+        <table class="table">
+            <thead>
+            <tr>
+                <th data-field="state" data-checkbox="true"></th>
+                <th scope="col">Tên sản phẩm</th>
+                <th scope="col">Đơn giá</th>
+                <th scope="col">Số lượng</th>
+                <th scope="col">Thành tiền</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr th:each="hdct : ${hoaDon.hoaDonChiTiets}">
+                <td></td>
+                <td
+                        th:text="${hdct.sanPhamChiTiet.sanPham.getTenSanPham()}">
+                </td>
+                <td th:text="${hdct.donGia}"></td>
+                <td th:text="${hdct.soLuong}"></td>
+                <td th:text="${hdct.tongTien}"></td>
+            </tr>
+            </tbody>
+        </table>
+
+        <p>Tổng tiền:
+            <span th:text="${hoaDon.tongTienDonHang}"></span>
+        </p>
     </div>
-    <h1>
-        Đang giao
-    </h1>
-    <div class="hduong">
-        <input type="text" class="form-control custom-input" placeholder="Tìm kiếm..."
-               id="search-input-dangGiao">
-        <div class="input-group-append">
-            <button class="btn btn-primary btnTimKiem" type="button" onclick="searchByIdDangGiao()">Tìm kiếm
-            </button>
+
+    <!--TIME LINE-->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="hori-timeline" dir="ltr">
+                            <ul class="list-inline events">
+                                <li class="list-inline-item event-list" th:each="giaoDich1 : ${timeLineChoXacNhan}">
+                                    <div class="px-4">
+                                        <div class="event-date bg-soft-primary text-primary"><span
+                                                th:text="${#dates.format(giaoDich1.ngayTao, 'dd/MM/yyyy')}"></span>
+                                        </div>
+                                        <h5 class="font-size-16">Chờ xác nhận</h5>
+                                        <p class="text-muted">Thao tác: Tạo đơn hàng</p>
+                                        <p class="text-muted">Người thao tác: <span
+                                                th:text="${giaoDich1.nguoiTao}"></span>
+                                        </p>
+                                    </div>
+                                </li>
+                                <li class="list-inline-item event-list" th:each="giaoDich : ${timeLineChoGiaoHang}">
+                                    <div class="px-4">
+                                        <div class="event-date bg-soft-success text-success"><span
+                                                th:text="${#dates.format(giaoDich.ngayTao, 'dd/MM/yyyy')}"></span></div>
+                                        <h5 class="font-size-16">Chờ giao hàng</h5>
+                                        <p class="text-muted">Thao tác: Xác nhận đơn</p>
+                                        <p class="text-muted">Người thao tác: <span
+                                                th:text="${giaoDich.nguoiTao}"></span>
+                                        </p>
+                                    </div>
+                                </li>
+                                <li class="list-inline-item event-list" th:each="giaoDich2 : ${timeLineDangGiaoHang}">
+                                    <div class="px-4">
+                                        <div class="event-date bg-soft-success text-success"><span
+                                                th:text="${#dates.format(giaoDich2.ngayTao, 'dd/MM/yyyy')}"></span>
+                                        </div>
+                                        <h5 class="font-size-16">Đang giao hàng</h5>
+                                        <p class="text-muted">Thao tác: Giao hàng cho đơn vị vận chuyển</p>
+                                        <p class="text-muted">Người thao tác: <span
+                                                th:text="${giaoDich2.nguoiTao}"></span>
+                                        </p>
+                                    </div>
+                                </li>
+                                <li class="list-inline-item event-list">
+                                    <div class="px-4">
+                                        <div class="event-date bg-soft-success text-success">Không</div>
+                                        <h5 class="font-size-16">Đã giao hàng</h5>
+                                        <p class="text-muted">Đơn hàng đã được giao</p>
+                                    </div>
+                                </li>
+                                <li class="list-inline-item event-list">
+                                    <div class="px-4">
+                                        <div class="event-date bg-soft-success text-success">Không</div>
+                                        <h5 class="font-size-16">Đơn hàng bị hủy</h5>
+                                        <p class="text-muted">Thao tác: Hủy đơn hàng</p>
+                                        <p class="text-muted">Người thao tác: Không có dữ liệu</span></p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <input type="date" class="form-control" id="search-input-date-DangGiao">
-        <button class="btn btn-primary" type="button" onclick="searchByCreationDate()">
-            <i class="fas fa-search"></i>
+        <!--UPDATE GIAO HÀNG THÀNH CÔNG-->
+        <button class="action-button DaGiao" th:attr="data-id=${hoaDon.id}"> Xác nhận đơn hàng đã giao
+            <i class="fas fa-check-circle"></i>
         </button>
-    </div>
-    <div class="hduong1">
-        <button id="HoanThanhTatCa" class="b1">Hoàn thành tất cả</button>
-        <div class="modal fade hoanThanhTatCaModal" tabindex="-1" aria-labelledby="hoanThanhTatCaModalLabel"
+        <br>
+        <div class="modal fade giaoHangTCModal" tabindex="-1" aria-labelledby="giaoHangTCModalLabel"
              aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="hoanThanhTatCaModalLabel">Xác nhận đơn</h5>
+                        <h5 class="modal-title" id="giaoHangTCModalLabel">Xác nhận đơn</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                 aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        Xác nhận giao thành công tất cả đơn hàng?
+                        Xác nhận giao hàng thành công?
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-primary btn-dong-y">Đồng ý</button>
@@ -648,169 +725,17 @@
             </div>
         </div>
     </div>
-    <table id="user-table-DangGiao" class="table">
-        <thead>
-        <tr>
-            <th data-field="state" data-checkbox="true"></th>
-            <th scope="col">Mã đơn</th>
-            <th scope="col">Họ tên</th>
-            <th scope="col">Số điện thoại</th>
-            <th scope="col">Ngày tạo đơn</th>
-            <th scope="col">Tổng tiền</th>
-            <th scope="col">Ghi chú</th>
-            <th scope="col">Thao tác</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="hoaDon : ${dangtGiao}">
-            <td class="bs-checkbox"><input data-index="0" name="btSelectItem" type="checkbox"></td>
-            <th scope="row" th:text="${hoaDon.maDon}"></th>
-            <td th:text="${hoaDon.khachHang.hoTen}"></td>
-            <td th:text="${hoaDon.sdtNguoiNhan}"></td>
-            <td th:text="${#dates.format(hoaDon.ngayTao, 'dd/MM/yyyy')}"></td>
-            <td th:text="${hoaDon.tongTienHoaDon}"></td>
-            <td th:text="${hoaDon.ghiChu}"></td>
-            <td>
-                <div class="button-group">
-                    <!--UPDATE GIAO HÀNG THÀNH CÔNG-->
-                    <button class="action-button DaGiao" th:attr="data-id=${hoaDon.id}">
-                        <i class="fas fa-check-circle"></i>
-                    </button>
-                    <br>
-                    <div class="modal fade giaoHangTCModal" tabindex="-1" aria-labelledby="giaoHangTCModalLabel"
-                         aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="giaoHangTCModalLabel">Xác nhận đơn</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    Xác nhận giao hàng thành công?
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-primary btn-dong-y">Đồng ý</button>
-                                    <button type="button" class="btn btn-secondary btn-khong"
-                                            data-bs-dismiss="modal">Không
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 
-                    <!--XEM CHI TIẾT HÓA ĐƠN-->
-                    <div class="btn-group">
-                        <a th:href="@{'/ChiTietHoaDon/DangGiaoHang' + ${hoaDon.id}}" class="btn btn-warning btn-sm" type="submit">
-                            <i class="fas fa-info-circle"></i>
-                        </a>
-                    </div>
-
-                </div>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-    <div>
-        <ul class="pagination" th:classappend="${pageDangGiao > 0} ? '' : 'pagination-empty'">
-            <li th:each="pageNumber : ${#numbers.sequence(0, pageDangGiao - 1)}">
-                <a th:href="@{/admin/DonHang/DangGiaoHang(page=${pageNumber})}" th:text="${pageNumber}"></a>
-            </li>
-        </ul>
-    </div>
-    <div class="alert alert-warning container mt-3 text-center" th:if="${#lists.isEmpty(dangtGiao)}"
-         style="background-color: transparent; border: none;">
-        <span style="font-size: 1.2em;">Không có dữ liệu</span>
+    <div class="button-group">
+        <button class="action-button" onclick="quayLai()">Quay lại
+            <i class="fas fa-arrow-left"></i>
+        </button>
     </div>
 </div>
 
 </body>
 
 </html>
-
-<!-- JS TÌM HÓA ĐƠN ĐANG GIAO HÀNG-->
-<script th:inline="javascript">
-    function searchByIdDangGiao() {
-        var input = document.getElementById("search-input-dangGiao").value.trim().toLowerCase();
-        var table = document.getElementById("user-table-DangGiao");
-        var rows = table.getElementsByTagName("tr");
-
-        var found = false; // Biến kiểm tra xem đã tìm thấy kết quả hay chưa
-
-        for (var i = 0; i < rows.length; i++) {
-            var orderIdCell = rows[i].getElementsByTagName("th")[0];
-            var customerNameCell = rows[i].getElementsByTagName("td")[1];
-            var phoneNumberCell = rows[i].getElementsByTagName("td")[2];
-            var totalPriceCell = rows[i].getElementsByTagName("td")[4];
-            var noteCell = rows[i].getElementsByTagName("td")[5];
-
-            if (orderIdCell && customerNameCell && phoneNumberCell && totalPriceCell && noteCell) {
-                var orderId = orderIdCell.textContent.trim().toLowerCase();
-                var customerName = customerNameCell.textContent.trim().toLowerCase();
-                var phoneNumber = phoneNumberCell.textContent.trim().toLowerCase();
-                var totalPrice = parseFloat(totalPriceCell.textContent.replace(/[^0-9.]/g, ''));
-                var note = noteCell.textContent.trim().toLowerCase();
-
-                if (
-                    orderId.indexOf(input) > -1 ||
-                    customerName.indexOf(input) > -1 ||
-                    phoneNumber.indexOf(input) > -1 ||
-                    totalPrice.toString().indexOf(input) > -1 ||
-                    note.indexOf(input) > -1
-                ) {
-                    rows[i].style.display = "";
-                    found = true; // Đánh dấu đã tìm thấy kết quả
-                } else {
-                    rows[i].style.display = "none";
-                }
-            }
-        }
-
-        if (!found) {
-            Array.from(rows).forEach(function (row) {
-                row.style.display = ""; // Hiển thị lại tất cả các dòng
-            });
-
-            Swal.fire({
-                icon: 'warning',
-                title: 'Không tìm thấy',
-                showConfirmButton: false,
-                timer: 1500
-            });
-        }
-    }
-</script>
-
-<script th:inline="javascript">
-    function searchByCreationDate() {
-        var inputDate = document.getElementById("search-input-date-DangGiao").value;
-        var table = document.getElementById("user-table-DangGiao");
-        var rows = table.getElementsByTagName("tr");
-
-        for (var i = 0; i < rows.length; i++) {
-            var creationDateCell = rows[i].getElementsByTagName("td")[3]; // Điều chỉnh chỉ mục nếu cần thiết
-
-            if (creationDateCell) {
-                var creationDate = creationDateCell.innerText;
-                var formattedCreationDate = formatDate(creationDate);
-
-                if (formattedCreationDate === inputDate) {
-                    rows[i].style.display = "";
-                } else {
-                    rows[i].style.display = "none";
-                }
-            }
-        }
-    }
-
-    function formatDate(dateString) {
-        var parts = dateString.split("/");
-        var day = parts[0];
-        var month = parts[1];
-        var year = parts[2];
-        return year + "-" + month + "-" + day;
-    }
-</script>
 
 
 

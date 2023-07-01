@@ -41,6 +41,7 @@
         .fas.fa-history:before {
             content: "\f1da"; /* Mã Unicode tương ứng với biểu tượng "fa-history" */
         }
+
         #modalChiTiet .modal-dialog {
             max-width: 1400px;
             width: 1400px;
@@ -650,26 +651,6 @@
         });
     </script>
 
-    <!-- TIMELINE-->
-    <script th:inline="javascript">
-        $(document).ready(function () {
-            $('#modalChiTiet').on('show.bs.modal', function (event) {
-                var button = $(event.relatedTarget);
-                var hoaDonId = button.data('id');
-                var modal = $(this);
-
-                $.ajax({
-                    url: '/giaodich/hoadon/ChoGiaoHang/' + hoaDonId,
-                    type: 'GET',
-                    success: function (data) {
-                        modal.find('.modal-body1').html(data);
-                    },
-                    error: function () {
-                    }
-                });
-            });
-        });
-    </script>
 
 </head>
 
@@ -693,6 +674,11 @@
             <button class="btn btn-primary btnTimKiem" type="button" onclick="searchByIdChoLayHang()">Tìm kiếm
             </button>
         </div>
+
+        <input type="date" class="form-control" id="search-input-date-choGiaoHang">
+        <button class="btn btn-primary" type="button" onclick="searchByCreationDate()">
+            <i class="fas fa-search"></i>
+        </button>
     </div>
     <div class="hduong1">
         <button id="GiaoTatCa" class="b1">Giao tất cả</button>
@@ -726,6 +712,7 @@
             <th scope="col">Mã đơn</th>
             <th scope="col">Họ tên</th>
             <th scope="col">Số điện thoại</th>
+            <th scope="col">Ngày tạo đơn</th>
             <th scope="col">Tổng tiền</th>
             <th scope="col">Ghi chú</th>
             <th scope="col">Thao tác</th>
@@ -737,6 +724,7 @@
             <th scope="row" th:text="${hoaDon.maDon}"></th>
             <td th:text="${hoaDon.khachHang.hoTen}"></td>
             <td th:text="${hoaDon.sdtNguoiNhan}"></td>
+            <td th:text="${#dates.format(hoaDon.ngayTao, 'dd/MM/yyyy')}"></td>
             <td th:text="${hoaDon.tongTienHoaDon}"></td>
             <td th:text="${hoaDon.ghiChu}"></td>
             <td>
@@ -767,27 +755,13 @@
                             </div>
                         </div>
                     </div>
-                    <!--XEM LỊCH SỬ ĐƠN HÀNG-->
-                    <button type="submit" class="btn btn-primary" data-toggle="modal" th:data-target="'#modalChiTiet'"
-                            th:data-id="${hoaDon.id}">
-                        <i class="fas fa-history"></i>
-                    </button>
-                    <div class="modal fade" th:id="'modalChiTiet'" tabindex="-1" aria-labelledby="exampleModalLabel"
-                         aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Lịch sử hóa đơn</h5>
-                                </div>
-                                <div class="modal-body1">
 
-                                </div>
-
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                                </div>
-                            </div>
-                        </div>
+                    <!--XEM CHI TIẾT HÓA ĐƠN-->
+                    <div class="btn-group">
+                        <a th:href="@{'/ChiTietHoaDon/ChoGiaoHang' + ${hoaDon.id}}" class="btn btn-warning btn-sm"
+                           type="submit">
+                            <i class="fas fa-info-circle"></i>
+                        </a>
                     </div>
                 </div>
             </td>
@@ -824,8 +798,8 @@
             var orderIdCell = rows[i].getElementsByTagName("th")[0];
             var customerNameCell = rows[i].getElementsByTagName("td")[1];
             var phoneNumberCell = rows[i].getElementsByTagName("td")[2];
-            var totalPriceCell = rows[i].getElementsByTagName("td")[3];
-            var noteCell = rows[i].getElementsByTagName("td")[4];
+            var totalPriceCell = rows[i].getElementsByTagName("td")[4];
+            var noteCell = rows[i].getElementsByTagName("td")[5];
 
             if (orderIdCell && customerNameCell && phoneNumberCell && totalPriceCell && noteCell) {
                 var orderId = orderIdCell.textContent.trim().toLowerCase();
@@ -861,6 +835,38 @@
                 timer: 1500
             });
         }
+    }
+</script>
+
+<!--TÌM KIẾM THEO NGÀY-->
+<script th:inline="javascript">
+    function searchByCreationDate() {
+        var inputDate = document.getElementById("search-input-date-choGiaoHang").value;
+        var table = document.getElementById("user-table-ChoLayHang");
+        var rows = table.getElementsByTagName("tr");
+
+        for (var i = 0; i < rows.length; i++) {
+            var creationDateCell = rows[i].getElementsByTagName("td")[3]; // Điều chỉnh chỉ mục nếu cần thiết
+
+            if (creationDateCell) {
+                var creationDate = creationDateCell.innerText;
+                var formattedCreationDate = formatDate(creationDate);
+
+                if (formattedCreationDate === inputDate) {
+                    rows[i].style.display = "";
+                } else {
+                    rows[i].style.display = "none";
+                }
+            }
+        }
+    }
+
+    function formatDate(dateString) {
+        var parts = dateString.split("/");
+        var day = parts[0];
+        var month = parts[1];
+        var year = parts[2];
+        return year + "-" + month + "-" + day;
     }
 </script>
 

@@ -103,7 +103,6 @@ public class ChoGiaoHangController {
                 gd.setNguoiCapNhat("ABC");
                 gd.setNguoiTao("ABC");
                 gd.setTrangThai(tt);
-//                System.out.println(gd);
                 giaoDichRepository.save(gd);
             }
 
