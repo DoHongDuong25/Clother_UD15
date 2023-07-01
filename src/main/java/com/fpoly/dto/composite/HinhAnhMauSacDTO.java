@@ -7,6 +7,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.context.annotation.Primary;
+import org.springframework.core.io.Resource;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fpoly.dto.HinhAnhDTO;
@@ -23,6 +24,10 @@ public class HinhAnhMauSacDTO {
 	private Long mauSacAddImagesId;
 	
 	private List<MultipartFile> imgFiles;
+	
+	private List<String> imgFilesString;
+	
+	private List<Resource> imgFilesResource;
 	
 	private Integer laAnhChinh;
 	

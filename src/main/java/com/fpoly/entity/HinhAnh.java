@@ -20,8 +20,8 @@ public class HinhAnh extends BaseEntity implements Serializable{
 	private MauSac mauSac;
 	
 	@ManyToOne
-	@JoinColumn(name = "san_pham_chi_tiet_id")
-	private SanPhamChiTiet sanPhamChiTiet;
+	@JoinColumn(name = "san_pham_id")
+	private SanPham sanPham;
 	
 	@Column(name = "ten_anh", columnDefinition = "nvarchar(200) not null")
 	private String tenAnh;

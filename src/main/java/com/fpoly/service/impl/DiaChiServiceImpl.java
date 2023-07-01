@@ -19,42 +19,42 @@ import com.fpoly.service.DiaChiService;
 
 @Service
 public class DiaChiServiceImpl implements DiaChiService {
-	
+
 	@Autowired
 	private DiaChiRepository diaChiRepository;
-	
+
 	@Autowired
 	private KhachHangRepository khachHangRepository ;
 	@Override
 	@Transactional
 	public DiaChiDTO save(DiaChiDTO result) {
-			DiaChiDTO diaChiDTO = new DiaChiDTO();
-			DiaChi diaChiEntity = new DiaChi();
-			try {
-					if(result.getKhachHangId() != null) {
-						diaChiEntity.setDiaChi(result.getCity()+"-"+result.getDistrict()+"-"+result.getWard()+"-"+result.getSoNha());
-						diaChiEntity.setKhachHang(khachHangRepository.getOne(result.getKhachHangId()));
-						diaChiEntity.setHoTen(result.getHoTen());
-						diaChiEntity.setSoDienThoai(result.getSoDienThoai());
-						diaChiEntity = diaChiRepository.save(diaChiEntity);
-							if(diaChiEntity.getId() != null) {
-								diaChiDTO.setId(diaChiEntity.getId());
-								diaChiDTO.setDiaChi(diaChiEntity.getDiaChi());
-								diaChiDTO.setCity(result.getCity());
-								diaChiDTO.setDistrict(result.getDistrict());
-								diaChiDTO.setWard(result.getWard());
-								diaChiDTO.setSoNha(result.getSoNha());
-								diaChiDTO.setHoTen(result.getHoTen());
-								diaChiDTO.setSoDienThoai(result.getSoDienThoai());
-								diaChiDTO.setKhachHangId(result.getKhachHangId());
-								return diaChiDTO;
-							}
-					}
-					return null ;
-			}catch( UnexpectedRollbackException e) {
-				return null ;
+		DiaChiDTO diaChiDTO = new DiaChiDTO();
+		DiaChi diaChiEntity = new DiaChi();
+		try {
+			if(result.getKhachHangId() != null) {
+				diaChiEntity.setDiaChi(result.getCity()+"-"+result.getDistrict()+"-"+result.getWard()+"-"+result.getSoNha());
+				diaChiEntity.setKhachHang(khachHangRepository.getOne(result.getKhachHangId()));
+				diaChiEntity.setHoTen(result.getHoTen());
+				diaChiEntity.setSoDienThoai(result.getSoDienThoai());
+				diaChiEntity = diaChiRepository.save(diaChiEntity);
+				if(diaChiEntity.getId() != null) {
+					diaChiDTO.setId(diaChiEntity.getId());
+					diaChiDTO.setDiaChi(diaChiEntity.getDiaChi());
+					diaChiDTO.setCity(result.getCity());
+					diaChiDTO.setDistrict(result.getDistrict());
+					diaChiDTO.setWard(result.getWard());
+					diaChiDTO.setSoNha(result.getSoNha());
+					diaChiDTO.setHoTen(result.getHoTen());
+					diaChiDTO.setSoDienThoai(result.getSoDienThoai());
+					diaChiDTO.setKhachHangId(result.getKhachHangId());
+					return diaChiDTO;
+				}
 			}
-			
+			return null ;
+		}catch( UnexpectedRollbackException e) {
+			return null ;
+		}
+
 	}
 	@Override
 	public void delete(long[] ids) {
@@ -100,9 +100,9 @@ public class DiaChiServiceImpl implements DiaChiService {
 	@Transactional
 	public void update(DiaChiDTO diaChiDTO) {
 		if(diaChiDTO.getId() != null) {
-			
+
 			DiaChi entity = new DiaChi();
-			
+
 			entity.setId(diaChiDTO.getId());
 			entity.setDiaChi(diaChiDTO.getCity()+"-"+diaChiDTO.getDistrict()+"-"+diaChiDTO.getWard()+"-"+diaChiDTO.getSoNha());
 			entity.setSoDienThoai(diaChiDTO.getSoDienThoai());

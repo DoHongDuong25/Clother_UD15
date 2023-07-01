@@ -10,13 +10,28 @@ import javax.persistence.EntityManager;
 import com.fpoly.QEntityGenarate.*;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.support.Querydsl;
 import org.springframework.stereotype.Repository;
 
+import com.fpoly.QEntityGenarate.QChatLieu;
+import com.fpoly.QEntityGenarate.QKichCo;
+import com.fpoly.QEntityGenarate.QKieuDang;
+import com.fpoly.QEntityGenarate.QLoaiSanPham;
+import com.fpoly.QEntityGenarate.QMauSac;
+import com.fpoly.QEntityGenarate.QPhongCach;
+import com.fpoly.QEntityGenarate.QSanPham;
+import com.fpoly.QEntityGenarate.QSanPhamChiTiet;
 import com.fpoly.dto.search.SPAndSPCTSearchDto;
 import com.fpoly.entity.SanPham;
 import com.fpoly.repository.SanPhamSearchRepository;
 import com.fpoly.service.TypeHelperService;
 import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.types.dsl.PathBuilderFactory;
+import com.querydsl.jpa.JPQLQuery;
 import com.querydsl.jpa.impl.JPAQuery;
 
 import lombok.AllArgsConstructor;
@@ -30,12 +45,12 @@ public class SanPhamSearchRepositoryImpl implements SanPhamSearchRepository{
 	private TypeHelperService typeHelperService;
 	
 	@Override
-	public List<SanPham> searchProductExist(SPAndSPCTSearchDto data){
+	public Page<SanPham> searchProductExist(SPAndSPCTSearchDto data, Pageable pageable){
 		SPAndSPCTSearchDto dataSearch = convertSearchNotNull(data);
+		Querydsl querydsl = new Querydsl(entityManager, new PathBuilderFactory().create(SanPham.class));
+		JPQLQuery<SanPham> query = new JPAQuery<>(entityManager);
 		
-		JPAQuery<SanPham> query = new JPAQuery<SanPham>(entityManager);
 		BooleanBuilder where = new BooleanBuilder();
-		
 		QSanPhamChiTiet qSanPhamChiTiet = QSanPhamChiTiet.sanPhamChiTiet;
 		QSanPham qSanPham = QSanPham.sanPham;
 		QKieuDang qKieuDang = QKieuDang.kieuDang;
@@ -174,7 +189,7 @@ public class SanPhamSearchRepositoryImpl implements SanPhamSearchRepository{
 //			}
 //		}
 		
-		List<SanPham> result = query.select(qSanPham).from(qSanPham)
+		query.select(qSanPham).from(qSanPham)
 				.leftJoin(qPhongCach).on(qSanPham.phongCach.id.eq(qPhongCach.id))
 				.innerJoin(qKieuDang).on(qSanPham.kieuDang.id.eq(qKieuDang.id))
 				.innerJoin(qChatLieu).on(qSanPham.chatLieu.id.eq(qChatLieu.id))
@@ -182,9 +197,10 @@ public class SanPhamSearchRepositoryImpl implements SanPhamSearchRepository{
 				.innerJoin(qMauSac).on(qSanPhamChiTiet.mauSac.id.eq(qMauSac.id))
 				.innerJoin(qKichCo).on(qSanPhamChiTiet.kichCo.id.eq(qKichCo.id))
 				.where(where).groupBy(qSanPham.id)
-				.orderBy(qSanPham.id.desc())
-				.fetch();
-		return result;
+				.orderBy(qSanPham.id.desc());
+		List<SanPham> result = querydsl.applyPagination(pageable, query).fetch();
+		Long totalElements = query.fetchCount();
+		return new PageImpl<SanPham>(result, pageable, totalElements);
 	}
 	
 //	convert type of value not null

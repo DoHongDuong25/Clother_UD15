@@ -48,4 +48,8 @@ public class KichCo extends BaseEntity implements Serializable{
 	@Column
 	private Boolean daXoa;
 
+	@Override
+	public String toString() {
+		return "KichCo [sanPhamChiTiets=" + sanPhamChiTiets + ", tenKichCo=" + tenKichCo + ", daXoa=" + daXoa + "]";
+	}
 }

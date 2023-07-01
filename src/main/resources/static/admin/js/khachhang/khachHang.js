@@ -1,7 +1,7 @@
 $(document).ready(function(){
-  $("#myBtn").click(function(){
-    $('.toast').toast('show');
-  });
+	$("#myBtn").click(function(){
+		$('.toast').toast('show');
+	});
 });
 
 
@@ -9,10 +9,10 @@ $('#input').on('change',function(){
 	var limit = $('#limitForSearch').val();
 	var trangThai = $('#trangThaiForSearch').val();
 	var input = $('#input').val();
-	
-	
-	
-	
+
+
+
+
 	if(input == ""){
 //		window.location.href=""+trangThai+"&limit="+limit;
 		setTimeout("location.href = 'http://localhost:8080/admin/khach-hang/danh-sach/tim-kiem/1?trangThai="+trangThai+"&limit="+limit+" ' ", 2000);
@@ -29,10 +29,10 @@ $('#input').on('change',function(){
 //{
 //    if(document.getElementById("trangThaiSelect").value!="" || document.getElementById("limit").value!="")
 //        document.getElementById("loc").disabled=false;
-//    	
+//
 //    else
 //    document.getElementById("loc").disabled=true;
-//    
+//
 //}
 
 
@@ -51,17 +51,17 @@ $('#limitSelect').on('change',function fun(e) {
 
 
 
-$('#checkAll').click(function(event) {   
-    if(this.checked) {
-        // Iterate each checkbox
-        $(':checkbox').each(function() {
-            this.checked = true;                        
-        });
-    } else {
-        $(':checkbox').each(function() {
-            this.checked = false;                       
-        });
-    }
+$('#checkAll').click(function(event) {
+	if(this.checked) {
+		// Iterate each checkbox
+		$(':checkbox').each(function() {
+			this.checked = true;
+		});
+	} else {
+		$(':checkbox').each(function() {
+			this.checked = false;
+		});
+	}
 });
 
 
@@ -70,31 +70,31 @@ $('#checkAll').click(function(event) {
 
 function xacNhanChuyenDoiTrangThaiDaChonThanhHoatDong() {
 	Swal.fire({
-		  title: 'Xác nhận chuyển đổi',
-		  text: "Bạn có chắc chắn muốn chuyển đổi các trạng thái ?",
-		  icon: 'warning',
-		  showCancelButton: true,
-		  confirmButtonColor: '#3085d6',
-		  cancelButtonColor: '#d33',
-		  confirmButtonText: 'Chuyển đổi'
-		}).then((result) =>
-		{
-		  if (result.isConfirmed) {
-			  var ids = $('tbody input[type=checkbox]:checked').map(function name() {
+		title: 'Xác nhận chuyển đổi',
+		text: "Bạn có chắc chắn muốn chuyển đổi các trạng thái ?",
+		icon: 'warning',
+		showCancelButton: true,
+		confirmButtonColor: '#3085d6',
+		cancelButtonColor: '#d33',
+		confirmButtonText: 'Chuyển đổi'
+	}).then((result) =>
+	{
+		if (result.isConfirmed) {
+			var ids = $('tbody input[type=checkbox]:checked').map(function name() {
 				return $(this).val();
-			  }).get();
-			  var pageCurrent= $('#pageCurrent').val();
-			  if(ids != ''){
-				  if(result.value){
-					  capNhatTrangThaiThanhHoatDong(ids,pageCurrent);
-				  }
-			  }else{
-				   $('#liveToast').html('<div class="toast-header"><strong class="mr-auto">Thông báo !</strong><small>1 giây trước </small><button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close"><span aria-hidden="true">&times;</span></button></div><div class="toast-body"><p class="fw-bold text-danger">Chuyển đổi thất bại !</p></div>');
-					$('#liveToast').toast('show');
-					setTimeout("location.href = 'http://localhost:8080/admin/khach-hang/danh-sach/"+pageCurrent+"?message=change_error' ", 2000);
-			  }
-		  }
-		})
+			}).get();
+			var pageCurrent= $('#pageCurrent').val();
+			if(ids != ''){
+				if(result.value){
+					capNhatTrangThaiThanhHoatDong(ids,pageCurrent);
+				}
+			}else{
+				$('#liveToast').html('<div class="toast-header"><strong class="mr-auto">Thông báo !</strong><small>1 giây trước </small><button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close"><span aria-hidden="true">&times;</span></button></div><div class="toast-body"><p class="fw-bold text-danger">Chuyển đổi thất bại !</p></div>');
+				$('#liveToast').toast('show');
+				setTimeout("location.href = 'http://localhost:8080/admin/khach-hang/danh-sach/"+pageCurrent+"?message=change_error' ", 2000);
+			}
+		}
+	})
 };
 function capNhatTrangThaiThanhHoatDong(ids,pageCurrent) {
 	$.ajax({
@@ -117,31 +117,31 @@ function capNhatTrangThaiThanhHoatDong(ids,pageCurrent) {
 
 function xacNhanChuyenDoiTrangThaiDaChonThanhKhongHoatDong() {
 	Swal.fire({
-		  title: 'Xác nhận chuyển đổi',
-		  text: "Bạn có chắc chắn muốn chuyển đổi các trạng thái ?",
-		  icon: 'warning',
-		  showCancelButton: true,
-		  confirmButtonColor: '#3085d6',
-		  cancelButtonColor: '#d33',
-		  confirmButtonText: 'Chuyển đổi'
-		}).then((result) =>
-		{
-		  if (result.isConfirmed) {
-			  var ids = $('tbody input[type=checkbox]:checked').map(function name() {
+		title: 'Xác nhận chuyển đổi',
+		text: "Bạn có chắc chắn muốn chuyển đổi các trạng thái ?",
+		icon: 'warning',
+		showCancelButton: true,
+		confirmButtonColor: '#3085d6',
+		cancelButtonColor: '#d33',
+		confirmButtonText: 'Chuyển đổi'
+	}).then((result) =>
+	{
+		if (result.isConfirmed) {
+			var ids = $('tbody input[type=checkbox]:checked').map(function name() {
 				return $(this).val();
-			  }).get();
-			  var pageCurrent= $('#pageCurrent').val();
-			  if(ids != ''){
-				  if(result.value){
-					  capNhatTrangThaiThanhKhongHoatDong(ids,pageCurrent);
-				  }
-			  }else{
-				  $('#liveToast').html('<div class="toast-header"><strong class="mr-auto">Thông báo !</strong><small>1 giây trước </small><button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close"><span aria-hidden="true">&times;</span></button></div><div class="toast-body"><p class="fw-bold text-danger">Chuyển đổi thất bại !</p></div>');
-					$('#liveToast').toast('show');
-					setTimeout("location.href = 'http://localhost:8080/admin/khach-hang/danh-sach/"+pageCurrent+"?message=change_error' ", 2000);
-			  }
-		  }
-		})
+			}).get();
+			var pageCurrent= $('#pageCurrent').val();
+			if(ids != ''){
+				if(result.value){
+					capNhatTrangThaiThanhKhongHoatDong(ids,pageCurrent);
+				}
+			}else{
+				$('#liveToast').html('<div class="toast-header"><strong class="mr-auto">Thông báo !</strong><small>1 giây trước </small><button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close"><span aria-hidden="true">&times;</span></button></div><div class="toast-body"><p class="fw-bold text-danger">Chuyển đổi thất bại !</p></div>');
+				$('#liveToast').toast('show');
+				setTimeout("location.href = 'http://localhost:8080/admin/khach-hang/danh-sach/"+pageCurrent+"?message=change_error' ", 2000);
+			}
+		}
+	})
 };
 
 function capNhatTrangThaiThanhKhongHoatDong(ids,pageCurrent) {
@@ -167,7 +167,7 @@ $('#formSubmitKhachHang').validate({
 	rules: {
 		email : {
 			required :true ,
-			email :true 
+			email :true
 		} ,
 		matKhau : "required",
 		hoTen : "required",
@@ -175,13 +175,13 @@ $('#formSubmitKhachHang').validate({
 			required: true ,
 			number : true ,
 			minlength:10,
-	        maxlength:10
+			maxlength:10
 		}
 	},
 	messages: {
 		email : {
 			required :"Vui lòng nhập email !" ,
-			email :"Email không đúng định dạng !" 
+			email :"Email không đúng định dạng !"
 		},
 		matKhau : "Vui lòng nhập mật khẩu !",
 		hoTen : "Vui lòng nhập họ tên !",
@@ -256,7 +256,6 @@ function capNhatKhachHang(data) {
 		}
 	});
 }
-
 
 
 

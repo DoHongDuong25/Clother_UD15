@@ -1,5 +1,6 @@
 package com.fpoly.service.impl;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.context.annotation.Primary;
@@ -32,6 +33,16 @@ public class HinhAnhServiceImpl implements HinhAnhService{
 		entity.setDaXoa(true);
 		hinhAnhRepository.save(entity);
 	}
+	@Override
+	public List<HinhAnh> getLstHinhAnhByMauSacIdAndSanPhamId(Long sanPhamId) {
+		return hinhAnhRepository.getLstHinhAnhByMauSacIdAndSanPhamId(sanPhamId);
+	}
+	
+	@Override
+	public List<Long> getDistinctMauSacInHinhAnhBySanPhamId(Long sanPhamId) {
+		return hinhAnhRepository.getDistinctMauSacInHinhAnhBySanPhamId(sanPhamId);
+	}
+	
 	
 	
 }

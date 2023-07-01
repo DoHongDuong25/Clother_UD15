@@ -3,6 +3,9 @@ package com.fpoly.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import com.fpoly.dto.search.SPAndSPCTSearchDto;
 import com.fpoly.entity.SanPham;
 
@@ -12,8 +15,8 @@ public interface SanPhamService {
 
 	<S extends SanPham> S save(S entity);
 
-	List<SanPham> getSanPhamExist();
+	Page<SanPham> getSanPhamExist(Pageable pageable);
 
-	List<SanPham> searchProductExist(SPAndSPCTSearchDto data);
+	Page<SanPham> searchProductExist(SPAndSPCTSearchDto data, Pageable pageable);
 
 }

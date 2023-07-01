@@ -42,7 +42,7 @@ $('#btnThemMoiDiaChi').click(function (e) {
 		$.each(formData,function(i,v){
 			data[""+v.name+""] = v.value;
 		});
-			themDiaChi(data);
+		themDiaChi(data);
 	}
 });
 
@@ -56,14 +56,14 @@ function themDiaChi(data) {
 		success : function(result) {
 //				$('#liveToast').html('<div class="toast-header"><strong class="mr-auto">Thông báo !</strong><small>1 giây trước </small><button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close"><span aria-hidden="true">&times;</span></button></div><div class="toast-body"><p class="fw-bold text-success">Thêm mới  địa chỉ thành công !</p></div>');
 //				$('#liveToast').toast('show');
-				setTimeout("location.href = ' http://localhost:8080/admin/khach-hang/danh-sach/chinh-sua?id="+result.khachHangId+"&page=1&message=create_address_success'   ", 2000);
+			setTimeout("location.href = ' http://localhost:8080/admin/khach-hang/danh-sach/chinh-sua?id="+result.khachHangId+"&page=1&message=create_address_success'   ", 2000);
 //			window.location.href = "http://localhost:8080/admin/khach-hang/danh-sach/chinh-sua?id="+result.khachHangId+"&page=1&message=create_address_success" ;
-			
+
 		},
 		error : function (error) {
 			$('#liveToast').html('<div class="toast-header"><strong class="mr-auto">Thông báo !</strong><small>1 giây trước </small><button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close"><span aria-hidden="true">&times;</span></button></div><div class="toast-body"><p class="fw-bold text-danger">Thêm mới  địa chỉ thất bại !</p></div>');
 			$('#liveToast').toast('show');
-			
+
 //			window.location.href = "http://localhost:8080/admin/khach-hang/danh-sach/1?message=error_system" ;
 			setTimeout("location.href = ' http://localhost:8080/admin/khach-hang/danh-sach/1?message=error_system'   ", 2000);
 		}
@@ -71,46 +71,46 @@ function themDiaChi(data) {
 };
 
 
-$('#checkAllDiachi').click(function(event) {   
-    if(this.checked) {
-        // Iterate each checkbox
-        $(':checkbox').each(function() {
-            this.checked = true;                        
-        });
-    } else {
-        $(':checkbox').each(function() {
-            this.checked = false;                       
-        });
-    }
+$('#checkAllDiachi').click(function(event) {
+	if(this.checked) {
+		// Iterate each checkbox
+		$(':checkbox').each(function() {
+			this.checked = true;
+		});
+	} else {
+		$(':checkbox').each(function() {
+			this.checked = false;
+		});
+	}
 });
 
 
 
 function xacNhanXoaDiaChi() {
 	Swal.fire({
-		  title: 'Xác nhận xóa địa chỉ',
-		  text: "Bạn có chắc chắn muốn xóa các địa chỉ đã chọn ?",
-		  icon: 'warning',
-		  showCancelButton: true,
-		  confirmButtonColor: '#3085d6',
-		  cancelButtonColor: '#d33',
-		  confirmButtonText: 'Xóa'
-		}).then((result) =>
-		{
-		  if (result.isConfirmed) {
-			  var ids = $('tbody input[type=checkbox]:checked').map(function name() {
+		title: 'Xác nhận xóa địa chỉ',
+		text: "Bạn có chắc chắn muốn xóa các địa chỉ đã chọn ?",
+		icon: 'warning',
+		showCancelButton: true,
+		confirmButtonColor: '#3085d6',
+		cancelButtonColor: '#d33',
+		confirmButtonText: 'Xóa'
+	}).then((result) =>
+	{
+		if (result.isConfirmed) {
+			var ids = $('tbody input[type=checkbox]:checked').map(function name() {
 				return $(this).val();
-			  }).get();
-			  if(ids != ''){
-				  if(result.value){
-					  xoaDiaChi(ids);
-				  }
-			  }else{
-				  $('#liveToast').html('<div class="toast-header"><strong class="mr-auto">Thông báo !</strong><small>1 giây trước </small><button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close"><span aria-hidden="true">&times;</span></button></div><div class="toast-body"><p class="fw-bold text-danger">Bạn chưa chọn địa chỉ !</p></div>');
-					$('#liveToast').toast('show');
-			  }
-		  }
-		})
+			}).get();
+			if(ids != ''){
+				if(result.value){
+					xoaDiaChi(ids);
+				}
+			}else{
+				$('#liveToast').html('<div class="toast-header"><strong class="mr-auto">Thông báo !</strong><small>1 giây trước </small><button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close"><span aria-hidden="true">&times;</span></button></div><div class="toast-body"><p class="fw-bold text-danger">Bạn chưa chọn địa chỉ !</p></div>');
+				$('#liveToast').toast('show');
+			}
+		}
+	})
 };
 function xoaDiaChi(ids) {
 	$.ajax({
@@ -122,7 +122,7 @@ function xoaDiaChi(ids) {
 			window.location.href = "http://localhost:8080/admin/khach-hang/danh-sach/1?message=delete_address_success" ;
 		},
 		error : function (error) {
-			
+
 		}
 	});
 }

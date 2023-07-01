@@ -61,6 +61,9 @@ public class SanPham extends BaseEntity implements Serializable{
 	@JoinColumn(name = "phong_cach_id", nullable = false)
 	private PhongCach phongCach;
 	
+	@OneToMany(mappedBy = "sanPham", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<HinhAnh> hinhAnhs;
+	
 	@Column
 	private Boolean daXoa;
 	

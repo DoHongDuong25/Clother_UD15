@@ -1,5 +1,6 @@
 package com.fpoly.entity;
 
+import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
@@ -37,8 +38,8 @@ public class DiaChi extends BaseEntity implements Serializable {
 	private String hoTen ; 
 	
 	@Column(name="so_dien_thoai")
-	private String soDienThoai ; 
-	
+	private String soDienThoai ;
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="khach_hang_id")
 	private KhachHang khachHang ;
