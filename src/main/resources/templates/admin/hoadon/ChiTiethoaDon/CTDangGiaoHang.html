@@ -46,8 +46,18 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
     <style>
-        .fas.fa-history:before {
-            content: "\f1da"; /* Mã Unicode tương ứng với biểu tượng "fa-history" */
+        .button-group {
+            display: flex;
+        }
+
+        .action-button {
+            flex: 0 0 100px; /* Đặt kích thước nút */
+            max-width: 100px; /* Đặt kích thước tối đa */
+            margin-right: 5px; /* Khoảng cách giữa các nút */
+        }
+
+        .action-button:last-child {
+            margin-right: 0; /* Loại bỏ margin phải của nút cuối cùng */
         }
 
         #modalChiTiet .modal-dialog {
@@ -57,13 +67,6 @@
 
         #modalChiTiet .modal-content {
             height: 450px;
-        }
-
-        .pagination {
-            list-style-type: none;
-            display: flex;
-            justify-content: center;
-            align-items: center;
         }
 
         .pagination li {
@@ -87,10 +90,6 @@
         .pagination .active a {
             background-color: #ccc;
             cursor: default;
-        }
-
-        .pagination-empty {
-            display: none;
         }
 
         h1 {
@@ -144,10 +143,6 @@
             border: none;
             border-radius: 4px;
             cursor: pointer;
-        }
-
-        .alert-warning {
-            margin-top: 1rem;
         }
 
         .modal-title {
@@ -304,57 +299,6 @@
             display: none;
         }
 
-        .hduong {
-            display: flex;
-            gap: 5px;
-            float: left;
-            padding: 5px;
-        }
-
-        .custom-input {
-            width: 400px;
-            height: 40px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-            padding: 10px;
-            font-size: 16px;
-        }
-
-        .custom-input:focus {
-            outline: none;
-            border-color: #4c9aff;
-            box-shadow: 0 0 5px rgba(76, 154, 255, 0.5);
-        }
-
-        .hduong1 {
-            display: flex;
-            gap: 5px;
-            float: right;
-        }
-
-        .b1 {
-            width: 150px;
-            height: 40px;
-            font-size: 16px;
-            border-radius: 5px;
-            border: none;
-            background-color: #4c9aff;
-            color: #fff;
-            cursor: pointer;
-        }
-
-        .b1:hover {
-            background-color: #357ae8;
-        }
-
-        .btnTimKiem {
-            background-color: #4c9aff;
-        }
-
-        .btnTimKiem:hover {
-            background-color: #357ae8;
-        }
-
         .table {
             width: 100%;
             border-collapse: collapse;
@@ -421,48 +365,6 @@
             justify-content: space-between;
             align-items: center;
             margin-top: 20px;
-        }
-
-        .tab-button {
-            flex: 1;
-            position: relative;
-            padding: 10px 0;
-            color: #333;
-            font-weight: bold;
-            background-color: transparent;
-            border: none;
-            border-radius: 30px;
-            transition: background-color 0.3s;
-            outline: none;
-            text-align: center;
-            cursor: pointer;
-        }
-
-        .tab-button.active {
-            background-color: #4c9aff;
-            color: #fff;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-        }
-
-        .tab-button:hover {
-            background-color: #f2f2f2;
-            color: #333;
-        }
-
-        .tab-button.active:before {
-            content: "";
-            position: absolute;
-            top: 50%;
-            left: 0;
-            transform: translateY(-50%);
-            width: 8px;
-            height: 8px;
-            background-color: #fff;
-            border-radius: 50%;
-        }
-
-        .tab-button:not(.active):before {
-            content: none;
         }
 
     </style>
@@ -699,37 +601,38 @@
         </div>
 
         <!--UPDATE GIAO HÀNG THÀNH CÔNG-->
-        <button class="action-button DaGiao" th:attr="data-id=${hoaDon.id}"> Xác nhận đơn hàng đã giao
-            <i class="fas fa-check-circle"></i>
-        </button>
-        <br>
-        <div class="modal fade giaoHangTCModal" tabindex="-1" aria-labelledby="giaoHangTCModalLabel"
-             aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="giaoHangTCModalLabel">Xác nhận đơn</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        Xác nhận giao hàng thành công?
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary btn-dong-y">Đồng ý</button>
-                        <button type="button" class="btn btn-secondary btn-khong"
-                                data-bs-dismiss="modal">Không
-                        </button>
+        <div class="button-group">
+            <button class="action-button DaGiao" th:attr="data-id=${hoaDon.id}"> Xác nhận đơn hàng đã giao
+                <i class="fas fa-check-circle"></i>
+            </button>
+            <br>
+            <div class="modal fade giaoHangTCModal" tabindex="-1" aria-labelledby="giaoHangTCModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="giaoHangTCModalLabel">Xác nhận đơn</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            Xác nhận giao hàng thành công?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary btn-dong-y">Đồng ý</button>
+                            <button type="button" class="btn btn-secondary btn-khong"
+                                    data-bs-dismiss="modal">Không
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
 
-    <div class="button-group">
-        <button class="action-button" onclick="quayLai()">Quay lại
-            <i class="fas fa-arrow-left"></i>
-        </button>
+
+            <button class="action-button" onclick="quayLai()">Quay lại
+                <i class="fas fa-arrow-left"></i>
+            </button>
+        </div>
     </div>
 </div>
 

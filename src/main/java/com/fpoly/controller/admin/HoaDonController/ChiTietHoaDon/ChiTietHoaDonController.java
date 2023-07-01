@@ -27,7 +27,7 @@ public class ChiTietHoaDonController {
     GiaoDichRepository giaoDichRepository;
 
     //CHỜ XÁC NHẬN
-    @RequestMapping("ChiTietHoaDon/ChoXacNhan{id}")
+    @RequestMapping("ChiTietHoaDon/ChoXacNhan/hoa-don-id={id}")
     public String ChoXacNhan(@PathVariable("id") Long id, Model model) {
         HoaDon hoaDon = hoaDonRepoditory.findById(id).get();
         List<GiaoDich> timeLineChoXacNhan = giaoDichRepository.findByTrangThaiIdAndHoaDonId(1, id);
@@ -37,7 +37,7 @@ public class ChiTietHoaDonController {
     }
 
     //CHỜ GIAO HÀNG
-    @RequestMapping("ChiTietHoaDon/ChoGiaoHang{id}")
+    @RequestMapping("ChiTietHoaDon/ChoGiaoHang/hoa-don-id={id}")
     public String ChoGiaoHang(@PathVariable("id") Long id, Model model) {
         HoaDon hoaDon = hoaDonRepoditory.findById(id).get();
         List<GiaoDich> timeLineChoXacNhan = giaoDichRepository.findByTrangThaiIdAndHoaDonId(1, id);
@@ -49,7 +49,7 @@ public class ChiTietHoaDonController {
     }
 
     //ĐANG GIAO HÀNG
-    @RequestMapping("ChiTietHoaDon/DangGiaoHang{id}")
+    @RequestMapping("ChiTietHoaDon/DangGiaoHang/hoa-don-id={id}")
     public String DangGiaoHang(@PathVariable("id") Long id, Model model) {
         HoaDon hoaDon = hoaDonRepoditory.findById(id).get();
         List<GiaoDich> timeLineChoXacNhan = giaoDichRepository.findByTrangThaiIdAndHoaDonId(1, id);
@@ -63,7 +63,7 @@ public class ChiTietHoaDonController {
     }
 
     //ĐÃ GIAO HÀNG
-    @RequestMapping("ChiTietHoaDon/DaGiaoHang{id}")
+    @RequestMapping("ChiTietHoaDon/DaGiaoHang/hoa-don-id={id}")
     public String DaGiaoHang(@PathVariable("id") Long id, Model model) {
         HoaDon hoaDon = hoaDonRepoditory.findById(id).get();
         List<GiaoDich> timeLineChoXacNhan = giaoDichRepository.findByTrangThaiIdAndHoaDonId(1, id);
@@ -78,7 +78,7 @@ public class ChiTietHoaDonController {
         return "admin/hoadon/ChiTiethoaDon/CTDaGiao";
     }
     //ĐÃ HỦY
-    @RequestMapping("ChiTietHoaDon/DaHuy{id}")
+    @RequestMapping("ChiTietHoaDon/DaHuy/hoa-don-id={id}")
     public String DaHuy(@PathVariable("id") Long id, Model model) {
         HoaDon hoaDon = hoaDonRepoditory.findById(id).get();
         List<GiaoDich> timeLineChoXacNhan = giaoDichRepository.findByTrangThaiIdAndHoaDonId(1, id);
@@ -89,7 +89,7 @@ public class ChiTietHoaDonController {
         return "admin/hoadon/ChiTiethoaDon/CTDaHuy";
     }
     //TẤT CẢ ĐƠN
-    @RequestMapping("ChiTietHoaDon/TatCaDon{id}")
+    @RequestMapping("ChiTietHoaDon/TatCaDon/hoa-don-id={id}")
     public String TatCaDon(@PathVariable("id") Long id, Model model) {
         HoaDon hoaDon = hoaDonRepoditory.findById(id).get();
         List<GiaoDich> timeLineChoXacNhan = giaoDichRepository.findByTrangThaiIdAndHoaDonId(1, id);
