@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{admin/layouts/index.html}">
+
+<head></head>
+
+<body>
+    <section layout:fragment="content" class="container">
+        <div class="card shadow mb-4 mt-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">
+                    Chi tiết sản phẩm
+                </h6>
+            </div>
+            <div class="card-body text-muted">
+                <div class="col-sm-12">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <label for="tenSanPham">Tên sản phẩm:</label>
+                            <input type="text" class="form-control" th:value="${sanPham.tenSanPham}" readonly>
+                        </div>
+                        <div class="col-sm-3">
+                            <label for="kieuDangId">Tên kiểu dáng:</label>
+                            <input type="text" class="form-control" th:value="${sanPham.kieuDang.tenKieuDang}" readonly>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- <script>
+            //             $(document).ready(function(){
+
+            // var native_width = 0;
+            // var native_height = 0;
+
+            // //Now the mousemove function
+            // $(".magnify").mousemove(function(e){
+            //     //When the user hovers on the image, the script will first calculate
+            //     //the native dimensions if they don't exist. Only after the native dimensions
+            //     //are available, the script will show the zoomed version.
+            //     if(!native_width && !native_height)
+            //     {
+            //         //This will create a new image object with the same image as that in .small
+            //         //We cannot directly get the dimensions from .small because of the 
+            //         //width specified to 200px in the html. To get the actual dimensions we have
+            //         //created this image object.
+            //         var image_object = new Image();
+            //         image_object.src = $(".small").attr("src");
+
+            //         //This code is wrapped in the .load function which is important.
+            //         //width and height of the object would return 0 if accessed before 
+            //         //the image gets loaded.
+            //         native_width = image_object.width;
+            //         native_height = image_object.height;
+            //     }
+            //     else
+            //     {
+            //         //x/y coordinates of the mouse
+            //         //This is the position of .magnify with respect to the document.
+            //         var magnify_offset = $(this).offset();
+            //         //We will deduct the positions of .magnify from the mouse positions with
+            //         //respect to the document to get the mouse positions with respect to the 
+            //         //container(.magnify)
+            //         var mx = e.pageX - magnify_offset.left;
+            //         var my = e.pageY - magnify_offset.top;
+
+            //         //Finally the code to fade out the glass if the mouse is outside the container
+            //         if(mx < $(this).width() && my < $(this).height() && mx > 0 && my > 0)
+            //         {
+            //             $(".large").fadeIn(100);
+            //         }
+            //         else
+            //         {
+            //             $(".large").fadeOut(100);
+            //         }
+            //         if($(".large").is(":visible"))
+            //         {
+            //             //The background position of .large will be changed according to the position
+            //             //of the mouse over the .small image. So we will get the ratio of the pixel
+            //             //under the mouse pointer with respect to the image and use that to position the 
+            //             //large image inside the magnifying glass
+            //             var rx = Math.round(mx/$(".small").width()*native_width - $(".large").width()/2)*-1;
+            //             var ry = Math.round(my/$(".small").height()*native_height - $(".large").height()/2)*-1;
+            //             var bgp = rx + "px " + ry + "px";
+
+            //             //Time to move the magnifying glass with the mouse
+            //             var px = mx - $(".large").width()/2;
+            //             var py = my - $(".large").height()/2;
+            //             //Now the glass moves with the mouse
+            //             //The logic is to deduct half of the glass's width and height from the 
+            //             //mouse coordinates to place it with its center at the mouse coordinates
+
+            //             //If you hover on the image now, you should see the magnifying glass in action
+            //             $(".large").css({left: px, top: py, backgroundPosition: bgp});
+            //         }
+            //     }
+            // })
+            // }) 
+            // const preview = (file) => {
+            //     const fr = new FileReader();
+            //     fr.onload = () => {
+            //         const img = document.createElement("img");
+            //         img.src = fr.result; // String Base64
+            //         img.alt = file.name;
+            //         img.style.maxHeight = "120px";
+            //         img.style.margin = "5px";
+            //         document.querySelector("#preview").append(img);
+            //     };
+            //     fr.readAsDataURL(file);
+            // };
+
+            // document.querySelector("#files").addEventListener("change", (ev) => {
+            //     if (!ev.target.files) return; // Do nothing.
+            //     [...ev.target.files].forEach(preview);
+            // });
+            $(document).ready(function () {
+        $("#test-upload").fileinput({
+            'theme': 'fa5',
+            'showPreview': false,
+            'allowedFileExtensions': ['jpg', 'png', 'gif'],
+            'elErrorContainer': '#errorBlock'
+        });
+        $("#kv-explorer").fileinput({
+            'theme': 'explorer-fa5',
+            'uploadUrl': '#',
+            overwriteInitial: false,
+            initialPreviewAsData: true,
+            initialPreview: [
+                "http://lorempixel.com/1920/1080/nature/1",
+                "http://lorempixel.com/1920/1080/nature/2",
+                "http://lorempixel.com/1920/1080/nature/3"
+            ],
+            initialPreviewConfig: [{
+                    caption: "nature-1.jpg",
+                    size: 329892,
+                    width: "120px",
+                    url: "{$url}",
+                    key: 1
+                },
+                {
+                    caption: "nature-2.jpg",
+                    size: 872378,
+                    width: "120px",
+                    url: "{$url}",
+                    key: 2
+                },
+                {
+                    caption: "nature-3.jpg",
+                    size: 632762,
+                    width: "120px",
+                    url: "{$url}",
+                    key: 3
+                }
+            ]
+        });
+        /*
+         $("#test-upload").on('fileloaded', function(event, file, previewId, index) {
+         alert('i = ' + index + ', id = ' + previewId + ', file = ' + file.name);
+         });
+         */
+        $('#inp-add-1').on('change', function () {
+            var $plugin = $('#inp-add-2').data('fileinput');
+            $plugin.addToStack($(this)[0].files[0])
+        });
+        $('#inp-add-2').fileinput({
+            uploadUrl: '#',
+            //uploadUrl: 'http://localhost/plugins/test-upload',
+            initialPreviewAsData: true,
+            initialPreview: [
+                "https://dummyimage.com/640x360/a0f.png&text=Transport+1",
+                "https://dummyimage.com/640x360/3a8.png&text=Transport+2",
+                "https://dummyimage.com/640x360/6ff.png&text=Transport+3"
+            ],
+            initialPreviewConfig: [{
+                    caption: "transport-1.jpg",
+                    size: 329892,
+                    width: "120px",
+                    url: "{$url}",
+                    key: 1,
+                    zoomData: 'https://dummyimage.com/1920x1080/a0f.png&text=Transport+1',
+                    description: '<h5>NUMBER 1</h5> The first choice for transport. This is the future.'
+                },
+                {
+                    caption: "transport-2.jpg",
+                    size: 872378,
+                    width: "120px",
+                    url: "{$url}",
+                    key: 2,
+                    zoomData: 'https://dummyimage.com/1920x1080/3a8.png&text=Transport+2',
+                    description: '<h5>NUMBER 2</h5> The second choice for transport. This is the future.'
+                },
+                {
+                    caption: "transport-3.jpg",
+                    size: 632762,
+                    width: "120px",
+                    url: "{$url}",
+                    key: 3,
+                    zoomData: 'https://dummyimage.com/1920x1080/6ff.png&text=Transport+3',
+                    description: '<h5>NUMBER 3</h5> The third choice for transport. This is the future.'
+                }
+            ]
+        });
+    });
+        </script> -->
+    </section>
+</body>
+
+</html>

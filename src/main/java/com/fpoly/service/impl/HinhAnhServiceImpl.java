@@ -34,9 +34,15 @@ public class HinhAnhServiceImpl implements HinhAnhService{
 		hinhAnhRepository.save(entity);
 	}
 	@Override
-	public List<HinhAnh> getLstHinhAnhByMauSacIdAndSanPhamId(List<Long> lstMauSacId, Long sanPhamId) {
-		return hinhAnhRepository.getLstHinhAnhByMauSacIdAndSanPhamId(lstMauSacId, sanPhamId);
+	public List<HinhAnh> getLstHinhAnhByMauSacIdAndSanPhamId(Long sanPhamId) {
+		return hinhAnhRepository.getLstHinhAnhByMauSacIdAndSanPhamId(sanPhamId);
 	}
+	
+	@Override
+	public List<Long> getDistinctMauSacInHinhAnhBySanPhamId(Long sanPhamId) {
+		return hinhAnhRepository.getDistinctMauSacInHinhAnhBySanPhamId(sanPhamId);
+	}
+	
 	
 	
 }

@@ -3,13 +3,15 @@ package com.fpoly.controller.admin;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-
+import java.net.MalformedURLException;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
@@ -17,6 +19,7 @@ import java.util.stream.IntStream;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.swing.plaf.multi.MultiToolTipUI;
 import javax.validation.Valid;
 
 import org.json.simple.JSONArray;
@@ -25,6 +28,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -43,6 +47,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -78,7 +83,6 @@ import com.fpoly.service.SanPhamChiTietService;
 import com.fpoly.service.SanPhamService;
 import com.fpoly.service.StorageService;
 //import com.fpoly.service.impl.ProductDetailsWithColorSizeRepository;
-
 
 
 @Controller
@@ -223,6 +227,14 @@ public class SanPhamChiTietController {
 //		model.addAttribute("dataSearch", new SPAndSPCTSearchDto());
 //		return "admin/product/productManage";
 //	}
+	@GetMapping("info/{id}")
+	public String infoProductDetai(ModelMap model, @PathVariable("id") Long id) {
+		Optional<SanPham> opt = sanPhamService.findById(id);
+		if(opt.isPresent()) {
+			model.addAttribute("sanPham", opt.get());
+		}
+		return "admin/product/infoProduct";
+	}
 	
 	@GetMapping("add")
 	public String addProductDetail(ModelMap model) {
@@ -317,8 +329,8 @@ public class SanPhamChiTietController {
 	@GetMapping("edit/{id}")
 	public String edit(ModelMap model, @PathVariable("id") Long id) {
 		Optional<SanPham> optSP = sanPhamService.findById(id);
-		List<SanPhamChiTiet> dataGen = sanPhamChiTietService.getLstSanPhamChiTietBySanPhamId(optSP.get().getId());
 		if(optSP.isPresent()) {
+			List<SanPhamChiTiet> dataGen = sanPhamChiTietService.getLstSanPhamChiTietBySanPhamId(optSP.get().getId());
 			SanPhamManageDTO dto = new SanPhamManageDTO();
 			BeanUtils.copyProperties(optSP.get(), dto);
 			dto.setSanPhamId(optSP.get().getId());
@@ -327,17 +339,63 @@ public class SanPhamChiTietController {
 			dto.setKieuDangId(optSP.get().getKieuDang().getId());
 			dto.setChatLieuId(optSP.get().getChatLieu().getId());
 			dto.setPhongCachId(optSP.get().getPhongCach().getId());	
-			List<Long> lstKC = new ArrayList<Long>();
-			List<Long> lstMS = new ArrayList<Long>();
-			lstKC = dataGen.stream().map(i -> i.getKichCo().getId()).collect(Collectors.toList());
-			lstMS = dataGen.stream().map(i -> i.getMauSac().getId()).collect(Collectors.toList());
+			List<Long> lstKC = dataGen.stream().map(i -> i.getKichCo().getId()).collect(Collectors.toList());
+			List<Long> lstMS = dataGen.stream().map(i -> i.getMauSac().getId()).collect(Collectors.toList());
 			dto.setKichCoIds(lstKC);
 			dto.setMauSacIds(lstMS);
 			
-			List<HinhAnh> lstHinhAnh = hinhAnhService.getLstHinhAnhByMauSacIdAndSanPhamId(lstMS, id);
+			List<HinhAnh> lstHinhAnh = hinhAnhService.getLstHinhAnhByMauSacIdAndSanPhamId(id);
+			List<List<String>> lstTenHinhAnhs = new ArrayList<>();
+			int i=0;
+			int j=0;
+			int countLstHinhAnh = 0;
+			do {
+				List<String> lstTenHinhAnh = new ArrayList<>();
+				for (j = i; j < lstHinhAnh.size()-1; j++) {
+					if(lstHinhAnh.get(j).getMauSac().getId().equals(lstHinhAnh.get(i).getMauSac().getId())) {
+						lstTenHinhAnh.add(lstHinhAnh.get(j).getTenAnh());
+					}else{
+						i=j;
+						break;
+					}
+				}
+				countLstHinhAnh++;
+
+				lstTenHinhAnhs.add(lstTenHinhAnh);
+				if(j == lstHinhAnh.size()) break;
+			} while (j< lstHinhAnh.size()-1);
+			int m = 0;
 			List<HinhAnhMauSacDTO> lstHinhAnhMauSacDTO = new ArrayList<>();
-			HinhAnhMauSacDTO h = new HinhAnhMauSacDTO();
-			//dang lam
+			List<Long> lstHinhAnhDistinct = hinhAnhService.getDistinctMauSacInHinhAnhBySanPhamId(id);
+			for (Long mauSacId : lstHinhAnhDistinct) {
+				HinhAnhMauSacDTO hinhAnhMauSacDTO = new HinhAnhMauSacDTO();
+				Optional<MauSac> optMS = mauSacService.findById(mauSacId);
+				if(optMS.isPresent()) {
+					hinhAnhMauSacDTO.setTenMauSacAddImg(optMS.get().getTenMauSac());
+					hinhAnhMauSacDTO.setMauSacAddImagesId(mauSacId);
+				}
+				if(m < countLstHinhAnh) {
+//					Resource[] imgfiles = applicationContext.getre;
+					List<String> imgfilesStr = new ArrayList<String>();
+					for (String imgStr : lstTenHinhAnhs.get(m)) {
+//						Resource file = storageService.loadAsResource(imgStr);
+						Path file = storageService.load(imgStr);
+						Resource resource;
+						try {
+							resource = new UrlResource(file.toUri());
+							imgfilesStr.add(resource.getFilename());
+						} catch (MalformedURLException e) {
+							e.printStackTrace();
+						}
+//						ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
+//								"attachment; filename=\"" + file.getFilename() + "\"").body(file);
+					}
+					hinhAnhMauSacDTO.setImgFilesString(imgfilesStr);
+					m++;
+				}
+				lstHinhAnhMauSacDTO.add(hinhAnhMauSacDTO);
+			}
+			dto.setLstHinhAnhMauSacDTO(lstHinhAnhMauSacDTO);
 			model.addAttribute("sanPhamManageDTO", dto);
 			model.addAttribute("dataGen", dataGen);	
 		}
@@ -438,11 +496,19 @@ public class SanPhamChiTietController {
 	
 	@PostMapping("saveImageProductDetail")
 	public ModelAndView saveImageProductDetail(ModelMap model, @ModelAttribute("sanPhamManageDTO") SanPhamManageDTO sanPhamManageDTO) {
-		sanPhamManageDTO.getLstHinhAnhMauSacDTO().stream().filter(m -> !m.getImgFiles().isEmpty()).forEach(i ->{
+		for (HinhAnhMauSacDTO item : sanPhamManageDTO.getLstHinhAnhMauSacDTO()) {
+			for (MultipartFile imgFile : item.getImgFiles()) {
+				if(imgFile.isEmpty()) {
+					model.addAttribute("messageDanger","Hình ảnh cho sản phẩm không được để trống");
+					return new ModelAndView( "admin/product/addProduct", model);
+				}
+			}
+		}
+		sanPhamManageDTO.getLstHinhAnhMauSacDTO().stream().forEach(i ->{
 			Optional<MauSac> optMS = mauSacService.findById(i.getMauSacAddImagesId());
 			sanPhamManageDTO.setIsEdit(true);
 			Optional<SanPham> optSP = sanPhamService.findById(sanPhamManageDTO.getSanPhamId());
-			i.getImgFiles().stream().filter(img1 -> !img1.isEmpty()).forEach(img -> {
+			i.getImgFiles().stream().forEach(img -> {
 				UUID uuid = UUID.randomUUID();
 				String uuString = uuid.toString();
 				HinhAnh hinhAnh = new HinhAnh();
@@ -453,9 +519,9 @@ public class SanPhamChiTietController {
 				storageService.store(img, hinhAnh.getTenAnh());
 				if(optMS.isPresent()) {
 					hinhAnh.setMauSac(optMS.get());
+					hinhAnh.setDaXoa(false);
+					hinhAnh.setCoHienThi(true);
 					hinhAnhService.save(hinhAnh);
-				}else {
-					model.addAttribute("messageDanger", "Thêm hình ảnh cho sản phẩm có màu: " + i.getMauSacAddImagesId()+" thất bại");		
 				}});
 			});
 		model.addAttribute("messageSuccess", "Thêm sản phẩm thành công");

@@ -16,4 +16,5 @@ public interface MauSacRepository extends JpaRepository<MauSac,Long> {
 
 	@Query(value = "SELECT DISTINCT m.* FROM `mau_sac` m LEFT JOIN san_pham_chi_tiet s ON m.id = s.mau_sac_id WHERE s.san_pham_id = :spId", nativeQuery = true)
 	List<MauSac> getAllMauSacExistBySPId(@Param("spId") Long spId);
+	
 }

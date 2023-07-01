@@ -13,6 +13,10 @@ public interface HinhAnhService {
 
 	<S extends HinhAnh> S save(S entity);
 
-	List<HinhAnh> getLstHinhAnhByMauSacIdAndSanPhamId(List<Long> lstMauSacId, Long sanPhamId);
+	List<HinhAnh> getLstHinhAnhByMauSacIdAndSanPhamId( Long sanPhamId);
+
+	List<Long> getDistinctMauSacInHinhAnhBySanPhamId(Long sanPhamId);
+
+
 
 }
