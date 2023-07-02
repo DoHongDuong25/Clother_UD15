@@ -133,8 +133,6 @@ public class KhachHangController {
 			@PathVariable(name="pageNumber") Integer currentPage ,
 			Model model , HttpServletRequest request
 			) {
-		
-		
 		khachHangService.capNhatTrangThaiTheoId(id);
 		if( trangThai == 2 &&  input.equalsIgnoreCase("")) {
 			return  "redirect:/admin/khach-hang/danh-sach/"+currentPage+"?limit="+limit+"&id="+id;

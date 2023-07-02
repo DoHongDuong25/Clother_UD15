@@ -29,6 +29,14 @@ public interface NguoiDungRepository extends JpaRepository<NguoiDung, Long> {
     NguoiDung findByEmail(String email);
     NguoiDung findBysoDienThoai(String sDT);
 
+    
+    @Modifying
+	@Query(value="UPDATE NguoiDung n SET n.trangThai = 1 WHERE n.id=?1")
+	void capNhatTrangThaiThanhHoatDongTheoMa(Long id);
+
+    @Modifying
+	@Query(value="UPDATE NguoiDung n SET n.trangThai = 2 WHERE n.id=?1")
+	void capNhatTrangThaiThanhKhongHoatDongTheoMa(Long id);
 
 
 }
