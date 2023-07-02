@@ -17,8 +17,7 @@ import com.fpoly.service.KhachHangService;
 public class KhachHangAPI {
 	@Autowired
 	private KhachHangService KhachHangService ;
-	
-	
+
 	@GetMapping("/admin/api/khach-hang")
 	public List<KhachHangDTO> layDanhSachKhachHang(){
 		return KhachHangService.findAll();
@@ -28,8 +27,7 @@ public class KhachHangAPI {
 	public void deleteKhachHangByTrangThaiDangHoatDong(@RequestBody long[] ids) {
 			KhachHangService.capNhatTrangThaiThanhDangHoatDongTheoMa(ids);
 	}
-	
-	
+
 	@PutMapping("/admin/api/khach-hang/trang-thai-khong-hoat-dong")
 	public void deleteKhachHangByTrangThaiKhongHoatDong(@RequestBody long[] ids) {
 			KhachHangService.capNhatTrangThaiThanhKhongHoatDongTheoMa(ids);
