@@ -75,7 +75,7 @@ public class SanPhamChiTiet extends BaseEntity implements Serializable{
 				"kichCo=" + kichCo.getId() +
 				", mauSac=" + mauSac.getId() +
 				", sanPham=" + sanPham.getId() +
-				", hinhAnhs=" + hinhAnhs.size() +
+//				", hinhAnhs=" + hinhAnhs.size() +
 				", soLuong=" + soLuong +
 				", hoaDonChiTiets=" + hoaDonChiTiets.size() +
 				", coHienThi=" + coHienThi +

@@ -41,7 +41,7 @@ public class HinhAnh extends BaseEntity implements Serializable{
 	@Override
 	public String toString() {
 		return "HinhAnh{" +
-				"sanPhamChiTiet=" + sanPhamChiTiet.getId() +
+//				"sanPhamChiTiet=" + sanPhamChiTiet.getId() +
 				", tenAnh='" + tenAnh + '\'' +
 //				", isAnhChinh=" + isAnhChinh +
 				", coHienThi=" + coHienThi +
