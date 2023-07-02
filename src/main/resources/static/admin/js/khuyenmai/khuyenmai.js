@@ -27,7 +27,7 @@ function submit(pageNum) {
 var discountRange = document.getElementById('discountRange');
 var discountStart = document.getElementById('startRange');
 var discountEnd = document.getElementById('endRange');
-var start = discountStart.value || 0;
+var start = discountStart.value || 0 ;
 var end = discountEnd.value || 30;
 noUiSlider.create(discountRange, {
     start: [start, end], // Initial range values
