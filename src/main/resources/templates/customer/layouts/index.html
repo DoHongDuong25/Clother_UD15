@@ -1,7 +1,5 @@
 <!DOCTYPE html>
-<html lang="zxx" xmlns:th="http://www.thymeleaf.org"
-	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
->
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
 <head>
     <meta charset="UTF-8">
@@ -12,8 +10,7 @@
     <title>Male-Fashion | Template</title>
 
     <!-- Google Font -->
-    <link th:href="@{/customer/css/fonts-googleapis.css}"
-    rel="stylesheet">
+    <link th:href="@{/customer/css/fonts-googleapis.css}" rel="stylesheet">
 
     <!-- Css Styles -->
     <link rel="stylesheet" th:href="@{/customer/css/bootstrap.min.css}" type="text/css">
@@ -27,24 +24,24 @@
 </head>
 
 <body>
-	<div id="preloder">
+    <div id="preloder">
         <div class="loader"></div>
     </div>
-	<span th:replace="customer/fragments/header :: header"></span>
-	<span th:replace="customer/fragments/section_start :: section-start"></span>
-	
-	 <!-- dynamic content -->
-		<section class="product spad" layout:fragment="content">
-	        <div class="container">
-	        	
-	        </div>
-	    </section>					
-	<!-- dynamic content -->
-	
-	<span th:replace="customer/fragments/section_lastest :: section-last"></span>
-	
-	
-	<span th:replace="customer/fragments/footer :: footer"></span>
+    <span th:replace="customer/fragments/header :: header"></span>
+    <!-- <span th:replace="customer/fragments/section_start :: section-start"></span> -->
+
+    <!-- dynamic content -->
+    <section class="product spad" layout:fragment="content">
+        <div>
+
+        </div>
+    </section>
+    <!-- dynamic content -->
+
+    <!-- <span th:replace="customer/fragments/section_lastest :: section-last"></span> -->
+
+
+    <span th:replace="customer/fragments/footer :: footer"></span>
     <div class="search-model">
         <div class="h-100 d-flex align-items-center justify-content-center">
             <div class="search-close-switch">+</div>
@@ -53,7 +50,7 @@
             </form>
         </div>
     </div>
-	<script th:src="@{/customer/js/jquery-3.3.1.min.js}"></script>
+    <script th:src="@{/customer/js/jquery-3.3.1.min.js}"></script>
     <script th:src="@{/customer/js/bootstrap.min.js}"></script>
     <script th:src="@{/customer/js/jquery.nice-select.min.js}"></script>
     <script th:src="@{/customer/js/jquery.nicescroll.min.js}"></script>

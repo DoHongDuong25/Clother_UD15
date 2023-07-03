@@ -87,5 +87,4 @@ public class NguoiDung extends BaseEntity implements Serializable{
 				", giaoDichs=" + giaoDichs.size() +
 				'}';
 	}
-
 }
