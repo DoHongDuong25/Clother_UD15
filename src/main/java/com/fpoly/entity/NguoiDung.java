@@ -51,13 +51,15 @@ public class NguoiDung extends BaseEntity implements Serializable{
 
 	@Column(name = "so_dien_thoai",columnDefinition = "nvarchar(20) null")
 	private String soDienThoai;
+
+	@Column(name = "mat_khau",columnDefinition = "nvarchar(20) null")
+	private String matKhau;
 	
 //	@Enumerated(EnumType.STRING)
 //	private Role role;
 
 	@Column(name = "trang_thai", columnDefinition = "int default(0)")
 	private int trangThai;
-
 
 	public String TrangThai2(){
 		String TrangThai2;
@@ -74,7 +76,6 @@ public class NguoiDung extends BaseEntity implements Serializable{
 	
 	@OneToMany(mappedBy="nguoiDung")
 	private List<GiaoDich> giaoDichs = new ArrayList<GiaoDich>() ;
-	
 
 	@Override
 	public String toString() {
@@ -87,5 +88,4 @@ public class NguoiDung extends BaseEntity implements Serializable{
 				", giaoDichs=" + giaoDichs.size() +
 				'}';
 	}
-
 }

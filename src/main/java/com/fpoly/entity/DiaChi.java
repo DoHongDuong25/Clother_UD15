@@ -29,8 +29,7 @@ import java.io.Serializable;
 @EntityListeners(AuditingEntityListener.class)
 @EqualsAndHashCode(callSuper=false)
 public class DiaChi extends BaseEntity implements Serializable {
-	
-	
+
 	@Column(name = "dia_chi",columnDefinition = "nvarchar(255) not null")
 	private String diaChi;
 	
@@ -43,6 +42,5 @@ public class DiaChi extends BaseEntity implements Serializable {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="khach_hang_id")
 	private KhachHang khachHang ;
-	
-	
+
 }
