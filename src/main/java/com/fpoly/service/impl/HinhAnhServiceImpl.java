@@ -46,8 +46,8 @@ public class HinhAnhServiceImpl implements HinhAnhService{
 	}
 	
 	@Override
-	public Page<HinhAnh> getHinhAnhChinhExist(Pageable pageable) {
-		return hinhAnhRepository.getHinhAnhChinhExist(pageable);
+	public List<HinhAnh> getHinhAnhChinhExist() {
+		return hinhAnhRepository.getHinhAnhChinhExist();
 	}
 
 }

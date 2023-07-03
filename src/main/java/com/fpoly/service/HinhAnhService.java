@@ -20,5 +20,5 @@ public interface HinhAnhService {
 
 	List<Long> getDistinctMauSacInHinhAnhBySanPhamId(Long sanPhamId);
 
-	Page<HinhAnh> getHinhAnhChinhExist(Pageable pageable);
+	List<HinhAnh> getHinhAnhChinhExist();
 }

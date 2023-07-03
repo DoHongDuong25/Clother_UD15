@@ -43,6 +43,9 @@ public class MauSac extends BaseEntity implements Serializable{
 	@Column(columnDefinition = "nvarchar(50) not null")
 	private String tenMauSac;
 	
+	@Column(columnDefinition = "nvarchar(30) not null")
+	private String maMauSac;
+	
 	@Column
 	private Boolean daXoa;
 

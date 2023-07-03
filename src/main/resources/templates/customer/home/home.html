@@ -69,10 +69,11 @@
                 <span class="label">New</span> -->
 
                 <div class="row product__filter">
-                    <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix" th:each="image : ${images.content}">
-                        <div class="product__item">
+                    <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix"
+                        th:each="images, istat1 : ${resultLst}">
+                        <div class="product__item" th:each="img, istat2 : *{images[__${istat1.index}__]}">
                             <div class="product__item__pic set-bg"
-                                th:data-setbg="${'/customer/home/images/' +  image.tenAnh}">
+                                th:data-setbg="${'/customer/home/images/' +  img[__${0}__].tenAnh}">
                                 <!-- <span class="label">New</span> -->
                                 <section th:replace="customer/fragments/product_hover :: product-hover"></section>
                             </div>
@@ -90,10 +91,10 @@
                                 <h5> đ</h5>
                                 <div class="product__color__select">
                                     <input type="number" th:value="${image.sanPham.id}" hidden>
-                                    <label for="pc-1">
-                                        <a href="">
-                                            <input type="radio" id="pc-1" th:value="${image.mauSac.id}">
-                                        </a>
+                                    <label th:for="${'pc-'+ img.tenAnh}">
+                                        <input type="radio" th:id="${'pc-'+ img.tenAnh}"
+                                            th:value="${image.mauSac.maMauSac}" th:img-name="${img.tenHinhAnh}"
+                                            onclick="getHinhAnhByMauSac(this.getAttribute('th:img-name'))">
                                     </label>
                                     <label class="active black" for="pc-2">
                                         <input type="radio" id="pc-2">
@@ -104,6 +105,11 @@
                                 </div>
                             </div>
                         </div>
+                        <script th:inline="javascript">
+                            function getHinhAnhByMauSac() {
+
+                            }
+                        </script>
                     </div>
                 </div>
             </div>

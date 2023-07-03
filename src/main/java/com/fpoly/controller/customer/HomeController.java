@@ -1,5 +1,6 @@
 package com.fpoly.controller.customer;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -8,6 +9,7 @@ import java.util.stream.IntStream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
@@ -77,30 +79,27 @@ public class HomeController {
 	}
 	
 	@RequestMapping("")
-	public String home(ModelMap model,
-			@RequestParam("page") Optional<Integer> page,
-			@RequestParam("size") Optional<Integer> size) {
-		
-		int currentPage = page.orElse(1);
-		int pageSize = size.orElse(8);
-		Pageable pageable = PageRequest.of(currentPage-1, pageSize);
-		Page<HinhAnh> resultPage = hinhAnhService.getHinhAnhChinhExist(pageable);
-		int totalPages = resultPage.getTotalPages();
-		if(totalPages>0) {
-			int start = Math.max(1, currentPage-2);
-			int end = Math.min(currentPage +2, totalPages);
-			if(totalPages>5) {
-				if(end == totalPages) {
-					start = end -5;
-				}else if(start==1) {
-					end = start +5;
+	public String home(ModelMap model) {
+		List<HinhAnh> lstHinhAnh = hinhAnhService.getHinhAnhChinhExist();
+		int i=0;
+		int j=0;
+		List<List<HinhAnh>> resultLst = new ArrayList<>();
+		do {
+			List<HinhAnh> lstTenHinhAnh = new ArrayList<>();
+			for (j = i; j < lstHinhAnh.size()-1; j++) {
+				if(lstHinhAnh.get(j).getSanPham().getId().equals(lstHinhAnh.get(i).getSanPham().getId())) {
+					lstTenHinhAnh.add(lstHinhAnh.get(j));
+				}else{
+					i=j;
+					break;
 				}
 			}
-			List<Integer> pageNumbers = IntStream.rangeClosed(start, end)
-					.boxed().collect(Collectors.toList()); 
-			model.addAttribute("pageNumbers", pageNumbers);
-		}
-		model.addAttribute("images", resultPage);
+
+			resultLst.add(lstTenHinhAnh);
+			if(j == lstHinhAnh.size()) break;
+		} while (j< lstHinhAnh.size()-1);
+		
+		model.addAttribute("resultLst", resultLst);
 		return "/customer/home/home";
 	}
 }
