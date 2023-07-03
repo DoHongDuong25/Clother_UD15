@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.context.annotation.Primary;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.fpoly.entity.HinhAnh;
@@ -43,6 +45,9 @@ public class HinhAnhServiceImpl implements HinhAnhService{
 		return hinhAnhRepository.getDistinctMauSacInHinhAnhBySanPhamId(sanPhamId);
 	}
 	
-	
-	
+	@Override
+	public Page<HinhAnh> getHinhAnhChinhExist(Pageable pageable) {
+		return hinhAnhRepository.getHinhAnhChinhExist(pageable);
+	}
+
 }

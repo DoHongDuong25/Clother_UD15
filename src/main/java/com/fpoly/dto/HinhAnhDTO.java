@@ -15,6 +15,10 @@ public class HinhAnhDTO extends BaseDTO{
 	
 	private Long mauSacId;
 	
+	private Long sanPhamId;
+	
+	private String tenAnh;
+	
 	private MultipartFile imgFile;
 	
 	private Boolean laAnhChinh;
