@@ -308,6 +308,14 @@ public class KhachHangServiceImpl implements KhachHangService{
 		}
 	}
 
+	@Override
+	public void updateUserStatus(Long id, int trangThai) {
+		KhachHang user = khachHangRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Khách hàng không tồn tại"));
+        user.setTrangThai(trangThai);
+        khachHangRepository.save(user);
+	}
+
 	
 //	@Autowired
 //	private KhachHangRepository khachHangRepository ;
