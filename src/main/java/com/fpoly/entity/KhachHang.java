@@ -34,7 +34,7 @@ public class KhachHang extends BaseEntity implements Serializable {
 	@Column(name = "email",columnDefinition = "nvarchar(256) not null unique")
     private String email;
 
-    @Column(name = "mat_Khau",columnDefinition = "nvarchar(256) not null ")
+    @Column(name = "mat_Khau",columnDefinition = "nvarchar(256) null ")
     private String matKhau;
 
     @Column(name = "ho_ten",columnDefinition = "nvarchar(256) not null ")

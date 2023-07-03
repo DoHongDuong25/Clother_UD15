@@ -27,11 +27,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.*;
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -41,46 +36,32 @@ import java.util.List;
 public class SanPhamChiTiet extends BaseEntity implements Serializable{
 	@Column(nullable = false)
 	private String maSanPhamChiTiet;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "kich_co_id", nullable = false)
 	private KichCo kichCo;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "mau_sac_id", nullable = false)
 	private MauSac mauSac;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "san_pham_id", nullable = false)
 	private SanPham sanPham;
-	
+
 	@Column
 	private int soLuong;
-	
+
 	@OneToMany(mappedBy = "sanPhamChiTiet", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<HoaDonChiTiet> hoaDonChiTiets;
-	
+
 	@Column
 	private Boolean coHienThi;
-	
+
 	@Column
 	private Boolean daXoa;
-	
+
 	@OneToMany(mappedBy="sanPhamChiTiet")
 	private List<GioHangChiTiet> gioHangChiTiet = new ArrayList<GioHangChiTiet>();
 
-	@Override
-	public String toString() {
-		return "SanPhamChiTiet{" +
-				"kichCo=" + kichCo.getId() +
-				", mauSac=" + mauSac.getId() +
-				", sanPham=" + sanPham.getId() +
-//				", hinhAnhs=" + hinhAnhs.size() +
-				", soLuong=" + soLuong +
-				", hoaDonChiTiets=" + hoaDonChiTiets.size() +
-				", coHienThi=" + coHienThi +
-				", daXoa=" + daXoa +
-				", gioHangChiTiet=" + gioHangChiTiet.size() +
-				'}';
-	}
 }
