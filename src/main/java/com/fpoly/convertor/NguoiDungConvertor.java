@@ -19,6 +19,7 @@ public class NguoiDungConvertor {
 		if(khachHangDTO.getTrangThai() == 1) {
 			entity.setTrangThai(1);
 		}
+		entity.setDaXoa(false);
 		return entity ;
 	}
 	
@@ -27,6 +28,7 @@ public class NguoiDungConvertor {
 		NguoiDung entity = new NguoiDung();
 		if(khachHangDTO.getId() != null) {
 			entity.setId(oldEntity.getId());
+			entity.setDaXoa(oldEntity.getDaXoa());
 		}
 		entity.setEmail(khachHangDTO.getEmail());
 		entity.setSoDienThoai(khachHangDTO.getSoDienThoai());
@@ -37,6 +39,7 @@ public class NguoiDungConvertor {
 		if(khachHangDTO.getTrangThai() == 1) {
 			entity.setTrangThai(1);
 		}
+		
 		return entity ;
 	}
 }
