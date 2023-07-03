@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.fpoly.dto.DiaChiDTO;
 import com.fpoly.dto.KhachHangDTO;
@@ -125,30 +124,6 @@ public class KhachHangController {
 		return  "/admin/khach-hang/danhSach";
 	}
 	
-	@RequestMapping("/chuyen-doi/{pageNumber}")
-	public String chuyenDoi(@RequestParam(name="trangThai",required=false) Integer trangThai ,
-			@RequestParam(name="limit",required=false ) Integer limit ,
-			@RequestParam(name="input",required=false ,defaultValue="") String input ,
-			@RequestParam(name="id") Long id ,
-			@PathVariable(name="pageNumber") Integer currentPage ,
-			Model model , HttpServletRequest request
-			) {
-		khachHangService.capNhatTrangThaiTheoId(id);
-		if( trangThai == 2 &&  input.equalsIgnoreCase("")) {
-			return  "redirect:/admin/khach-hang/danh-sach/"+currentPage+"?limit="+limit+"&id="+id;
-		}else if (trangThai != null && trangThai != 2 && input.equalsIgnoreCase("")) {
-			return  "redirect:/admin/khach-hang/danh-sach/chuyen-doi-trang-thai/"+currentPage+"?trangThai="+trangThai+"&limit="+limit+"&id="+id;
-		}else if (trangThai != null &&   input != null ) {
-			if(trangThai == 2 &&  !input.equalsIgnoreCase("")) {
-				return  "redirect:/admin/khach-hang/danh-sach/tim-kiem/"+currentPage+"?trangThai="+trangThai+"&limit="+limit+"&input="+input+"&id="+id;
-			}
-			if(trangThai != 2 &&  !input.equalsIgnoreCase("")) {
-				return  "redirect:/admin/khach-hang/danh-sach/tim-kiem/"+currentPage+"?trangThai="+trangThai+"&limit="+limit+"&input="+input+"&id="+id;
-			}
-		}
-		
-		return "/admin/khach-hang/danhSach";
-	}
 	
 	@RequestMapping("danh-sach/tim-kiem/{pageNumber}")
 	public String timKiemKhachHangTheoInput(

@@ -123,7 +123,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="card shadow mb-4 mt-5">
+	<div class="card  mb-4 mt-5">
 
 		<div class="card-body">
 			<div class="table">
@@ -131,7 +131,7 @@
 					<thead>
 					<tr>
 						<th>
-							<input type="checkbox" value="" id="checkAll" name="checkAll" />
+									<input type="checkbox"  value="" th:id="checkAll" name="checkAll" />
 						</th>
 						<th>STT</th>
 						<th>Họ và tên</th>
@@ -141,32 +141,31 @@
 						<th colspan="2">Thao tác</th>
 					</tr>
 					</thead>
-					<tbody th:each="item : *{listKhachHangDTO}">
+					<tbody th:each="item : *{listKhachHangDTO}" >
 
 					<tr>
 						<th:block th:if="*{listKhachHangDTO != null}">
-							<td><input type="checkbox" th:value="${item.id}" id="checkbox_${item.id}" /></td>
+							<td>
+									<input type="checkbox" class="form-checkbox" th:value="${item.id}" th:id="'checkbox_'+${item.id}" />
+							</td>
 							<td>[[${itemStat.index+1}]]</td>
 							<td>[[${item.hoTen}]]</td>
 							<td>[[${item.soDienThoai}]]</td>
 							<td>[[${item.email}]]</td>
 
 
-							<td><th:block th:if="${item.trangThai == 1}">
-								<span class="text-success">Đang hoạt động</span>
-							</th:block> <th:block th:if="${item.trangThai == 0}">
-								<span class="text-danger">Ngừng hoạt động</span>
-							</th:block></td>
-							<td><a th:href="@{|/admin/khach-hang/danh-sach/chinh-sua?id=${item.id}&page=1|}" class="btn btn-outline-primary" title="Cập nhật"> <i class="fas fa-user-edit"></i>
-							</a></td>
 							<td>
-								<a  th:href="@{|/admin/khach-hang/chuyen-doi/*{page}?id=${item.id}&trangThai=*{trangThai}&input=*{input}&limit=*{limit}| }"
-									class="dt-button buttons-html5 btn btn-outline-white  btn-bold" data-toggle="tooltip" title='Chuyển đổi trạng thái'>
-																<span>
-																	<i class="fas fa-sync-alt"></i>
-																</span>
-								</a>
+							<div class="btn-group">
+	                            <div class="custom-control custom-switch">
+	                                <input type="checkbox" class="custom-control-input" th:id="${item.id}" th:value="${item.id}" th:checked="${item.trangThai == 1}">
+	                                <label class="custom-control-label" th:for="${item.id}"></label>
+	                            </div>
+	                        </div>
+							
 							</td>
+							<td><a th:href="@{|/admin/khach-hang/danh-sach/chinh-sua?id=${item.id}&page=1|}" class="btn btn-outline-primary" title="Cập nhật"> <i class="fas fa-edit text-primary"></i>
+							</a></td>
+							
 						</th:block>
 						<th:block th:if="*{listKhachHangDTO == null }">
 							<span>Không có dữ liệu !</span>
