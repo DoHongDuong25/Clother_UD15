@@ -411,10 +411,11 @@
             </tbody>
             </thead>
         </table>
+        <!--From phân trang-->
         <div class="pagination-container">
             <div class="pagination">
                 <ul>
-                    <li th:each="pageNumber : ${#numbers.sequence(0, totalPages - 1)}">
+                    <li th:each="pageNumber : ${#numbers.sequence(1, totalPages)}">
                         <a th:href="@{/admin/NguoiDung(page=${pageNumber})}" th:text="${pageNumber}"></a>
                     </li>
                 </ul>
@@ -429,9 +430,7 @@
 <!-- Xử lý phân trang -->
 <script th:inline="javascript">
     function changePage(event, pageNumber) {
-        event.preventDefault(); // Ngăn chặn hành vi mặc định của liên kết
-
-        // Gửi yêu cầu AJAX để lấy nội dung trang mới
+        event.preventDefault();
         var xhr = new XMLHttpRequest();
         xhr.open("GET", "/admin/NguoiDung?page=" + pageNumber);
         xhr.onload = function () {
@@ -445,7 +444,7 @@
     }
 </script>
 
-<!-- Tim Kiếm Trạng Thái -->
+<!-- Lọc Trạng Thái -->
 <script th:inline="javascript">
     function filterByStatus() {
         var selectedStatus = document.getElementById("status").value.toLowerCase();
@@ -459,7 +458,6 @@
             if (selectedStatus === "all" || selectedStatus === status) {
                 displayRow = true;
             }
-
             if (displayRow) {
                 row.style.display = "";
             } else {
@@ -477,10 +475,10 @@
         var rows = table.getElementsByTagName("tr");
 
         for (var i = 0; i < rows.length; i++) {
-            var idCell = rows[i].getElementsByTagName("td")[0]; // Adjust the index if necessary
-            var customerNameCell = rows[i].getElementsByTagName("td")[1]; // Adjust the index if necessary
-            var emailCell = rows[i].getElementsByTagName("td")[2]; // Adjust the index if necessary
-            var phoneCell = rows[i].getElementsByTagName("td")[3]; // Adjust the index if necessary
+            var idCell = rows[i].getElementsByTagName("td")[0];
+            var customerNameCell = rows[i].getElementsByTagName("td")[1];
+            var emailCell = rows[i].getElementsByTagName("td")[2];
+            var phoneCell = rows[i].getElementsByTagName("td")[3];
 
             if (idCell && customerNameCell && emailCell && phoneCell) {
                 var idCell = idCell.textContent || idCell.innerText;
@@ -493,9 +491,28 @@
                 phoneNumber = phoneNumber.toLowerCase();
 
                 if (
-                    (idCell.indexOf(input) > -1 || customerName.indexOf(input) > -1 || emailCell.indexOf(input) > -1 || phoneNumber.indexOf(input) > -1)
+                    (idCell.indexOf(input) > -1 ||
+                    customerName.indexOf(input) > -1 ||
+                    phoneNumber.indexOf(input) > -1 ||
+                    emailCell.toString().indexOf(input) > -1)
                 ) {
                     rows[i].style.display = "";
+
+                    var searchLabel = input;
+                    if (idCell.indexOf(input) > -1) {
+                        searchLabel += " (Mã Nhân Viên)";
+                    }
+                    if (customerName.indexOf(input) > -1) {
+                        searchLabel += " (Tên Nhân Viên)";
+                    }
+                    if (phoneNumber.indexOf(input) > -1) {
+                        searchLabel += " (Số Điện Thoại)";
+                    }
+
+                    if (emailCell.indexOf(input) > -1) {
+                        searchLabel += " (Email)";
+                    }
+                    document.getElementById("search-input-allHD-name").value = searchLabel;
                 } else {
                     rows[i].style.display = "none";
                 }
@@ -510,6 +527,7 @@
         var inputDate = document.getElementById("search-input-allHD-date").value;
         var table = document.getElementById("user-name-label");
         var rows = table.getElementsByTagName("tr");
+        var found = false;
 
         for (var i = 0; i < rows.length; i++) {
             var creationDateCell = rows[i].getElementsByTagName("td")[4]; // Điều chỉnh chỉ mục nếu cần thiết
@@ -520,13 +538,28 @@
 
                 if (formattedCreationDate === inputDate) {
                     rows[i].style.display = "";
+                    found = true;
                 } else {
                     rows[i].style.display = "none";
                 }
             }
         }
+        if (found) {
+            Swal.fire({
+                icon: 'success',
+                title: 'Tìm kiếm thành công!',
+                showConfirmButton: false,
+                timer: 1500
+            });
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: 'Không tìm thấy',
+                showConfirmButton: false,
+                timer: 1500
+            });
+        }
     }
-
     function formatDate(dateString) {
         var parts = dateString.split("/");
         var day = parts[0];
@@ -536,7 +569,7 @@
     }
 </script>
 
-<!-- Nút trạng thái bật/tắt -->
+<!-- Nút bật/tắt trạng thái -->
 <script th:inline="javascript">
     $(document).ready(function() {
         $('.custom-control-input').click(function() {
@@ -547,7 +580,7 @@
             $.post("/updateStatus", { userId: userId, status: status }, function(data) {
                 Swal.fire({
                     icon: 'success',
-                    title: 'Cập nhật trạng thái thành công',
+                    title: 'Cập nhật thành công',
                     showConfirmButton: false,
                     timer: 1500
                 });
