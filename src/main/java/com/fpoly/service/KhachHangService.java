@@ -39,6 +39,9 @@ List<KhachHangDTO> findAllByTrangThaiCoPhanTrang(Integer trangThai,Pageable page
 	void capNhatTrangThaiTheoId(Long id);
 
 
+	void updateUserStatus(Long id, int trangThai);
+
+
 
 
 	

@@ -1,8 +1,23 @@
-$(document).ready(function(){
-	$("#myBtn").click(function(){
-		$('.toast').toast('show');
-	});
-});
+$(document).ready(function() {
+        $('.custom-control-input').click(function() {
+            var userId = $(this).val();
+            var status = $(this).is(':checked') ? 1 : 0 ;
+            $.post("/cap-nhat-trang-thai", { userId: userId, status: status }, function(data) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Cập nhật trạng thái thành công',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+            }).fail(function(error) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Có lỗi xảy ra',
+                    text: error.responseText
+                });
+            });
+        });
+    });
 
 
 $('#input').on('change',function(){
@@ -54,12 +69,12 @@ $('#limitSelect').on('change',function fun(e) {
 $('#checkAll').click(function(event) {
 	if(this.checked) {
 		// Iterate each checkbox
-		$(':checkbox').each(function() {
+		$('.form-checkbox').each(function() {
 			this.checked = true;
 		});
 	} else {
-		$(':checkbox').each(function() {
-			this.checked = false;
+		$('.form-checkbox').each(function() {
+				this.checked = false;
 		});
 	}
 });
@@ -105,6 +120,7 @@ function capNhatTrangThaiThanhHoatDong(ids,pageCurrent) {
 		success : function(result) {
 			$('#liveToast').html('<div class="toast-header"><strong class="mr-auto">Thông báo !</strong><small>1 giây trước </small><button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close"><span aria-hidden="true">&times;</span></button></div><div class="toast-body"><p class="fw-bold text-success">Chuyển đổi thành công !</p></div>');
 			$('#liveToast').toast('show');
+			
 			setTimeout("location.href = 'http://localhost:8080/admin/khach-hang/danh-sach/"+pageCurrent+"?message=change_success' ", 2000);
 		},
 		error : function (error) {
@@ -127,7 +143,7 @@ function xacNhanChuyenDoiTrangThaiDaChonThanhKhongHoatDong() {
 	}).then((result) =>
 	{
 		if (result.isConfirmed) {
-			var ids = $('tbody input[type=checkbox]:checked').map(function name() {
+			var ids = $('tbody input[type=checkbox][class=form-checkbox]:checked').map(function name() {
 				return $(this).val();
 			}).get();
 			var pageCurrent= $('#pageCurrent').val();
@@ -225,11 +241,23 @@ function themKhachHang(data) {
 			$('#liveToast').html('<div class="toast-header"><strong class="mr-auto">Thông báo !</strong><small>1 giây trước </small><button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close"><span aria-hidden="true">&times;</span></button></div><div class="toast-body"><p class="fw-bold text-success">Thêm mới  thành công !</p></div>');
 			$('#liveToast').toast('show');
 //			window.location.href = "http://localhost:8080/admin/khach-hang/danh-sach/chinh-sua?id="+result.id+"&page=1&message=create_success" ;
-			setTimeout("location.href = 'http://localhost:8080/admin/khach-hang/danh-sach/chinh-sua?id="+result.id+"&page=1&message=create_success '      ", 2000);
+			Swal.fire({
+                icon: 'success',
+                title: 'Thêm mới khách hàng thành công !',
+                showConfirmButton: false,
+                timer: 1500
+            });
+			setTimeout("location.href = 'http://localhost:8080/admin/khach-hang/danh-sach/chinh-sua?id="+result.id+"&page=1'      ", 2000);
 		},
 		error : function (error) {
 			$('#liveToast').html('<div class="toast-header"><strong class="mr-auto">Thông báo !</strong><small>1 giây trước </small><button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close"><span aria-hidden="true">&times;</span></button></div><div class="toast-body"><p class="fw-bold text-danger">Thêm mới thất bại !</p></div>');
 			$('#liveToast').toast('show');
+			Swal.fire({
+                icon: 'error',
+                title: 'Thêm mới khách thất bại !',
+                showConfirmButton: false,
+                timer: 1500
+            });
 			//window.location.href = "http://localhost:8080/admin/khach-hang/danh-sach/chinh-sua?message=duplicate_email&email="+data.email ;
 			setTimeout("location.href = 'http://localhost:8080/admin/khach-hang/danh-sach/chinh-sua?email="+data.email+"&message=duplicate_email '      ", 2000);
 		}
@@ -246,11 +274,23 @@ function capNhatKhachHang(data) {
 			$('#liveToast').html('<div class="toast-header"><strong class="mr-auto">Thông báo !</strong><small>1 giây trước </small><button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close"><span aria-hidden="true">&times;</span></button></div><div class="toast-body"><p class="fw-bold text-success">Cập nhật  thành công !</p></div>');
 			$('#liveToast').toast('show');
 //			window.location.href = "http://localhost:8080/admin/khach-hang/danh-sach/chinh-sua?id="+result.id+"&page=1&message=update_success"  ;
-			setTimeout("location.href = 'http://localhost:8080/admin/khach-hang/danh-sach/chinh-sua?id="+result.id+"&page=1&message=update_success '      ", 2000);
+			Swal.fire({
+                icon: 'success',
+                title: 'Cập nhật khách hàng thành công !',
+                showConfirmButton: false,
+                timer: 1500
+            });
+			setTimeout("location.href = 'http://localhost:8080/admin/khach-hang/danh-sach/chinh-sua?id="+result.id+"&page=1 '      ", 2000);
 		},
 		error : function (error) {
 			$('#liveToast').html('<div class="toast-header"><strong class="mr-auto">Thông báo !</strong><small>1 giây trước </small><button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close"><span aria-hidden="true">&times;</span></button></div><div class="toast-body"><p class="fw-bold text-danger">Cập nhật thất bại !</p></div>');
 			$('#liveToast').toast('show');
+			Swal.fire({
+                icon: 'error',
+                title: 'Cập nhật khách thất bại !',
+                showConfirmButton: false,
+                timer: 1500
+            });
 //			window.location.href = "http://localhost:8080/admin/khach-hang/danh-sach/chinh-sua?id="+data.id+"&message=update_duplicate_email&email="+data.email ;
 			setTimeout("location.href = 'http://localhost:8080/admin/khach-hang/danh-sach/chinh-sua?id="+data.id+"&email="+data.email+"&message=update_duplicate_email'     ", 2000);
 		}
