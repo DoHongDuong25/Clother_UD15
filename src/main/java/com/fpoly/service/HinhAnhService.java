@@ -3,6 +3,9 @@ package com.fpoly.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import com.fpoly.entity.HinhAnh;
 
 public interface HinhAnhService {
@@ -17,6 +20,5 @@ public interface HinhAnhService {
 
 	List<Long> getDistinctMauSacInHinhAnhBySanPhamId(Long sanPhamId);
 
-
-
+	List<HinhAnh> getHinhAnhChinhExist();
 }
