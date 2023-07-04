@@ -26,6 +26,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,12 +40,14 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.fpoly.constant.OptionContants;
+import com.fpoly.constant.pageContants;
 import com.fpoly.dto.ChatLieuDTO;
 import com.fpoly.dto.KichCoDTO;
 import com.fpoly.dto.KieuDangDTO;
 import com.fpoly.dto.LoaiSanPhamDTO;
 import com.fpoly.dto.MauSacDTO;
 import com.fpoly.dto.PhongCachDTO;
+import com.fpoly.dto.SanPhamChiTietDTO;
 import com.fpoly.dto.composite.HinhAnhMauSacDTO;
 import com.fpoly.dto.composite.SanPhamManageDTO;
 import com.fpoly.dto.search.SPAndSPCTSearchDto;
@@ -213,7 +216,8 @@ public class SanPhamChiTietController {
 //		return "admin/product/productManage";
 //	}
 	@GetMapping("info/{id}")
-	public String infoProductDetai(ModelMap model, @PathVariable("id") Long id) {
+	public String infoProductDetai(ModelMap model, @PathVariable("id") Long id
+			) {
 		Optional<SanPham> opt = sanPhamService.findById(id);
 		if(opt.isPresent()) {
 			model.addAttribute("sanPham", opt.get());
@@ -222,9 +226,9 @@ public class SanPhamChiTietController {
 	}
 	
 	@GetMapping("add")
-	public String addProductDetail(ModelMap model) {
+	public ModelAndView addProductDetail(ModelMap model) {
 		model.addAttribute("sanPhamManageDTO", new SanPhamManageDTO());
-		return "admin/product/addProduct";
+		return new ModelAndView("admin/product/addProduct");
 	}
 	
 	@PostMapping("generateProductDetails")
@@ -289,6 +293,7 @@ public class SanPhamChiTietController {
 				i.setMauSac(optMS.get());
 				i.setKichCo(optKC.get());
 			});
+			data.setIsEdit(false);
 			data.setSanPhamId(sanPham.getId());
 			model.addAttribute("dataGen", dataGen);	
 			model.addAttribute("sanPhamManageDTO", data);
@@ -329,7 +334,7 @@ public class SanPhamChiTietController {
 			dto.setKichCoIds(lstKC);
 			dto.setMauSacIds(lstMS);
 			
-			List<HinhAnh> lstHinhAnh = hinhAnhService.getLstHinhAnhByMauSacIdAndSanPhamId(id);
+			List<HinhAnh> lstHinhAnh = hinhAnhService.getLstHinhAnhMauSacBySanPhamId(id);
 			List<List<String>> lstTenHinhAnhs = new ArrayList<>();
 			int i=0;
 			int j=0;
@@ -444,7 +449,26 @@ public class SanPhamChiTietController {
 		return new ModelAndView("admin/product/addProduct", model);
 	}
 	
-	
+	@GetMapping("/productDetail/edit/{id}/{pageName}")
+	public String editProductDetail(ModelMap model, @PathVariable("id") Long id,
+			@PathVariable("pageName") String returnUrlPage) {
+		Optional<SanPhamChiTiet> opt = sanPhamChiTietService.findById(id);
+		if(opt.isPresent()) {
+			SanPhamChiTietDTO dto = new SanPhamChiTietDTO();
+			BeanUtils.copyProperties(opt.get(), dto);
+			dto.setKichCoId(opt.get().getKichCo().getId());
+			dto.setMauSacId(opt.get().getMauSac().getId());
+			dto.setSanPhamId(opt.get().getSanPham().getId());
+			if(returnUrlPage.equalsIgnoreCase(pageContants.addProduct)) {
+				returnUrlPage = "/admin/product/edit/" + opt.get().getSanPham().getId();
+			}else if(returnUrlPage.equalsIgnoreCase(pageContants.infoProduct)) {
+				returnUrlPage = "/admin/product/info/" + opt.get().getSanPham().getId();
+			}
+			model.addAttribute("sanPhamChiTietDTO", dto);
+			model.addAttribute("returnUrlPage", returnUrlPage);
+		}
+		return "admin/product/editProductDetail";
+	}
 	
 	@GetMapping("addImageProductDetail")
 	public String addImageProductDetail(ModelMap model, @ModelAttribute("sanPhamManageDTO") SanPhamManageDTO data,
@@ -473,6 +497,7 @@ public class SanPhamChiTietController {
 			}
 			data.setLstHinhAnhMauSacDTO(lstHinhAnhMauSacDTO);
 		}
+		data.setIsEdit(false);
 		model.addAttribute("sanPhamManageDTO", data);
 		List<SanPhamChiTiet> dataGen = sanPhamChiTietService.getLstSanPhamChiTietBySanPhamId(idSanPham);
 		model.addAttribute("dataGen", dataGen);
@@ -508,12 +533,59 @@ public class SanPhamChiTietController {
 					hinhAnh.setCoHienThi(true);
 					hinhAnhService.save(hinhAnh);
 				}});
-			});
-		model.addAttribute("messageSuccess", "Thêm sản phẩm thành công");
-		Optional<Integer> page = Optional.of(1);
-		Optional<Integer> size = Optional.of(10);
-		this.showViewBeforeSearch(model, new SPAndSPCTSearchDto(), page, size);
-		return new ModelAndView("admin/product/productManage", model);
+		});
+		model.addAttribute("messageSuccess", "Thêm hình ảnh cho sản phẩm thành công");
+		
+		List<HinhAnh> lstHinhAnh = hinhAnhService.getLstHinhAnhMauSacBySanPhamId(sanPhamManageDTO.getSanPhamId());
+		List<List<String>> lstTenHinhAnhs = new ArrayList<>();
+		int i=0;
+		int j=0;
+		int countLstHinhAnh = 0;
+		do {
+			List<String> lstTenHinhAnh = new ArrayList<>();
+			for (j = i; j < lstHinhAnh.size()-1; j++) {
+				if(lstHinhAnh.get(j).getMauSac().getId().equals(lstHinhAnh.get(i).getMauSac().getId())) {
+					lstTenHinhAnh.add(lstHinhAnh.get(j).getTenAnh());
+				}else{
+					i=j;
+					break;
+				}
+			}
+			countLstHinhAnh++;
+
+			lstTenHinhAnhs.add(lstTenHinhAnh);
+			if(j == lstHinhAnh.size()) break;
+		} while (j< lstHinhAnh.size()-1);
+		int m = 0;
+		List<HinhAnhMauSacDTO> lstHinhAnhMauSacDTO = new ArrayList<>();
+		List<Long> lstHinhAnhDistinct = hinhAnhService.getDistinctMauSacInHinhAnhBySanPhamId(sanPhamManageDTO.getSanPhamId());
+		for (Long mauSacId : lstHinhAnhDistinct) {
+			HinhAnhMauSacDTO hinhAnhMauSacDTO = new HinhAnhMauSacDTO();
+			Optional<MauSac> optMS = mauSacService.findById(mauSacId);
+			if(optMS.isPresent()) {
+				hinhAnhMauSacDTO.setTenMauSacAddImg(optMS.get().getTenMauSac());
+				hinhAnhMauSacDTO.setMauSacAddImagesId(mauSacId);
+			}
+			if(m < countLstHinhAnh) {
+				List<String> imgfilesStr = new ArrayList<String>();
+				for (String imgStr : lstTenHinhAnhs.get(m)) {
+					Path file = storageService.load(imgStr);
+					Resource resource;
+					try {
+						resource = new UrlResource(file.toUri());
+						imgfilesStr.add(resource.getFilename());
+					} catch (MalformedURLException e) {
+						e.printStackTrace();
+					}
+				}
+				hinhAnhMauSacDTO.setImgFilesString(imgfilesStr);
+				m++;
+			}
+			lstHinhAnhMauSacDTO.add(hinhAnhMauSacDTO);
+		}
+		model.addAttribute("sanPhamManageDTO", sanPhamManageDTO);
+		
+		return new ModelAndView("admin/product/addProduct", model);
 	}
 	
 	@PostMapping("saveOptionValue")
@@ -588,7 +660,6 @@ public class SanPhamChiTietController {
 					sanPhamChiTietService.delete(opt.get());
 				}
 			}
-			model.addAttribute("messageSuccess", "Đã xóa hết những sản phẩm đã chọn");
 		}else model.addAttribute("messageDanger", "Bạn chưa chọn ô checkbox nào");
 	}
 	

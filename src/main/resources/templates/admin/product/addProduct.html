@@ -192,8 +192,8 @@
                             Kích cỡ và màu sắc
                         </h6>
                     </div>
-                    <div class="col-sm-12 row">
-                        <div class="col-sm-4 mt-3" thcl>
+                    <div class="col-sm-12 row" th:if="*{isEdit == false}">
+                        <div class="col-sm-4 mt-3">
                             <div class="row">
                                 <div class="col-12">
                                     <label for="kichCoIds">Tên kích cỡ:</label>
@@ -266,6 +266,73 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-sm-12 row" th:if="*{isEdit == true}">
+                        <div class="col-sm-6 mt-3">
+                            <div class="row">
+                                <div class="col-12">
+                                    <label for="kichCoIds">Tên kích cỡ:</label>
+                                </div>
+                                <div class="col-10" style="padding-right: 3px;">
+                                    <select class="selectpicker" name="kichCoIds" id="kichCoIds" th:field="*{kichCoIds}"
+                                        th:classappend="${#fields.hasErrors('kichCoIds')}?
+                                            is-invalid : ''" multiple>
+                                        <option th:each="item : ${lstKichCo}" th:value="${item.id}"
+                                            th:text="${item.tenKichCo}">
+                                        </option>
+                                    </select>
+                                    <small id="kichCoIds" th:if="${#fields.hasErrors('kichCoIds')}" th:class="${#fields.hasErrors('kichCoIds')}?
+                                            invalid-feedback : ''" th:errors="*{kichCoIds}"></small>
+                                </div>
+                                <div class="col-2" style="padding-left: 0;">
+                                    <a class="btn btn-outline-info"
+                                        onclick="openPopupIsShowSpeedAddProduct('Tên kích cỡ', 'kichCo')">
+                                        <img th:src="@{/admin/img/icons/plus.svg}"></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 mt-3 mb-3">
+                            <div class="row">
+                                <div class="col-12"><label for="mauSacIds">Tên màu sắc:</label></div>
+                                <div class="col-10" style="padding-right: 3px;">
+                                    <select class="selectpicker" name="mauSacIds" id="mauSacIds" th:field="*{mauSacIds}"
+                                        th:classappend="${#fields.hasErrors('mauSacIds')}?
+                                    is-invalid : ''" multiple>
+                                        <option th:each="item : ${lstMauSac}" th:value="${item.id}">
+                                            <span>
+                                                <svg class="bd-placeholder-img rounded mr-2" width="20" height="20"
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    preserveAspectRatio="xMidYMid slice" focusable="false" role="img">
+                                                    <rect width="100%" height="100%" fill="red"></rect>
+                                                </svg>
+                                                <span th:text="${item.tenMauSac}"></span>
+                                            </span>
+                                        </option>
+                                    </select>
+                                    <small id="mauSacIds" th:if="${#fields.hasErrors('mauSacIds')}" th:class="${#fields.hasErrors('mauSacIds')}?
+                                    invalid-feedback : ''" th:errors="*{mauSacIds}"></small>
+                                </div>
+                                <div class="col-2" style="padding-left: 0;">
+                                    <a class="btn btn-outline-info"
+                                        onclick="openPopupIsShowSpeedAddProduct('Tên màu sắc', 'mauSac')">
+                                        <img th:src="@{/admin/img/icons/plus.svg}"></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 mt-3 mb-3">
+                            <div class="float-right">
+                                <a class="btn btn-primary" th:if="*{isEdit == false}"
+                                    onclick="flexUrlSubmit('generateProductDetails', 'post', 'AddProduct')">
+                                    <span>Tạo sản phẩm <img th:src="@{/admin/img/icons/box-arrow-down.svg}"
+                                            aria-label="chi tiết" /></span>
+                                </a>
+                                <a class="btn btn-primary" th:if="*{isEdit == true}"
+                                    onclick="flexUrlSubmit('add', 'get', 'AddProduct')">
+                                    <span>Tạo mới sản phẩm <img th:src="@{/admin/img/icons/box-arrow-in-up.svg}"
+                                            aria-label="chi tiết" /></span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="card shadow mb-4 mt-4" th:if="${not #lists.isEmpty(dataGen)}">
@@ -274,8 +341,7 @@
                         Bảng sản phẩm đã thêm mới
                         <div class="btn-group-sm">
                             <div class="float-right">
-                                <a class="btn btn-danger" onclick="showConfirmModalDialogDeleteAllbyId()">Xóa
-                                    hết</a>
+                                <a class="btn btn-danger" onclick="showConfirmModalDialogDeleteAllbyId()">Xóa</a>
                             </div>
                         </div>
                     </h6>
@@ -378,22 +444,17 @@
                                         </td>
                                         <td>
                                             <div class="btn-group">
-                                                <a class="btn
-                                                                btn-outline-info
-                                                                btn-sm" id="info"><img
-                                                        th:src="@{/admin/img/icons/info.svg}" data-bs-container="body"
-                                                        data-bs-toggle="popover" data-bs-placement="top"
-                                                        data-bs-content="Top popover"></a>
-                                                <a class="btn
-                                                                btn-outline-primary
-                                                                btn-sm" th:href="@{'/admin/product/edit/'
-                                                                + ${data.id}}"><img
-                                                        th:src="@{/admin/img/icons/edit.svg}"></a>
-                                                <a class="btn
-                                                                btn-outline-danger
-                                                                btn-sm" th:data-id="${data.id}"
-                                                    th:data-name="${data.sanPham.tenSanPham}" onclick="showConfirmModalDialog(this.getAttribute('data-id'),
-                                                                this.getAttribute('data-name'))"><img
+                                                <a class="btn btn-outline-primary btn-sm" data-toggle="popover"
+                                                    data-trigger="hover" data-placement="top"
+                                                    data-content="Cập nhật sản phẩm chi tiết"
+                                                    th:href="@{'/admin/product/productDetail/edit/' + ${data.id}} +'/addProduct'"
+                                                    disabled><img th:src="@{/admin/img/icons/edit.svg}"></a>
+
+                                                <a class="btn btn-outline-danger btn-sm" th:data-id="${data.id}"
+                                                    data-toggle="popover" data-trigger="hover" data-placement="top"
+                                                    data-content="Xóa sản phẩm chi tiết"
+                                                    th:data-name="${data.mauSac.tenMauSac}"
+                                                    onclick="showConfirmModalDialog(this.getAttribute('data-id'), this.getAttribute('data-name'))"><img
                                                         th:src="@{/admin/img/icons/trash.svg}"></a>
                                             </div>
                                         </td>
@@ -421,88 +482,136 @@
             </div>
             <div class="card shadow mb-4 mt-4"
                 th:if="${sanPhamManageDTO.lstHinhAnhMauSacDTO != null && !sanPhamManageDTO.lstHinhAnhMauSacDTO.isEmpty()}">
-                <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold">
-                        Thêm hình ảnh cho sản phẩm
-                    </h6>
-                </div>
-                <div class="col-sm-12">
-                    <div class="col-sm-12 card mb-4 mt-4" th:each="item, istat : *{lstHinhAnhMauSacDTO}">
-                        <div class="row">
-                            <div class="col-sm-12 mt-3">
-                                <div class="col-sm-12">
-                                    <h6>Tên màu sắc của sản phẩm đang thêm ảnh: <span
-                                            th:text="${item.tenMauSacAddImg}"></span></h6>
-                                    <input type="number" class="form-control"
-                                        th:field="*{lstHinhAnhMauSacDTO[__${istat.index}__].mauSacAddImagesId}"
-                                        name="mauSacAddImagesId" th:value="${item.mauSacAddImagesId}" hidden />
-                                    <input type="file" th:id="'inp-add-' + ${istat.index}"
-                                        th:name="'inp-add-' + ${istat.index}" multiple
-                                        th:field="*{lstHinhAnhMauSacDTO[__${istat.index}__].imgFiles}">
-                                    <br>
-                                    <div class="row"
-                                        th:each="img, istatHAMS : *{lstHinhAnhMauSacDTO[__${istat.index}__].imgFilesString}">
-                                        <img alt="" th:id="'imgItem' + ${istat.index} + ${istatHAMS.index}"
-                                            width="120px" th:src="${'/admin/product/images/' + img}">
-                                        <input type="file" th:id="'inp-add-'+ ${istat.index} + ${istatHAMS.index}"
-                                            th:src="${'/admin/product/images/' + img}">
-                                        <script th:inline="javascript">
-                                            $(document).ready(function () {
-                                                var index1 = '[[${istat.index}]]';
-                                                var index2 = '[[${istatHAMS.index}]]';
-                                                $('#inp-add-'+ index1 + index2).on('ready', function () {
-                                                    var $plugin = $('#inp-add-' + index1).data('fileinput');
-                                                    $plugin.addToStack($(this)[0].files[0]);
-                                                })
-                                                $('#inp-add-' + index1).fileinput({
-                                                    uploadUrl: '#',
-                                                    //uploadUrl: 'http://localhost/plugins/test-upload',
-                                                    initialPreviewAsData: false,
-                                                    // initialPreview: [
-                                                        
-                                                    // ]
-                                                })
-                                            })
-                                        </script>
+                <div th:if="*{isEdit == false}">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold">
+                            Thêm hình ảnh cho sản phẩm
+                        </h6>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="col-sm-12 card mb-4 mt-4" th:each="item, istat : *{lstHinhAnhMauSacDTO}">
+                            <div class="row">
+                                <div class="col-sm-12 mt-3">
+                                    <div class="col-sm-12">
+                                        <input type="number" class="form-control"
+                                                th:field="*{lstHinhAnhMauSacDTO[__${istat.index}__].mauSacAddImagesId}"
+                                                name="mauSacAddImagesId" th:value="${item.mauSacAddImagesId}" hidden />
+                                        <div th:if="*{#lists.isEmpty(lstHinhAnhMauSacDTO[__${istat.index}__].imgFilesString)}">
+                                            <h6>Tên màu sắc của sản phẩm đang thêm ảnh: <span
+                                                th:text="${item.tenMauSacAddImg}"></span></h6>
+                                            <input type="file" th:id="'inp-add-' + ${istat.index}"
+                                                th:name="'inp-add-' + ${istat.index}" multiple
+                                                th:field="*{lstHinhAnhMauSacDTO[__${istat.index}__].imgFiles}">
+                                            <br>
+                                            <hr><br>
+                                        </div>
+                                        <div
+                                            th:if="*{not #lists.isEmpty(lstHinhAnhMauSacDTO[__${istat.index}__].imgFilesString)}">
+                                            <h6>Hình ảnh preview: </h6>
+                                            <div style="border-radius: 5px; border: 1px solid #ddd;padding: 8px;
+                                            width: 100%;margin-bottom: 5px;">
+                                                <div style="border: 1px dashed #aaa;min-height: 260px;border-radius: 4px;text-align: center;
+                                                vertical-align: middle;margin: 12px 15px 12px 12px;padding: 5px;">
+                                                    <div th:if="*{not #lists.isEmpty(lstHinhAnhMauSacDTO[__${istat.index}__].imgFilesString)}"
+                                                        th:each="img, istatHAMS : *{lstHinhAnhMauSacDTO[__${istat.index}__].imgFilesString}">
+                                                        <img alt=""
+                                                            th:id="'imgItem' + ${istat.index} + ${istatHAMS.index}"
+                                                            width="120px" th:src="${'/admin/product/images/' + img}">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- <div class="row" style="border-radius: 5px; border: 1px solid #ddd;padding: 8px;
+                                            width: 100%;margin-bottom: 5px;"
+                                            th:each="img, istatHAMS : *{lstHinhAnhMauSacDTO[__${istat.index}__].imgFilesString}">
+                                            <img alt="" th:id="'imgItem' + ${istat.index} + ${istatHAMS.index}"
+                                                width="120px" th:src="${'/admin/product/images/' + img}">
+                                            <input type="file" th:id="'inp-add-'+ ${istat.index} + ${istatHAMS.index}"
+                                                th:src="${'/admin/product/images/' + img}">   
+                                        </div> -->
                                     </div>
                                 </div>
-                            </div>
-                            <hr class="mt-2 mb-2">
-                            <!-- <script th:inline="javascript">
-                                $(document).ready(function () {
-                                    var index = '[[${istat.index}]]';
-                                    const imgFiles = JSON.parse('[[*{lstHinhAnhMauSacDTO[__${istat.index}__].imgFilesString}]]');
-                                    var httpLocal = "/admin/product/images/";
-                                    let lstImg = "";
-                                    $('kv-file-content')
-                                    imgFiles.forEach(function (item) {
-                                        lstImg = lstImg + '"' + httpLocal + item + '",';
-                                    });
-                                    const imgStr = lstImg.toString();
-                                    $('#inp-add-1').on('load', function () {
-                                        var $plugin = $('#inp-add-' + index).data('fileinput');
-                                        $plugin.addToStack($(this)[0].files[0]);
-                                    }
+                                <hr class="mt-2 mb-2">
+                                <script th:inline="javascript">
+                                    $(document).ready(function () {
+                                        var index1 = '[[${istat.index}]]';
 
-                                    $('#inp-add-' + index).fileinput({
-                                        uploadUrl: '#',
-                                        //uploadUrl: 'http://localhost/plugins/test-upload',
-                                        initialPreviewAsData: true,
-                                        initialPreview: [
-                                            imgStr
-                                        ]
+                                        $('#inp-add-' + index1).fileinput({
+                                            uploadUrl: '#',
+                                            //uploadUrl: 'http://localhost/plugins/test-upload',
+                                            initialPreviewAsData: false,
+                                            // initialPreview: [
+
+                                            // ]
+                                        })
                                     })
-                                })
-                            </script> -->
+                                </script>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="col-sm-12 mt-3 pb-5">
+                            <div class="float-right">
+                                <a class="btn btn-primary"
+                                    onclick="flexUrlSubmit('saveImageProductDetail', 'post', 'AddProduct')">
+                                    <span>Hoàn tất thêm sản phẩm <img th:src="@{/admin/img/icons/save.svg}"
+                                            aria-label="chi tiết" /></span></a>
+                            </div>
                         </div>
                     </div>
-                    <hr>
-                    <div class="col-sm-12 mt-3 pb-5">
-                        <div class="float-right">
-                            <a class="btn btn-primary"
-                                onclick="flexUrlSubmit('saveImageProductDetail', 'post', 'AddProduct')">
-                                <span>Hoàn tất thêm sản phẩm <img th:src="@{/admin/img/icons/save.svg}"
-                                        aria-label="chi tiết" /></span></a>
+                </div>
+                <div th:if="*{isEdit == true}">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold">
+                            Cập nhật hình ảnh cho sản phẩm
+                        </h6>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="col-sm-12 card mb-4 mt-4" th:each="item, istat : *{lstHinhAnhMauSacDTO}">
+                            <div class="row">
+                                <div class="col-sm-12 mt-3">
+                                    <div class="col-sm-12">
+                                        <h6>Tên màu sắc của sản phẩm đang thêm ảnh: <span
+                                                th:text="${item.tenMauSacAddImg}"></span></h6>
+                                        <input type="number" class="form-control"
+                                            th:field="*{lstHinhAnhMauSacDTO[__${istat.index}__].mauSacAddImagesId}"
+                                            name="mauSacAddImagesId" th:value="${item.mauSacAddImagesId}" hidden />
+                                        <br>
+                                        <hr><br>
+                                        <div class="row"
+                                            th:each="img, istatHAMS : *{lstHinhAnhMauSacDTO[__${istat.index}__].imgFilesString}">
+                                            <img alt="" th:id="'imgItem' + ${istat.index} + ${istatHAMS.index}"
+                                                width="120px" th:src="${'/admin/product/images/' + img}">
+                                            <input type="file" th:id="'inp-add-'+ ${istat.index} + ${istatHAMS.index}"
+                                                th:src="${'/admin/product/images/' + img}">
+                                            <script th:inline="javascript">
+                                                $(document).ready(function () {
+                                                    var index1 = '[[${istat.index}]]';
+                                                    var index2 = '[[${istatHAMS.index}]]';
+
+                                                    $('#inp-add-' + index1).fileinput({
+                                                        uploadUrl: '#',
+                                                        //uploadUrl: 'http://localhost/plugins/test-upload',
+                                                        initialPreviewAsData: false,
+                                                        // initialPreview: [
+
+                                                        // ]
+                                                    })
+                                                })
+                                            </script>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr class="mt-2 mb-2">
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="col-sm-12 mt-3 pb-5">
+                            <div class="float-right">
+                                <a class="btn btn-primary"
+                                    onclick="flexUrlSubmit('saveImageProductDetail', 'post', 'AddProduct')">
+                                    <span>Hoàn tất thêm sản phẩm <img th:src="@{/admin/img/icons/save.svg}"
+                                            aria-label="chi tiết" /></span></a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -654,6 +763,11 @@
                 </div>
             </div>
         </div>
+        <script>
+            $(document).ready(function () {
+                $('[data-toggle="popover"]').popover();
+            });
+        </script>
         <script th:inline="javascript">
             window.onload = function () {
                 var firstNavIndex = document.getElementById("firstNavIndex").clientHeight;
