@@ -6,11 +6,37 @@
 
 <body>
     <section layout:fragment="content">
-        <div th:if="${messageSuccess != null}" class="alert alert-success" role="alert">
-            <i th:text="${messageSuccess}"></i>
+        <div id="messageSuccess" th:if="${messageSuccess}" class="toast" role="alert" aria-live="assertive"
+            aria-atomic="true" data-delay="3000">
+            <div class="toast-header">
+                <svg class="bd-placeholder-img rounded mr-2" width="20" height="20" xmlns="http://www.w3.org/2000/svg"
+                    preserveAspectRatio="xMidYMid slice" focusable="false" role="img">
+                    <rect width="100%" height="100%" fill="#007aff"></rect>
+                </svg>
+                <!-- <img src="..." class="rounded mr-2" alt="..."> -->
+                <strong class="mr-auto">Thông báo hệ thống</strong>
+                <small>Now</small>
+                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="toast-body" th:text="${messageSuccess}"></div>
         </div>
-        <div th:if="${messageDanger != null}" class="alert alert-danger" role="alert">
-            <i th:text="${messageDanger}"></i>
+        <div id="messageDanger" th:if="${messageDanger}" class="toast" role="alert" aria-live="assertive"
+            aria-atomic="true" data-delay="3000">
+            <div class="toast-header">
+                <svg class="bd-placeholder-img rounded mr-2" width="20" height="20" xmlns="http://www.w3.org/2000/svg"
+                    preserveAspectRatio="xMidYMid slice" focusable="false" role="img">
+                    <rect width="100%" height="100%" fill="red"></rect>
+                </svg>
+                <!-- <img src="..." class="rounded mr-2" alt="..."> -->
+                <strong class="mr-auto">Thông báo hệ thống</strong>
+                <small>Now</small>
+                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="toast-body" th:text="${messageDanger}"></div>
         </div>
         <!-- Begin Page Content -->
         <div class="container-fluid">
@@ -190,8 +216,7 @@
                                 <div class="float-right">
                                     <a class="btn btn-primary mr-sm-1" th:href="@{/admin/product/add}">Thêm
                                         mới</a>
-                                    <a class="btn btn-danger" onclick="showConfirmModalDialogDeleteAllbyId()">Xóa
-                                        hết</a>
+                                    <a class="btn btn-danger" onclick="showConfirmModalDialogDeleteAllbyId()">Xóa</a>
                                 </div>
                             </div>
                         </h6>
@@ -287,12 +312,8 @@
                                             <div class="btn-group">
                                                 <a class="btn btn-outline-info btn-sm" id="info" data-toggle="popover"
                                                     data-trigger="hover" data-placement="top"
-                                                    data-content="Sản phẩm chi tiết"><img
-                                                        th:src="@{/admin/img/icons/info.svg}"
-                                                        th:data-text0="${item.nguoiTao}" th:data-text1="${item.ngayTao}"
-                                                        th:data-text2="${item.nguoiCapNhat}"
-                                                        th:data-text3="${item.ngayCapNhat}" th:data-text4="${item.moTa}"
-                                                        onclick="showInfoProductDetailById(this.getAttribute('data-text0'), this.getAttribute('data-text1'),this.getAttribute('data-text2'),this.getAttribute('data-text3'), this.getAttribute('data-text4'))"></a>
+                                                    data-content="Sản phẩm chi tiết" th:href="@{'/admin/product/info/' + ${item.id}}">
+                                                    <img th:src="@{/admin/img/icons/info.svg}"></a>
 
                                                 <a class="btn btn-outline-primary btn-sm" data-toggle="popover"
                                                     data-trigger="hover" data-placement="top"
@@ -337,15 +358,16 @@
                                     <li class="page-item active"
                                         th:each="pageNumber : ${#numbers.sequence(sanPhamPage.number + 1 > 2 ? sanPhamPage.number + 1 - 2 : 1, sanPhamPage.number + 1 + 2 < sanPhamPage.totalPages ? sanPhamPage.number + 1 + 2 : sanPhamPage.totalPages)}"
                                         th:class="${pageNumber == sanPhamPage.number + 1}? 'page-item active' : 'page-item'">
-                                        <button th:id="pageNumberProductManage+${pageNumber}" class="page-link" th:text="${pageNumber}">
+                                        <button th:id="pageNumberProductManage+${pageNumber}" class="page-link"
+                                            th:text="${pageNumber}">
                                         </button>
                                         <script th:inline="javascript">
                                             $(document).ready(function () {
-                                                $('#pageNumberProductManage[[${pageNumber}]]').on("click", function(){
-                                                    var num = parseInt("[[${pageNumber}]]"); 
-                                                    $('#inputPageProductManage').attr("value", num);                               
+                                                $('#pageNumberProductManage[[${pageNumber}]]').on("click", function () {
+                                                    var num = parseInt("[[${pageNumber}]]");
+                                                    $('#inputPageProductManage').attr("value", num);
                                                     $('#flexUrlTableFormProductManage').submit();
-                                                })     
+                                                })
                                             });
                                         </script>
                                     </li>
@@ -355,24 +377,23 @@
                                     </li>
                                     <li
                                         th:class="${ sanPhamPage.totalPages == sanPhamPage.number + 1}? 'page-item active' : 'page-item'">
-                                        <button
-                                            class="page-link" id="lastPageProductManage">
+                                        <button class="page-link" id="lastPageProductManage">
                                             Trang cuối
                                         </button>
                                     </li>
                                     <script th:inline="javascript">
                                         $(document).ready(function () {
-                                            $('#firstPageProductManage').on("click", function(){
-                                                var num = 1; 
-                                                $('#inputPageProductManage').attr("value", num);                               
+                                            $('#firstPageProductManage').on("click", function () {
+                                                var num = 1;
+                                                $('#inputPageProductManage').attr("value", num);
                                                 $('#flexUrlTableFormProductManage').submit();
                                             })
-                                            $('#lastPageProductManage').on("click", function(){
-                                                var num = parseInt("[[${sanPhamPage.totalPages}]]"); 
-                                                $('#inputPageProductManage').attr("value", num);                               
+                                            $('#lastPageProductManage').on("click", function () {
+                                                var num = parseInt("[[${sanPhamPage.totalPages}]]");
+                                                $('#inputPageProductManage').attr("value", num);
                                                 $('#flexUrlTableFormProductManage').submit();
                                             })
-                                    });
+                                        });
                                     </script>
                                 </ul>
                             </nav>
@@ -490,6 +511,20 @@
             $(document).ready(function () {
                 $('[data-toggle="popover"]').popover();
             });
+        </script>
+        <script th:inline="javascript">
+            window.onload = function () {
+                var firstNavIndex = document.getElementById("firstNavIndex").clientHeight;
+                var messageSuccess = '[[${messageSuccess}]]';
+                var messageDanger = '[[${messageDanger}]]';
+                $('#toastsCustomCss').attr("style", "position: absolute; top:" + firstNavIndex + "; right: 0;z-index: 1;");
+                if (messageSuccess.length !== 0) {
+                    $("#messageSuccess").toast("show");
+                }
+                if (messageDanger.length !== 0) {
+                    $("#messageDanger").toast("show");
+                }
+            }
         </script>
     </section>
 </body>
