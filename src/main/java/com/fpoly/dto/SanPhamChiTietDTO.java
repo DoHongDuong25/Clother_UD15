@@ -27,7 +27,7 @@ public class SanPhamChiTietDTO extends BaseDTO{
 	@Min(value = 0, message = "Số lượng không được nhỏ hơn 0")
 	private Integer soLuong;
 	
-	private List<HinhAnhDTO> hinhAnhs = new ArrayList<HinhAnhDTO>();
+	private Boolean coHienThi;
 	
 	private Boolean daXoa;
 }
