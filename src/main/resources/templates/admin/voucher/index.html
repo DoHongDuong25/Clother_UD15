@@ -13,20 +13,20 @@
 <section layout:fragment="content">
     <div class="container mt-4">
         <div class="row">
-            <div class="col-6">
+            <div class="col-7">
                 <div class="input-group mb-3">
                     <input type="text" class="form-control" placeholder="Tìm kiếm" id="search" th:value="${keyword}">
                     <button class="btn btn-primary" type="button" onclick="submit()">Tìm kiếm</button>
                 </div>
             </div>
             <div class="col-3"></div>
-            <div class="col-3 text-end">
+            <div class="col-2 text-end">
                 <a th:href="@{/admin/voucher/create}" class="btn btn-success">Tạo mã giảm giá</a>
             </div>
         </div>
         <div class="row">
-            <div class="col-1">
-                <label for="size">Số lượng trong một trang</label>
+            <div class="col-2">
+                <label for="size" style="white-space: nowrap;">Số lượng một trang: </label>
             </div>
             <div class="col-1">
                 <select class="form-select" aria-label="Default select example" id="size">
@@ -36,7 +36,7 @@
                 </select>
             </div>
             <div class="col-1">
-                <label class="col-form-label" for="status">Trạng thái:</label>
+                <label class="col-form-label" for="status" style="white-space: nowrap;">Trạng thái:</label>
             </div>
             <div class="col-2">
                 <select class="form-select" aria-label="Default select example" id="status">
@@ -45,8 +45,11 @@
                     <option value="OFF" th:selected="${status == 'OFF'}">Đang Tắt</option>
                 </select>
             </div>
-            <div class="col-1">
-                <label class="col-form-label " for="discountRange">Lọc theo phần trăm giảm:</label>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-2">
+                <label class="col-form-label " for="discountRange" style="white-space: nowrap;">Lọc theo % giảm: </label>
             </div>
             <div class="col-2">
                 <div id="discountRange"></div>
@@ -67,24 +70,26 @@
                 </div>
             </div>
         </div>
+
         <div class="row mt-4">
             <div class="col-12">
-                <table class="table" id="voucherTable">
+<!--                <table class="table" id="voucherTable">-->
+                <table class="table table-bordered table-hover" id="voucherTable" width="100%" cellspacing="0">
                     <thead>
+<!--                    <thead class="text-nowrap">-->
                     <tr>
                         <th class="text-center">Số thứ tự</th>
                         <th class="text-center">Mã giảm giá</th>
                         <th class="text-center">Phần trăm giảm</th>
-                        <th class="text-center">Giá trị tối thiểu</th>
+                        <th class="text-center">Cho đơn tối thiểu</th>
                         <th class="text-center">Thời gian</th>
                         <th class="text-center">Trạng thái</th>
                         <th class="text-center">Hành động</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tbody>
-                    <tr th:each="voucher : ${vouchers}">
-                        <td th:text="${voucher.id}" class="text-center"></td>
+                    <tr th:each="voucher, index : ${vouchers}">
+                        <td th:text="${index.index + 1}" class="text-center"></td>
                         <td th:text="${voucher.tenKhuyenMai}" class="text-center"></td>
                         <td th:text="${voucher.phanTramGiam + '%'}" class="text-center"></td>
                         <td th:text="${voucher.giaTriToiThieu}" class="text-center"></td>
@@ -107,7 +112,6 @@
                             </a>
                         </td>
                     </tr>
-                    </tbody>
                     </tbody>
                 </table>
                 <nav aria-label="Page navigation example">

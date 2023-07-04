@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -28,9 +29,13 @@ public class KhuyenMaiDTO extends BaseDTO<KhuyenMaiDTO> {
     @NotNull(message = "Ngày kết thúc không được để trống")
     private Date ngayKetThuc;
 
+    @NotNull(message = "Phần trăm không được để trống")
     @Min(value = 0, message = "Phần trăm không được nhỏ hơn 0")
+    @Max(value = 100, message = "Phần trăm không được lớn hơn 100")
     private int phanTramGiam;
-    @Min(value = 0, message = "Giá trị không được nhỏ hơn 0")
+
+    @NotNull(message = "Giá trị tối thiểu không được để trống")
+    @Min(value = 0, message = "Giá trị tối thiểu không được nhỏ hơn 0")
     private int giaTriToiThieu;
 
     private boolean trangThai;

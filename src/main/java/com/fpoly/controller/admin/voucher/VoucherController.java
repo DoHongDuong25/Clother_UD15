@@ -36,7 +36,9 @@ public class VoucherController {
                              @RequestParam(value = "discountEnd", defaultValue = "100") String endStr){
         Integer start = Integer.parseInt(startStr);
         Integer end = Integer.parseInt(endStr);
+
         Page<KhuyenMaiDTO> list = khuyenMaiService.getListKhuyenMai(page, size, keyword, status, start, end, dateFromStr, dateToStr);
+
         model.addAttribute("vouchers", list);
         model.addAttribute("keyword", keyword);
         model.addAttribute("status", status);
