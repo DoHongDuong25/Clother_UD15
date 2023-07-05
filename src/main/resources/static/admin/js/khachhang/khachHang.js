@@ -13,7 +13,7 @@ $(document).ready(function() {
                 Swal.fire({
                     icon: 'error',
                     title: 'Có lỗi xảy ra',
-                    text: error.responseText
+                    timer: 1500
                 });
             });
         });
@@ -121,7 +121,7 @@ function capNhatTrangThaiThanhHoatDong(ids,pageCurrent) {
 			$('#liveToast').html('<div class="toast-header"><strong class="mr-auto">Thông báo !</strong><small>1 giây trước </small><button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close"><span aria-hidden="true">&times;</span></button></div><div class="toast-body"><p class="fw-bold text-success">Chuyển đổi thành công !</p></div>');
 			$('#liveToast').toast('show');
 			
-			setTimeout("location.href = 'http://localhost:8080/admin/khach-hang/danh-sach/"+pageCurrent+"?message=change_success' ", 2000);
+			setTimeout("location.href = 'http://localhost:8080/admin/khach-hang/danh-sach/"+pageCurrent+"' ", 2000);
 		},
 		error : function (error) {
 			setTimeout("location.href = 'http://localhost:8080/admin/khach-hang/danh-sach/"+pageCurrent+"?message=change_error' ", 2000);
@@ -154,7 +154,7 @@ function xacNhanChuyenDoiTrangThaiDaChonThanhKhongHoatDong() {
 			}else{
 				$('#liveToast').html('<div class="toast-header"><strong class="mr-auto">Thông báo !</strong><small>1 giây trước </small><button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close"><span aria-hidden="true">&times;</span></button></div><div class="toast-body"><p class="fw-bold text-danger">Chuyển đổi thất bại !</p></div>');
 				$('#liveToast').toast('show');
-				setTimeout("location.href = 'http://localhost:8080/admin/khach-hang/danh-sach/"+pageCurrent+"?message=change_error' ", 2000);
+				setTimeout("location.href = 'http://localhost:8080/admin/khach-hang/danh-sach/"+pageCurrent+"' ", 2000);
 			}
 		}
 	})
@@ -280,7 +280,7 @@ function capNhatKhachHang(data) {
                 showConfirmButton: false,
                 timer: 1500
             });
-			setTimeout("location.href = 'http://localhost:8080/admin/khach-hang/danh-sach/chinh-sua?id="+result.id+"&page=1 '      ", 2000);
+			setTimeout("location.href = 'http://localhost:8080/admin/khach-hang/danh-sach/chinh-sua?id="+result.id+"&page=1'      ", 2000);
 		},
 		error : function (error) {
 			$('#liveToast').html('<div class="toast-header"><strong class="mr-auto">Thông báo !</strong><small>1 giây trước </small><button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close"><span aria-hidden="true">&times;</span></button></div><div class="toast-body"><p class="fw-bold text-danger">Cập nhật thất bại !</p></div>');

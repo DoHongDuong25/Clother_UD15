@@ -1,24 +1,33 @@
 package com.fpoly.controller.admin.NguoiDung;
 
-import com.fpoly.entity.NguoiDung;
-import com.fpoly.repository.NguoiDungRepository;
-import com.fpoly.service.NguoiDungService;
-import com.fpoly.service.SendMail;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
+import java.util.Random;
+
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.view.RedirectView;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
-import java.util.*;
+import com.fpoly.entity.NguoiDung;
+import com.fpoly.repository.NguoiDungRepository;
+import com.fpoly.service.NguoiDungService;
 
 @Controller
 public class NguoiDungController {

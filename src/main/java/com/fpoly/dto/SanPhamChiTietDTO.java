@@ -28,4 +28,10 @@ public class SanPhamChiTietDTO extends BaseDTO<BaseDTO> {
 	private List<HinhAnhDTO> hinhAnhs = new ArrayList<HinhAnhDTO>();
 	
 	private Boolean daXoa;
+	
+	private String tenKichCo ;
+	
+	private String tenMauSac ;
+	
+	private SanPhamDTO sanPhamDTO ;
 }

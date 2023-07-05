@@ -25,6 +25,9 @@ public class DiaChiServiceImpl implements DiaChiService {
 
 	@Autowired
 	private KhachHangRepository khachHangRepository ;
+	
+	
+	@SuppressWarnings("deprecation")
 	@Override
 	@Transactional
 	public DiaChiDTO save(DiaChiDTO result) {
@@ -66,11 +69,10 @@ public class DiaChiServiceImpl implements DiaChiService {
 	public int countByMaKhachHang(Long id ) {
 		return diaChiRepository.countByMaKhachHang(id);
 	}
-	@SuppressWarnings("null")
 	@Override
 	public List<DiaChiDTO> findAllDiaChiByMaKhachHang(Long id, Pageable pageale) {
 		List<DiaChiDTO> listDiaChiDTO = new ArrayList<DiaChiDTO>();
-		List<DiaChi> listDiaChiEntity = new ArrayList<DiaChi>();
+		List<DiaChi> listDiaChiEntity = new ArrayList<>() ;
 		DiaChiDTO diaChiDTO = null;
 		listDiaChiEntity = diaChiRepository.findAllByMaKhachHang(id,pageale).getContent();
 		for (DiaChi diaChi : listDiaChiEntity) {
@@ -83,6 +85,9 @@ public class DiaChiServiceImpl implements DiaChiService {
 		}
 		return listDiaChiDTO;
 	}
+	
+	
+	@SuppressWarnings("deprecation")
 	@Override
 	public DiaChiDTO findById(Long id) {
 		DiaChiDTO dto = null ;
@@ -96,6 +101,7 @@ public class DiaChiServiceImpl implements DiaChiService {
 		}
 		return  dto ;
 	}
+	@SuppressWarnings("deprecation")
 	@Override
 	@Transactional
 	public void update(DiaChiDTO diaChiDTO) {
@@ -111,5 +117,6 @@ public class DiaChiServiceImpl implements DiaChiService {
 			diaChiRepository.save(entity);
 		}
 	}
+	
 
 }
