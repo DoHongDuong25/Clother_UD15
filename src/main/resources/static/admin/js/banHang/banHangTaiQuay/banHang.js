@@ -2,23 +2,20 @@ function quayLai() {
     window.location.href = "/admin/BanHangTaiQuay";
 }
 
-// File: banHang.js
-// Lấy tham chiếu đến modal và phần body của modal
-const modal = document.getElementById("modalThemSanPhanm");
-const modalBody = document.getElementById("modal-body");
+$(document).ready(function () {
+    $('#modalSanPham').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        var hoaDonId = button.data('id');
+        var modal = $(this);
 
-// Hàm xử lý sự kiện click để hiển thị modal và tải nội dung từ file HTML khác
-function showModal() {
-    // Sử dụng fetch để tải nội dung từ file HTML khác
-    fetch("../../modal.html")
-        .then(function (response) {
-            return response.text();
-        })
-        .then(function (html) {
-            // Gán nội dung tải được vào phần body của modal
-            modalBody.innerHTML = html;
-
-            // Hiển thị modal
-            $(modal).modal("show");
+        $.ajax({
+            url: '/banHang/ThemSanPham',
+            type: 'GET',
+            success: function (data) {
+                modal.find('.modal-body1').html(data);
+            },
+            error: function () {
+            }
         });
-}
+    });
+});

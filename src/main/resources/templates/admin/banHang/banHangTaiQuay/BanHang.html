@@ -15,17 +15,16 @@
     </div>
 
     <h3>Danh sách sản phẩm</h3>
-    <button type="submit" class="btn btn-primary" data-toggle="modal"
-            data-target="#modalThemSanPhanm" onclick="showModal()">Thêm sản phẩm</button>
-
-    <div class="modal fade" id="modalThemSanPhanm" tabindex="-1" aria-labelledby="exampleModalLabel"
+    <button type="submit" class="btn btn-primary" data-toggle="modal" th:data-target="'#modalSanPham'">
+    </button>
+    <div class="modal fade" th:id="'modalSanPham'" tabindex="-1" aria-labelledby="exampleModalLabel"
          aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Lịch sử hóa đơn</h5>
                 </div>
-                <div class="modal-body1" id="modal-body">
+                <div class="modal-body1">
 
                 </div>
 

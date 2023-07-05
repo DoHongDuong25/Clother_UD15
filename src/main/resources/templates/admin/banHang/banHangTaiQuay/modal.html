@@ -1,5 +1,6 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin/layouts/index}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -8,9 +9,10 @@
     <title>Document</title>
 </head>
 <body>
-<div class="modal-content">
-    <!-- Nội dung modal -->
-    <h1>Modal theem sản phẩm</h1>
+<div class="container-fluid">
+    <div th:each="sanPhamlist: ${sanPham}">
+        <h1 th:text="${sanPhamlist.tenSanPham}"></h1>
+    </div>
 </div>
 </body>
 </html>
