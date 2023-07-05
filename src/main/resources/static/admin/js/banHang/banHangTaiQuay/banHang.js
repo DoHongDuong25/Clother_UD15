@@ -12,7 +12,7 @@ $(document).ready(function () {
             url: '/banHang/ThemSanPham',
             type: 'GET',
             success: function (data) {
-                modal.find('.modal-body1').html(data);
+                modal.find('.modal-body').html(data);
             },
             error: function () {
             }
