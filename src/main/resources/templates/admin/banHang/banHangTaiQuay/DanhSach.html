@@ -4,29 +4,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" th:href="@{/admin/css/banHang/banHangTaiQuay.css}">\
-
-    <script th:inline="javascript">
-        document.getElementById('button-tao-moi').addEventListener('submit', function(event) {
-            event.preventDefault(); // Ngăn chặn gửi form mặc định
-
-            // Gửi request tạo hóa đơn
-            fetch(this.action, {
-                method: this.method,
-                body: new FormData(this)
-            }).then(function(response) {
-                if (response.ok) {
-                    // Chuyển hướng tới trang hiển thị thông tin hóa đơn
-                    window.location.href = '/banHang/' + response.id;
-                } else {
-                    console.error('Lỗi khi tạo hóa đơn');
-                }
-            }).catch(function(error) {
-                console.error('Lỗi khi tạo hóa đơn:', error);
-            });
-        });
-    </script>
-
+    <link rel="stylesheet" th:href="@{/admin/css/banHang/banHangTaiQuay.css}">
 </head>
 
 <body>
@@ -37,8 +15,8 @@
         <i class="fas fa-search"></i>
     </button>
 
-    <form th:action="@{/TaoHoaDon}" method="post">
-        <button id="button-tao-moi" type="submit" class="create-invoice-button">
+    <form id="form-tao-moi" th:action="@{/TaoHoaDon}" method="post">
+        <button type="submit" class="create-invoice-button">
             Tạo hóa đơn
         </button>
     </form>
@@ -58,15 +36,26 @@
         <tbody>
         <tr th:each="hoaDonLoai1: ${hoaDonLoai1}">
             <td th:text="${hoaDonLoai1.maDon}"></td>
-            <td th:text="${hoaDonLoai1.maDon}"></td>
+            <td th:text="${hoaDonLoai1.hoaDonChiTiets.size()}"></td>
             <td th:text="${hoaDonLoai1.tongTienHoaDon}"></td>
             <td th:text="${#dates.format(hoaDonLoai1.ngayTao, 'dd/MM/yyyy')}"></td>
             <td th:text="${hoaDonLoai1.trangThai.name}"></td>
-            <td>hduong</td>
+            <td>
+                <div class="btn-group">
+                    <a th:href="@{'/banHang/' + ${hoaDonLoai1.id}}"
+                       class="btn btn-warning btn-sm"
+                       type="submit">
+                        <i class="fas fa-info-circle"></i>
+                    </a>
+                </div>
+            </td>
         </tr>
         </tbody>
     </table>
 </div>
+
+<script th:src="@{/admin/js/banHang/banHangTaiQuay/danhSach.js}"></script>
+
 </body>
 
 </html>

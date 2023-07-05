@@ -4,6 +4,8 @@
 
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/admin/css/banHang/banHangTaiQuay.css}">
+    <script th:src="@{/admin/js/banHang/banHangTaiQuay/banHang.js}"></script>
 </head>
 
 <body>
@@ -11,7 +13,46 @@
     <div th:object="${hoaDon}">
         <h1 th:text="${hoaDon.maDon}"></h1>
     </div>
+
+    <h3>Danh sách sản phẩm</h3>
+    <button id="btn-them-san-pham" class="btn btn-primary">Thêm sản phẩm</button>
+
+    <div id="modal" class="modal">
+        <!-- Đặt tên class cho phần content của modal để có thể tải nội dung vào đây -->
+        <div id="modal-content" class="modal-content">
+            <!-- Nội dung modal sẽ được tải và đưa vào đây -->
+        </div>
+    </div>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th data-field="state" data-checkbox="true"></th>
+            <th scope="col">Tên sản phẩm</th>
+            <th scope="col">Đơn giá</th>
+            <th scope="col">Số lượng</th>
+            <th scope="col">Thành tiền</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="hdct : ${hoaDon.hoaDonChiTiets}">
+            <td></td>
+            <td
+                    th:text="${hdct.sanPhamChiTiet.sanPham.getTenSanPham()}">
+            </td>
+            <td th:text="${hdct.donGia}"></td>
+            <td th:text="${hdct.soLuong}"></td>
+            <td th:text="${hdct.tongTien}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <h3>thanh toán</h3>
+
+    <button class="action-button" onclick="quayLai()">Quay lại
+        <i class="fas fa-arrow-left"></i>
+    </button>
 </div>
 </body>
-
 </html>
