@@ -60,12 +60,6 @@ $('#limitSelect').on('change',function fun(e) {
 	$('#limit').val(optionLimit);
 });
 
-
-
-
-
-
-
 $('#checkAll').click(function(event) {
 	if(this.checked) {
 		// Iterate each checkbox

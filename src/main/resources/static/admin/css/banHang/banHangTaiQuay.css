@@ -1,0 +1,88 @@
+.container {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.search-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.timKiem {
+    flex-grow: 1;
+    width: 500px; /* Giá trị width để thu nhỏ chiều rộng */
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-right: 10px;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s, background-color 0.3s; /* Thêm hiệu ứng chuyển đổi */
+    outline: none;
+    margin-bottom: 20px;
+}
+
+.timKiem:focus {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.search-button {
+    background-color: #6c63ff;
+    border: none;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+.create-invoice-button {
+    background-color: #6c63ff;
+    border: none;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    float: right;
+}
+
+.search-button:hover,
+.create-invoice-button:hover {
+    background-color: #b3d7ff;
+}
+
+.fa-search {
+    font-size: 18px;
+}
+.action-button {
+    background-color: #4CAF50; /* Màu nền */
+    border: none; /* Không viền */
+    color: white; /* Màu chữ */
+    padding: 10px 20px; /* Kích thước lề */
+    text-align: center; /* Căn giữa chữ */
+    text-decoration: none; /* Không gạch chân */
+    display: inline-block; /* Hiển thị dạng inline */
+    font-size: 16px; /* Cỡ chữ */
+    margin: 4px 2px; /* Kích thước lề */
+    cursor: pointer; /* Con trỏ chuột thành kiểu tay */
+}
+
+.action-button:hover {
+    background-color: #45a049; /* Màu nền khi di chuột qua */
+}
+
+.action-button i {
+    margin-right: 5px; /* Khoảng cách giữa biểu tượng và chữ */
+}

@@ -18,12 +18,12 @@ import java.util.stream.Collectors;
 public class KhuyenMaiJob {
     private final KhuyenMaiRepository khuyenMaiRepository;
 
-    @Scheduled(cron = "0 */30 * ? * *", zone = "Asia/Ho_Chi_Minh") //every 15 min
-//    @Scheduled(cron = "0 1 * * * *", zone = "Asia/Ho_Chi_Minh") // everyday at 1am
+//    @Scheduled(cron = "0 0/1 * * * *", zone = "Asia/Ho_Chi_Minh") 1 minute 1 time
+    @Scheduled(cron = "0/3 * * * * *", zone = "Asia/Ho_Chi_Minh") //3 second 1 time
     @Transactional
     public void updateStatusVoucher() {
-        System.out.println("start scheduling");
-        System.out.println(LocalDateTime.now());
+//        System.out.println("start scheduling");
+//        System.out.println(LocalDateTime.now());
         List<KhuyenMai> list = khuyenMaiRepository.findAll();
         Date currentDate = new Date();
 
@@ -40,7 +40,7 @@ public class KhuyenMaiJob {
                 .map(BaseEntity::getId)
                 .collect(Collectors.toList());
         khuyenMaiRepository.updateStatusByDate(enable, true);
-        System.out.println("end of scheduling");
-        System.out.println(LocalDateTime.now());
+//        System.out.println("end of scheduling");
+//        System.out.println(LocalDateTime.now());
     }
 }

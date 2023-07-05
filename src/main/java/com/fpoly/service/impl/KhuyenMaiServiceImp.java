@@ -29,7 +29,7 @@ public class KhuyenMaiServiceImp implements KhuyenMaiService{
                                                Integer end,
                                                String dateFromStr,
                                                String dateToStr) {
-        Sort sort = Sort.by("ngayBatDau").descending();
+        Sort sort = Sort.by("id").descending();
         PageRequest pageRequest = PageRequest.of(page-1, size, sort);
         Date startDate = convertStringToDate(dateFromStr);
         Date endDate = convertStringToDate(dateToStr);

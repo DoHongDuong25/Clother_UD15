@@ -278,16 +278,16 @@ Deoptimization events (0 events):
 No events
 
 Classes redefined (10 events):
-Event: 6058.811 Thread 0x00000000173c7000 redefined class name=com.fpoly.controller.admin.KhachHangController, count=12
-Event: 6058.965 Thread 0x00000000173c7000 redefined class name=com.fpoly.controller.admin.KhachHangController, count=8
-Event: 6059.057 Thread 0x00000000173c7000 redefined class name=com.fpoly.controller.admin.KhachHangController, count=3
-Event: 6059.128 Thread 0x00000000173c7000 redefined class name=com.fpoly.controller.admin.KhachHangController, count=13
-Event: 6059.217 Thread 0x00000000173c7000 redefined class name=com.fpoly.controller.admin.KhachHangController, count=5
-Event: 6059.292 Thread 0x00000000173c7000 redefined class name=com.fpoly.controller.admin.KhachHangController, count=14
-Event: 6059.360 Thread 0x00000000173c7000 redefined class name=com.fpoly.controller.admin.KhachHangController, count=12
-Event: 6059.432 Thread 0x00000000173c7000 redefined class name=com.fpoly.controller.admin.KhachHangController, count=12
-Event: 6059.511 Thread 0x00000000173c7000 redefined class name=com.fpoly.controller.admin.KhachHangController, count=12
-Event: 6059.592 Thread 0x00000000173c7000 redefined class name=com.fpoly.controller.admin.KhachHangController, count=12
+Event: 6058.811 Thread 0x00000000173c7000 redefined class name=com.fpoly.controller.admin.KhachHang.KhachHangController, count=12
+Event: 6058.965 Thread 0x00000000173c7000 redefined class name=com.fpoly.controller.admin.KhachHang.KhachHangController, count=8
+Event: 6059.057 Thread 0x00000000173c7000 redefined class name=com.fpoly.controller.admin.KhachHang.KhachHangController, count=3
+Event: 6059.128 Thread 0x00000000173c7000 redefined class name=com.fpoly.controller.admin.KhachHang.KhachHangController, count=13
+Event: 6059.217 Thread 0x00000000173c7000 redefined class name=com.fpoly.controller.admin.KhachHang.KhachHangController, count=5
+Event: 6059.292 Thread 0x00000000173c7000 redefined class name=com.fpoly.controller.admin.KhachHang.KhachHangController, count=14
+Event: 6059.360 Thread 0x00000000173c7000 redefined class name=com.fpoly.controller.admin.KhachHang.KhachHangController, count=12
+Event: 6059.432 Thread 0x00000000173c7000 redefined class name=com.fpoly.controller.admin.KhachHang.KhachHangController, count=12
+Event: 6059.511 Thread 0x00000000173c7000 redefined class name=com.fpoly.controller.admin.KhachHang.KhachHangController, count=12
+Event: 6059.592 Thread 0x00000000173c7000 redefined class name=com.fpoly.controller.admin.KhachHang.KhachHangController, count=12
 
 Internal exceptions (10 events):
 Event: 6071.642 Thread 0x000000001ddbc800 Exception <a 'java/lang/ClassNotFoundException': com/fpoly/entity/TrangThaiHoaDonCustomizer> (0x00000000d7faf778) thrown at [C:\re\workspace\8-2-build-windows-amd64-cygwin\jdk8u191\11896\hotspot\src\share\vm\classfile\systemDictionary.cpp, line 210]

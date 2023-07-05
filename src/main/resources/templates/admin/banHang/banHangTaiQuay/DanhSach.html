@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin/layouts/index}">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/admin/css/banHang/banHangTaiQuay.css}">
+</head>
+
+<body>
+<div class="container" layout:fragment="content">
+    <input type="text" class="timKiem" placeholder="Tìm kiếm đơn hàng..." aria-label="Search"
+           aria-describedby="basic-addon2">
+    <button type="submit" class="search-button">
+        <i class="fas fa-search"></i>
+    </button>
+
+    <form id="form-tao-moi" th:action="@{/TaoHoaDon}" method="post">
+        <button type="submit" class="create-invoice-button">
+            Tạo hóa đơn
+        </button>
+    </form>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Mã đơn</th>
+            <th>Số sản phẩm</th>
+            <th>Tổng số tiền</th>
+            <th>Ngày tạo</th>
+            <th>Trạng thái</th>
+            <th>Thao tác</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="hoaDonLoai1: ${hoaDonLoai1}">
+            <td th:text="${hoaDonLoai1.maDon}"></td>
+            <td th:text="${hoaDonLoai1.hoaDonChiTiets.size()}"></td>
+            <td th:text="${hoaDonLoai1.tongTienHoaDon}"></td>
+            <td th:text="${#dates.format(hoaDonLoai1.ngayTao, 'dd/MM/yyyy')}"></td>
+            <td th:text="${hoaDonLoai1.trangThai.name}"></td>
+            <td>
+                <div class="btn-group">
+                    <a th:href="@{'/banHang/' + ${hoaDonLoai1.id}}"
+                       class="btn btn-warning btn-sm"
+                       type="submit">
+                        <i class="fas fa-info-circle"></i>
+                    </a>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<script th:src="@{/admin/js/banHang/banHangTaiQuay/danhSach.js}"></script>
+
+</body>
+
+</html>

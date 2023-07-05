@@ -15,7 +15,7 @@ function submit(pageNum) {
         '&keyword=' + encodeURIComponent(keyword) +
         '&status=' + encodeURIComponent(status) +
         '&discountStart=' + encodeURIComponent(discountStart) +
-        '&discountEnd=' + encodeURIComponent(discountEnd) +
+        '&discountEnd=' + encodeURIComponent(discountEnd) +F
         '&dateFrom=' + encodeURIComponent(dateFrom) +
         '&dateTo=' + encodeURIComponent(dateTo);
 

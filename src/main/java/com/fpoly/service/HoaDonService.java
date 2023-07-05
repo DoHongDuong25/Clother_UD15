@@ -16,4 +16,6 @@ public interface HoaDonService{
 
     List<HoaDon> searchByDate(Date searchDate);
 
+    Integer getMaxId();
+
 }

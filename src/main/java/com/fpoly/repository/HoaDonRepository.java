@@ -20,6 +20,9 @@ public interface HoaDonRepository extends CrudRepository<HoaDon, Long> {
     @Query(value = "SELECT * FROM hoa_don WHERE loai_hoa_don = :loai", nativeQuery = true)
     List<HoaDon> finHDByLoaiHD(@Param("loai") Integer loai);
 
+    @Query(value = "select Max(id) from hoa_don", nativeQuery = true)
+    Integer getMaxId();
+
     List<HoaDon> findByNgayTao(Date ngayTao);
 }
 
