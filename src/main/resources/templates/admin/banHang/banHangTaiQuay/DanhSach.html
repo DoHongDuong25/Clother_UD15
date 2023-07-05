@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin/layouts/index}">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/admin/css/banHang/banHangTaiQuay.css}">\
+
+    <script th:inline="javascript">
+        document.getElementById('button-tao-moi').addEventListener('submit', function(event) {
+            event.preventDefault(); // Ngăn chặn gửi form mặc định
+
+            // Gửi request tạo hóa đơn
+            fetch(this.action, {
+                method: this.method,
+                body: new FormData(this)
+            }).then(function(response) {
+                if (response.ok) {
+                    // Chuyển hướng tới trang hiển thị thông tin hóa đơn
+                    window.location.href = '/banHang/' + response.id;
+                } else {
+                    console.error('Lỗi khi tạo hóa đơn');
+                }
+            }).catch(function(error) {
+                console.error('Lỗi khi tạo hóa đơn:', error);
+            });
+        });
+    </script>
+
+</head>
+
+<body>
+<div class="container" layout:fragment="content">
+    <input type="text" class="timKiem" placeholder="Tìm kiếm đơn hàng..." aria-label="Search"
+           aria-describedby="basic-addon2">
+    <button type="submit" class="search-button">
+        <i class="fas fa-search"></i>
+    </button>
+
+    <form th:action="@{/TaoHoaDon}" method="post">
+        <button id="button-tao-moi" type="submit" class="create-invoice-button">
+            Tạo hóa đơn
+        </button>
+    </form>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Mã đơn</th>
+            <th>Số sản phẩm</th>
+            <th>Tổng số tiền</th>
+            <th>Ngày tạo</th>
+            <th>Trạng thái</th>
+            <th>Thao tác</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="hoaDonLoai1: ${hoaDonLoai1}">
+            <td th:text="${hoaDonLoai1.maDon}"></td>
+            <td th:text="${hoaDonLoai1.maDon}"></td>
+            <td th:text="${hoaDonLoai1.tongTienHoaDon}"></td>
+            <td th:text="${#dates.format(hoaDonLoai1.ngayTao, 'dd/MM/yyyy')}"></td>
+            <td th:text="${hoaDonLoai1.trangThai.name}"></td>
+            <td>hduong</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+
+</html>

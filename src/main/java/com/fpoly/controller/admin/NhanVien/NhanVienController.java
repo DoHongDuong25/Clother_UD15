@@ -18,7 +18,7 @@ import javax.mail.internet.MimeMessage;
 import java.util.*;
 
 @Controller
-public class NguoiDungController {
+public class NhanVienController {
     @Autowired
     NguoiDungService nguoiDungService;
     @Autowired

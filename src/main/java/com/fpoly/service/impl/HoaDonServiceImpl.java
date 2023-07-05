@@ -19,7 +19,7 @@ public class HoaDonServiceImpl implements HoaDonService {
     private final HoaDonRepository hoaDonRepository;
 
     private HoaDonRepoditory2 hoaDonRepository2;
-    private  JdbcTemplate jdbcTemplate;
+    private JdbcTemplate jdbcTemplate;
 
     public HoaDonServiceImpl(HoaDonRepository hoaDonRepository) {
         this.hoaDonRepository = hoaDonRepository;
@@ -27,13 +27,14 @@ public class HoaDonServiceImpl implements HoaDonService {
 
     @Override
     public List<HoaDon> getAll() {
-        return (List<HoaDon>)hoaDonRepository.findAll();
+        return (List<HoaDon>) hoaDonRepository.findAll();
     }
 
     @Override
-    public Page<HoaDon> getByStatus(int trangThai, Pageable pageable){
+    public Page<HoaDon> getByStatus(int trangThai, Pageable pageable) {
         return hoaDonRepository2.findByTrangThaiHoaDonListTrangThai(trangThai, pageable);
     }
+
     @Override
     public Page<HoaDon> getAll(Pageable pageable) {
         return hoaDonRepository2.findAll(pageable);
@@ -42,5 +43,10 @@ public class HoaDonServiceImpl implements HoaDonService {
     @Override
     public List<HoaDon> searchByDate(Date searchDate) {
         return hoaDonRepository.findByNgayTao(searchDate);
+    }
+
+    @Override
+    public Integer getMaxId() {
+        return hoaDonRepository.getMaxId();
     }
 }
