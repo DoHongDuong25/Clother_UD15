@@ -15,12 +15,24 @@
     </div>
 
     <h3>Danh sách sản phẩm</h3>
-    <button id="btn-them-san-pham" class="btn btn-primary">Thêm sản phẩm</button>
+    <button type="submit" class="btn btn-primary" data-toggle="modal"
+            data-target="#modalThemSanPhanm" onclick="showModal()">Thêm sản phẩm</button>
 
-    <div id="modal" class="modal">
-        <!-- Đặt tên class cho phần content của modal để có thể tải nội dung vào đây -->
-        <div id="modal-content" class="modal-content">
-            <!-- Nội dung modal sẽ được tải và đưa vào đây -->
+    <div class="modal fade" id="modalThemSanPhanm" tabindex="-1" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Lịch sử hóa đơn</h5>
+                </div>
+                <div class="modal-body1" id="modal-body">
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                </div>
+            </div>
         </div>
     </div>
 
