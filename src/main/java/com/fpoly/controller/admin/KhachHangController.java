@@ -180,7 +180,7 @@ public class KhachHangController {
 			diaChiDTO.setPage(page);
 			diaChiDTO.setKhachHangId(id);
 			diaChiDTO.setLimit(5);
-			Pageable pageable = PageRequest.of(page-1,diaChiDTO.getLimit());
+			Pageable pageable = PageRequest.of(page-1,diaChiDTO.getLimit(),Sort.by(Sort.DEFAULT_DIRECTION.DESC,"id"));
 			khachHangDTO = khachHangService.findById(id);
  			diaChiDTO.setListDiaChi(diaChiService.findAllDiaChiByMaKhachHang(khachHangDTO.getId(),pageable));
 			diaChiDTO.setTotalItems((int) diaChiService.countByMaKhachHang(khachHangDTO.getId()));
