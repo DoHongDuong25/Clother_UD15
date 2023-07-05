@@ -21,4 +21,10 @@ public class BanHangController {
         model.addAttribute("hoaDon", hoaDon);
         return "admin/banHang/banHangTaiQuay/BanHang";
     }
+
+    @RequestMapping("ThemSanPham")
+    public String themSanPham(){
+
+        return null;
+    }
 }
