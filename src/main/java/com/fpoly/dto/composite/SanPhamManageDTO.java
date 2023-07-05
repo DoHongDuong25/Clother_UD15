@@ -64,5 +64,7 @@ public class SanPhamManageDTO {
 	
 	private Boolean isCreatedImg = false;
 	
+	private Boolean isCreatedValueImg = false;
+	
 	private List<HinhAnhMauSacDTO> lstHinhAnhMauSacDTO;
 }

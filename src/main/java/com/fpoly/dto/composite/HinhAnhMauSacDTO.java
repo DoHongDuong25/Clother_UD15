@@ -27,6 +27,10 @@ public class HinhAnhMauSacDTO {
 	
 	private List<String> imgFilesString;
 	
+	private List<String> imgLaAnhChinh;
+	
+	private List<String> imgCoHienThi;
+	
 	private List<Resource> imgFilesResource;
 	
 	private Integer laAnhChinh;

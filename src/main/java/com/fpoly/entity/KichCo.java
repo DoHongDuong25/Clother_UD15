@@ -25,19 +25,12 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Set;
 
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "kich_co")
 public class KichCo extends BaseEntity implements Serializable{
-	
-	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
 
 	@OneToMany(mappedBy = "kichCo", cascade = CascadeType.ALL)
 	private List<SanPhamChiTiet> sanPhamChiTiets;
@@ -47,9 +40,4 @@ public class KichCo extends BaseEntity implements Serializable{
 	
 	@Column
 	private Boolean daXoa;
-
-	@Override
-	public String toString() {
-		return "KichCo [sanPhamChiTiets=" + sanPhamChiTiets + ", tenKichCo=" + tenKichCo + ", daXoa=" + daXoa + "]";
-	}
 }

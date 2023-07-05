@@ -17,8 +17,6 @@ public class HinhAnhDTO extends BaseDTO<BaseDTO> {
 	
 	private String tenAnh;
 	
-	private MultipartFile imgFile;
-	
 	private Boolean laAnhChinh;
 
 	private Boolean coHienThi;

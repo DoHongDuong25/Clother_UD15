@@ -23,8 +23,7 @@ import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -46,13 +45,4 @@ public class MauSac extends BaseEntity implements Serializable{
 	
 	@Column
 	private Boolean daXoa;
-
-	@Override
-	public String toString() {
-		return "MauSac{" +
-				"sanPhamChiTiets=" + sanPhamChiTiets.size() +
-				", tenMauSac='" + tenMauSac + '\'' +
-				", daXoa=" + daXoa +
-				'}';
-	}
 }
