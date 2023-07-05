@@ -30,7 +30,7 @@ public class KhuyenMai extends BaseEntity implements Serializable {
     @Column(name = "ngay_ket_thuc",columnDefinition = "nvarchar(256) not null")
     private Date ngayKetThuc;
 
-    @Column(name = "phan_tram_giam",columnDefinition = "nvarchar(256) not null")
+    @Column(name = "phan_tram_giam",columnDefinition = "int not null")
     private int phanTramGiam;
 
     @Column(name = "gia_tri_toi_thieu",columnDefinition = "int not null")
