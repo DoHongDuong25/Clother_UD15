@@ -25,4 +25,6 @@ public class GioHangChiTietDTO extends BaseDTO<GioHangChiTietDTO> {
     private int trangThai;
 
     private Boolean daXoa;
+    
+    private SanPhamChiTietDTO sanPhamChiTietDTO ;
 }

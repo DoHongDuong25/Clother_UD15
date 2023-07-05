@@ -21,7 +21,7 @@ public class GioHangDTO extends BaseDTO<GioHangDTO> {
 
 	    private int tongTien;
 	    
-	    private List<GioHangChiTietDTO> listGioHangChiTiets = new ArrayList<GioHangChiTietDTO>();
+	    private List<GioHangChiTietDTO> listGioHangChiTiets ;
 
 		
 }
