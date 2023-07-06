@@ -42,28 +42,16 @@ function toggleProductIds(source) {
 //   if (document.getElementById(id).isCheck === true) {
 //   }
 // }
-function showInfoProductDetailById(
-  nguoiTao,
-  ngayTao,
-  nguoiCapNhat,
-  NgayCapNhat,
-  moTa
-) {
-  $("#infoProductDetail").modal("show");
-  document.getElementById("infoProductDetailContentString0").innerHTML =
-    nguoiTao;
-  document.getElementById("infoProductDetailContentString1").innerHTML =
-    ngayTao;
-  document.getElementById("infoProductDetailContentString2").innerHTML =
-    nguoiCapNhat;
-  document.getElementById("infoProductDetailContentString3").innerHTML =
-    NgayCapNhat;
-  document.getElementById("infoProductDetailContentString4").innerHTML = moTa;
-}
 
 function openPopupIsShowSpeedAddProduct(tenThuocTinh, tenField) {
   document.getElementById("tenThuocTinh").innerHTML = tenThuocTinh;
   document.getElementById("fieldthuocTinhInput").value = tenField;
+  if (tenField === "mauSac") {
+    var htmlObj = document.getElementById("maMauSacDiv");
+    html =
+      "<label for='maMauSacInput'>Mã màu sắc:</label><input type='text' class='form-control' name='maMauSac' id='maMauSacInput' />";
+    htmlObj.innerHTML = html;
+  }
   $("#iShowSpeedModalId").modal("show");
 }
 

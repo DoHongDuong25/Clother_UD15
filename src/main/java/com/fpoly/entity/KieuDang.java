@@ -22,8 +22,7 @@ import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -41,12 +40,4 @@ public class KieuDang extends BaseEntity implements Serializable{
 	@OneToMany(mappedBy = "kieuDang", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Set<SanPham> sanPhams;
 
-	@Override
-	public String toString() {
-		return "KieuDang{" +
-				"tenKieuDang='" + tenKieuDang + '\'' +
-				", daXoa=" + daXoa +
-				", sanPhams=" + sanPhams.size() +
-				'}';
-	}
 }

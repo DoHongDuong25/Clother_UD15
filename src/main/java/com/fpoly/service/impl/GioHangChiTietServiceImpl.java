@@ -15,6 +15,7 @@ import com.fpoly.dto.GioHangChiTietDTO;
 import com.fpoly.entity.GioHangChiTiet;
 import com.fpoly.repository.GioHangChiTietRepository;
 import com.fpoly.service.GioHangChiTietService;
+import com.sun.mail.handlers.message_rfc822;
 
 @Service
 public class GioHangChiTietServiceImpl implements GioHangChiTietService {
@@ -67,6 +68,18 @@ public class GioHangChiTietServiceImpl implements GioHangChiTietService {
 			list.add(integer);
 		}
 		return list ;
+	}
+
+	@Override
+	@Transactional
+	public void deleteById(Long id) {
+		gioHangChiTietRepo.deleteById(id);
+	}
+
+	@Override
+	@Transactional
+	public void deleteAll() {
+		gioHangChiTietRepo.deleteAll();
 	}
 
 }

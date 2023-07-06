@@ -1,11 +1,14 @@
 package com.fpoly.service.impl;
 
+import com.fpoly.convertor.KhuyenMaiConvertor;
 import com.fpoly.dto.KhuyenMaiDTO;
 import com.fpoly.entity.KhuyenMai;
 import com.fpoly.repository.KhuyenMaiRepository;
 import com.fpoly.service.KhuyenMaiService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -19,8 +22,14 @@ import java.util.Date;
 @RequiredArgsConstructor
 @Slf4j
 public class KhuyenMaiServiceImp implements KhuyenMaiService{
+	
+	@Autowired
+    private KhuyenMaiConvertor khuyenMaiConvertor ;
+	
     private final KhuyenMaiRepository khuyenMaiRepository;
     @Override
+    
+    
     public Page<KhuyenMaiDTO> getListKhuyenMai(int page,
                                                int size,
                                                String keyword,
@@ -124,5 +133,16 @@ public class KhuyenMaiServiceImp implements KhuyenMaiService{
         khuyenMai.setTrangThai(!khuyenMai.isTrangThai());
         khuyenMaiRepository.save(khuyenMai);
     }
+    @Override
+	public KhuyenMaiDTO timKhuyenMaiTheoTenKhuyenMai(String maGiamGia) {
+		KhuyenMaiDTO khuyenMaiDTO = new KhuyenMaiDTO();
+		KhuyenMai khuyenMai = khuyenMaiRepository.findByTenKhuyenMai(maGiamGia);
+		if(khuyenMai != null) {
+			khuyenMaiDTO = khuyenMaiConvertor.toDTO(khuyenMai);
+		}else {
+			return null ;
+		}
+		return khuyenMaiDTO;
+	}
 
 }

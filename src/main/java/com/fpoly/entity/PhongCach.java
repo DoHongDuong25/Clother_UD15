@@ -23,8 +23,7 @@ import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -39,13 +38,4 @@ public class PhongCach extends BaseEntity implements Serializable{
 	
 	@Column
 	private Boolean daXoa;
-
-	@Override
-	public String toString() {
-		return "PhongCach{" +
-				"tenPhongCach='" + tenPhongCach + '\'' +
-				", sanPhams=" + sanPhams.size() +
-				", daXoa=" + daXoa +
-				'}';
-	}
 }

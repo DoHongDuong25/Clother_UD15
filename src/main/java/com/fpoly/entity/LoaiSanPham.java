@@ -23,8 +23,7 @@ import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -40,13 +39,4 @@ public class LoaiSanPham extends BaseEntity implements Serializable{
 	
 	@Column
 	private Boolean daXoa;
-
-	@Override
-	public String toString() {
-		return "LoaiHang{" +
-				"tenLoaiSanPham='" + tenLoaiSanPham + '\'' +
-				", sanPhams=" + sanPhams.size() +
-				", daXoa=" + daXoa +
-				'}';
-	}
 }
