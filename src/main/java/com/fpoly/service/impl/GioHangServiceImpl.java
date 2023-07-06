@@ -50,8 +50,8 @@ public class GioHangServiceImpl implements GioHangService {
 			List<GioHangChiTietDTO> listGioHangChiTietDTO = new ArrayList<GioHangChiTietDTO>();
 			GioHang gioHangEntity = gioHangRepo.findGioHangByKhachHangId(id);
 			if(gioHangEntity != null) {
-				List<GioHangChiTiet> listGioHangChiTiet = gioHangChiTietRepo.findAllByGioHangId(gioHangEntity.getId());
-				for (GioHangChiTiet gioHangChiTiet : listGioHangChiTiet) {
+//				List<GioHangChiTiet> listGioHangChiTiet = gioHangChiTietRepo.findAllByGioHangId(gioHangEntity.getId());
+				for (GioHangChiTiet gioHangChiTiet : gioHangEntity.getGioHangChiTiets()) {
 					GioHangChiTietDTO gioHangChiTietDTO = gioHangChiTietConvertor.toDTO(gioHangChiTiet);
 					SanPhamChiTietDTO sanPhamChiTietDTO = sanPhamChiTietConvertor.toDTO(gioHangChiTiet.getSanPhamChiTiet());
 					sanPhamChiTietDTO.setSanPhamDTO(sanPhamConvertor.toDTO(gioHangChiTiet.getSanPhamChiTiet().getSanPham()));

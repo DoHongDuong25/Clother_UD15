@@ -10,4 +10,8 @@ public interface GioHangChiTietService  {
 
 	void capNhatSoLuongGioHangChiTiet(Long[] ids, Integer[] soLuongs);
 
+	void deleteById(Long id);
+
+	void deleteAll();
+
 }
