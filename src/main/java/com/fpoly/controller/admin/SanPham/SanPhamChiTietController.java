@@ -125,7 +125,6 @@ public class SanPhamChiTietController {
         }).collect(Collectors.toList());
     }
 
-
     @ModelAttribute("lstKieuDang")
     public List<KieuDangDTO> getLstKieuDang() {
         return kieuDangService.selectAllKieuDangExist().stream().map(item -> {
