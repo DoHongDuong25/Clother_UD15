@@ -49,5 +49,16 @@ public class HinhAnhServiceImpl implements HinhAnhService{
 	public List<HinhAnh> getHinhAnhChinhExist() {
 		return hinhAnhRepository.getHinhAnhChinhExist();
 	}
+	
+	@Override
+	public Optional<HinhAnh> getHinhAnhByName(String tenAnh) {
+		return hinhAnhRepository.getHinhAnhByName(tenAnh);
+	}
+	
+	@Override
+	public Optional<HinhAnh> getHinhAnhChinhBySanPhamId(Long sanPhamId) {
+		return hinhAnhRepository.getHinhAnhChinhBySanPhamId(sanPhamId);
+	}
 
+	
 }

@@ -9,15 +9,11 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class HinhAnhDTO extends BaseDTO<BaseDTO> {
+public class HinhAnhDTO {
 	
-	private Long mauSacId;
-	
-	private Long sanPhamId;
+	private Long hinhAnhid;
 	
 	private String tenAnh;
-	
-	private MultipartFile imgFile;
 	
 	private Boolean laAnhChinh;
 

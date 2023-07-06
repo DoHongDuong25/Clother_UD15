@@ -3,8 +3,11 @@ package com.fpoly.service.impl;
 import java.util.List;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 
 import com.fpoly.entity.LoaiSanPham;
@@ -27,6 +30,7 @@ public class LoaiSanPhamServiceImpl implements LoaiSanPhamService{
 	}		
 	
 	@Override
+	@Transactional
 	public <S extends LoaiSanPham> S save(S entity) {
 		entity.setDaXoa(false);
 		return loaiSanPhamRepository.save(entity);

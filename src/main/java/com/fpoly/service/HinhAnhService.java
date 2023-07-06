@@ -21,4 +21,8 @@ public interface HinhAnhService {
 	List<Long> getDistinctMauSacInHinhAnhBySanPhamId(Long sanPhamId);
 
 	List<HinhAnh> getHinhAnhChinhExist();
+
+	Optional<HinhAnh> getHinhAnhByName(String tenAnh);
+
+	Optional<HinhAnh> getHinhAnhChinhBySanPhamId(Long sanPhamId);
 }

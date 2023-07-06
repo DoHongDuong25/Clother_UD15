@@ -514,10 +514,9 @@
         </script>
         <script th:inline="javascript">
             window.onload = function () {
-                var firstNavIndex = document.getElementById("firstNavIndex").clientHeight;
                 var messageSuccess = '[[${messageSuccess}]]';
                 var messageDanger = '[[${messageDanger}]]';
-                $('#toastsCustomCss').attr("style", "position: absolute; top:" + firstNavIndex + "; right: 0;z-index: 1;");
+                $('#toastsCustomCss').attr("style", "position: absolute; top: 70px; right: 0;z-index: 1;");
                 if (messageSuccess.length !== 0) {
                     $("#messageSuccess").toast("show");
                 }
