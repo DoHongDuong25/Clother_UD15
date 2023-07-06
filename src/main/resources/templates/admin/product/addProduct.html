@@ -9,7 +9,7 @@
     <section layout:fragment="content" class="container">
         <div id="toastsCustomCss">
             <div id="messageSuccess" th:if="${messageSuccess}" class="toast" role="alert" aria-live="assertive"
-                aria-atomic="true" data-delay="3000">
+                aria-atomic="true" data-delay="2000">
                 <div class="toast-header">
                     <svg class="bd-placeholder-img rounded mr-2" width="20" height="20"
                         xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false"
@@ -23,10 +23,12 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="toast-body" th:text="${messageSuccess}"></div>
+                <div class="toast-body">
+                    <span id="messageSuccessBodyId" th:text="${messageSuccess}"></span>
+                </div>
             </div>
             <div id="messageDanger" th:if="${messageDanger}" class="toast" role="alert" aria-live="assertive"
-                aria-atomic="true" data-delay="3000">
+                aria-atomic="true" data-delay="2000">
                 <div class="toast-header">
                     <svg class="bd-placeholder-img rounded mr-2" width="20" height="20"
                         xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false"
@@ -40,7 +42,11 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="toast-body" th:text="${messageDanger}"></div>
+                <div class="toast-body">
+                    <span id="messageDangerBodyId" th:text="${messageDanger}"></span>
+                </div>
+            </div>
+            <div id="toastAjax" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-delay="2000">
             </div>
         </div>
         <form enctype="multipart/form-data" id="flexUrlTableFormAddProduct" th:object="${sanPhamManageDTO}">
@@ -505,13 +511,14 @@
                                             <hr><br>
                                         </div>
                                         <div th:if="*{isCreatedValueImg == true}">
-                                            <h6>Hình ảnh preview: </h6>
-                                            <div th:if="*{not #lists.isEmpty(lstHinhAnhMauSacDTO[__${istat.index}__].imgFilesString)}"
-                                                th:each="img, istatHAMS : *{lstHinhAnhMauSacDTO[__${istat.index}__].imgFilesString}">
+                                            <h6>Tên màu sắc của sản phẩm đang thêm ảnh: <span
+                                                    th:text="${item.tenMauSacAddImg}"></span></h6>
+                                            <div th:if="*{not #lists.isEmpty(lstHinhAnhMauSacDTO[__${istat.index}__].hinhAnhDTOs)}"
+                                                th:each="img, istatHAMS : *{lstHinhAnhMauSacDTO[__${istat.index}__].hinhAnhDTOs}">
                                                 <div
                                                     class="file-preview-frame krajee-default  kv-preview-thumb rotatable">
                                                     <div class="kv-file-content text-center">
-                                                        <img th:src="${'/admin/product/images/' + img}"
+                                                        <img th:src="${'/admin/product/images/' + img.tenAnh}"
                                                             style="width: auto; height: auto; max-width: 100%; max-height: 100%; image-orientation: from-image;"
                                                             alt="">
                                                     </div>
@@ -536,36 +543,19 @@
                                                                 class="bi-plus-lg text-warning"></i></div>
                                                         <div class="file-actions">
                                                             <div class="file-footer-buttons">
-                                                                <input type="radio" onchange="addDataToRadioAndCheckBoxHinhAnh()"
+                                                                <input type="radio"
                                                                     th:name="'HinhAnhRadioName'+${istat.index}"
-                                                                    th:id="'HinhAnhRadioId'+${istat.index}+${istatHAMS.index}">
-                                                                <input type="text"
-                                                                    th:id="'HinhAnhRadioIdInput'+${istat.index}+${istatHAMS.index}"
-                                                                    th:name="HinhAnhRadioName" hidden>
+                                                                    th:checked="${img.laAnhChinh? 'true': 'false'}"
+                                                                    th:img-name="${img.tenAnh}"
+                                                                    th:id="'HinhAnhRadioId'+${istat.index}+${istatHAMS.index}"
+                                                                    onclick="changeLaAnhChinh(this.getAttribute('checked'), this.getAttribute('img-name'))">
                                                             </div>
                                                             <div class="file-footer-buttons">
-                                                                <input type="checkbox" onchange="addDataToRadioAndCheckBoxHinhAnh()"
-                                                                    th:name="'HinhAnhCheckboxName'+${istat.index}"
-                                                                    th:id="'HinhAnhCheckboxId'+${istat.index}+${istatHAMS.index}">
-                                                                 <input type="text"
-                                                                    th:id="'HinhAnhCheckboxIdInput'+${istat.index}+${istatHAMS.index}"
-                                                                    th:name="HinhAnhCheckboxName" hidden>
+                                                                <input type="checkbox"
+                                                                    th:checked="${img.coHienThi? 'true': 'false'}"
+                                                                    th:img-name="${img.tenAnh}"
+                                                                    onclick="changeCoHienThi(this.getAttribute('checked'), this.getAttribute('img-name'))">
                                                             </div>
-                                                            <script th:inline="javascript">
-                                                                function addDataToRadioAndCheckBoxHinhAnh(){
-                                                                    var index1 = '[[${istat.index}]]';
-                                                                    var index2 = '[[${istatHAMS.index}]]';
-                                                                    var img = '[[${img}]]';
-                                                                    var radio = document.getElementById('HinhAnhRadioId'+index1+index2);
-                                                                    var checkbox = document.getElementById('HinhAnhCheckboxId'+index1+index2);
-                                                                    if(radio.checked == true){
-                                                                        $('#HinhAnhRadioIdInput'+index1+index2).attr("th:value", img);
-                                                                    }else $('#HinhAnhRadioIdInput'+index1+index2).removeAttr("value");
-                                                                    if(checkbox.checked == true){
-                                                                        $('#HinhAnhCheckboxIdInput'+index1+index2).attr("th:value", img);
-                                                                    }else $('#HinhAnhCheckboxIdInput'+index1+index2).removeAttr("value");
-                                                                }
-                                                            </script>
                                                         </div>
                                                         <div class="clearfix"></div>
                                                     </div>
@@ -585,6 +575,35 @@
                                                     // ]
                                                 })
                                             })
+                                            function changeCoHienThi(checked, imgName) {
+                                                                                      
+                                                $.ajax({
+                                                    url: "http://localhost:8080/admin/product/changeCoHienThi/" + imgName + "/" + !checked,
+                                                    type: "GET",
+                                                    contentType: "application/json",
+                                                    success: function (result) {
+                                                        var html = "<div class='toast-header'> <svg class='bd-placeholder-img rounded mr-2' width='20' height='20' xmlns='http://www.w3.org/2000/svg' preserveAspectRatio='xMidYMid slice' focusable='false' role='img'><rect width='100%' height='100%' fill='blue'></rect></svg><strong class='mr-auto'>Thông báo hệ thống</strong><small>Now</small><button type='button' class='ml-2 mb-1 close' data-dismiss='toast' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div><div class='toast-body'>Cập nhật ảnh chính cho sản phẩm thành công</div>";
+                                                        $('#toastsCustomCss').attr("style", "position: fixed; top: 10px; right: 0;z-index: 1;");
+                                                        $('#toastAjax').html(html);
+                                                        $("#toastAjax").toast("show");
+                                                        
+                                                    },
+                                                    error: function (result) {
+                                                        var html = "<div class='toast-header'> <svg class='bd-placeholder-img rounded mr-2' width='20' height='20' xmlns='http://www.w3.org/2000/svg' preserveAspectRatio='xMidYMid slice' focusable='false' role='img'><rect width='100%' height='100%' fill='red'></rect></svg><strong class='mr-auto'>Thông báo hệ thống</strong><small>Now</small><button type='button' class='ml-2 mb-1 close' data-dismiss='toast' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div><div class='toast-body'>Cập nhật ảnh chính cho sản phẩm thất bại</div>";
+                                                        $('#toastsCustomCss').attr("style", "position: fixed; top: 10px; right: 0;z-index: 1;");
+                                                        $('#toastAjax').html(html);
+                                                        $("#toastAjax").toast("show");
+                                                    }
+                                                });
+
+                                            }
+                                            function changeLaAnhChinh(checked, imgName) {
+                                                $.ajax({
+                                                    url: "http://localhost:8080/admin/product/changeLaAnhChinh/" + imgName + "/" + !checked,
+                                                    type: "GET",
+                                                    contentType: "application/json",
+                                                });
+                                            }
                                         </script>
                                     </div>
                                 </div>
@@ -598,8 +617,9 @@
                                     onclick="flexUrlSubmit('saveImageProductDetail', 'post', 'AddProduct')">
                                     <span>Hoàn tất thêm sản phẩm <img th:src="@{/admin/img/icons/save.svg}"
                                             aria-label="chi tiết" /></span></a>
-                                <a class="btn btn-primary" onclick="flexUrlSubmit('saveProduct', 'post', 'AddProduct')">
-                                    <span>OK <img th:src="@{/admin/img/icons/save.svg}"
+                                <a class="btn btn-primary"
+                                    onclick="flexUrlSubmit('saveValueImageProduct', 'post', 'AddProduct')">
+                                    <span>Hoàn thành thêm sản phẩm <img th:src="@{/admin/img/icons/save.svg}"
                                             aria-label="chi tiết" /></span></a>
                             </div>
                         </div>
