@@ -28,4 +28,10 @@ public class SanPhamChiTietDTO extends BaseDTO<BaseDTO> {
 	private Boolean coHienThi;
 	
 	private Boolean daXoa;
+	
+	private String tenKichCo ;
+	
+	private String tenMauSac ;
+	
+	private SanPhamDTO sanPhamDTO ;
 }

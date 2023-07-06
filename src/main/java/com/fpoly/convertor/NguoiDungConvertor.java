@@ -13,11 +13,12 @@ public class NguoiDungConvertor {
 		entity.setEmail(khachHangDTO.getEmail());
 		entity.setSoDienThoai(khachHangDTO.getSoDienThoai());
 		entity.setTenNguoiDung(khachHangDTO.getHoTen());
+		entity.setMatKhau(khachHangDTO.getMatKhau());
 		if(khachHangDTO.getTrangThai() == 0) {
-			entity.setTrangThai(2);
+			entity.setTrangThai(1);
 		}
 		if(khachHangDTO.getTrangThai() == 1) {
-			entity.setTrangThai(1);
+			entity.setTrangThai(0);
 		}
 		entity.setDaXoa(false);
 		return entity ;
@@ -33,11 +34,12 @@ public class NguoiDungConvertor {
 		entity.setEmail(khachHangDTO.getEmail());
 		entity.setSoDienThoai(khachHangDTO.getSoDienThoai());
 		entity.setTenNguoiDung(khachHangDTO.getHoTen());
+		entity.setMatKhau(khachHangDTO.getMatKhau());
 		if(khachHangDTO.getTrangThai() == 0) {
-			entity.setTrangThai(2);
+			entity.setTrangThai(1);
 		}
 		if(khachHangDTO.getTrangThai() == 1) {
-			entity.setTrangThai(1);
+			entity.setTrangThai(0);
 		}
 		
 		return entity ;

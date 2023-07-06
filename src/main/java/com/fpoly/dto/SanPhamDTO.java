@@ -27,4 +27,12 @@ public class SanPhamDTO {
 	private String moTa;
 
 	private Boolean daXoa;
+	
+	private String tenChatLieu ;
+	
+	private String TenKieuDang ;
+	
+	private String tenPhongCach ;
+	
+	private String tenLoaiSanPham ;
 }

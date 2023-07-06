@@ -47,4 +47,8 @@ public class DiaChiDTO extends BaseDTO<DiaChiDTO> {
     private List<DiaChiDTO> listDiaChi = new ArrayList<DiaChiDTO>();
 
     private Long khachHangId ;
+
+    
+    
+    
 }

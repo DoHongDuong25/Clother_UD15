@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.Date;
@@ -24,4 +25,7 @@ public interface KhuyenMaiRepository extends JpaRepository<KhuyenMai,Long> {
     @Modifying
     @Query("update  KhuyenMai v set v.trangThai = :status where v.id in :ids")
     void updateStatusByDate(List<Long> ids, boolean status);
+
+    @Query("SELECT k FROM KhuyenMai k WHERE k.tenKhuyenMai =:tenKhuyenMai")
+	KhuyenMai findByTenKhuyenMai(@Param("tenKhuyenMai") String maGiamGia);
 }

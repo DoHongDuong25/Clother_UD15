@@ -17,4 +17,5 @@ public interface KhuyenMaiService {
     KhuyenMaiDTO getVoucher(Long id);
     void deleteVoucher(Long id);
     void toggleDisableVoucher(Long id);
+	KhuyenMaiDTO timKhuyenMaiTheoTenKhuyenMai(String maGiamGia);
 }

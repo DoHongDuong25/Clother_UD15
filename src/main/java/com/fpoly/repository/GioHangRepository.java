@@ -12,4 +12,7 @@ public interface GioHangRepository extends JpaRepository<GioHang,Long> {
 	@Query("SELECT g FROM GioHang g WHERE g.khachHang.email=?1 ")
 	GioHang findGioHangByEmail(String email);
 	
+	@Query("SELECT g FROM GioHang g WHERE g.khachHang.id=?1 ")
+	GioHang findGioHangByKhachHangId(Long id);
+	
 }
