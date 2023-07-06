@@ -69,7 +69,7 @@
     </table>
     <div>
         <ul class="pagination" th:classappend="${pageDaHuy > 0} ? '' : 'pagination-empty'">
-            <li th:each="pageNumber : ${#numbers.sequence(0, pageDaHuy - 1)}">
+            <li th:each="pageNumber : ${#numbers.sequence(1, pageDaHuy)}">
                 <a th:href="@{/admin/DonHang/DaHuyHang(page=${pageNumber})}" th:text="${pageNumber}"></a>
             </li>
         </ul>
