@@ -4,14 +4,6 @@
 .table tbody tr:hover {
     background-color: #e2e8f0;
 }
-#modalChiTiet .modal-dialog {
-    max-width: 1400px;
-    width: 1400px;
-}
-
-#modalChiTiet .modal-content {
-    height: 450px;
-}
 
 .pagination {
     list-style-type: none;

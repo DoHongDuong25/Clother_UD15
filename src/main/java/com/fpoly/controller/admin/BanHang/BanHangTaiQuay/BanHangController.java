@@ -44,4 +44,13 @@ public class BanHangController {
         model.addAttribute("sanPham", sanPham);
         return "admin/banHang/banHangTaiQuay/modal";
     }
+    @RequestMapping("/{sanPhamId}/mausac-kichco")
+    public String getMauSacAndKichCo(@PathVariable Long sanPhamId, Model model) {
+        String mauSacAndKichCo = banHangService.getMauSacAndKichCo(sanPhamId);
+        String[] attributes = mauSacAndKichCo.split(",");
+        model.addAttribute("spct", attributes);
+        return "api/test";
+    }
+
+
 }

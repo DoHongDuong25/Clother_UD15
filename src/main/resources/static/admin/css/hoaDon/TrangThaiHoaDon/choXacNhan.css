@@ -2,14 +2,6 @@
     content: "\f1da";
 }
 
-#modalChiTiet .modal-dialog {
-    max-width: 1400px;
-    width: 1400px;
-}
-
-#modalChiTiet .modal-content {
-    height: 450px;
-}
 
 .pagination {
     list-style-type: none;

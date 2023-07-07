@@ -18,15 +18,15 @@ public class banHangRestController {
         this.banHangService = banHangService;
     }
 
-    @RequestMapping("/{sanPhamId}/mausac-kichco")
-    public ResponseEntity<List<String>> getMauSacAndKichCo(@PathVariable Long sanPhamId) {
-        try {
-            String mauSacAndKichCo = banHangService.getMauSacAndKichCo(sanPhamId);
-            List<String> attributes = Arrays.asList(mauSacAndKichCo.split(","));
-            return ResponseEntity.ok(attributes);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-        }
-    }
+//    @RequestMapping("/{sanPhamId}/mausac-kichco")
+//    public ResponseEntity<List<String>> getMauSacAndKichCo(@PathVariable Long sanPhamId) {
+//        try {
+//            String mauSacAndKichCo = banHangService.getMauSacAndKichCo(sanPhamId);
+//            List<String> attributes = Arrays.asList(mauSacAndKichCo.split(","));
+//            return ResponseEntity.ok(attributes);
+//        } catch (Exception e) {
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+//        }
+//    }
 
 }
