@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -22,4 +24,15 @@ public class HoaDonChiTietDTO extends BaseDTO<HoaDonChiTietDTO> {
 	    private BigDecimal tongTien;
 
 	    private int daXoa;
+	    
+	    private Integer page ;
+	    
+	    private Integer totalPages ;
+	    
+	    private Integer totalItems ;
+	    
+	    private List<HoaDonChiTietDTO> listHoaDonChiTietDTO = new ArrayList<HoaDonChiTietDTO>();
+	    
+	    private SanPhamChiTietDTO sanPhamChiTietDTO ;
+	    
 }

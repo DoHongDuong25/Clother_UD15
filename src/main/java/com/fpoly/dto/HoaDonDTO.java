@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -19,6 +21,7 @@ public class HoaDonDTO extends BaseDTO<HoaDonDTO> {
 
     private Long giaoDichId;
 
+    
     private String nguoiNhan;
 
     private String sdtNguoiNhan;
@@ -36,6 +39,19 @@ public class HoaDonDTO extends BaseDTO<HoaDonDTO> {
     private BigDecimal tongTienDonHang;
 
     private String loaiDonHang;
+    
+    private String maDonHang ;
 
-
+    private String tenKhuyenMai ;
+    
+    private Integer page ; 
+    
+    private Integer totalPages ;
+    
+    private Integer totalItems ;
+    
+    private List<HoaDonDTO> listHoaDonDTO = new ArrayList<HoaDonDTO>();
+    
+    private String trangThai ;
+    
 }
