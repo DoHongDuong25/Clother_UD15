@@ -3,6 +3,8 @@ package com.fpoly.repository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -24,6 +26,20 @@ public interface HoaDonRepository extends CrudRepository<HoaDon, Long> {
     Integer getMaxId();
 
     List<HoaDon> findByNgayTao(Date ngayTao);
+    
+    @Query(value = "SELECT * FROM hoa_don WHERE loai_hoa_don = :loaiHoaDon AND khach_hang_id = :khachHangId", nativeQuery = true)
+	Page<HoaDon> findAllByLoaiHoaDonAndMaKhachHang(@Param("loaiHoaDon")Integer loaiHoaDon,
+			@Param("khachHangId")Long khachHangId, Pageable pageable);
+    
+    @Query(value = "SELECT count(*) FROM hoa_don WHERE loai_hoa_don = :loaiHoaDon", nativeQuery = true)
+	Integer countByLoaiHoaDon(@Param("loaiHoaDon")Integer loaiHoaDon);
+    
+    @Query(value = "SELECT * FROM hoa_don WHERE ma_don = :maDonHang", nativeQuery = true)
+	HoaDon findByMaDonHang(@Param("maDonHang")String maDonHang);
+    
+    @Modifying
+    @Query(value = "UPDATE  hoa_don SET trang_thai_id=5 WHERE id = :id", nativeQuery = true)
+	void capNhatTrangThaiThanhHuyDon(@Param("id") Long id);
 }
 
 

@@ -1,4 +1,5 @@
 package com.fpoly.service;
+import com.fpoly.dto.HoaDonDTO;
 import com.fpoly.entity.HoaDon;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,5 +18,9 @@ public interface HoaDonService{
     List<HoaDon> searchByDate(Date searchDate);
 
     Integer getMaxId();
+
+	HoaDonDTO findAllByLoaiHoaDonAndMaKhachHang(Integer loaiHoaDon, Long khachHangId ,Pageable pageable);
+
+	void capNhatTrangThaiHuyDon(String maDonHang);
 
 }
