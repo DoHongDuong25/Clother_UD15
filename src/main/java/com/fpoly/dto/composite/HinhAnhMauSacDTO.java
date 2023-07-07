@@ -21,11 +21,16 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class HinhAnhMauSacDTO {
+	//mau sac id
 	private Long mauSacAddImagesId;
 	
 	private List<MultipartFile> imgFiles;
 	
-	private List<String> imgFilesString;
+	private List<HinhAnhDTO> hinhAnhDTOs;
+	
+	private List<String> imgLaAnhChinh;
+	
+	private List<String> imgCoHienThi;
 	
 	private List<Resource> imgFilesResource;
 	

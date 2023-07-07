@@ -66,23 +66,49 @@
 .fa-search {
     font-size: 18px;
 }
-.action-button {
-    background-color: #4CAF50; /* Màu nền */
-    border: none; /* Không viền */
-    color: white; /* Màu chữ */
-    padding: 10px 20px; /* Kích thước lề */
-    text-align: center; /* Căn giữa chữ */
-    text-decoration: none; /* Không gạch chân */
-    display: inline-block; /* Hiển thị dạng inline */
-    font-size: 16px; /* Cỡ chữ */
-    margin: 4px 2px; /* Kích thước lề */
-    cursor: pointer; /* Con trỏ chuột thành kiểu tay */
+
+.button-group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
 }
 
-.action-button:hover {
-    background-color: #45a049; /* Màu nền khi di chuột qua */
+.btn-primary, .action-button {
+    background-color: #6c63ff;
+    border: none;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    float: right;
 }
 
-.action-button i {
-    margin-right: 5px; /* Khoảng cách giữa biểu tượng và chữ */
+.action-button:hover, .btn-primary:hover {
+    background-color: #b3d7ff;
+}
+
+.empty-cart {
+    text-align: center;
+    vertical-align: middle;
+}
+
+.empty-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.empty-content img {
+    max-width: 100%;
+    margin-bottom: 10px;
+}
+
+.empty-message {
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 10px;
 }

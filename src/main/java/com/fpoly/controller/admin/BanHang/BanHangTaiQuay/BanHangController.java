@@ -2,7 +2,9 @@ package com.fpoly.controller.admin.BanHang.BanHangTaiQuay;
 
 import com.fpoly.entity.GiaoDich;
 import com.fpoly.entity.HoaDon;
+import com.fpoly.entity.SanPham;
 import com.fpoly.repository.HoaDonRepository;
+import com.fpoly.repository.SanPhamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +17,10 @@ import java.util.List;
 public class BanHangController {
     @Autowired
     HoaDonRepository hoaDonRepository;
+
+    @Autowired
+    SanPhamRepository sanPhamRepository;
+
     @RequestMapping("banHang/{id}")
     public String banHang(@PathVariable("id") Long id, Model model) {
         HoaDon hoaDon = hoaDonRepository.findById(id).get();
@@ -22,9 +28,10 @@ public class BanHangController {
         return "admin/banHang/banHangTaiQuay/BanHang";
     }
 
-    @RequestMapping("ThemSanPham")
-    public String themSanPham(){
-
-        return null;
+    @RequestMapping("banHang/ThemSanPham")
+    public String themSanPham(Model model){
+        List<SanPham> sanPham = sanPhamRepository.findAll();
+        model.addAttribute("sanPham",sanPham);
+        return "admin/banHang/banHangTaiQuay/modal";
     }
 }

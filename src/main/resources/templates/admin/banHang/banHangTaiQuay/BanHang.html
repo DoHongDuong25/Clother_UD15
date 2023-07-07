@@ -4,33 +4,37 @@
 
 <head>
     <meta charset="UTF-8">
+    <title>Bán hàng tại quầy</title>
     <link rel="stylesheet" th:href="@{/admin/css/banHang/banHangTaiQuay.css}">
     <script th:src="@{/admin/js/banHang/banHangTaiQuay/banHang.js}"></script>
 </head>
 
 <body>
 <div class="container" layout:fragment="content">
-    <div th:object="${hoaDon}">
-        <h1 th:text="${hoaDon.maDon}"></h1>
-    </div>
 
-    <h3>Danh sách sản phẩm</h3>
-    <button type="submit" class="btn btn-primary" data-toggle="modal"
-            data-target="#modalThemSanPhanm" onclick="showModal()">Thêm sản phẩm</button>
+    <div class="button-group">
+        <button class="action-button" onclick="quayLai()">Danh sách
+            <i class="fas fa-arrow-left"></i>
+        </button>
 
-    <div class="modal fade" id="modalThemSanPhanm" tabindex="-1" aria-labelledby="exampleModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Lịch sử hóa đơn</h5>
-                </div>
-                <div class="modal-body1" id="modal-body">
+        <button type="submit" class="btn btn-primary" data-toggle="modal" th:data-target="'#modalSanPham'">
+            <i class="fas fa-fw fa-shopping-cart"></i>
+            Thêm sản phẩm
+        </button>
+        <div class="modal fade" th:id="'modalSanPham'" tabindex="-1" aria-labelledby="exampleModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Thêm sản phẩm</h5>
+                    </div>
+                    <div class="modal-body">
 
-                </div>
+                    </div>
 
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -40,7 +44,7 @@
         <thead>
         <tr>
             <th data-field="state" data-checkbox="true"></th>
-            <th scope="col">Tên sản phẩm</th>
+            <th scope="col">Sản phẩm</th>
             <th scope="col">Đơn giá</th>
             <th scope="col">Số lượng</th>
             <th scope="col">Thành tiền</th>
@@ -57,14 +61,19 @@
             <td th:text="${hdct.soLuong}"></td>
             <td th:text="${hdct.tongTien}"></td>
         </tr>
+
+        <tr th:if="${hoaDon.hoaDonChiTiets.isEmpty()}">
+            <td colspan="5">
+                <div class="empty-content">
+                    <img src="/admin/img/gioHangTrong.png" alt="Không có sản phẩm">
+                    <p class="empty-message">Không có sản phẩm nào trong giỏ hàng</p>
+                </div>
+            </td>
+        </tr>
         </tbody>
     </table>
 
     <h3>thanh toán</h3>
-
-    <button class="action-button" onclick="quayLai()">Quay lại
-        <i class="fas fa-arrow-left"></i>
-    </button>
 </div>
 </body>
 </html>

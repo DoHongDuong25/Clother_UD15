@@ -8,9 +8,30 @@
     <title>Document</title>
 </head>
 <body>
-<div class="modal-content">
-    <!-- Nội dung modal -->
-    <h1>Modal theem sản phẩm</h1>
+<div class="container-fluid">
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">Hình ảnh</th>
+            <th scope="col">ID</th>
+            <th scope="col">Tên sản phẩm</th>
+            <th scope="col">Giá sản phẩm</th>
+            <th>Thao tác</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="sanPhamlist: ${sanPham}">
+            <td th:text="${sanPhamlist.id}"></td>
+            <td th:text="${sanPhamlist.id}"></td>
+            <td th:text="${sanPhamlist.tenSanPham}"></td>
+            <td th:text="${sanPhamlist.gia}"></td>
+            <td>
+                <h3>Thêm sản phẩm -> Hiển thị ra modal chọn sản phẩm chi tiết</h3>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 </div>
 </body>
 </html>
