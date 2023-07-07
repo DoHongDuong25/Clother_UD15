@@ -112,3 +112,12 @@
     font-weight: bold;
     margin-top: 10px;
 }
+
+#modalSanPham .modal-dialog {
+    max-width: 1400px;
+    width: 1400px;
+}
+
+#modalSanPham .modal-content {
+    height: 700px;
+}

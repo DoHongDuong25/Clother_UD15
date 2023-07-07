@@ -6,6 +6,26 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+<!--    <script>-->
+<!--        $(document).ready(function () {-->
+<!--            $('#openModalButton').click(function () {-->
+<!--                $.ajax({-->
+<!--                    url: 'api/test.html',-->
+<!--                    dataType: 'html',-->
+<!--                    success: function (response) {-->
+<!--                        $('#modalContent').html(response);-->
+<!--                        $('#modalSanPhamChiTiet').modal('show');-->
+<!--                    },-->
+<!--                    error: function (error) {-->
+<!--                        console.log(error);-->
+<!--                    }-->
+<!--                });-->
+<!--            });-->
+<!--        });-->
+
+<!--    </script>-->
 </head>
 <body>
 <div class="container-fluid">
@@ -27,11 +47,36 @@
             <td th:text="${sanPhamlist.tenSanPham}"></td>
             <td th:text="${sanPhamlist.gia}"></td>
             <td>
-                <h3>Thêm sản phẩm -> Hiển thị ra modal chọn sản phẩm chi tiết</h3>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModalSPCT">
+                    Chọn
+                </button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="myModalSPCT" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title" id="myModalLabel">Modal Title</h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body-spct">
+                                <!-- Nội dung của modal -->
+                                <p>Nội dung modal...</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                                <button type="button" class="btn btn-primary">Lưu</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </td>
         </tr>
         </tbody>
     </table>
 </div>
+
 </body>
 </html>

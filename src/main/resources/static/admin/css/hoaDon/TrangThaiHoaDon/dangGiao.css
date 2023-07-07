@@ -416,4 +416,6 @@ body {
 .tab-button:not(.active):before {
     content: none;
 }
-
+.table tbody tr:hover {
+    background-color: #e2e8f0;
+}

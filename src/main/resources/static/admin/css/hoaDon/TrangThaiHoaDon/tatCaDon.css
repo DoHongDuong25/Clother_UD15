@@ -265,4 +265,7 @@ h1:before {
     left: 50%;
     transform: translateX(-50%);
 }
+.table tbody tr:hover {
+    background-color: #e2e8f0;
+}
 

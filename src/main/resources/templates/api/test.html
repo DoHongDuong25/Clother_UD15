@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+</head>
+<body>
+<div class="container-fluid">
+    <div id="buttons"></div>
+
+    <script>
+        $(document).ready(function () {
+            var sanPhamId = 1; // Thay thế bằng ID sản phẩm thực tế
+
+            $.ajax({
+                url: sanPhamId + "/mausac-kichco",
+                type: "GET",
+                success: function (response) {
+                    var attributes = response;
+
+                    var buttonContainer = $("#buttons");
+
+                    for (var i = 0; i < attributes.length; i++) {
+                        var attribute = attributes[i];
+                        var button = $("<button>").text(attribute);
+                        buttonContainer.append(button);
+
+                        button.click(function () {
+                            var clickedAttribute = $(this).text();
+                            alert("Bạn đã nhấp vào button với thuộc tính: " + clickedAttribute);
+                        });
+                    }
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+        });
+    </script>
+</div>
+
+</body>
+</html>
