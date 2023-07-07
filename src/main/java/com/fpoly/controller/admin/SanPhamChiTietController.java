@@ -536,13 +536,61 @@ public class SanPhamChiTietController {
 				}
 			});
 		});
+		
+		List<HinhAnh> lstHinhAnh = hinhAnhService.getLstHinhAnhMauSacBySanPhamId(sanPhamManageDTO.getSanPhamId());
+		List<List<HinhAnhDTO>> lstHinhAnhDTOs = new ArrayList<>();
+		int i = 0;
+		int j = 0;
+		int countLstHinhAnh = 0;
+		do {
+			List<HinhAnhDTO> HinhAnhDTOs = new ArrayList<>();
+			for (j = i; j < lstHinhAnh.size(); j++) {
+				if (lstHinhAnh.get(j).getMauSac().getId().equals(lstHinhAnh.get(i).getMauSac().getId())) {
+					HinhAnhDTO haDto = new HinhAnhDTO();
+					BeanUtils.copyProperties(lstHinhAnh.get(j), haDto);
+					haDto.setCoHienThi(lstHinhAnh.get(j).getCoHienThi());
+					haDto.setLaAnhChinh(lstHinhAnh.get(j).getLaAnhChinh());
+					haDto.setHinhAnhid(lstHinhAnh.get(j).getId());
+					HinhAnhDTOs.add(haDto);
+				} else {
+					i = j;
+					break;
+				}
+			}
+			countLstHinhAnh++;
+
+			lstHinhAnhDTOs.add(HinhAnhDTOs);
+			if (j == lstHinhAnh.size())
+				break;
+		} while (j < lstHinhAnh.size());
+		int m = 0;
+		List<HinhAnhMauSacDTO> lstHinhAnhMauSacDTO = new ArrayList<>();
+		List<Long> lstHinhAnhDistinct = hinhAnhService.getDistinctMauSacInHinhAnhBySanPhamId(sanPhamManageDTO.getSanPhamId());
+		for (Long mauSacId : lstHinhAnhDistinct) {
+			HinhAnhMauSacDTO hinhAnhMauSacDTO = new HinhAnhMauSacDTO();
+			Optional<MauSac> optMS = mauSacService.findById(mauSacId);
+			if (optMS.isPresent()) {
+				hinhAnhMauSacDTO.setTenMauSacAddImg(optMS.get().getTenMauSac());
+				hinhAnhMauSacDTO.setMauSacAddImagesId(mauSacId);
+			}
+			if (m < countLstHinhAnh) {
+				List<HinhAnhDTO> lstHinhAnhDTO = new ArrayList<HinhAnhDTO>();
+				for (HinhAnhDTO item : lstHinhAnhDTOs.get(m)) {
+					lstHinhAnhDTO.add(item);
+				}
+				hinhAnhMauSacDTO.setHinhAnhDTOs(lstHinhAnhDTO);
+				m++;
+			}
+			lstHinhAnhMauSacDTO.add(hinhAnhMauSacDTO);
+		}
+		sanPhamManageDTO.setIsCreatedValueImg(true);
+		sanPhamManageDTO.setLstHinhAnhMauSacDTO(lstHinhAnhMauSacDTO);
 		model.addAttribute("messageSuccess", "Thêm hình ảnh cho sản phẩm thành công");
 		sanPhamManageDTO.setIsCreatedValueImg(true);
 		List<SanPhamChiTiet> dataGen = sanPhamChiTietService
 				.getLstSanPhamChiTietBySanPhamId(sanPhamManageDTO.getSanPhamId());
 		model.addAttribute("dataGen", dataGen);
 		model.addAttribute("sanPhamManageDTO", sanPhamManageDTO);
-
 		return new ModelAndView("admin/product/addProduct", model);
 	}
 	
