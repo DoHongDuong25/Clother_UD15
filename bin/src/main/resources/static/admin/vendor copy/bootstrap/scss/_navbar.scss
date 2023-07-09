@@ -37,6 +37,10 @@
     @extend %container-flex-properties;
   }
 
+  .container-fluid-spct {
+    @extend %container-flex-properties;
+  }
+
   @each $breakpoint, $container-max-width in $container-max-widths {
     > .container#{breakpoint-infix($breakpoint, $container-max-widths)} {
       @extend %container-flex-properties;

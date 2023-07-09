@@ -2,64 +2,62 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-    <script>
-        $(document).ready(function() {
-            $('.btn-modal').click(function() {
-                var id = $(this).data('id');
-                $('#modalContent').text('ID sản phẩm: ' + id);
-            });
-        });
-    </script>
 
 </head>
 <body>
 <div class="container-fluid">
-    <table class="table">
-        <thead>
-        <tr>
-            <th scope="col">Hình ảnh</th>
-            <th scope="col">ID</th>
-            <th scope="col">Tên sản phẩm</th>
-            <th scope="col">Giá sản phẩm</th>
-            <th>Thao tác</th>
-        </tr>
-        </thead>
+<!--    <table class="table">-->
+<!--        <thead>-->
+<!--        <tr>-->
+<!--            <th scope="col">Hình ảnh</th>-->
+<!--            <th scope="col">ID</th>-->
+<!--            <th scope="col">Tên sản phẩm</th>-->
+<!--            <th scope="col">Giá sản phẩm</th>-->
+<!--            <th>Thao tác</th>-->
+<!--        </tr>-->
+<!--        </thead>-->
 
-        <tbody>
-        <tr th:each="sanPhamlist: ${sanPham}">
-            <td th:text="${sanPhamlist.id}"></td>
-            <td th:text="${sanPhamlist.id}"></td>
-            <td th:text="${sanPhamlist.tenSanPham}"></td>
-            <td th:text="${sanPhamlist.gia}"></td>
-            <td>
-                <button type="submit" class="btn btn-primary btn-modal" data-toggle="modal" data-target="#modalChiTiet"
-                        data-id="${sanPhamlist.id}">
-                    <i class="fas fa-history"></i>
-                </button>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+<!--        <tbody>-->
+<!--        <tr th:each="sanPhamlist: ${sanPham}">-->
+<!--            <td th:text="${sanPhamlist.id}"></td>-->
+<!--            <td th:text="${sanPhamlist.id}"></td>-->
+<!--            <td th:text="${sanPhamlist.tenSanPham}"></td>-->
+<!--            <td th:text="${sanPhamlist.gia}"></td>-->
+<!--            <td>-->
+<!--                <button type="submit" class="btn btn-primary" data-toggle="modal" th:data-target="'#modalChiTiet'"-->
+<!--                        th:data-id="${sanPhamlist.id}">-->
+<!--                    Chọn-->
+<!--                </button>-->
+<!--            </td>-->
+<!--        </tr>-->
+<!--        </tbody>-->
+<!--    </table>-->
+    <h1>Chọn sản phẩm</h1>
 </div>
 
-<div class="modal fade" id="modalChiTiet" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Lịch sử hóa đơn</h5>
-            </div>
-            <div class="modal-body-spct">
-                <!-- Nội dung của modal "modalChiTiet" -->
-                <div id="modalContent"></div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-            </div>
-        </div>
-    </div>
-</div>
+
+
+<script>
+    $(document).ready(function () {
+        $('.btn-primary').click(function () {
+            var sanPhamId = $(this).attr('data-id');
+            console.log(sanPhamId);
+            var modal = $('#modalChiTiet');
+
+            $.ajax({
+                url: '/' + sanPhamId + '/mausac-kichco',
+                type: 'GET',
+                success: function (data) {
+                    modal.find('.modal-body-spct').html(data);
+                    modal.modal('show');
+                },
+                error: function () {
+                }
+            });
+        });
+    });
+</script>
 </body>
 </html>

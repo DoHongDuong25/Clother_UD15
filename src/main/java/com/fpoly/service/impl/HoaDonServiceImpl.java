@@ -49,4 +49,9 @@ public class HoaDonServiceImpl implements HoaDonService {
     public Integer getMaxId() {
         return hoaDonRepository.getMaxId();
     }
+
+    @Override
+    public Page<HoaDon> findHoaDonByTrangThaiAndKhachHangId(int trangThai, Long khachHangId, Pageable pageable) {
+        return hoaDonRepository2.findHoaDonByTrangThaiAndKhachHangId(trangThai, khachHangId, pageable);
+    }
 }

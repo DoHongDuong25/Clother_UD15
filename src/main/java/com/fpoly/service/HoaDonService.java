@@ -18,4 +18,5 @@ public interface HoaDonService{
 
     Integer getMaxId();
 
+    Page<HoaDon> findHoaDonByTrangThaiAndKhachHangId(int trangThai, Long khachHangId, Pageable pageable);
 }

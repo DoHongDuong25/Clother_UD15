@@ -94,6 +94,10 @@
     vertical-align: middle;
 }
 
+.modal-backdrop {
+    background-color: transparent !important;
+}
+
 .empty-content {
     display: flex;
     flex-direction: column;
@@ -121,3 +125,4 @@
 #modalSanPham .modal-content {
     height: 700px;
 }
+

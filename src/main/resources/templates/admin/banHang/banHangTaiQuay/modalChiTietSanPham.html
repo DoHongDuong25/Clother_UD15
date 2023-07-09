@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+<div class="container-fluid">
+<!--    <form id="spctForm" method="POST" action="/themHoaDonChiTiet">-->
+<!--        <h2>Kich Co</h2>-->
+<!--        <div th:each="kc : ${kichCo}">-->
+<!--            <label>-->
+<!--                <input type="radio" name="tenKichCo" th:value="${kc}"/>-->
+<!--                <span th:text="${kc}"></span>-->
+<!--            </label>-->
+<!--        </div>-->
+
+<!--        <h2>Mau Sac</h2>-->
+<!--        <div th:each="ms : ${mauSac}">-->
+<!--            <label>-->
+<!--                <input type="radio" name="tenMauSac" th:value="${ms}"/>-->
+<!--                <span th:text="${ms}"></span>-->
+<!--            </label>-->
+<!--        </div>-->
+
+<!--        <h2>So Luong</h2>-->
+<!--        <input type="number" name="soLuong" min="1" value="1" oninput="calculateTotal()">-->
+
+<!--        <label>Đơn giá: <span id="donGia" th:text="${gia}"></span></label>-->
+
+<!--        <h2>Thanh tien</h2>-->
+<!--        <input type="text" id="thanhTien" name="thanhTien" readonly>-->
+
+<!--        <button type="button" class="btn btn-primary" onclick="submitForm()">Chọn</button>-->
+<!--    </form>-->
+    <h1>Chi tiết sản phẩm</h1>
+</div>
+
+<!--<script>-->
+<!--    function calculateTotal() {-->
+<!--        var donGia = parseFloat(document.getElementById("donGia").textContent);-->
+<!--        var soLuong = parseInt(document.getElementsByName("soLuong")[0].value);-->
+<!--        var thanhTien = donGia * soLuong;-->
+<!--        document.getElementById("thanhTien").value = thanhTien.toFixed(2);-->
+<!--    }-->
+
+<!--    function submitForm() {-->
+<!--        var kichCoValue = $('input[name=tenKichCo]:checked', '#spctForm').val();-->
+<!--        var mauSacValue = $('input[name=tenMauSac]:checked', '#spctForm').val();-->
+<!--        var thanhTienValue = parseFloat(document.getElementById("thanhTien").value);-->
+
+<!--        // Gửi yêu cầu AJAX để thêm hóa đơn chi tiết-->
+<!--        $.ajax({-->
+<!--            url: '/themHoaDonChiTiet',-->
+<!--            type: 'POST',-->
+<!--            data: {-->
+<!--                tenMauSac: mauSacValue,-->
+<!--                tenKichCo: kichCoValue,-->
+<!--                soLuong: 1,-->
+<!--                thanhTien: thanhTienValue-->
+<!--            },-->
+<!--            success: function (data) {-->
+<!--                var sanPhamChiTietId = data; // Nhận ID của sản phẩm chi tiết từ phản hồi thành công-->
+<!--                console.log("ID của sản phẩm chi tiết: " + sanPhamChiTietId);-->
+
+<!--                // Thực hiện các xử lý khác sau khi thêm hóa đơn chi tiết thành công-->
+
+<!--                // Ví dụ: Hiển thị thông báo thành công, làm mới form, vv.-->
+<!--            },-->
+<!--            error: function () {-->
+<!--                // Xử lý lỗi-->
+<!--            }-->
+<!--        });-->
+<!--    }-->
+<!--</script>-->
+</body>
+</html>

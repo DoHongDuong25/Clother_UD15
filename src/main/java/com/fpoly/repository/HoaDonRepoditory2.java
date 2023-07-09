@@ -23,4 +23,7 @@ public interface HoaDonRepoditory2 extends PagingAndSortingRepository<HoaDon, Lo
             countQuery = "SELECT COUNT(*) FROM hoa_don WHERE trang_thai_id = ?1",
             nativeQuery = true)
     Page<HoaDon> findByTrangThaiHoaDonListTrangThai(int trangThai, Pageable pageable);
+
+    @Query(value = "SELECT * FROM hoa_don WHERE trang_thai_id = ? and khach_hang_id = ?", nativeQuery = true)
+    Page<HoaDon> findHoaDonByTrangThaiAndKhachHangId(int trangThai, Long khachHangId, Pageable pageable);
 }

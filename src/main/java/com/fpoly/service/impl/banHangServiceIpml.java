@@ -6,6 +6,9 @@ import com.fpoly.service.banHangService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Map;
+
 @Service
 public class banHangServiceIpml implements banHangService {
     private final banHangRepository banHangRepository;
@@ -15,7 +18,17 @@ public class banHangServiceIpml implements banHangService {
     }
 
     @Override
-    public String getMauSacAndKichCo(Long sanPhamId) {
-        return banHangRepository.getMauSacAndKichCo(sanPhamId);
+    public String getKichCo(Long sanPhamId) {
+        return banHangRepository.getKichCo(sanPhamId);
+    }
+
+    @Override
+    public String getMauSac(Long sanPhamId) {
+        return banHangRepository.getMauSac(sanPhamId);
+    }
+
+    @Override
+    public Long findIdByTenKichCoAndTenMauSac(String tenKichCo, String tenMauSac) {
+        return banHangRepository.findIdByTenKichCoAndTenMauSac(tenKichCo, tenMauSac);
     }
 }
