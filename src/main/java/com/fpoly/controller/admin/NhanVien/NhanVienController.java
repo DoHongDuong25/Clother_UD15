@@ -7,11 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-<<<<<<< HEAD:src/main/java/com/fpoly/controller/admin/NhanVien/NhanVienController.java
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
-=======
->>>>>>> b64a328e39f08fafbb5f9e20d9fe2bf8d1b6ce61:src/main/java/com/fpoly/controller/admin/NguoiDung/NguoiDungController.java
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
