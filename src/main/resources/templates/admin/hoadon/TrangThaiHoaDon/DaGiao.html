@@ -43,7 +43,7 @@
             <th scope="col">Ngày tạo đơn</th>
             <th scope="col">Tổng tiền</th>
             <th scope="col">Ghi chú</th>
-            <th scope="col">Xem chi tiết</th>
+            <th scope="col">Thao tác</th>
         </tr>
         </thead>
         <tbody>
@@ -70,7 +70,7 @@
     </table>
     <div>
         <ul class="pagination" th:classappend="${pageDaGiao > 0} ? '' : 'pagination-empty'">
-            <li th:each="pageNumber : ${#numbers.sequence(0, pageDaGiao - 1)}">
+            <li th:each="pageNumber : ${#numbers.sequence(1, pageDaGiao)}">
                 <a th:href="@{/admin/DonHang/DaGiaoHang(page=${pageNumber})}" th:text="${pageNumber}"></a>
             </li>
         </ul>

@@ -23,4 +23,5 @@ public interface HoaDonService{
 
 	void capNhatTrangThaiHuyDon(String maDonHang);
 
+    Page<HoaDon> findHoaDonByTrangThaiAndKhachHangId(int trangThai, Long khachHangId, Pageable pageable);
 }

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="zxx" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{customer/layouts/index}">
+<head>
+    <meta charset="UTF-8">
+    <title>Chờ giao hàng</title>
+</head>
+<body>
+<section class="Customer_ChoGiaoHang" layout:fragment="content" th:each="hoaDon: *{choGiaoHang}">
+    <h1 th:text="${hoaDon.maDon}"></h1>
+    <h1 th:text="${hoaDon.khachHang.hoTen}"></h1>
+<!--    <div>-->
+<!--        <ul class="pagination" th:classappend="${pageChoGiaoHang > 0} ? '' : 'pagination-empty'">-->
+<!--            <li th:each="pageNumber : ${#numbers.sequence(1, pageChoGiaoHang)}">-->
+<!--                <a th:href="@{/admin/DonHang/ChoGiaoHang(page=${pageNumber})}" th:text="${pageNumber}"></a>-->
+<!--            </li>-->
+<!--        </ul>-->
+<!--    </div>-->
+</section>
+</body>
+</html>

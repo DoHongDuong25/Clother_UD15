@@ -37,8 +37,10 @@ public class TatCaDonController {
     HoaDonService hoaDonService;
 
     @RequestMapping("/admin/DonHang/TatCaDon")
-    public String getAllHoaDonStatus(Model model, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "3") int size) {
-        PageRequest pageable = PageRequest.of(page, size);
+    public String getAllHoaDonStatus(Model model,
+                                     @RequestParam(defaultValue = "1") int page,
+                                     @RequestParam(defaultValue = "3") int size) {
+        PageRequest pageable = PageRequest.of(page -1, size);
         Page<HoaDon> getAllHoaDon = hoaDonRepository2.finHDByLoaiHD(0, pageable);
         model.addAttribute("getAllHoaDon", getAllHoaDon.getContent());
         model.addAttribute("totalPages", getAllHoaDon.getTotalPages());

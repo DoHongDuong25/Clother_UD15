@@ -54,13 +54,13 @@
             <th scope="col">Tổng tiền</th>
             <th scope="col">Ghi chú</th>
             <th scope="col">Trạng thái đơn</th>
-            <th scope="col">Xem chi tiết</th>
+            <th scope="col">Thao tác</th>
         </tr>
 
         </thead>
         <tbody>
         <tr th:each="hoaDon : ${getAllHoaDon}">
-            <td class="bs-checkbox"><input data-index="0" name="btSelectItem" type="checkbox"></td>
+            <td></td>
             <th scope="row" th:text="${hoaDon.maDon}"></th>
             <td th:text="${hoaDon.khachHang.hoTen}"></td>
             <td th:text="${hoaDon.sdtNguoiNhan}"></td>
@@ -85,7 +85,7 @@
     </table>
     <div>
         <ul class="pagination" th:classappend="${totalPages > 0} ? '' : 'pagination-empty'">
-            <li th:each="pageNumber : ${#numbers.sequence(0, totalPages - 1)}">
+            <li th:each="pageNumber : ${#numbers.sequence(1, totalPages)}">
                 <a th:href="@{/admin/DonHang/TatCaDon(page=${pageNumber})}" th:text="${pageNumber}"></a>
             </li>
         </ul>

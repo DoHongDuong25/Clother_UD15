@@ -40,8 +40,10 @@ public class ChoXacNhanController {
     HoaDonService hoaDonService;
 
     @RequestMapping("admin/DonHang/ChoXacNhanDonHang")
-    public String getHoaDonChoXacNhan(Model model, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "3") int size) {
-        PageRequest pageable = PageRequest.of(page, size);
+    public String getHoaDonChoXacNhan(Model model,
+                                      @RequestParam(defaultValue = "1") int page,
+                                      @RequestParam(defaultValue = "3") int size) {
+        PageRequest pageable = PageRequest.of(page -1, size);
         Page<HoaDon> choXacNhan = hoaDonRepoditory2.findByTrangThaiHoaDonListTrangThai(1, pageable);
 
         model.addAttribute("choXacNhan", choXacNhan.getContent());

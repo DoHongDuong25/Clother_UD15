@@ -1,14 +1,8 @@
 .fas.fa-history:before {
     content: "\f1da"; /* Mã Unicode tương ứng với biểu tượng "fa-history" */
 }
-
-#modalChiTiet .modal-dialog {
-    max-width: 1400px;
-    width: 1400px;
-}
-
-#modalChiTiet .modal-content {
-    height: 450px;
+.table tbody tr:hover {
+    background-color: #e2e8f0;
 }
 
 .pagination {

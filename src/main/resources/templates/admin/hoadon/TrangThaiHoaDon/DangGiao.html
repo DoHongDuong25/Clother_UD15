@@ -74,7 +74,7 @@
         </thead>
         <tbody>
         <tr th:each="hoaDon : ${dangtGiao}">
-            <td class="bs-checkbox"><input data-index="0" name="btSelectItem" type="checkbox"></td>
+            <td></td>
             <th scope="row" th:text="${hoaDon.maDon}"></th>
             <td th:text="${hoaDon.khachHang.hoTen}"></td>
             <td th:text="${hoaDon.sdtNguoiNhan}"></td>
@@ -125,7 +125,7 @@
     </table>
     <div>
         <ul class="pagination" th:classappend="${pageDangGiao > 0} ? '' : 'pagination-empty'">
-            <li th:each="pageNumber : ${#numbers.sequence(0, pageDangGiao - 1)}">
+            <li th:each="pageNumber : ${#numbers.sequence(1, pageDangGiao)}">
                 <a th:href="@{/admin/DonHang/DangGiaoHang(page=${pageNumber})}" th:text="${pageNumber}"></a>
             </li>
         </ul>
