@@ -44,13 +44,16 @@ public class NguoiDungService {
         Pageable pageable = PageRequest.of(page, size);
         return iNguoiDungPaginRespository.findAll(pageable);
     }
-    public Page<NguoiDung> getAll(int page, int size) {
+
+    public Page<NguoiDung> getAll(int page, int size){
         Pageable pageable = PageRequest.of(page, size);
         return iNguoiDungPaginRespository.GetAll(pageable);
     }
+
     public void saveNguoiDung(NguoiDung nguoiDung) {
         nguoiDungRepository.save(nguoiDung);
     }
+
     public NguoiDung getNguoiDungById(Long id) {
         if (id != null) {
             Optional<NguoiDung> optionalNguoiDung = nguoiDungRepository.findById(id);
@@ -66,4 +69,5 @@ public class NguoiDungService {
         user.setTrangThai(trangThai);
         nguoiDungRepository.save(user);
     }
+
 }
