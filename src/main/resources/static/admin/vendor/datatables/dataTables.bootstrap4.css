@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 @charset "UTF-8";
 table.dataTable {
   clear: both;
@@ -208,3 +209,5 @@ div.table-responsive > div.dataTables_wrapper > div.row > div[class^=col-]:first
 div.table-responsive > div.dataTables_wrapper > div.row > div[class^=col-]:last-child {
   padding-right: 0;
 }
+=======
+>>>>>>> b64a328e39f08fafbb5f9e20d9fe2bf8d1b6ce61

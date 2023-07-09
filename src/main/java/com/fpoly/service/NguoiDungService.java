@@ -47,7 +47,11 @@ public class NguoiDungService {
         return iNguoiDungPaginRespository.findAll(pageable);
     }
 
+<<<<<<< HEAD
     public Page<NguoiDung> getAll(int page, int size) {
+=======
+    public Page<NguoiDung> getAll(int page, int size){
+>>>>>>> b64a328e39f08fafbb5f9e20d9fe2bf8d1b6ce61
         Pageable pageable = PageRequest.of(page, size);
         return iNguoiDungPaginRespository.GetAll(pageable);
     }
@@ -71,4 +75,5 @@ public class NguoiDungService {
         user.setTrangThai(trangThai);
         nguoiDungRepository.save(user);
     }
+
 }

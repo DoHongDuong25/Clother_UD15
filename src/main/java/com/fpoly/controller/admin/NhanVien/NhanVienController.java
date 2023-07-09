@@ -7,14 +7,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+<<<<<<< HEAD:src/main/java/com/fpoly/controller/admin/NhanVien/NhanVienController.java
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+=======
+>>>>>>> b64a328e39f08fafbb5f9e20d9fe2bf8d1b6ce61:src/main/java/com/fpoly/controller/admin/NguoiDung/NguoiDungController.java
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
 import java.util.*;
 
 @Controller
@@ -23,74 +24,62 @@ public class NhanVienController {
     NguoiDungService nguoiDungService;
     @Autowired
     NguoiDungRepository nguoiDungRepository;
-    @Autowired
-    private JavaMailSender mailSender;
+
     //List
     @GetMapping("/admin/NguoiDung")
     public String getUsers(
-            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "4") int size,
             Model model
     ) {
-        Page<NguoiDung> users = nguoiDungService.getAll(page - 1, size);
+        Page<NguoiDung> users = nguoiDungService.getAll(page, size);
         System.out.println(users);
         model.addAttribute("users", users.getContent());
         model.addAttribute("totalPages", users.getTotalPages());
         return "admin/NguoiDung/list/NguoiDung";
     }
+
     //Add
     @RequestMapping("/NguoiDung/themMoi")
     public String themNguoiDung(Model model) {
         model.addAttribute("nguoiDung", new NguoiDung());
         return "admin/NguoiDung/crud/ThemNguoiDung";
     }
-    private static final String digits = "0123456789";
-    private static final String ALPHA_NUMERIC = digits;
-    private static Random generator = new Random();
-
-    public String randomMa(int soKyTu) {
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < soKyTu; i++) {
-            int number = randomNumber(0, ALPHA_NUMERIC.length() - 1);
-            char ch = ALPHA_NUMERIC.charAt(number);
-            sb.append(ch);
-        }
-        return sb.toString();
-    }
-
-    public static int randomNumber(int min, int max) {
-        return generator.nextInt((max - min) + 1) + min;
-    }
 
     @PostMapping("/themMoi")
-    public String addNguoiDung(@ModelAttribute("nguoiDung") NguoiDung nguoiDung, Model model) throws MessagingException {
+    public String addNguoiDung(@ModelAttribute("nguoiDung") NguoiDung nguoiDung, Model model) {
         boolean isValid = true;
-
-        // Check tên người dùng
+        //Chenk tên người dùng
         if (nguoiDung.getTenNguoiDung().isEmpty()) {
-            model.addAttribute("msgName", "Không được để trống");
+            model.addAttribute("msgName", "Không được để trống tên người dùng");
             isValid = false;
         }
-        // Check email
+
+        if (nguoiDungRepository.findByEmail(nguoiDung.getEmail()) != null) {
+            model.addAttribute("msgEmail", "Email đã được sử dụng");
+            isValid = false;
+        }
+        //Chenk email
         if (nguoiDung.getEmail().isEmpty()) {
-            model.addAttribute("msgEmail", "Không được để trống");
-            isValid = false;
-        } else if (nguoiDungRepository.findByEmail(nguoiDung.getEmail()) != null) {
-            model.addAttribute("msgEmail", "Email đã tồn tại");
+            model.addAttribute("msgEmail", "Không được để trống email");
             isValid = false;
         }
 
-        // Check số điện thoại
+        if (nguoiDungRepository.findByEmail(nguoiDung.getEmail()) != null) {
+            model.addAttribute("msgEmail", "Email đã được sử dụng");
+            isValid = false;
+        }
+        //Chenk số điện thoại
         if (nguoiDung.getSoDienThoai().isEmpty()) {
-            model.addAttribute("msgsodienthoai", "Không được để trống");
-            isValid = false;
-        } else if (nguoiDungRepository.findBysoDienThoai(nguoiDung.getSoDienThoai()) != null) {
-            model.addAttribute("msgsodienthoai", "Số điện thoại đã tồn tại");
+            model.addAttribute("msgsodienthoai", "Không được để trống số điện thoại");
             isValid = false;
         }
-
+        if (nguoiDungRepository.findBysoDienThoai(nguoiDung.getSoDienThoai()) != null) {
+            model.addAttribute("msgsodienthoai", "Trùng sdt");
+            isValid = false;
+        }
         if (isValid) {
-            Integer maxId = nguoiDungRepository.getMaxId();
+            Integer maxId = nguoiDungRepository.getMaxId(); // Sử dụng kiểu dữ liệu Integer thay vì List<Object>
             int id;
             String ma;
 
@@ -101,41 +90,15 @@ public class NhanVienController {
                 id = 1;
                 ma = "NV" + id;
             }
-
-            // Generate random code
-            String randomCode = randomMa(6); // Change the number of characters as per your requirement
-
             // Lưu mã người dùng vào đối tượng nguoiDung
             nguoiDung.setMaNguoiDung(ma);
             nguoiDung.setDaXoa(false);
             nguoiDung.setNgayCapNhat(new Date());
             nguoiDungRepository.save(nguoiDung);
-
-            try {
-                sendEmailNotification(nguoiDung, randomCode);
-            } catch (MessagingException e) {
-                // Xử lý lỗi gửi email
-                // You can add appropriate error handling code here
-            }
-
             return "redirect:/admin/NguoiDung";
         } else {
             return "admin/NguoiDung/crud/ThemNguoiDung";
         }
-    }
-
-    private void sendEmailNotification(NguoiDung nguoiDung, String randomCode) throws MessagingException {
-        String email = nguoiDung.getEmail();
-
-        MimeMessage message = mailSender.createMimeMessage();
-        MimeMessageHelper helper = new MimeMessageHelper(message, false);
-
-        helper.setFrom("datn.ud15@gmail.com");
-        helper.setTo(email); // Địa chỉ email của người dùng
-        helper.setSubject("Thông báo thêm thành công");
-        helper.setText("Người dùng mới đã được thêm thành công.\nMật khẩu của bạn là: " + randomCode);
-
-        mailSender.send(message);
     }
 
     //Update
@@ -145,24 +108,43 @@ public class NhanVienController {
         model.addAttribute("nguoiDungEdit", nguoiDung);
         return "admin/NguoiDung/crud/ChinhSuaNguoiDung";
     }
+
     @PostMapping("/chinhSua/save")
     public String editNguoiDung(@ModelAttribute("nguoiDungEdit") NguoiDung nguoiDungEdit, Model model) {
         boolean isValid = true;
-        //Chenk tên người dùng
+
+        // Kiểm tra rỗng tên người dùng
         if (nguoiDungEdit.getTenNguoiDung().isEmpty()) {
-            model.addAttribute("msgName", "Không được để trống");
+            model.addAttribute("msgName", "Không được để trống tên người dùng");
             isValid = false;
         }
-        //Chenk eamil
+
+        // Kiểm tra rỗng email
         if (nguoiDungEdit.getEmail().isEmpty()) {
-            model.addAttribute("msgEmail", "Không được để trống");
+            model.addAttribute("msgEmail", "Không được để trống email");
             isValid = false;
         }
-        //Chenk sdt
+
+        // Kiểm tra rỗng số điện thoại
         if (nguoiDungEdit.getSoDienThoai().isEmpty()) {
-            model.addAttribute("msgSoDienThoai", "Không được để trống");
+            model.addAttribute("msgSoDienThoai", "Không được để trống số điện thoại");
             isValid = false;
         }
+
+        // Kiểm tra trùng email
+        NguoiDung existingNguoiDungByEmail = nguoiDungRepository.findByEmail(nguoiDungEdit.getEmail());
+        if (existingNguoiDungByEmail != null && !existingNguoiDungByEmail.getId().equals(nguoiDungEdit.getId())) {
+            model.addAttribute("msgEmail", "Email đã được sử dụng");
+            isValid = false;
+        }
+
+        // Kiểm tra trùng số điện thoại
+        NguoiDung existingNguoiDungBySoDienThoai = nguoiDungRepository.findBysoDienThoai(nguoiDungEdit.getSoDienThoai());
+        if (existingNguoiDungBySoDienThoai != null && !existingNguoiDungBySoDienThoai.getId().equals(nguoiDungEdit.getId())) {
+            model.addAttribute("msgSoDienThoai", "Số điện thoại đã được sử dụng");
+            isValid = false;
+        }
+
         if (isValid) {
             NguoiDung existingNguoiDung = nguoiDungService.getNguoiDungById(nguoiDungEdit.getId());
             existingNguoiDung.setTenNguoiDung(nguoiDungEdit.getTenNguoiDung());
@@ -171,9 +153,11 @@ public class NhanVienController {
             nguoiDungService.saveNguoiDung(existingNguoiDung);
             return "redirect:/admin/NguoiDung";
         } else {
+            // Nếu có lỗi, trả về view chỉnh sửa với các thông báo lỗi
             return "admin/NguoiDung/crud/ChinhSuaNguoiDung";
         }
     }
+
     //Delete
     @RequestMapping("xoa/{id}")
     public String delete(Model model, @PathVariable("id") Long id) {
@@ -186,6 +170,7 @@ public class NhanVienController {
         model.addAttribute("listProducts", nguoiDungRepository.findAll());
         return "redirect:/admin/NguoiDung";
     }
+
     //Search
     @GetMapping("/admin/search")
     public String searchNguoiDung(@RequestParam("id") Long id, Model model) {
@@ -199,7 +184,7 @@ public class NhanVienController {
         }
         return "admin/NguoiDung/list/NguoiDung";
     }
-    //Status
+
     @PostMapping("/updateStatus")
     public ResponseEntity<String> updateStatus(@RequestParam("userId") Long id, @RequestParam("status") int trangThai) {
         try {

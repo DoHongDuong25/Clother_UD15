@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /*! DataTables 1.10.24
  * ©2008-2021 SpryMedia Ltd - datatables.net/license
  */
@@ -14983,3 +14984,5 @@
 
   return $.fn.dataTable;
 });
+=======
+>>>>>>> b64a328e39f08fafbb5f9e20d9fe2bf8d1b6ce61
