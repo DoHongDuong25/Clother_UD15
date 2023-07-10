@@ -129,10 +129,6 @@ $(document).ready(function () {
     $('.HuyDon').click(function () {
         var hoaDonId = $(this).data('id');
 
-        // Lưu trạng thái tab hiện tại vào sessionStorage
-        var activeTab = $('.nav-link.active').attr('href');
-        sessionStorage.setItem('activeTab', activeTab);
-
         // Hiển thị modal xác nhận
         $('.huyModal').modal('show');
 
@@ -165,19 +161,6 @@ $(document).ready(function () {
             $('.huyModal').modal('hide');
         });
     });
-
-    // Kiểm tra nếu có tab đã lưu trong sessionStorage
-    var savedTab = sessionStorage.getItem('activeTab');
-    if (savedTab) {
-        // Xác định tab cần hiển thị
-        var targetTab = $('.nav-link[href="' + savedTab + '"]');
-
-        // Kích hoạt tab
-        targetTab.tab('show');
-
-        // Xóa trạng thái tab đã lưu trong sessionStorage
-        sessionStorage.removeItem('activeTab');
-    }
 });
 
 <!-- JS HỦY TẤT CẢ-->

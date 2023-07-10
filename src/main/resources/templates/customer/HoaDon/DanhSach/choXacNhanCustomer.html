@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="zxx" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{customer/layouts/index}">
+<head>
+    <meta charset="UTF-8">
+    <title>Chờ xác nhận</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.css">
+
+    <script th:inline="javascript">
+        $(document).ready(function () {
+            $('.HuyDon').click(function () {
+                var hoaDonId = $(this).data('id');
+
+                // Lưu trạng thái tab hiện tại vào sessionStorage
+                var activeTab = $('.nav-link.active').attr('href');
+                sessionStorage.setItem('activeTab', activeTab);
+
+                // Hiển thị modal xác nhận
+                $('.huyModal').modal('show');
+
+                // Xử lý sự kiện khi bấm nút Đồng ý
+                $('.huyModal .btn-dong-y').click(function () {
+                    // Gửi yêu cầu xác nhận đơn hàng bằng Ajax
+                    $.get('/customer/updateHuyDon/' + hoaDonId, function (response) {
+                        // Lưu trạng thái đã xác nhận vào sessionStorage
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Đã hủy thành công',
+                            showConfirmButton: false,
+                            timer: 2000
+                        }).then(function () {
+                            // Lưu trạng thái đã xác nhận vào sessionStorage
+                            sessionStorage.setItem('isConfirmed', true);
+
+                            // Tải lại trang
+                            location.reload();
+                        });
+                    });
+
+                    // Đóng modal
+                    $('.huyModal').modal('hide');
+                });
+
+                // Xử lý sự kiện khi bấm nút Không
+                $('.huyModal .btn-khong').click(function () {
+                    // Đóng modal
+                    $('.huyModal').modal('hide');
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+<section class="Customer_ChoGiaoHang" layout:fragment="content">
+    <div class="tab-buttons">
+        <button class="tab-button" onclick="redirectToTatCaDon()">Tất cả đơn</button>
+        <button class="tab-button" onclick="redirectToChoxacNhan()">Chờ xác nhận</button>
+        <button class="tab-button active" onclick="redirectToChoGiaoHang()">Chờ giao hàng</button>
+        <button class="tab-button" onclick="redirectToDangGiao()">Đang giao</button>
+        <button class="tab-button" onclick="redirectToDaGiao()">Đã giao</button>
+        <button class="tab-button" onclick="redirectToDahuy()">Đã hủy</button>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">STT</th>
+                        <th scope="col">Mã đơn</th>
+                        <th scope="col">Người nhận</th>
+                        <th scope="col">Số điện thoại</th>
+                        <th scope="col">Thành tiền</th>
+                        <th scope="col">Trạng thái</th>
+                        <th scope="col" colspan="2">Thao tác</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="customerXN, stt: ${choXacNhanCustomer}">
+                        <th scope="row" th:text="${stt.count}"></th>
+                        <td th:text="${customerXN.maDon}"></td>
+                        <td th:text="${customerXN.nguoiNhan}"></td>
+                        <td th:text="${customerXN.sdtNguoiNhan}"></td>
+                        <td th:text="${customerXN.tongTienHoaDon}"></td>
+                        <td th:text="${customerXN.trangThai.name}"></td>
+                        <td>
+                            <div class="btn-group">
+                                <div class="btn-group">
+                                    <a th:href="@{'/customer/DonHang/ChiTietHoaDon/ChoGiaoHang/hoa-don-id=' + ${customerXN.id}}"
+                                       class="btn btn-warning btn-sm"
+                                       type="submit">
+                                        <i class="fa fa-id-card-o" aria-hidden="true"></i>
+                                    </a>
+                                </div>
+
+                                <button class="action-button HuyDon" th:attr="data-id=${customerXN.id}">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                                <br>
+                                <div class="modal fade huyModal" tabindex="-1" aria-labelledby="huyDonModalLabel"
+                                     aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="huyDonModalLabel">Hủy đơn hàng</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                Hủy đơn hàng?
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-primary btn-dong-y">Đồng ý</button>
+                                                <button type="button" class="btn btn-secondary btn-khong"
+                                                        data-bs-dismiss="modal">Không
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>

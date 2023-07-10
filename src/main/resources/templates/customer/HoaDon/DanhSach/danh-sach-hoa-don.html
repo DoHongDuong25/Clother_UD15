@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Đơn hàng</title>
+
 </head>
 <body>
 <section class="shopping-cart spad" layout:fragment="content">
@@ -58,10 +59,13 @@
                         <td>[[${item.ghiChu}]]</td>
                         <td><span th:class="${item.trangThai == 'Chờ xác nhận' ? 'text-primary' : 'text-secondary' }">[[${item.trangThai}]]</span>
                         </td>
-                        <td><a class="btn btn-secondary"
+                        <td>
+                            <a class="btn btn-secondary"
                                th:href="@{|/customer/don-hang/chi-tiet-don-hang?maDonHang=${item.maDonHang}&page=1|}"
                                data-toggle="tooltip" title='Chi tiết đơn hàng'>
-                            <i class="fa fa-id-card-o" aria-hidden="true"></i></a></td>
+                                <i class="fa fa-id-card-o" aria-hidden="true"></i>
+                            </a>
+                        </td>
                         <th:block th:if="${item.trangThai == 'Chờ xác nhận'}">
                             <td><a class="btn btn-danger" data-toggle="modal"
                                    th:attr="data-target='#huyDonHang'+${item.id}" title='Hủy đơn hàng'>
@@ -89,8 +93,6 @@
                                         </div>
                                     </div>
                                 </div>
-
-
                             </td>
                         </th:block>
                     </tr>
@@ -139,6 +141,7 @@
             </div>
         </div>
     </div>
+
     <th:block th:if="${maDonHang != null}">
         <div class="container">
             <div class="row pt-5" th:object="${hoaDonChiTietDTO}">
@@ -179,41 +182,19 @@
                         </tbody>
                     </table>
                 </div>
-                <!-- <div class="col-md-12 offset-3">
-                        <nav aria-label="Page navigation example">
-                                <ul class="pagination">
-                                    <li th:class="*{page > 1 ? 'page-item' : 'page-item disabled'}">
-                                    <a class="page-link" th:href="@{|/customer/don-hang?page=1|}" aria-label="First">
-                                        <span aria-hidden="true">Đầu tiên</span>
-                                    </a></li>
-                                    <li th:class="*{page > 1 ? 'page-item' : 'page-item disabled'}"><a class="page-link" th:href="@{|/customer/don-hang?page=*{page - 1}|}" aria-label="Previous"> <span aria-hidden="true">Quay lại</span>
-                                    </a></li>
-                                    <th:block th:if="*{totalPages <= 10}">
-                                        <li th:each="i :*{#numbers.sequence(1,totalPages)}" th:class="${hoaDonDTO.page != i ? 'page-item' : 'page-item disabled'}"><a class="page-link"
-                                        th:href="@{|/customer/don-hang?page=${i}|}">[[${i}]]</a></li>
-                                    </th:block>
-                                    <th:block th:if="*{totalPages > 10}">
-                                        <th:block th:if="*{page <= 5 || page  > totalPages - 4}">
-                                            <li th:each="i :*{#numbers.sequence(1,5)}" th:class="${hoaDonDTO.page != i  ? 'page-item' : 'page-item disabled'}">
-                                            <a class="page-link" th:href="@{|/customer/don-hang?page=${i}|}">[[${i}]]</a></li>
-                                            <a class="page-link" th:href="@{|/customer/don-hang?page=6|}">....</a>
-                                            <li th:each="i :*{#numbers.sequence(totalPages - 4,totalPages)}" th:class="${donHangDTO.page != i  ? 'page-item' : 'page-item disabled'}">
-                                                <a class="page-link" th:href="@{|/customer/don-hang?page=${i}|}">[[${i}]]</a></li>
-                                        </th:block>
-                                    </th:block>
-                                    <li th:class="*{page < totalPages ? 'page-item' : 'page-item disabled'}">
-                                        <a class="page-link" th:href="@{|/customer/don-hang?page=*{page + 1}|}" aria-label="Next"> <span aria-hidden="true">Đi tiếp</span>
-                                        </a></li>
-                                    <li th:class="*{page < totalPages ? 'page-item' : 'page-item disabled'}">
-                                        <a class="page-link" th:href="@{|/customer/don-hang?page=*{totalPages}|}" aria-label="Next"> <span aria-hidden="true">Cuối cùng</span>
-                                        </a></li>
-                                </ul>
-                            </nav>
-                </div> -->
             </div>
         </div>
     </th:block>
 
+    <th:block th:if="${maDonHang != null}">
+        <div class="container">
+            <div class="row pt-5" th:object="${hoaDonChiTietDTO}">
+                <div class="col-md-12">
+                    Timeline đơn hàng [[${maDonHang}]]
+                </div>
+            </div>
+        </div>
+    </th:block>
 </section>
 </body>
 </html>
