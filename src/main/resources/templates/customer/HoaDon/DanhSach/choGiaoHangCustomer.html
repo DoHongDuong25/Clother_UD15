@@ -4,56 +4,55 @@
 <head>
     <meta charset="UTF-8">
     <title>Chờ giao hàng</title>
+    <link rel="stylesheet" th:href="@{/customer/css/HoaDon/ChiTietCustomer/danhSach.css}">
+    <script th:src="@{/customer/js/HoaDon/jsChungHDCtomer.js}"></script>
 </head>
 <body>
-<section class="Customer_ChoGiaoHang" layout:fragment="content">
-    <div class="tab-buttons">
-        <button class="tab-button" onclick="redirectToTatCaDon()">Tất cả đơn</button>
-        <button class="tab-button" onclick="redirectToChoxacNhan()">Chờ xác nhận</button>
-        <button class="tab-button active" onclick="redirectToChoGiaoHang()">Chờ giao hàng</button>
-        <button class="tab-button" onclick="redirectToDangGiao()">Đang giao</button>
-        <button class="tab-button" onclick="redirectToDaGiao()">Đã giao</button>
-        <button class="tab-button" onclick="redirectToDahuy()">Đã hủy</button>
-    </div>
-
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <table class="table">
-                    <thead>
-                    <tr>
-                        <th scope="col">STT</th>
-                        <th scope="col">Mã đơn</th>
-                        <th scope="col">Người nhận</th>
-                        <th scope="col">Số điện thoại</th>
-                        <th scope="col">Thành tiền</th>
-                        <th scope="col">Trạng thái</th>
-                        <th scope="col" colspan="2">Thao tác</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr th:each="customerGH, stt: ${customerChoGiaoHang}">
-                        <th scope="row" th:text="${stt.count}"></th>
-                        <td th:text="${customerGH.maDon}"></td>
-                        <td th:text="${customerGH.nguoiNhan}"></td>
-                        <td th:text="${customerGH.sdtNguoiNhan}"></td>
-                        <td th:text="${customerGH.tongTienHoaDon}"></td>
-                        <td th:text="${customerGH.trangThai.name}"></td>
-                        <td>
-                            <div class="btn-group">
-                                <a th:href="@{'/customer/DonHang/ChiTietHoaDon/ChoGiaoHang/hoa-don-id=' + ${customerGH.id}}"
-                                   class="btn btn-warning btn-sm"
-                                   type="submit">
-                                    <i class="fa fa-id-card-o" aria-hidden="true"></i>
-                                </a>
-                            </div>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
+<div class="container" layout:fragment="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="tab-buttons">
+                <button class="tab-button" onclick="redirectToChoxacNhanCustomer()">Chờ xác nhận</button>
+                <button class="tab-button active" onclick="redirectToChoGiaoHangCustomer()">Chờ giao hàng</button>
+                <button class="tab-button" onclick="redirectToDangGiaoCustomer()">Đang giao</button>
+                <button class="tab-button" onclick="redirectToDaGiaoCustomer()">Đã giao</button>
+                <button class="tab-button" onclick="redirectToDahuyCustomer()">Đã hủy</button>
             </div>
+
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">STT</th>
+                    <th scope="col">Mã đơn</th>
+                    <th scope="col">Người nhận</th>
+                    <th scope="col">Số điện thoại</th>
+                    <th scope="col">Thành tiền</th>
+                    <th scope="col">Trạng thái</th>
+                    <th scope="col" colspan="2">Thao tác</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="customerGH, stt: ${customerChoGiaoHang}">
+                    <th scope="row" th:text="${stt.count}"></th>
+                    <td th:text="${customerGH.maDon}"></td>
+                    <td th:text="${customerGH.nguoiNhan}"></td>
+                    <td th:text="${customerGH.sdtNguoiNhan}"></td>
+                    <td th:text="${customerGH.tongTienHoaDon}"></td>
+                    <td th:text="${customerGH.trangThai.name}"></td>
+                    <td>
+                        <div class="btn-group">
+                            <a th:href="@{'/customer/DonHang/ChiTietHoaDon/ChoGiaoHang/hoa-don-id=' + ${customerGH.id}}"
+                               class="btn btn-warning btn-sm"
+                               type="submit">
+                                <i class="fa fa-id-card-o" aria-hidden="true"></i>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
         </div>
     </div>
-</section>
+</div>
 </body>
 </html>

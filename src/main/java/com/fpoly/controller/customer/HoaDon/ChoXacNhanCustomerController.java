@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -59,6 +60,7 @@ public class ChoXacNhanCustomerController {
         }
         return "customer/HoaDon/DanhSach/choXacNhanCustomer";
     }
+
     @RequestMapping("customer/updateHuyDon/{id}")
     public ResponseEntity<String> updateHuyDon(@PathVariable("id") Long hoaDonId) {
         Optional<HoaDon> optionalHoaDon = hoaDonRepository.findById(hoaDonId);
@@ -88,4 +90,13 @@ public class ChoXacNhanCustomerController {
             return ResponseEntity.notFound().build();
         }
     }
+    @RequestMapping("customer/DonHang/ChiTietHoaDon/ChoXacNhan/hoa-don-id={id}")
+    public String CTChoGiaoHang(@PathVariable("id") Long id, Model model) {
+        HoaDon hoaDon = hoaDonRepository.findById(id).get();
+        List<GiaoDich> timeLineChoXacNhan = giaoDichRepository.findByTrangThaiIdAndHoaDonId(1, id);
+        model.addAttribute("timeLineChoXacNhan", timeLineChoXacNhan);
+        model.addAttribute("hoaDon", hoaDon);
+        return "customer/HoaDon/ChiTietHoaDon/CTChoXacNhanCustomer";
+    }
+
 }

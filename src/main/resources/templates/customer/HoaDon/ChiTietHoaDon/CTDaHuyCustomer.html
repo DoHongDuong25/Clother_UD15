@@ -3,7 +3,7 @@
       layout:decorate="~{customer/layouts/index}">
 <head>
     <meta charset="UTF-8">
-    <title>Chờ giao hàng</title>
+    <title>Đã hủy</title>
     <link rel="stylesheet" th:href="@{/customer/css/HoaDon/ChiTietCustomer/ChiTiet.css}">
 </head>
 <body>
@@ -66,14 +66,14 @@
                     </div>
                 </div>
 
-                <div class="timeline-step" th:each="TLChoGiaoHang: ${timeLineChoGiaoHang}">
+                <div class="timeline-step" th:each="TLDaHuy: ${timeLineHuyDonHang}">
                     <div class="timeline-content" data-toggle="popover" data-trigger="hover" data-placement="top"
                          title="" data-content="And here's some amazing content. It's very engaging. Right?"
                          data-original-title="2003">
                         <div class="inner-circle"></div>
                         <p class="h6 mt-3 mb-1"><span
-                                th:text="${#dates.format(TLChoGiaoHang.ngayTao, 'dd/MM/yyyy')}"></span></p>
-                        <p class="h6 text-muted mb-0 mb-lg-0">Chờ giao hàng</p>
+                                th:text="${#dates.format(TLDaHuy.ngayTao, 'dd/MM/yyyy')}"></span></p>
+                        <p class="h6 text-muted mb-0 mb-lg-0">Đã hủy đơn</span></p>
                     </div>
                 </div>
             </div>
