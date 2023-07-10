@@ -1,4 +1,4 @@
-package com.fpoly.controller.admin.HoaDon.TrangThaiHoaDon;
+package com.fpoly.controller.customer.HoaDon;
 
 import com.fpoly.entity.GiaoDich;
 import com.fpoly.entity.HoaDon;
@@ -6,8 +6,6 @@ import com.fpoly.entity.TrangThai;
 import com.fpoly.repository.GiaoDichRepository;
 import com.fpoly.repository.HoaDonRepoditory2;
 import com.fpoly.repository.HoaDonRepository;
-import com.fpoly.service.GiaoDichService;
-import com.fpoly.service.HoaDonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -23,45 +21,51 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
-public class ChoGiaoHangController {
-    @Autowired
-    HoaDonRepository hoaDonRepository;
-
+public class DangGiaoCustomerController {
     @Autowired
     HoaDonRepoditory2 hoaDonRepoditory2;
 
     @Autowired
+    HoaDonRepository hoaDonRepository;
+
+    @Autowired
     GiaoDichRepository giaoDichRepository;
 
-    @Autowired
-    GiaoDichService giaoDichService;
-
-    @Autowired
-    HoaDonService hoaDonService;
-
-    @RequestMapping("admin/DonHang/ChoGiaoHang")
-    public String getHoaDonChoLayHang(Model model,
-                                      @RequestParam(defaultValue = "1") int page,
-                                      @RequestParam(defaultValue = "3") int size) {
+    @RequestMapping("customer/DonHang/DangGiaoHang")
+    public String DangGiaoCustomer(Model model,
+                                   @RequestParam(defaultValue = "1") int page,
+                                   @RequestParam(defaultValue = "3") int size) {
         PageRequest pageable = PageRequest.of(page - 1, size);
-        Page<HoaDon> ChoGiaoHang = hoaDonRepoditory2.findByTrangThaiHoaDonListTrangThai(2, pageable);
+        Page<HoaDon> dangtGiao = hoaDonRepoditory2.findByTrangThaiHoaDonListTrangThai(3, pageable);
 
-        model.addAttribute("ChoGiaoHang", ChoGiaoHang.getContent());
-        model.addAttribute("pageChoGiaoHang", ChoGiaoHang.getTotalPages());
-        return "admin/hoadon/TrangThaiHoaDon/ChoGiaoHang";
+        model.addAttribute("dangtGiaoCustomer", dangtGiao.getContent());
+        model.addAttribute("pageDangGiao", dangtGiao.getTotalPages());
+        return "customer/HoaDon/DanhSach/dangGiaoCustomer";
     }
 
-    //UPDATE TRẠNG THÁI CỦA ĐƠN HÀNG LÀ ĐANG GIAO HÀNG
-    @RequestMapping("/updateGiaoHang/{id}")
-    public ResponseEntity<String> updateGiaoHang(@PathVariable("id") Long hoaDonId) {
+    @RequestMapping("customer/DonHang/ChiTietHoaDon/DangGiaoHang/hoa-don-id={id}")
+    public String CTDangGiaoCustomer(@PathVariable("id") Long id, Model model) {
+        HoaDon hoaDon = hoaDonRepository.findById(id).get();
+        List<GiaoDich> timeLineChoXacNhan = giaoDichRepository.findByTrangThaiIdAndHoaDonId(1, id);
+        List<GiaoDich> timeLineChoGiaoHang = giaoDichRepository.findByTrangThaiIdAndHoaDonId(2, id);
+        List<GiaoDich> timeLineDangGiaoHang = giaoDichRepository.findByTrangThaiIdAndHoaDonId(3, id);
+        model.addAttribute("timeLineChoXacNhan", timeLineChoXacNhan);
+        model.addAttribute("timeLineChoGiaoHang", timeLineChoGiaoHang);
+        model.addAttribute("timeLineDangGiaoHang", timeLineDangGiaoHang);
+        model.addAttribute("hoaDon", hoaDon);
+        return "customer/HoaDon/ChiTietHoaDon/CTDangGiaoCustomer";
+    }
+
+    @RequestMapping("customer/updateGiaoHangThanhCong/{id}")
+    public ResponseEntity<String> updateGiaoHangThanhCong(@PathVariable("id") Long hoaDonId) {
         Optional<HoaDon> optionalHoaDon = hoaDonRepository.findById(hoaDonId);
         if (optionalHoaDon.isPresent()) {
             HoaDon hoaDon = optionalHoaDon.get();
             TrangThai tt = new TrangThai();
-            tt.setId(3L);
+            tt.setId(4L);
             hoaDon.setTrangThai(tt);
             hoaDon.setNgayCapNhat(new Date());
-            hoaDon.setNguoiCapNhat("hduong"); // Cập nhật người cập nhật (thay "hduong" bằng giá trị tương ứng)
+            hoaDon.setNguoiCapNhat("hduong");
             hoaDonRepository.save(hoaDon);
             GiaoDich gd = new GiaoDich();
             gd.setHoaDon(hoaDon);
@@ -71,31 +75,27 @@ public class ChoGiaoHangController {
             gd.setNguoiCapNhat("ABC");
             gd.setNguoiTao("ABC");
             gd.setTrangThai(tt);
-//            System.out.println(gd);
             giaoDichRepository.save(gd);
-            String message = "Xác nhận thành công";
+            String message = "Đã xác nhận đơn hàng là đang giao";
             return ResponseEntity.ok(message);
+
         } else {
             String errorMessage = "Không tìm thấy hóa đơn";
             return ResponseEntity.notFound().build();
         }
     }
 
-    //GIAO TẤT CẢ
-    @RequestMapping("/updateGiaoHangAll")
-    public ResponseEntity<String> updateGiaoHangAll() {
-        // Lấy danh sách tất cả hóa đơn chưa được xác nhận
-        List<HoaDon> hoaDonList = hoaDonRepository.findByTrangThaiHoaDonListTrangThai(2);
+    @RequestMapping("customer/updateThanhCongAll")
+    public ResponseEntity<String> updateThanhCongAll() {
+        List<HoaDon> hoaDonList = hoaDonRepository.findByTrangThaiHoaDonListTrangThai(3);
 
-        // Kiểm tra xem danh sách hóa đơn có rỗng hay không
         if (!hoaDonList.isEmpty()) {
-            // Duyệt qua từng hóa đơn và cập nhật trạng thái
             for (HoaDon hoaDon : hoaDonList) {
                 TrangThai tt = new TrangThai();
-                tt.setId(3L);
+                tt.setId(4L);
                 hoaDon.setTrangThai(tt);
                 hoaDon.setNgayCapNhat(new Date());
-                hoaDon.setNguoiCapNhat("hduong"); // Cập nhật người cập nhật (thay "hduong" bằng giá trị tương ứng)
+                hoaDon.setNguoiCapNhat("hduong");
                 hoaDonRepository.save(hoaDon);
                 GiaoDich gd = new GiaoDich();
                 gd.setHoaDon(hoaDon);
@@ -115,5 +115,4 @@ public class ChoGiaoHangController {
             return ResponseEntity.notFound().build();
         }
     }
-
 }

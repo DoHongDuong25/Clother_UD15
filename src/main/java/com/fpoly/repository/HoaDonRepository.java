@@ -1,5 +1,6 @@
 package com.fpoly.repository;
 
+import com.fpoly.entity.GiaoDich;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -40,6 +41,9 @@ public interface HoaDonRepository extends CrudRepository<HoaDon, Long> {
     @Modifying
     @Query(value = "UPDATE  hoa_don SET trang_thai_id=5 WHERE id = :id", nativeQuery = true)
 	void capNhatTrangThaiThanhHuyDon(@Param("id") Long id);
+
+    @Query(value = "select * from giao_dich where trang_thai_id = ? and hoa_don_id = ? ORDER BY id DESC LIMIT 1", nativeQuery = true)
+    List<GiaoDich> timeLine(int trangThai, Long hoaDonId);
 }
 
 
