@@ -193,6 +193,7 @@ public class SanPhamSearchRepositoryImpl implements SanPhamSearchRepository{
 				.leftJoin(qPhongCach).on(qSanPham.phongCach.id.eq(qPhongCach.id))
 				.innerJoin(qKieuDang).on(qSanPham.kieuDang.id.eq(qKieuDang.id))
 				.innerJoin(qChatLieu).on(qSanPham.chatLieu.id.eq(qChatLieu.id))
+				.innerJoin(qLoaiSanPham).on(qSanPham.loaiSanPham.id.eq(qLoaiSanPham.id))
 				.innerJoin(qSanPhamChiTiet).on(qSanPhamChiTiet.sanPham.id.eq(qSanPham.id))
 				.innerJoin(qMauSac).on(qSanPhamChiTiet.mauSac.id.eq(qMauSac.id))
 				.innerJoin(qKichCo).on(qSanPhamChiTiet.kichCo.id.eq(qKichCo.id))

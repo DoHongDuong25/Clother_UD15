@@ -5,7 +5,7 @@ import static com.querydsl.core.types.PathMetadataFactory.*;
 import com.querydsl.core.types.dsl.*;
 
 import com.querydsl.core.types.PathMetadata;
-import javax.annotation.Generated;
+import javax.annotation.processing.Generated;
 
 import com.fpoly.entity.LyDoTraHang;
 import com.fpoly.entity.TraHang;
@@ -16,7 +16,7 @@ import com.querydsl.core.types.dsl.PathInits;
 /**
  * QLyDoTraHang is a Querydsl query type for LyDoTraHang
  */
-@Generated("com.querydsl.codegen.EntitySerializer")
+@Generated("com.querydsl.codegen.DefaultEntitySerializer")
 public class QLyDoTraHang extends EntityPathBase<LyDoTraHang> {
 
     private static final long serialVersionUID = 1897402107L;

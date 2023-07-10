@@ -205,13 +205,6 @@ public class SanPhamChiTietController {
 		return "admin/product/productManage";
 	}
 
-//	@GetMapping("")
-//	public String productManage(ModelMap model) {
-//		List<SanPham> resultSP = sanPhamService.getSanPhamExist();
-//		model.addAttribute("sanPhams", resultSP);
-//		model.addAttribute("dataSearch", new SPAndSPCTSearchDto());
-//		return "admin/product/productManage";
-//	}
 	@GetMapping("info/{id}")
 	public String infoProductDetai(ModelMap model, @PathVariable("id") Long id) {
 		Optional<SanPham> opt = sanPhamService.findById(id);
@@ -529,20 +522,67 @@ public class SanPhamChiTietController {
 				storageService.store(img, hinhAnh.getTenAnh());
 				if (optMS.isPresent()) {
 					hinhAnh.setMauSac(optMS.get());
-					hinhAnh.setDaXoa(false);
 					hinhAnh.setCoHienThi(true);
 					hinhAnh.setLaAnhChinh(false);
 					hinhAnhService.save(hinhAnh);
 				}
 			});
 		});
+		
+		List<HinhAnh> lstHinhAnh = hinhAnhService.getLstHinhAnhMauSacBySanPhamId(sanPhamManageDTO.getSanPhamId());
+		List<List<HinhAnhDTO>> lstHinhAnhDTOs = new ArrayList<>();
+		int i = 0;
+		int j = 0;
+		int countLstHinhAnh = 0;
+		do {
+			List<HinhAnhDTO> HinhAnhDTOs = new ArrayList<>();
+			for (j = i; j < lstHinhAnh.size(); j++) {
+				if (lstHinhAnh.get(j).getMauSac().getId().equals(lstHinhAnh.get(i).getMauSac().getId())) {
+					HinhAnhDTO haDto = new HinhAnhDTO();
+					BeanUtils.copyProperties(lstHinhAnh.get(j), haDto);
+					haDto.setCoHienThi(lstHinhAnh.get(j).getCoHienThi());
+					haDto.setLaAnhChinh(lstHinhAnh.get(j).getLaAnhChinh());
+					haDto.setHinhAnhid(lstHinhAnh.get(j).getId());
+					HinhAnhDTOs.add(haDto);
+				} else {
+					i = j;
+					break;
+				}
+			}
+			countLstHinhAnh++;
+
+			lstHinhAnhDTOs.add(HinhAnhDTOs);
+			if (j == lstHinhAnh.size())
+				break;
+		} while (j < lstHinhAnh.size());
+		int m = 0;
+		List<HinhAnhMauSacDTO> lstHinhAnhMauSacDTO = new ArrayList<>();
+		List<Long> lstHinhAnhDistinct = hinhAnhService.getDistinctMauSacInHinhAnhBySanPhamId(sanPhamManageDTO.getSanPhamId());
+		for (Long mauSacId : lstHinhAnhDistinct) {
+			HinhAnhMauSacDTO hinhAnhMauSacDTO = new HinhAnhMauSacDTO();
+			Optional<MauSac> optMS = mauSacService.findById(mauSacId);
+			if (optMS.isPresent()) {
+				hinhAnhMauSacDTO.setTenMauSacAddImg(optMS.get().getTenMauSac());
+				hinhAnhMauSacDTO.setMauSacAddImagesId(mauSacId);
+			}
+			if (m < countLstHinhAnh) {
+				List<HinhAnhDTO> lstHinhAnhDTO = new ArrayList<HinhAnhDTO>();
+				for (HinhAnhDTO item : lstHinhAnhDTOs.get(m)) {
+					lstHinhAnhDTO.add(item);
+				}
+				hinhAnhMauSacDTO.setHinhAnhDTOs(lstHinhAnhDTO);
+				m++;
+			}
+			lstHinhAnhMauSacDTO.add(hinhAnhMauSacDTO);
+		}
+		sanPhamManageDTO.setIsCreatedValueImg(true);
+		sanPhamManageDTO.setLstHinhAnhMauSacDTO(lstHinhAnhMauSacDTO);
 		model.addAttribute("messageSuccess", "Thêm hình ảnh cho sản phẩm thành công");
 		sanPhamManageDTO.setIsCreatedValueImg(true);
 		List<SanPhamChiTiet> dataGen = sanPhamChiTietService
 				.getLstSanPhamChiTietBySanPhamId(sanPhamManageDTO.getSanPhamId());
 		model.addAttribute("dataGen", dataGen);
 		model.addAttribute("sanPhamManageDTO", sanPhamManageDTO);
-
 		return new ModelAndView("admin/product/addProduct", model);
 	}
 	
@@ -566,15 +606,19 @@ public class SanPhamChiTietController {
 			@PathVariable("checked") Boolean checked){
 		Optional<HinhAnh> opt = hinhAnhService.getHinhAnhByName(imgName);
 		if(opt.isPresent()) {
-			Optional<HinhAnh> optHAChinh = hinhAnhService.getHinhAnhChinhBySanPhamId(opt.get().getSanPham().getId());
-			if(optHAChinh.isPresent()) {
-				optHAChinh.get().setLaAnhChinh(!checked);
-				opt.get().setLaAnhChinh(checked);
-				hinhAnhService.save(opt.get());
-				hinhAnhService.save(optHAChinh.get());
-				model.addAttribute("messageSuccess", "Cập nhật ảnh chính cho sản phẩm thành công");
-				return new ResponseEntity<>(HttpStatus.OK);
-			}else return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			int countHAChinhOld = hinhAnhService.getCountHinhAnhChinhBySanPhamIdAndMauSacId(opt.get().getSanPham().getId(), opt.get().getMauSac().getId());
+			if(countHAChinhOld > 0) {
+				Optional<HinhAnh> optHAChinhOld = hinhAnhService.getHinhAnhChinhBySanPhamIdAndMauSacId(opt.get().getSanPham().getId(), opt.get().getMauSac().getId());
+				if(optHAChinhOld.isPresent()) {
+					optHAChinhOld.get().setLaAnhChinh(!checked);
+					hinhAnhService.save(optHAChinhOld.get());
+				}
+			}
+			opt.get().setLaAnhChinh(checked);
+			opt.get().setCoHienThi(true);
+			hinhAnhService.save(opt.get());
+			return new ResponseEntity<>(HttpStatus.OK);
+			
 		}else return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 	}
 	

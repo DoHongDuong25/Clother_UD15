@@ -524,7 +524,7 @@
                                                     </div>
                                                     <div class="file-thumbnail-footer">
                                                         <div class="file-footer-caption"
-                                                            title="50-mau-anh-chup-ao-thun-nam-1.jpg">
+                                                            title="...">
                                                             <div class="file-caption-info">Ảnh sản phẩm
                                                             </div>
                                                             <div class="file-size-info"></div>
@@ -582,6 +582,27 @@
                                                     type: "GET",
                                                     contentType: "application/json",
                                                     success: function (result) {
+                                                        var html = "<div class='toast-header'> <svg class='bd-placeholder-img rounded mr-2' width='20' height='20' xmlns='http://www.w3.org/2000/svg' preserveAspectRatio='xMidYMid slice' focusable='false' role='img'><rect width='100%' height='100%' fill='blue'></rect></svg><strong class='mr-auto'>Thông báo hệ thống</strong><small>Now</small><button type='button' class='ml-2 mb-1 close' data-dismiss='toast' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div><div class='toast-body'>Cập nhật có hiển thị ảnh cho sản phẩm thành công</div>";
+                                                        $('#toastsCustomCss').attr("style", "position: fixed; top: 10px; right: 0;z-index: 1;");
+                                                        $('#toastAjax').html(html);
+                                                        $("#toastAjax").toast("show");
+                                                        
+                                                    },
+                                                    error: function (result) {
+                                                        var html = "<div class='toast-header'> <svg class='bd-placeholder-img rounded mr-2' width='20' height='20' xmlns='http://www.w3.org/2000/svg' preserveAspectRatio='xMidYMid slice' focusable='false' role='img'><rect width='100%' height='100%' fill='red'></rect></svg><strong class='mr-auto'>Thông báo hệ thống</strong><small>Now</small><button type='button' class='ml-2 mb-1 close' data-dismiss='toast' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div><div class='toast-body'>Cập nhật có hiển thị ảnh cho sản phẩm thất bại</div>";
+                                                        $('#toastsCustomCss').attr("style", "position: fixed; top: 10px; right: 0;z-index: 1;");
+                                                        $('#toastAjax').html(html);
+                                                        $("#toastAjax").toast("show");
+                                                    }
+                                                });
+
+                                            }
+                                            function changeLaAnhChinh(checked, imgName) {
+                                                $.ajax({
+                                                    url: "http://localhost:8080/admin/product/changeLaAnhChinh/" + imgName + "/" + !checked,
+                                                    type: "GET",
+                                                    contentType: "application/json",
+                                                    success: function (result) {
                                                         var html = "<div class='toast-header'> <svg class='bd-placeholder-img rounded mr-2' width='20' height='20' xmlns='http://www.w3.org/2000/svg' preserveAspectRatio='xMidYMid slice' focusable='false' role='img'><rect width='100%' height='100%' fill='blue'></rect></svg><strong class='mr-auto'>Thông báo hệ thống</strong><small>Now</small><button type='button' class='ml-2 mb-1 close' data-dismiss='toast' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div><div class='toast-body'>Cập nhật ảnh chính cho sản phẩm thành công</div>";
                                                         $('#toastsCustomCss').attr("style", "position: fixed; top: 10px; right: 0;z-index: 1;");
                                                         $('#toastAjax').html(html);
@@ -595,14 +616,6 @@
                                                         $("#toastAjax").toast("show");
                                                     }
                                                 });
-
-                                            }
-                                            function changeLaAnhChinh(checked, imgName) {
-                                                $.ajax({
-                                                    url: "http://localhost:8080/admin/product/changeLaAnhChinh/" + imgName + "/" + !checked,
-                                                    type: "GET",
-                                                    contentType: "application/json",
-                                                });
                                             }
                                         </script>
                                     </div>
@@ -615,11 +628,11 @@
                             <div class="float-right">
                                 <a class="btn btn-primary"
                                     onclick="flexUrlSubmit('saveImageProductDetail', 'post', 'AddProduct')">
-                                    <span>Hoàn tất thêm sản phẩm <img th:src="@{/admin/img/icons/save.svg}"
+                                    <span>Hoàn tất thêm ảnh sản phẩm <img th:src="@{/admin/img/icons/save.svg}"
                                             aria-label="chi tiết" /></span></a>
                                 <a class="btn btn-primary"
-                                    onclick="flexUrlSubmit('saveValueImageProduct', 'post', 'AddProduct')">
-                                    <span>Hoàn thành thêm sản phẩm <img th:src="@{/admin/img/icons/save.svg}"
+                                    onclick="flexUrlSubmit('', 'post', 'AddProduct')">
+                                    <span>Quay trở về trang chủ <img th:src="@{/admin/img/icons/save.svg}"
                                             aria-label="chi tiết" /></span></a>
                             </div>
                         </div>

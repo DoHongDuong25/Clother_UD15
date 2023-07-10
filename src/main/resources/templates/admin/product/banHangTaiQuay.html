@@ -2,7 +2,178 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
     layout:decorate="~{admin/layouts/index.html}">
 
-<head></head>
+<head>
+    <style>
+        .button-add-productDetail {
+            font-size: 18px;
+            color: #111111;
+            height: 40px;
+            width: 40px;
+            background: #f3f2ee;
+            border-radius: 50%;
+            line-height: 40px;
+            text-align: center;
+        }
+
+        .button-add-productDetail:hover {
+            font-size: 18px;
+            color: #111111;
+            height: 40px;
+            width: 40px;
+            background: #f3f2ee;
+            border-radius: 50%;
+            line-height: 40px;
+            text-align: center;
+            border: 1px solid;
+            box-shadow: inset 0 0 20px rgba(255, 255, 255, .5), 0 0 20px rgba(255, 255, 255, .2);
+            outline-color: rgba(255, 255, 255, 0);
+            outline-offset: 15px;
+        }
+
+        .product__details__option__color label input {
+            position: absolute;
+            visibility: hidden;
+        }
+
+        input[type=checkbox],
+        input[type=radio] {
+            box-sizing: border-box;
+            padding: 0;
+        }
+
+        .product__details__option__size label {
+            color: #111111;
+            font-size: 15px;
+            font-weight: 700;
+            text-transform: uppercase;
+            display: inline-block;
+            border: 1px solid #e5e5e5;
+            padding: 6px 15px;
+            margin-bottom: 0;
+            margin-right: 5px;
+            cursor: pointer;
+        }
+
+        button,
+        input,
+        optgroup,
+        select,
+        textarea {
+            margin: 0;
+            font-family: inherit;
+            font-size: inherit;
+            line-height: inherit;
+        }
+
+        .product__details__option__size label.label-active {
+            background: #111111;
+            color: #ffffff;
+            border-color: #111111;
+        }
+
+        *,
+        ::after,
+        ::before {
+            box-sizing: border-box;
+        }
+
+        button,
+        input {
+            overflow: visible;
+        }
+
+        button,
+        input,
+        optgroup,
+        select,
+        textarea {
+            margin: 0;
+            font-family: inherit;
+            font-size: inherit;
+            line-height: inherit;
+        }
+
+        .product__details__option__color {
+            display: inline-block;
+            position: relative;
+            top: 10px;
+        }
+
+        .product__details__option__color span {
+            color: #111111;
+            display: inline-block;
+            margin-right: 10px;
+            position: relative;
+            top: -9px;
+        }
+
+        .product__details__option__color label {
+            height: 30px;
+            width: 30px;
+            border-radius: 50%;
+            position: relative;
+            margin-right: 10px;
+            margin-bottom: 0;
+            display: inline-block;
+            cursor: pointer;
+        }
+
+
+
+        .product__details__option__color label input {
+            position: absolute;
+            visibility: hidden;
+        }
+
+        input[type=checkbox],
+        input[type=radio] {
+            box-sizing: border-box;
+            padding: 0;
+        }
+
+        button,
+        input {
+            overflow: visible;
+        }
+
+        input[type="radio"i] {
+            background-color: initial;
+            cursor: default;
+            appearance: auto;
+            box-sizing: border-box;
+            margin: 3px 3px 0px 5px;
+            padding: initial;
+            border: initial;
+        }
+
+        .product__details__option {
+            margin-bottom: 30px;
+        }
+
+        .shopping__cart__table table tbody tr td.product__cart__item {
+            width: 400px;
+        }
+
+        .shopping__cart__table table tbody tr td {
+            padding-bottom: 30px;
+            padding-top: 30px;
+        }
+
+        td {
+            display: table-cell;
+            vertical-align: inherit;
+        }
+
+        table {
+            border-collapse: collapse;
+        }
+
+        .shopping__cart__table table tbody tr td.product__cart__item .product__cart__item__pic {
+            float: left;
+            margin-right: 30px;
+        }
+    </style>
+</head>
 
 <body>
     <section layout:fragment="content" class="container-fluid">
@@ -41,12 +212,12 @@
         <!-- Begin Page Content -->
         <div>
             <!-- Page Heading -->
-            <h1 class="h3 mb-2 text-gray-800">Quản lý sản phẩm</h1>
+            <h1 class="h3 mb-2 text-gray-800">Bán hàng tại quầy</h1>
             <hr>
-            <form th:action="@{/admin/product}" id="flexUrlTableFormProductManage" enctype="multipart/form-data"
-                th:object="${dataSearch}" method="get">
+
+            <form id="flexUrlTableFormBanHangTaiQuay" enctype="multipart/form-data">
                 <input type="number" name="page" id="inputPageProductManage" hidden>
-                <div class="card shadow mb-1 pt-sm-2 pb-sm-3">
+                <div class="card shadow mb-1 pt-sm-2 pb-sm-3" th:object="${dataSearch}">
                     <div class="col-sm-12">
                         <div class="row">
                             <div class="col-sm-3">
@@ -201,12 +372,11 @@
                         </div>
                         <div class="col-sm-12 mt-3">
                             <div class="float-right">
-                                <a class="btn btn-primary" onclick="flexUrlSubmit('', 'get', 'ProductManage')">Tìm
+                                <a class="btn btn-primary" onclick="flexUrlSubmitBanHangTaiQuay('', 'get', 'BanHangTaiQuay')">Tìm
                                     kiếm</a>
                             </div>
                         </div>
                     </div>
-
                 </div>
                 <!-- DataTales Example -->
                 <div class="card shadow mb-4 mt-4">
@@ -215,49 +385,21 @@
                             <div class="btn-group-sm">
                                 <div class="float-right">
                                     <a class="btn btn-primary mr-sm-1" th:href="@{/admin/product/add}">Thêm
-                                        mới</a>
+                                        mới sản phẩm</a>
                                     <a class="btn btn-danger" onclick="showConfirmModalDialogDeleteAllbyId()">Xóa</a>
                                 </div>
                             </div>
                         </h6>
                     </div>
                     <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
-                                <thead class="text-nowrap text-center">
+                        <div class="table table-hover">
+                            <table width="100%" cellspacing="0">
+                                <thead class="text-center">
                                     <tr>
-                                        <th>
-                                            <div class="checkbox-wrapper-30">
-                                                <span class="checkbox">
-                                                    <input type="checkbox" onclick="toggleProductIds(this)" />
-                                                    <svg>
-                                                        <use xlink:href="#checkbox-30" class="checkbox"></use>
-                                                    </svg>
-                                                </span>
-                                                <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
-                                                    <symbol id="checkbox-30" viewBox="0 0 22 22">
-                                                        <path fill="none" stroke="currentColor"
-                                                            d="M5.5,11.3L9,14.8L20.2,3.3l0,0c-0.5-1-1.5-1.8-2.7-1.8h-13c-1.7,0-3,1.3-3,3v13c0,1.7,1.3,3,3,3h13 c1.7,0,3-1.3,3-3v-13c0-0.4-0.1-0.8-0.3-1.2" />
-                                                    </symbol>
-                                                </svg>
-                                            </div>
-                                        </th>
                                         <th>#</th>
+                                        <th>Ảnh sản phẩm</th>
                                         <th>Tên sản phẩm</th>
-                                        <!-- <th>Số lượng</th> -->
                                         <th>Giá</th>
-                                        <!-- <th>Kích cỡ</th>
-                                        <th>Màu sắc</th> -->
-                                        <th>Kiểu dáng</th>
-                                        <th>Chất liệu</th>
-                                        <th>Loại sản phẩm</th>
-                                        <th>Phong cách</th>
-                                        <!-- <th>Mô tả</th> -->
-                                        <!-- <th>Người tạo</th>
-                                        <th>Ngày tạo</th>
-                                        <th>Người chỉnh sửa</th>
-                                        <th>Ngày chỉnh sửa</th> -->
-                                        <!-- <th>Có hiển thị</th> -->
                                         <th>Thao tác</th>
                                     </tr>
                                     <tr th:if="${!sanPhamPage.hasContent()}">
@@ -266,68 +408,157 @@
                                         </td>
                                     </tr>
                                 </thead>
-                                <tbody class="text-center">
-                                    <tr th:each="item, istat : ${sanPhamPage.content}">
-                                        <th>
-                                            <div class="checkbox-wrapper-30">
-                                                <span class="checkbox">
-                                                    <input type="checkbox" name="productIds" th:value="${item.id}" />
-                                                    <svg>
-                                                        <use xlink:href="#checkbox-30" class="checkbox"></use>
-                                                    </svg>
-                                                </span>
-                                                <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
-                                                    <symbol id="checkbox-30" viewBox="0 0 22 22">
-                                                        <path fill="none" stroke="currentColor"
-                                                            d="M5.5,11.3L9,14.8L20.2,3.3l0,0c-0.5-1-1.5-1.8-2.7-1.8h-13c-1.7,0-3,1.3-3,3v13c0,1.7,1.3,3,3,3h13 c1.7,0,3-1.3,3-3v-13c0-0.4-0.1-0.8-0.3-1.2" />
-                                                    </symbol>
-                                                </svg>
-                                            </div>
-                                        </th>
-                                        <td th:text="${sanPhamPage.number * sanPhamPage.size + istat.index + 1}"></td>
-                                        <td th:text="${item.tenSanPham}"></td>
-                                        <!-- <td th:text="${item.soLuong}"></td> -->
-                                        <td th:text="${item.gia}"></td>
-                                        <!-- <td th:text="${item.kichCo.tenKichCo}"></td>
-                                        <td th:text="${item.mauSac.tenMauSac}"></td> -->
-                                        <td th:text="${item.kieuDang.tenKieuDang}"></td>
-                                        <td th:text="${item.chatLieu.tenChatLieu}"></td>
-                                        <td th:text="${item.loaiSanPham.TenLoaiSanPham}"></td>
-                                        <td th:text="${item.phongCach.tenPhongCach}"></td>
-                                        <!-- <td th:text="${item.nguoiTao}"></td>
-                                        <td th:text="${item.ngayTao}"></td>
-                                        <td th:text="${item.nguoiCapNhat}"></td>
-                                        <td th:text="${item.ngayCapNhat}"></td> -->
-                                        <!-- <td class="text-center">
-                                            <div class="custom-control custom-switch align-items-center">
-                                                <input type="checkbox" class="custom-control-input"
-                                                    th:id="customSwitch + ${item.id}" th:data-id="${item.id}"
-                                                    th:checked="${item.coHienThi? 'true' : 'false'}"
-                                                    onclick="changeIsShowProductDetail('changeIsShow',this.getAttribute('id'),this.getAttribute('data-id'), this.getAttribute('checked'))">
-                                                <label class="custom-control-label"
-                                                    th:for="customSwitch +  ${item.id}"></label>
-                                            </div>
-                                        </td> -->
+                                <tbody class="text-center" th:object="${resultSP}">
+                                    <tr th:each="item, istat : ${resultSP.lstShowSanPhamTaiQuayDTO}">
+                                        <td th:text="${sanPhamPage.number * sanPhamPage.size + istat.index + 1}">
+                                        </td>
                                         <td>
-                                            <div class="btn-group">
-                                                <a class="btn btn-outline-info btn-sm" id="info" data-toggle="popover"
-                                                    data-trigger="hover" data-placement="top"
-                                                    data-content="Sản phẩm chi tiết" th:href="@{'/admin/product/info/' + ${item.id}}">
-                                                    <img th:src="@{/admin/img/icons/info.svg}"></a>
-
-                                                <a class="btn btn-outline-primary btn-sm" data-toggle="popover"
-                                                    data-trigger="hover" data-placement="top"
-                                                    data-content="Cập nhật sản phẩm"
-                                                    th:href="@{'/admin/product/edit/' + ${item.id}}" disabled><img
-                                                        th:src="@{/admin/img/icons/edit.svg}"></a>
-
-                                                <a class="btn btn-outline-danger btn-sm" th:data-id="${item.id}"
-                                                    data-toggle="popover" data-trigger="hover" data-placement="top"
-                                                    data-content="Xóa sản phẩm" th:data-name="${item.tenSanPham}"
-                                                    onclick="showConfirmModalDialog(this.getAttribute('data-id'), this.getAttribute('data-name'))"><img
-                                                        th:src="@{/admin/img/icons/trash.svg}"></a>
+                                            <div class="col-sm-6 row offset-3">
+                                                <div th:id="'carouselExampleIndicators'+${istat.index}"
+                                                    class="carousel slide" data-ride="carousel">
+                                                    <ol class="carousel-indicators">
+                                                        <li th:data-target="'#carouselExampleIndicators'+${istat.index}"
+                                                            th:data-slide-to="${#numbers.formatInteger(istat.index+''+istatAC.index,5)}"
+                                                            th:class="${#numbers.formatInteger(istat.index+''+istatAC.index,5) == #numbers.formatInteger(istat.index+''+0,5)? 'active':''}"
+                                                            th:each="img, istatAC : ${item.anhChinhs}">
+                                                        </li>
+                                                    </ol>
+                                                    <div class="carousel-inner">
+                                                        <div th:class="${#numbers.formatInteger(istat.index+''+istatAC.index,5) == #numbers.formatInteger(istat.index+''+0,5)? 'carousel-item active' : 'carousel-item'}"
+                                                            th:each="img, istatAC : ${item.anhChinhs}">
+                                                            <img class="d-block h-100"
+                                                                th:src="${'/staff/product/images/'+img}"
+                                                                alt="First slide" width="150px">
+                                                        </div>
+                                                    </div>
+                                                    <a class="carousel-control-prev"
+                                                        th:href="'#carouselExampleIndicators'+${istat.index}"
+                                                        role="button" data-slide="prev">
+                                                        <span class="carousel-control-prev-icon"
+                                                            aria-hidden="true"></span>
+                                                        <span class="sr-only">Previous</span>
+                                                    </a>
+                                                    <a class="carousel-control-next"
+                                                        th:href="'#carouselExampleIndicators'+${istat.index}"
+                                                        role="button" data-slide="next">
+                                                        <span class="carousel-control-next-icon"
+                                                            aria-hidden="true"></span>
+                                                        <span class="sr-only">Next</span>
+                                                    </a>
+                                                </div>
                                             </div>
                                         </td>
+                                        <td th:text="${item.tenSanPham}"></td>
+                                        <td th:text="${item.gia}"></td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <a class="button-add-productDetail" id="info" data-toggle="popover"
+                                                    data-trigger="hover" data-placement="top"
+                                                    data-content="Chọn chi tiết sản phẩm" th:data-id="${istat.index}"
+                                                    onclick="openModalAddDetailProduct(this.getAttribute('data-id'))">
+                                                    <i class="fa fa-plus"></i></a>
+
+                                                <!-- <a class="btn btn-outline-primary btn-sm" data-toggle="popover"
+                                                        data-trigger="hover" data-placement="top"
+                                                        data-content="Cập nhật sản phẩm"
+                                                        th:href="@{'/admin/product/edit/' + ${item.id}}" disabled><img
+                                                            th:src="@{/admin/img/icons/edit.svg}"></a>
+    
+                                                    <a class="btn btn-outline-danger btn-sm" th:data-id="${item.id}"
+                                                        data-toggle="popover" data-trigger="hover" data-placement="top"
+                                                        data-content="Xóa sản phẩm" th:data-name="${item.tenSanPham}"
+                                                        onclick="showConfirmModalDialog(this.getAttribute('data-id'), this.getAttribute('data-name'))"><img
+                                                            th:src="@{/admin/img/icons/trash.svg}"></a> -->
+                                            </div>
+                                        </td>
+                                        <!-- Modal add productDetail -->
+                                        <div class="modal fade" th:id="'modalAddDetailProduct'+${istat.index}"
+                                            tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
+                                            aria-hidden="true">
+                                            <div class="modal-dialog modal-lg" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title">Chọn chi tiết sản phẩm</h5>
+                                                        <button type="button" class="close" data-dismiss="modal"
+                                                            aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="row">
+                                                            <div class="col-sm-7">
+                                                                <div th:id="'showHinhAnhSanPhamChiTiet'+${istat.index}"
+                                                                    class="carousel slide" data-bs-ride="carousel">
+                                                                    <div class="carousel-inner">
+                                                                        <div class="carousel-item"
+                                                                            th:classappend="${#numbers.formatInteger(istat.index+''+istatAC.index,5) == #numbers.formatInteger(istat.index+''+0,5)? 'active':''}"
+                                                                            th:each="img, istatAC : ${item.anhChinhs}">
+                                                                            <img th:src="${'/staff/product/images/'+img}"
+                                                                                class="w-100 img-responsive" alt="...">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <script th:inline="javascript">
+                                                                    $(document).ready(function () {
+                                                                        var myCarousel = document.querySelector('#showHinhAnhSanPhamChiTiet' + '[[${istat.index}]]')
+                                                                        var carousel = new bootstrap.Carousel(myCarousel, {
+                                                                            pause: true
+                                                                        })
+                                                                    })
+                                                                </script>
+                                                            </div>
+                                                            <div class="col-sm-5">
+                                                                <div class="product__details__option">
+                                                                    <div class="product__details__option__size">
+                                                                        <span>Size:</span>
+                                                                        <label class="img-thumbnail"
+                                                                            th:for="${kc.tenKichCo}+${istat.index}+${istatKC.index}"
+                                                                            onclick="labelActive(this.getAttribute('id'),this.getAttribute('name'), this.getAttribute('input-name'), this.getAttribute('input-id'))"
+                                                                            th:id="labelKC+${istat.index}+${istatKC.index}"
+                                                                            th:each="kc, istatKC : ${item.lstKichCo}"
+                                                                            th:name="labelKCName+${istat.index}"
+                                                                            th:input-name="inputKCName+${istat.index}"
+                                                                            th:input-id="${kc.tenKichCo}+${istat.index}+${istatKC.index}">
+                                                                            <!-- class="label-active" -->
+                                                                            [[${kc.tenKichCo}]]
+                                                                            <input type="radio" th:value="${kc.id}"
+                                                                                th:name="inputKCName+${istat.index}"
+                                                                                th:id="${kc.tenKichCo}+${istat.index}+${istatKC.index}"
+                                                                                th:field="*{kichCoId}" hidden>
+                                                                        </label>
+                                                                    </div>
+                                                                    <!--*: check lai id -->
+                                                                    <div class="product__details__option__color">
+                                                                        <span>Color:</span>
+                                                                        <label
+                                                                            onclick="chooseOptionColorLabel(this.getAttribute('id'),this.getAttribute('name'), this.getAttribute('input-name'), this.getAttribute('input-id'))"
+                                                                            th:for="${ms.tenMauSac}+${istat.index}+${istatMS.index}"
+                                                                            th:id="labelMS+${istat.index}+${istatMS.index}"
+                                                                            th:style="'background-color:'+ ${ms.maMauSac}   "
+                                                                            th:each="ms, istatMS : ${item.lstMauSac}"
+                                                                            th:name="labelMSName+${istat.index}"
+                                                                            th:input-name="inputMSName+${istat.index}"
+                                                                            th:input-id="${ms.tenMauSac}+${istat.index}+${istatMS.index}">
+                                                                            <input type="radio" th:value="${ms.id}"
+                                                                                th:name="inputMSName+${istat.index}"
+                                                                                th:id="${ms.tenMauSac}+${istat.index}+${istatMS.index}"
+                                                                                th:field="*{mauSacId}" hidden>
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <a type="button" class="btn btn-outline-dark" th:input-name1="inputMSName+${istat.index}"
+                                                        th:input-name2="inputKCName+${istat.index}" th:label-name1="labelMSName+${istat.index}" th:label-name2="labelKCName+${istat.index}" onclick="clearDataChoose(this.getAttribute('input-name1'), this.getAttribute('input-name2'),
+                                                        this.getAttribute('label-name1'), this.getAttribute('label-name2'))"
+                                                            data-dismiss="modal">Đóng</a>
+                                                            <a class="btn btn-outline-primary" onclick="flexUrlSubmitBanHangTaiQuay('getData', 'post', 'BanHangTaiQuay')">Thêm sản phẩm</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </tr>
                                 </tbody>
                             </table>
@@ -511,6 +742,36 @@
             $(document).ready(function () {
                 $('[data-toggle="popover"]').popover();
             });
+            function openAddProduct() {
+                $('#banHangTaiQuayModal').modal("show");
+            }
+            function openModalAddDetailProduct(id) {
+                $('#modalAddDetailProduct' + id).modal("show");
+            }
+            function clearDataChoose(mauSacInputName,kichCoInputName, mauSacLabelName,kichCoLabelName){
+                var kichCoIdName = document.getElementsByName("kichCoId");
+                $(kichCoIdName).removeAttr("checked");
+                var mauSacIdName = document.getElementsByName("mauSacId");
+                $(mauSacIdName).removeAttr("checked");
+                var kichCoLabel = document.getElementsByName(kichCoLabelName);
+                $(kichCoLabel).removeClass("label-active");
+            }
+            function labelActive(labelId, labelName, inputName, inputId) {
+                var lstName = document.getElementsByName(labelName);
+                $(lstName).removeClass("label-active");
+                $('#' + labelId).addClass("label-active");
+                var lstInputName = document.getElementsByName(inputName);
+                $(lstInputName).removeAttr("checked");
+                $('#' + inputId).attr("checked", "true");
+            }
+            function chooseOptionColorLabel(labelId, labelName, inputName, inputId) {
+                var lstName = document.getElementsByName(labelName);
+                $(lstName).removeClass("label-active");
+                $('#' + labelId).addClass("label-active");
+                var lstInputName = document.getElementsByName(inputName);
+                $(lstInputName).removeAttr("checked");
+                $('#' + inputId).attr("checked", "true");
+            }
         </script>
         <script th:inline="javascript">
             window.onload = function () {

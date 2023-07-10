@@ -5,11 +5,10 @@ import static com.querydsl.core.types.PathMetadataFactory.*;
 import com.querydsl.core.types.dsl.*;
 
 import com.querydsl.core.types.PathMetadata;
-import javax.annotation.Generated;
+import javax.annotation.processing.Generated;
 
 import com.fpoly.entity.GiaoDich;
 import com.fpoly.entity.NguoiDung;
-//import com.fpoly.entity.Role;
 import com.querydsl.core.types.Path;
 import com.querydsl.core.types.dsl.PathInits;
 
@@ -17,7 +16,7 @@ import com.querydsl.core.types.dsl.PathInits;
 /**
  * QNguoiDung is a Querydsl query type for NguoiDung
  */
-@Generated("com.querydsl.codegen.EntitySerializer")
+@Generated("com.querydsl.codegen.DefaultEntitySerializer")
 public class QNguoiDung extends EntityPathBase<NguoiDung> {
 
     private static final long serialVersionUID = -769406018L;
@@ -35,6 +34,8 @@ public class QNguoiDung extends EntityPathBase<NguoiDung> {
     //inherited
     public final NumberPath<Long> id = _super.id;
 
+    public final StringPath maNguoiDung = createString("maNguoiDung");
+
     public final StringPath matKhau = createString("matKhau");
 
     //inherited
@@ -49,11 +50,7 @@ public class QNguoiDung extends EntityPathBase<NguoiDung> {
     //inherited
     public final StringPath nguoiTao = _super.nguoiTao;
 
-//    public final EnumPath<Role> role = createEnum("role", Role.class);
-
     public final StringPath soDienThoai = createString("soDienThoai");
-
-    public final StringPath tenDangNhap = createString("tenDangNhap");
 
     public final StringPath tenNguoiDung = createString("tenNguoiDung");
 

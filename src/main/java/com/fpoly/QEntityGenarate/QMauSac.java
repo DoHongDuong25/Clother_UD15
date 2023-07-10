@@ -5,8 +5,9 @@ import static com.querydsl.core.types.PathMetadataFactory.*;
 import com.querydsl.core.types.dsl.*;
 
 import com.querydsl.core.types.PathMetadata;
-import javax.annotation.Generated;
+import javax.annotation.processing.Generated;
 
+import com.fpoly.entity.HinhAnh;
 import com.fpoly.entity.MauSac;
 import com.fpoly.entity.SanPhamChiTiet;
 import com.querydsl.core.types.Path;
@@ -16,7 +17,7 @@ import com.querydsl.core.types.dsl.PathInits;
 /**
  * QMauSac is a Querydsl query type for MauSac
  */
-@Generated("com.querydsl.codegen.EntitySerializer")
+@Generated("com.querydsl.codegen.DefaultEntitySerializer")
 public class QMauSac extends EntityPathBase<MauSac> {
 
     private static final long serialVersionUID = -1990321258L;
@@ -27,8 +28,12 @@ public class QMauSac extends EntityPathBase<MauSac> {
 
     public final BooleanPath daXoa = createBoolean("daXoa");
 
+    public final ListPath<HinhAnh, QHinhAnh> hinhAnhs = this.<HinhAnh, QHinhAnh>createList("hinhAnhs", HinhAnh.class, QHinhAnh.class, PathInits.DIRECT2);
+
     //inherited
     public final NumberPath<Long> id = _super.id;
+
+    public final StringPath maMauSac = createString("maMauSac");
 
     //inherited
     public final DateTimePath<java.util.Date> ngayCapNhat = _super.ngayCapNhat;
@@ -42,7 +47,7 @@ public class QMauSac extends EntityPathBase<MauSac> {
     //inherited
     public final StringPath nguoiTao = _super.nguoiTao;
 
-    public final SetPath<SanPhamChiTiet, QSanPhamChiTiet> sanPhamChiTiets = this.<SanPhamChiTiet, QSanPhamChiTiet>createSet("sanPhamChiTiets", SanPhamChiTiet.class, QSanPhamChiTiet.class, PathInits.DIRECT2);
+    public final ListPath<SanPhamChiTiet, QSanPhamChiTiet> sanPhamChiTiets = this.<SanPhamChiTiet, QSanPhamChiTiet>createList("sanPhamChiTiets", SanPhamChiTiet.class, QSanPhamChiTiet.class, PathInits.DIRECT2);
 
     public final StringPath tenMauSac = createString("tenMauSac");
 

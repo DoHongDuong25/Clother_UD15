@@ -33,9 +33,6 @@ public class HinhAnh extends BaseEntity implements Serializable{
 	@Column(name = "co_hien_thi")
 	private Boolean coHienThi;
 
-	@Column(name = "da_xoa")
-	private Boolean daXoa;
-
 	@OneToMany(mappedBy = "hinhAnhTraHang", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Set<LyDoTraHang> lyDoTraHang;
 }
