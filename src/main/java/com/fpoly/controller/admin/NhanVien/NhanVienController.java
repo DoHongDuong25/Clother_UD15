@@ -25,11 +25,11 @@ public class NhanVienController {
     //List
     @GetMapping("/admin/NguoiDung")
     public String getUsers(
-            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "4") int size,
             Model model
     ) {
-        Page<NguoiDung> users = nguoiDungService.getAll(page, size);
+        Page<NguoiDung> users = nguoiDungService.getAll(page -1, size);
         System.out.println(users);
         model.addAttribute("users", users.getContent());
         model.addAttribute("totalPages", users.getTotalPages());
