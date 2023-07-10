@@ -24,5 +24,9 @@ public interface HinhAnhService {
 
 	Optional<HinhAnh> getHinhAnhByName(String tenAnh);
 
-	Optional<HinhAnh> getHinhAnhChinhBySanPhamId(Long sanPhamId);
+	Optional<HinhAnh> getHinhAnhChinhBySanPhamIdAndMauSacId(Long sanPhamId, Long mauSacId);
+
+	List<HinhAnh> getHinhAnhChinhBySanPhamIdAndMauSacIds(Long sanPhamId, List<Long> mauSacIds);
+
+	int getCountHinhAnhChinhBySanPhamIdAndMauSacId(Long sanPhamId, Long mauSacId);
 }

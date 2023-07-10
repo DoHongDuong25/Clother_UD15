@@ -5,10 +5,9 @@ import static com.querydsl.core.types.PathMetadataFactory.*;
 import com.querydsl.core.types.dsl.*;
 
 import com.querydsl.core.types.PathMetadata;
-import javax.annotation.Generated;
+import javax.annotation.processing.Generated;
 
 import com.fpoly.entity.GioHangChiTiet;
-import com.fpoly.entity.HinhAnh;
 import com.fpoly.entity.HoaDonChiTiet;
 import com.fpoly.entity.SanPhamChiTiet;
 import com.querydsl.core.types.Path;
@@ -18,7 +17,7 @@ import com.querydsl.core.types.dsl.PathInits;
 /**
  * QSanPhamChiTiet is a Querydsl query type for SanPhamChiTiet
  */
-@Generated("com.querydsl.codegen.EntitySerializer")
+@Generated("com.querydsl.codegen.DefaultEntitySerializer")
 public class QSanPhamChiTiet extends EntityPathBase<SanPhamChiTiet> {
 
     private static final long serialVersionUID = 165118662L;
@@ -35,14 +34,14 @@ public class QSanPhamChiTiet extends EntityPathBase<SanPhamChiTiet> {
 
     public final ListPath<GioHangChiTiet, QGioHangChiTiet> gioHangChiTiet = this.<GioHangChiTiet, QGioHangChiTiet>createList("gioHangChiTiet", GioHangChiTiet.class, QGioHangChiTiet.class, PathInits.DIRECT2);
 
-    public final ListPath<HinhAnh, QHinhAnh> hinhAnhs = this.<HinhAnh, QHinhAnh>createList("hinhAnhs", HinhAnh.class, QHinhAnh.class, PathInits.DIRECT2);
-
     public final ListPath<HoaDonChiTiet, QHoaDonChiTiet> hoaDonChiTiets = this.<HoaDonChiTiet, QHoaDonChiTiet>createList("hoaDonChiTiets", HoaDonChiTiet.class, QHoaDonChiTiet.class, PathInits.DIRECT2);
 
     //inherited
     public final NumberPath<Long> id = _super.id;
 
     public final QKichCo kichCo;
+
+    public final StringPath maSanPhamChiTiet = createString("maSanPhamChiTiet");
 
     public final QMauSac mauSac;
 

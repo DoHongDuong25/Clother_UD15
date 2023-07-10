@@ -11,21 +11,29 @@ import javax.persistence.EntityManager;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.support.Querydsl;
 import org.springframework.stereotype.Repository;
 
 
 import com.fpoly.QEntityGenarate.QChatLieu;
 import com.fpoly.QEntityGenarate.QKichCo;
 import com.fpoly.QEntityGenarate.QKieuDang;
+import com.fpoly.QEntityGenarate.QLoaiSanPham;
 import com.fpoly.QEntityGenarate.QMauSac;
 import com.fpoly.QEntityGenarate.QPhongCach;
 import com.fpoly.QEntityGenarate.QSanPham;
 import com.fpoly.QEntityGenarate.QSanPhamChiTiet;
 import com.fpoly.dto.search.SPAndSPCTSearchDto;
+import com.fpoly.entity.SanPham;
 import com.fpoly.entity.SanPhamChiTiet;
 import com.fpoly.repository.SanPhamChiTietSearchRepository;
 import com.fpoly.service.TypeHelperService;
 import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.types.dsl.PathBuilderFactory;
+import com.querydsl.jpa.JPQLQuery;
 import com.querydsl.jpa.impl.JPAQuery;
 
 import lombok.AllArgsConstructor;
@@ -40,10 +48,12 @@ public class SanPhamChiTietSearchRepositoryImpl implements SanPhamChiTietSearchR
 	private TypeHelperService typeHelperService;
 	
 	@Override
-	public List<SanPhamChiTiet> searchProductDetailExist(SPAndSPCTSearchDto data){
+	public Page<SanPhamChiTiet> searchProductDetailExist(SPAndSPCTSearchDto data, Pageable pageable){
 		SPAndSPCTSearchDto dataSearch = convertSearchNotNull(data);
 		
-		JPAQuery<SanPhamChiTiet> query = new JPAQuery<SanPhamChiTiet>(entityManager);
+		JPQLQuery<SanPhamChiTiet> query = new JPAQuery<>(entityManager);
+		Querydsl querydsl = new Querydsl(entityManager, new PathBuilderFactory().create(SanPhamChiTiet.class));
+		
 		BooleanBuilder where = new BooleanBuilder();
 		
 		QSanPhamChiTiet qSanPhamChiTiet = QSanPhamChiTiet.sanPhamChiTiet;
@@ -53,6 +63,7 @@ public class SanPhamChiTietSearchRepositoryImpl implements SanPhamChiTietSearchR
 		QChatLieu qChatLieu = QChatLieu.chatLieu;
 		QMauSac qMauSac = QMauSac.mauSac;
 		QKichCo qKichCo = QKichCo.kichCo;
+		QLoaiSanPham qLoaiSanPham = QLoaiSanPham.loaiSanPham;
 		
 		where.and(qSanPhamChiTiet.daXoa.isFalse());
 		where.and(qSanPham.daXoa.isFalse());
@@ -64,30 +75,26 @@ public class SanPhamChiTietSearchRepositoryImpl implements SanPhamChiTietSearchR
 		List<Long> lstPhongCach = dataSearch.getPhongCachIds();
 		List<Long> lstKichCo = dataSearch.getKichCoIds();
 		List<Long> lstMauSac = dataSearch.getMauSacIds();
-		List<Boolean> lstCoHienThi = dataSearch.getCoHienThi();
 		
-		if(lstCoHienThi.size() != 2 && lstCoHienThi.size() != 0) {
-			where.and(qSanPhamChiTiet.coHienThi.eq(dataSearch.getCoHienThi().get(0)));
-		}
+		where.and(qSanPhamChiTiet.coHienThi.isTrue());
 		
-		if(lstKieuDang.size() != 0) {
-			if(lstKieuDang.get(0).equals(-1L)) {
-				where.and(qSanPham.kieuDang.id.in(lstKieuDang));
-			}
+		
+		if(!lstKieuDang.isEmpty() && !lstKieuDang.get(0).equals(-1L)) {
+			where.and(qSanPham.kieuDang.id.in(lstKieuDang));
 		}
-		if(lstChatLieu.size() != 0) {
+		if(!lstChatLieu.isEmpty() && !lstKieuDang.get(0).equals(-1L)) {
 			where.and(qSanPham.chatLieu.id.in(lstChatLieu));
 		}
-		if(lstPhongCach.size() != 0) {
+		if(!lstPhongCach.isEmpty() && !lstKieuDang.get(0).equals(-1L)) {
 			where.and(qSanPham.phongCach.id.in(lstPhongCach));
 		}
-		if(lstLoaiSanPham.size() != 0) {
+		if(!lstLoaiSanPham.isEmpty() && !lstKieuDang.get(0).equals(-1L)) {
 			where.and(qSanPham.loaiSanPham.id.in(lstLoaiSanPham));
 		}
-		if(lstMauSac.size() != 0) {
+		if(!lstMauSac.isEmpty() && !lstKieuDang.get(0).equals(-1L)) {
 			where.and(qSanPhamChiTiet.mauSac.id.in(lstMauSac));
 		}
-		if(lstKichCo.size() != 0) {
+		if(!lstKichCo.isEmpty() && !lstKieuDang.get(0).equals(-1L)) {
 			where.and(qSanPhamChiTiet.kichCo.id.in(lstKichCo));
 		}
 		
@@ -95,6 +102,11 @@ public class SanPhamChiTietSearchRepositoryImpl implements SanPhamChiTietSearchR
 			if(StringUtils.isNotEmpty(dataSearch.getTenSanPham())) {
 				where.and(qSanPham.tenSanPham.containsIgnoreCase(dataSearch.getTenSanPham()));
 			}
+		}
+		
+		if(lstLoaiSanPham.size() != 0 && !lstLoaiSanPham.get(0).equals(-1L)) {
+			where.and(qLoaiSanPham.daXoa.isFalse());
+			where.and(qSanPham.loaiSanPham.id.in(lstLoaiSanPham));
 		}
 		
 		if(!dataSearch.getNguoiTaoSPCT().equalsIgnoreCase("-1")) {
@@ -179,17 +191,20 @@ public class SanPhamChiTietSearchRepositoryImpl implements SanPhamChiTietSearchR
 //			}
 //		}
 		
-		List<SanPhamChiTiet> result = query.select(qSanPhamChiTiet).from(qSanPhamChiTiet)
-				.innerJoin(qMauSac).on(qSanPhamChiTiet.mauSac.id.eq(qMauSac.id))
+		query.select(qSanPhamChiTiet).from(qSanPhamChiTiet)
+				.leftJoin(qMauSac).on(qSanPhamChiTiet.mauSac.id.eq(qMauSac.id))
 				.innerJoin(qKichCo).on(qSanPhamChiTiet.kichCo.id.eq(qKichCo.id))
-				.leftJoin(qSanPham).on(qSanPhamChiTiet.sanPham.id.eq(qSanPham.id))
+				.innerJoin(qSanPham).on(qSanPhamChiTiet.sanPham.id.eq(qSanPham.id))
 				.innerJoin(qPhongCach).on(qSanPham.phongCach.id.eq(qPhongCach.id))
 				.innerJoin(qKieuDang).on(qSanPham.kieuDang.id.eq(qKieuDang.id))
 				.innerJoin(qChatLieu).on(qSanPham.chatLieu.id.eq(qChatLieu.id))
+				.innerJoin(qLoaiSanPham).on(qSanPham.loaiSanPham.id.eq(qLoaiSanPham.id))
 				.where(where)
 				.orderBy(qSanPhamChiTiet.sanPham.id.desc())
 				.fetch();
-		return result;
+		List<SanPhamChiTiet> result = querydsl.applyPagination(pageable, query).fetch();
+		Long totalElements = query.fetchCount();
+		return new PageImpl<SanPhamChiTiet>(result, pageable, totalElements);
 	}
 	
 //	convert type of value not null

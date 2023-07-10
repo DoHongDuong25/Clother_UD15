@@ -5,10 +5,10 @@ import static com.querydsl.core.types.PathMetadataFactory.*;
 import com.querydsl.core.types.dsl.*;
 
 import com.querydsl.core.types.PathMetadata;
-import javax.annotation.Generated;
+import javax.annotation.processing.Generated;
 
 import com.fpoly.entity.HoaDon;
-//import com.fpoly.entity.TrangThaiHoaDon;
+import com.fpoly.entity.HoaDonChiTiet;
 import com.querydsl.core.types.Path;
 import com.querydsl.core.types.dsl.PathInits;
 
@@ -16,7 +16,7 @@ import com.querydsl.core.types.dsl.PathInits;
 /**
  * QHoaDon is a Querydsl query type for HoaDon
  */
-@Generated("com.querydsl.codegen.EntitySerializer")
+@Generated("com.querydsl.codegen.DefaultEntitySerializer")
 public class QHoaDon extends EntityPathBase<HoaDon> {
 
     private static final long serialVersionUID = -2121147509L;
@@ -31,7 +31,7 @@ public class QHoaDon extends EntityPathBase<HoaDon> {
 
     public final StringPath ghiChu = createString("ghiChu");
 
-    public final QGiaoDich giaoDich;
+    public final ListPath<HoaDonChiTiet, QHoaDonChiTiet> hoaDonChiTiets = this.<HoaDonChiTiet, QHoaDonChiTiet>createList("hoaDonChiTiets", HoaDonChiTiet.class, QHoaDonChiTiet.class, PathInits.DIRECT2);
 
     //inherited
     public final NumberPath<Long> id = _super.id;
@@ -40,7 +40,9 @@ public class QHoaDon extends EntityPathBase<HoaDon> {
 
     public final QKhuyenMai khuyenMai;
 
-    public final StringPath loaiDonHang = createString("loaiDonHang");
+    public final NumberPath<Integer> loaiHoaDon = createNumber("loaiHoaDon", Integer.class);
+
+    public final StringPath maDon = createString("maDon");
 
     //inherited
     public final DateTimePath<java.util.Date> ngayCapNhat = _super.ngayCapNhat;
@@ -60,13 +62,15 @@ public class QHoaDon extends EntityPathBase<HoaDon> {
 
     public final StringPath sdtNguoiNhan = createString("sdtNguoiNhan");
 
-    public final StringPath thoiGianGiaoHang = createString("thoiGianGiaoHang");
+    public final DateTimePath<java.util.Date> thoiGianGiaoHang = createDateTime("thoiGianGiaoHang", java.util.Date.class);
 
     public final NumberPath<java.math.BigDecimal> tienShip = createNumber("tienShip", java.math.BigDecimal.class);
 
     public final NumberPath<java.math.BigDecimal> tongTienDonHang = createNumber("tongTienDonHang", java.math.BigDecimal.class);
 
     public final NumberPath<java.math.BigDecimal> tongTienHoaDon = createNumber("tongTienHoaDon", java.math.BigDecimal.class);
+
+    public final QTrangThai trangThai;
 
     public QHoaDon(String variable) {
         this(HoaDon.class, forVariable(variable), INITS);
@@ -86,10 +90,10 @@ public class QHoaDon extends EntityPathBase<HoaDon> {
 
     public QHoaDon(Class<? extends HoaDon> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.giaoDich = inits.isInitialized("giaoDich") ? new QGiaoDich(forProperty("giaoDich"), inits.get("giaoDich")) : null;
         this.khachHang = inits.isInitialized("khachHang") ? new QKhachHang(forProperty("khachHang")) : null;
         this.khuyenMai = inits.isInitialized("khuyenMai") ? new QKhuyenMai(forProperty("khuyenMai")) : null;
         this.nguoiDung = inits.isInitialized("nguoiDung") ? new QNguoiDung(forProperty("nguoiDung")) : null;
+        this.trangThai = inits.isInitialized("trangThai") ? new QTrangThai(forProperty("trangThai")) : null;
     }
 
 }
