@@ -5,7 +5,7 @@ import static com.querydsl.core.types.PathMetadataFactory.*;
 import com.querydsl.core.types.dsl.*;
 
 import com.querydsl.core.types.PathMetadata;
-import javax.annotation.Generated;
+import javax.annotation.processing.Generated;
 
 import com.fpoly.entity.TraHang;
 import com.querydsl.core.types.Path;
@@ -15,7 +15,7 @@ import com.querydsl.core.types.dsl.PathInits;
 /**
  * QTraHang is a Querydsl query type for TraHang
  */
-@Generated("com.querydsl.codegen.EntitySerializer")
+@Generated("com.querydsl.codegen.DefaultEntitySerializer")
 public class QTraHang extends EntityPathBase<TraHang> {
 
     private static final long serialVersionUID = 815039507L;

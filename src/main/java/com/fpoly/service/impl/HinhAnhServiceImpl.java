@@ -32,8 +32,7 @@ public class HinhAnhServiceImpl implements HinhAnhService{
 
 	@Override
 	public void delete(HinhAnh entity) {
-		entity.setDaXoa(true);
-		hinhAnhRepository.save(entity);
+		hinhAnhRepository.delete(entity);
 	}
 	@Override
 	public List<HinhAnh> getLstHinhAnhMauSacBySanPhamId(Long sanPhamId) {
@@ -56,8 +55,18 @@ public class HinhAnhServiceImpl implements HinhAnhService{
 	}
 	
 	@Override
-	public Optional<HinhAnh> getHinhAnhChinhBySanPhamId(Long sanPhamId) {
-		return hinhAnhRepository.getHinhAnhChinhBySanPhamId(sanPhamId);
+	public Optional<HinhAnh> getHinhAnhChinhBySanPhamIdAndMauSacId(Long sanPhamId, Long mauSacId) {
+		return hinhAnhRepository.getHinhAnhChinhBySanPhamIdAndMauSacId(sanPhamId, mauSacId);
+	}
+	
+	@Override
+	public List<HinhAnh> getHinhAnhChinhBySanPhamIdAndMauSacIds(Long sanPhamId, List<Long> mauSacIds) {
+		return hinhAnhRepository.getHinhAnhChinhBySanPhamIdAndMauSacIds(sanPhamId, mauSacIds);
+	}
+	
+	@Override
+	public int getCountHinhAnhChinhBySanPhamIdAndMauSacId(Long sanPhamId, Long mauSacId) {
+		return hinhAnhRepository.getCountHinhAnhChinhBySanPhamIdAndMauSacId(sanPhamId, mauSacId);
 	}
 
 	

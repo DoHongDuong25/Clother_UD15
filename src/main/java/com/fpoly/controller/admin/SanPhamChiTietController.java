@@ -205,13 +205,6 @@ public class SanPhamChiTietController {
 		return "admin/product/productManage";
 	}
 
-//	@GetMapping("")
-//	public String productManage(ModelMap model) {
-//		List<SanPham> resultSP = sanPhamService.getSanPhamExist();
-//		model.addAttribute("sanPhams", resultSP);
-//		model.addAttribute("dataSearch", new SPAndSPCTSearchDto());
-//		return "admin/product/productManage";
-//	}
 	@GetMapping("info/{id}")
 	public String infoProductDetai(ModelMap model, @PathVariable("id") Long id) {
 		Optional<SanPham> opt = sanPhamService.findById(id);
@@ -529,7 +522,6 @@ public class SanPhamChiTietController {
 				storageService.store(img, hinhAnh.getTenAnh());
 				if (optMS.isPresent()) {
 					hinhAnh.setMauSac(optMS.get());
-					hinhAnh.setDaXoa(false);
 					hinhAnh.setCoHienThi(true);
 					hinhAnh.setLaAnhChinh(false);
 					hinhAnhService.save(hinhAnh);
@@ -614,15 +606,19 @@ public class SanPhamChiTietController {
 			@PathVariable("checked") Boolean checked){
 		Optional<HinhAnh> opt = hinhAnhService.getHinhAnhByName(imgName);
 		if(opt.isPresent()) {
-			Optional<HinhAnh> optHAChinh = hinhAnhService.getHinhAnhChinhBySanPhamId(opt.get().getSanPham().getId());
-			if(optHAChinh.isPresent()) {
-				optHAChinh.get().setLaAnhChinh(!checked);
-				opt.get().setLaAnhChinh(checked);
-				hinhAnhService.save(opt.get());
-				hinhAnhService.save(optHAChinh.get());
-				model.addAttribute("messageSuccess", "Cập nhật ảnh chính cho sản phẩm thành công");
-				return new ResponseEntity<>(HttpStatus.OK);
-			}else return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			int countHAChinhOld = hinhAnhService.getCountHinhAnhChinhBySanPhamIdAndMauSacId(opt.get().getSanPham().getId(), opt.get().getMauSac().getId());
+			if(countHAChinhOld > 0) {
+				Optional<HinhAnh> optHAChinhOld = hinhAnhService.getHinhAnhChinhBySanPhamIdAndMauSacId(opt.get().getSanPham().getId(), opt.get().getMauSac().getId());
+				if(optHAChinhOld.isPresent()) {
+					optHAChinhOld.get().setLaAnhChinh(!checked);
+					hinhAnhService.save(optHAChinhOld.get());
+				}
+			}
+			opt.get().setLaAnhChinh(checked);
+			opt.get().setCoHienThi(true);
+			hinhAnhService.save(opt.get());
+			return new ResponseEntity<>(HttpStatus.OK);
+			
 		}else return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 	}
 	

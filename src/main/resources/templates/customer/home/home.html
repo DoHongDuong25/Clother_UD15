@@ -1,54 +1,20 @@
 <!DOCTYPE html>
-<<<<<<< HEAD
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
-	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{customer/layouts/index}"
->
-<head>
-<meta charset="UTF-8">
-<title>Trang chủ</title>
-	<link th:href="@{/customer/css/fonts-googleapis.css}" rel="stylesheet">
-=======
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
     layout:decorate="~{customer/layouts/index}">
->>>>>>> 1f792fc8fff24f6093ead2a1bf8a220f7b8aad4b
 
 <head>
     <meta charset="UTF-8">
     <title>Trang chủ</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
+
 </head>
 
 <body>
-<<<<<<< HEAD
-	<section class="product spad" layout:fragment="content">
-	        <div class="container">
-	        	<h1>Hello customer</h1>
-	        </div>
-	  </section>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	<script th:src="@{/customer/js/jquery-3.3.1.min.js}"></script>
-    <script th:src="@{/customer/js/bootstrap.min.js}"></script>
-    <script th:src="@{/customer/js/jquery.nice-select.min.js}"></script>
-    <script th:src="@{/customer/js/jquery.nicescroll.min.js}"></script>
-    <script th:src="@{/customer/js/jquery.magnific-popup.min.js}"></script>
-    <script th:src="@{/customer/js/jquery.countdown.min.js}"></script>
-    <script th:src="@{/customer/js/jquery.slicknav.js}"></script>
-    <script th:src="@{/customer/js/mixitup.min.js}"></script>
-    <script th:src="@{/customer/js/owl.carousel.min.js}"></script>
-    <script th:src="@{/customer/js/main.js}"></script>
-=======
     <section layout:fragment="content">
         <span th:replace="customer/fragments/section_start :: section-start"></span>
         <!-- Banner Section Begin -->
@@ -96,6 +62,513 @@
         <!-- Product Section Begin -->
         <section class="product spad">
             <div class="container">
+                <button onclick="openAddProduct()">Thêm sản phẩm</button>
+                <!-- Shopping Cart Section Begin -->
+                <section class="shopping-cart spad">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-8">
+                                <div class="shopping__cart__table">
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th>Product</th>
+                                                <th>Quantity</th>
+                                                <th>Total</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td class="product__cart__item">
+                                                    <div class="product__cart__item__pic">
+                                                        <img src="img/shopping-cart/cart-1.jpg" alt="">
+                                                    </div>
+                                                    <div class="product__cart__item__text">
+                                                        <h6>T-shirt Contrast Pocket</h6>
+                                                        <h5>$98.49</h5>
+                                                    </div>
+                                                </td>
+                                                <td class="quantity__item">
+                                                    <div class="quantity">
+                                                        <div class="pro-qty-2">
+                                                            <input type="text" value="1">
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td class="cart__price">$ 30.00</td>
+                                                <td class="cart__close"><i class="fa fa-close"></i></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="product__cart__item">
+                                                    <div class="product__cart__item__pic">
+                                                        <img src="img/shopping-cart/cart-2.jpg" alt="">
+                                                    </div>
+                                                    <div class="product__cart__item__text">
+                                                        <h6>Diagonal Textured Cap</h6>
+                                                        <h5>$98.49</h5>
+                                                    </div>
+                                                </td>
+                                                <td class="quantity__item">
+                                                    <div class="quantity">
+                                                        <div class="pro-qty-2">
+                                                            <input type="text" value="1">
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td class="cart__price">$ 32.50</td>
+                                                <td class="cart__close"><i class="fa fa-close"></i></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="product__cart__item">
+                                                    <div class="product__cart__item__pic">
+                                                        <img src="img/shopping-cart/cart-3.jpg" alt="">
+                                                    </div>
+                                                    <div class="product__cart__item__text">
+                                                        <h6>Basic Flowing Scarf</h6>
+                                                        <h5>$98.49</h5>
+                                                    </div>
+                                                </td>
+                                                <td class="quantity__item">
+                                                    <div class="quantity">
+                                                        <div class="pro-qty-2">
+                                                            <input type="text" value="1">
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td class="cart__price">$ 47.00</td>
+                                                <td class="cart__close"><i class="fa fa-close"></i></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="product__cart__item">
+                                                    <div class="product__cart__item__pic">
+                                                        <img src="img/shopping-cart/cart-4.jpg" alt="">
+                                                    </div>
+                                                    <div class="product__cart__item__text">
+                                                        <h6>Basic Flowing Scarf</h6>
+                                                        <h5>$98.49</h5>
+                                                    </div>
+                                                </td>
+                                                <td class="quantity__item">
+                                                    <div class="quantity">
+                                                        <div class="pro-qty-2">
+                                                            <input type="text" value="1">
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td class="cart__price">$ 30.00</td>
+                                                <td class="cart__close"><i class="fa fa-close"></i></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-6 col-sm-6">
+                                        <div class="continue__btn">
+                                            <a href="#">Continue Shopping</a>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6">
+                                        <div class="continue__btn update__btn">
+                                            <a href="#"><i class="fa fa-spinner"></i> Update cart</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="cart__discount">
+                                    <h6>Discount codes</h6>
+                                    <form action="#">
+                                        <input type="text" placeholder="Coupon code">
+                                        <button type="submit">Apply</button>
+                                    </form>
+                                </div>
+                                <div class="cart__total">
+                                    <h6>Cart total</h6>
+                                    <ul>
+                                        <li>Subtotal <span>$ 169.50</span></li>
+                                        <li>Total <span>$ 169.50</span></li>
+                                    </ul>
+                                    <a href="#" class="primary-btn">Proceed to checkout</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <!-- Shopping Cart Section End -->
+                <script>
+                    function openAddProduct() {
+                        $('#banHangTaiQuayModal').modal("show");
+                    }
+                </script>
+                <form action="#" th:action="@{/admin/product}" enctype="multipart/form-data" method="get">
+                    <!-- <button type="submit"><span class="icon_search"></span></button> -->
+                    <div class="container mt-2 mb-2" th:object="${dataSearch}">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <label for="tenSanPham">Tên sản phẩm:</label>
+                                <input type="text" class="form-control" name="tenSanPham"
+                                    id="tenSanPhamSearchProductManage" placeholder="Tên sản phẩm"
+                                    th:field="*{tenSanPham}">
+                            </div>
+                            <div class="col-sm-3">
+                                <label for="kieuDangId">Tên kiểu dáng:</label>
+                                <select class="selectpicker" name="kieuDangId" id="kieuDangId" th:field="*{kieuDangIds}"
+                                    multiple>
+                                    <option th:each="item : ${lstKieuDang}" th:value="${item.id}"
+                                        th:text="${item.tenKieuDang}">
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="col-sm-3">
+                                <label for="chatLieuIds">Tên chất liệu:</label>
+                                <select class="selectpicker" name="chatLieuIds" id="chatLieuIds"
+                                    th:field="*{chatLieuIds}" multiple>
+                                    <option th:each="item : ${lstChatLieu}" th:value="${item.id}"
+                                        th:text="${item.tenChatLieu} ">
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="col-sm-3">
+                                <label for="loaiSanPhamIds">Tên loại sản phẩm:</label>
+                                <select class="selectpicker" name="loaiSanPhamIds" id="loaiSanPhamIds"
+                                    th:field="*{loaiSanPhamIds}" multiple>
+                                    <option th:each="item : ${lstLoaiSanPham}" th:value="${item.id}"
+                                        th:text="${item.tenLoaiSanPham}">
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="col-sm-3">
+                                <label for="phongCachIds">Tên phong cách:</label>
+                                <select class="selectpicker" name="phongCachIds" id="phongCachIds"
+                                    th:field="*{phongCachIds}" multiple>
+                                    <option th:each="item : ${lstPhongCach}" th:value="${item.id}"
+                                        th:text="${item.tenPhongCach}">
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="col-sm-3">
+                                <label for="kichCoIds">Tên kích cỡ:</label>
+                                <select class="selectpicker" name="kichCoIds" id="kichCoIds" th:field="*{kichCoIds}"
+                                    multiple>
+                                    <option th:each="item : ${lstKichCo}" th:value="${item.id}"
+                                        th:text="${item.tenKichCo}">
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="col-sm-3">
+                                <label for="mauSacIds">Tên màu sắc:</label>
+                                <select class="selectpicker" name="mauSacIds" id="mauSacIds" th:field="*{mauSacIds}"
+                                    multiple>
+                                    <option th:each="item, istat : ${lstMauSac}" th:value="${item.id}"
+                                        th:text="${item.tenMauSac}">
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="shopping__cart__table table-hover">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Ảnh</th>
+                                    <th>Tên sản phẩm</th>
+                                    <th>Giá</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="item, istat : ${resultListSP}">
+                                    <td class="product__cart__item">
+                                        <div class="product__cart__item__pic">
+                                            <!-- carousel start -->
+                                            <div th:id="'carouselExampleIndicators'+${istat.index}"
+                                                class="carousel slide" data-ride="carousel">
+                                                <ol class="carousel-indicators">
+                                                    <li th:data-target="'#carouselExampleIndicators'+${istat.index}"
+                                                        th:data-slide-to="${#numbers.formatInteger(istat.index+''+istatAC.index,5)}"
+                                                        th:class="${#numbers.formatInteger(istat.index+''+istatAC.index,5) == #numbers.formatInteger(istat.index+''+0,5)? 'active':''}"
+                                                        th:each="img, istatAC : *{resultListSP[__${istat.index}__].anhChinhs}">
+                                                    </li>
+                                                </ol>
+                                                <div class="carousel-inner">
+                                                    <div th:class="${#numbers.formatInteger(istat.index+''+istatAC.index,5) == #numbers.formatInteger(istat.index+''+0,5)? 'carousel-item active' : 'carousel-item'}"
+                                                        th:each="img, istatAC : *{resultListSP[__${istat.index}__].anhChinhs}">
+                                                        <img class="d-block h-100"
+                                                            th:src="${'/staff/product/images/'+img}" alt="First slide"
+                                                            style="max-height: 150px;">
+                                                    </div>
+                                                </div>
+                                                <a class="carousel-control-prev"
+                                                    th:href="'#carouselExampleIndicators'+${istat.index}" role="button"
+                                                    data-slide="prev">
+                                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                    <span class="sr-only">Previous</span>
+                                                </a>
+                                                <a class="carousel-control-next"
+                                                    th:href="'#carouselExampleIndicators'+${istat.index}" role="button"
+                                                    data-slide="next">
+                                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                    <span class="sr-only">Next</span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="product__cart__item__text">
+                                        <h5 th:text="${item.tenSanPham}">
+                                            T-shirt Contrast
+                                            Pocket</h5>
+                                    </td>
+                                    <td class="cart__price"><span th:text="${item.gia}"></span>đ
+                                    </td>
+                                    <td class="cart__close"><i class="fa fa-plus"
+                                            onclick="openPopupAddOptionValue()"></i></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="product__pagination" th:if="${sanPhamPage.totalPages >0}">
+                            <a th:class="${1 == sanPhamPage.number + 1}? 'active' : ''">1</a>
+                            <a th:if="${sanPhamPage.number + 1 - 2 > 1}" href="#">...</a>
+                            <a th:each="pageNumber : ${#numbers.sequence(sanPhamPage.number + 1 > 2 ? sanPhamPage.number + 1 - 2 : 1, sanPhamPage.number + 1 + 2 < sanPhamPage.totalPages ? sanPhamPage.number + 1 + 2 : sanPhamPage.totalPages)}"
+                                th:class="${pageNumber == sanPhamPage.number + 1}? 'active' : ''">
+                                <button th:id="pageNumberProductManage+${pageNumber}" class="page-link"
+                                    th:text="${pageNumber}">
+                                </button>
+                                <script th:inline="javascript">
+                                    $(document).ready(function () {
+                                        $('#pageNumberProductManage[[${pageNumber}]]').on("click", function () {
+                                            var num = parseInt("[[${pageNumber}]]");
+                                            $('#inputPageProductManage').attr("value", num);
+                                            $('#flexUrlTableFormProductManage').submit();
+                                        })
+                                    });
+                                </script>
+                            </a>
+                            <a class="page-link" href="#"
+                                th:if="${sanPhamPage.number + 1 + 2 < sanPhamPage.totalPages}">...</a>
+                            <a id="lastPageProductManage"
+                                th:class="${ sanPhamPage.totalPages == sanPhamPage.number + 1}? 'active' : ''"
+                                th:text="${sanPhamPage.totalPages}">
+
+                            </a>
+                            <script th:inline="javascript">
+                                $(document).ready(function () {
+                                    $('#firstPageProductManage').on("click", function () {
+                                        var num = 1;
+                                        $('#inputPageProductManage').attr("value", num);
+                                        $('#flexUrlTableFormProductManage').submit();
+                                    })
+                                    $('#lastPageProductManage').on("click", function () {
+                                        var num = parseInt("[[${sanPhamPage.totalPages}]]");
+                                        $('#inputPageProductManage').attr("value", num);
+                                        $('#flexUrlTableFormProductManage').submit();
+                                    })
+                                });
+                            </script>
+                        </div>
+                    </div>
+                </form>
+                <!-- start modal -->
+                <div class="modal fade" id="banHangTaiQuayModal" tabindex="-1" role="dialog"
+                    aria-labelledby="modelTitleId" aria-hidden="true">
+                    <div class="modal-dialog modal-xl" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Chi tiết sản phẩm</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="col-sm-12">
+                                    <div class="shop__sidebar__search">
+                                        <form action="#" th:action="@{/admin/product}" enctype="multipart/form-data"
+                                            method="get">
+                                            <!-- <button type="submit"><span class="icon_search"></span></button> -->
+                                            <div class="container mt-2 mb-2" th:object="${dataSearch}">
+                                                <div class="row">
+                                                    <div class="col-sm-3">
+                                                        <label for="tenSanPham">Tên sản phẩm:</label>
+                                                        <input type="text" class="form-control" name="tenSanPham"
+                                                            id="tenSanPhamSearchProductManage"
+                                                            placeholder="Tên sản phẩm" th:field="*{tenSanPham}">
+                                                    </div>
+                                                    <div class="col-sm-3">
+                                                        <label for="kieuDangId">Tên kiểu dáng:</label>
+                                                        <select class="selectpicker" name="kieuDangId" id="kieuDangId"
+                                                            th:field="*{kieuDangIds}" multiple>
+                                                            <option th:each="item : ${lstKieuDang}"
+                                                                th:value="${item.id}" th:text="${item.tenKieuDang}">
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-sm-3">
+                                                        <label for="chatLieuIds">Tên chất liệu:</label>
+                                                        <select class="selectpicker" name="chatLieuIds" id="chatLieuIds"
+                                                            th:field="*{chatLieuIds}" multiple>
+                                                            <option th:each="item : ${lstChatLieu}"
+                                                                th:value="${item.id}" th:text="${item.tenChatLieu} ">
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-sm-3">
+                                                        <label for="loaiSanPhamIds">Tên loại sản phẩm:</label>
+                                                        <select class="selectpicker" name="loaiSanPhamIds"
+                                                            id="loaiSanPhamIds" th:field="*{loaiSanPhamIds}" multiple>
+                                                            <option th:each="item : ${lstLoaiSanPham}"
+                                                                th:value="${item.id}" th:text="${item.tenLoaiSanPham}">
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-sm-3">
+                                                        <label for="phongCachIds">Tên phong cách:</label>
+                                                        <select class="selectpicker" name="phongCachIds"
+                                                            id="phongCachIds" th:field="*{phongCachIds}" multiple>
+                                                            <option th:each="item : ${lstPhongCach}"
+                                                                th:value="${item.id}" th:text="${item.tenPhongCach}">
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-sm-3">
+                                                        <label for="kichCoIds">Tên kích cỡ:</label>
+                                                        <select class="selectpicker" name="kichCoIds" id="kichCoIds"
+                                                            th:field="*{kichCoIds}" multiple>
+                                                            <option th:each="item : ${lstKichCo}" th:value="${item.id}"
+                                                                th:text="${item.tenKichCo}">
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-sm-3">
+                                                        <label for="mauSacIds">Tên màu sắc:</label>
+                                                        <select class="selectpicker" name="mauSacIds" id="mauSacIds"
+                                                            th:field="*{mauSacIds}" multiple>
+                                                            <option th:each="item, istat : ${lstMauSac}"
+                                                                th:value="${item.id}" th:text="${item.tenMauSac}">
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="shopping__cart__table table-hover">
+                                                <table>
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Ảnh</th>
+                                                            <th>Tên sản phẩm</th>
+                                                            <th>Giá</th>
+                                                            <th></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr th:each="item, istat : ${resultListSP}">
+                                                            <td class="product__cart__item">
+                                                                <div class="product__cart__item__pic">
+                                                                    <!-- carousel start -->
+                                                                    <div th:id="'carouselExampleIndicators'+${istat.index}"
+                                                                        class="carousel slide" data-ride="carousel">
+                                                                        <ol class="carousel-indicators">
+                                                                            <li th:data-target="'#carouselExampleIndicators'+${istat.index}"
+                                                                                th:data-slide-to="${#numbers.formatInteger(istat.index+''+istatAC.index,5)}"
+                                                                                th:class="${#numbers.formatInteger(istat.index+''+istatAC.index,5) == #numbers.formatInteger(istat.index+''+0,5)? 'active':''}"
+                                                                                th:each="img, istatAC : *{resultListSP[__${istat.index}__].anhChinhs}">
+                                                                            </li>
+                                                                        </ol>
+                                                                        <div class="carousel-inner">
+                                                                            <div th:class="${#numbers.formatInteger(istat.index+''+istatAC.index,5) == #numbers.formatInteger(istat.index+''+0,5)? 'carousel-item active' : 'carousel-item'}"
+                                                                                th:each="img, istatAC : *{resultListSP[__${istat.index}__].anhChinhs}">
+                                                                                <img class="d-block h-100"
+                                                                                    th:src="${'/staff/product/images/'+img}"
+                                                                                    alt="First slide"
+                                                                                    style="max-height: 150px;">
+                                                                            </div>
+                                                                        </div>
+                                                                        <a class="carousel-control-prev"
+                                                                            th:href="'#carouselExampleIndicators'+${istat.index}"
+                                                                            role="button" data-slide="prev">
+                                                                            <span class="carousel-control-prev-icon"
+                                                                                aria-hidden="true"></span>
+                                                                            <span class="sr-only">Previous</span>
+                                                                        </a>
+                                                                        <a class="carousel-control-next"
+                                                                            th:href="'#carouselExampleIndicators'+${istat.index}"
+                                                                            role="button" data-slide="next">
+                                                                            <span class="carousel-control-next-icon"
+                                                                                aria-hidden="true"></span>
+                                                                            <span class="sr-only">Next</span>
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                            <td class="product__cart__item__text">
+                                                                <h5 th:text="${item.tenSanPham}">
+                                                                    T-shirt Contrast
+                                                                    Pocket</h5>
+                                                            </td>
+                                                            <td class="cart__price"><span
+                                                                    th:text="${item.gia}"></span>đ
+                                                            </td>
+                                                            <td class="cart__close"><i class="fa fa-plus"
+                                                                    onclick="openPopupAddOptionValue()"></i></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <div class="product__pagination" th:if="${sanPhamPage.totalPages >0}">
+                                                    <a th:class="${1 == sanPhamPage.number + 1}? 'active' : ''">1</a>
+                                                    <a th:if="${sanPhamPage.number + 1 - 2 > 1}" href="#">...</a>
+                                                    <a th:each="pageNumber : ${#numbers.sequence(sanPhamPage.number + 1 > 2 ? sanPhamPage.number + 1 - 2 : 1, sanPhamPage.number + 1 + 2 < sanPhamPage.totalPages ? sanPhamPage.number + 1 + 2 : sanPhamPage.totalPages)}"
+                                                        th:class="${pageNumber == sanPhamPage.number + 1}? 'active' : ''">
+                                                        <button th:id="pageNumberProductManage+${pageNumber}"
+                                                            class="page-link" th:text="${pageNumber}">
+                                                        </button>
+                                                        <script th:inline="javascript">
+                                                            $(document).ready(function () {
+                                                                $('#pageNumberProductManage[[${pageNumber}]]').on("click", function () {
+                                                                    var num = parseInt("[[${pageNumber}]]");
+                                                                    $('#inputPageProductManage').attr("value", num);
+                                                                    $('#flexUrlTableFormProductManage').submit();
+                                                                })
+                                                            });
+                                                        </script>
+                                                    </a>
+                                                    <a class="page-link" href="#"
+                                                        th:if="${sanPhamPage.number + 1 + 2 < sanPhamPage.totalPages}">...</a>
+                                                    <a id="lastPageProductManage"
+                                                        th:class="${ sanPhamPage.totalPages == sanPhamPage.number + 1}? 'active' : ''"
+                                                        th:text="${sanPhamPage.totalPages}">
+
+                                                    </a>
+                                                    <script th:inline="javascript">
+                                                        $(document).ready(function () {
+                                                            $('#firstPageProductManage').on("click", function () {
+                                                                var num = 1;
+                                                                $('#inputPageProductManage').attr("value", num);
+                                                                $('#flexUrlTableFormProductManage').submit();
+                                                            })
+                                                            $('#lastPageProductManage').on("click", function () {
+                                                                var num = parseInt("[[${sanPhamPage.totalPages}]]");
+                                                                $('#inputPageProductManage').attr("value", num);
+                                                                $('#flexUrlTableFormProductManage').submit();
+                                                            })
+                                                        });
+                                                    </script>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <a type="button" class="btn btn-outline-dark" data-dismiss="modal">Đóng</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end modal -->
                 <!-- <div class="row">
                     <div class="col-lg-12">
                         <ul class="filter__controls">
@@ -109,13 +582,12 @@
                 <!-- new-arrivals hot-sales new-arrivals
                 <span class="label">New</span> -->
 
-                <div class="row product__filter">
+                <!-- <div class="row product__filter">
                     <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix"
                         th:each="images, istat1 : ${resultLst}">
                         <div class="product__item" th:each="img, istat2 : *{images[__${istat1.index}__]}">
                             <div class="product__item__pic set-bg"
                                 th:data-setbg="${'/customer/home/images/' +  img[__${0}__].tenAnh}">
-                                <!-- <span class="label">New</span> -->
                                 <section th:replace="customer/fragments/product_hover :: product-hover"></section>
                             </div>
                             <div class="product__item__text">
@@ -152,22 +624,16 @@
                             }
                         </script>
                     </div>
-                </div>
+                </div> -->
             </div>
             <span th:replace="customer/fragments/section_lastest :: section-last"></span>
+            <script>
+                // $('.carousel').carousel({
+                //     interval: 2000
+                // });
+                $('.my-select').selectpicker();
+            </script>
         </section>
-
-        <script th:src="@{/customer/js/jquery-3.3.1.min.js}"></script>
-        <script th:src="@{/customer/js/bootstrap.min.js}"></script>
-        <script th:src="@{/customer/js/jquery.nice-select.min.js}"></script>
-        <script th:src="@{/customer/js/jquery.nicescroll.min.js}"></script>
-        <script th:src="@{/customer/js/jquery.magnific-popup.min.js}"></script>
-        <script th:src="@{/customer/js/jquery.countdown.min.js}"></script>
-        <script th:src="@{/customer/js/jquery.slicknav.js}"></script>
-        <script th:src="@{/customer/js/mixitup.min.js}"></script>
-        <script th:src="@{/customer/js/owl.carousel.min.js}"></script>
-        <script th:src="@{/customer/js/main.js}"></script>
->>>>>>> 1f792fc8fff24f6093ead2a1bf8a220f7b8aad4b
 </body>
 
 

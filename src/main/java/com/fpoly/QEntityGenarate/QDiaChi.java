@@ -7,29 +7,33 @@ import com.querydsl.core.types.dsl.*;
 import com.querydsl.core.types.PathMetadata;
 import javax.annotation.processing.Generated;
 
-import com.fpoly.entity.GiaoDich;
+import com.fpoly.entity.DiaChi;
 import com.querydsl.core.types.Path;
 import com.querydsl.core.types.dsl.PathInits;
 
 
 /**
- * QGiaoDich is a Querydsl query type for GiaoDich
+ * QDiaChi is a Querydsl query type for DiaChi
  */
 @Generated("com.querydsl.codegen.DefaultEntitySerializer")
-public class QGiaoDich extends EntityPathBase<GiaoDich> {
+public class QDiaChi extends EntityPathBase<DiaChi> {
 
-    private static final long serialVersionUID = -1047726916L;
+    private static final long serialVersionUID = 2053760874L;
 
     private static final PathInits INITS = PathInits.DIRECT2;
 
-    public static final QGiaoDich giaoDich = new QGiaoDich("giaoDich");
+    public static final QDiaChi diaChi1 = new QDiaChi("diaChi1");
 
     public final QBaseEntity _super = new QBaseEntity(this);
 
-    public final QHoaDon hoaDon;
+    public final StringPath diaChi = createString("diaChi");
+
+    public final StringPath hoTen = createString("hoTen");
 
     //inherited
     public final NumberPath<Long> id = _super.id;
+
+    public final QKhachHang khachHang;
 
     //inherited
     public final DateTimePath<java.util.Date> ngayCapNhat = _super.ngayCapNhat;
@@ -40,33 +44,30 @@ public class QGiaoDich extends EntityPathBase<GiaoDich> {
     //inherited
     public final StringPath nguoiCapNhat = _super.nguoiCapNhat;
 
-    public final NumberPath<Long> nguoiDung = createNumber("nguoiDung", Long.class);
-
     //inherited
     public final StringPath nguoiTao = _super.nguoiTao;
 
-    public final QTrangThai trangThai;
+    public final StringPath soDienThoai = createString("soDienThoai");
 
-    public QGiaoDich(String variable) {
-        this(GiaoDich.class, forVariable(variable), INITS);
+    public QDiaChi(String variable) {
+        this(DiaChi.class, forVariable(variable), INITS);
     }
 
-    public QGiaoDich(Path<? extends GiaoDich> path) {
+    public QDiaChi(Path<? extends DiaChi> path) {
         this(path.getType(), path.getMetadata(), PathInits.getFor(path.getMetadata(), INITS));
     }
 
-    public QGiaoDich(PathMetadata metadata) {
+    public QDiaChi(PathMetadata metadata) {
         this(metadata, PathInits.getFor(metadata, INITS));
     }
 
-    public QGiaoDich(PathMetadata metadata, PathInits inits) {
-        this(GiaoDich.class, metadata, inits);
+    public QDiaChi(PathMetadata metadata, PathInits inits) {
+        this(DiaChi.class, metadata, inits);
     }
 
-    public QGiaoDich(Class<? extends GiaoDich> type, PathMetadata metadata, PathInits inits) {
+    public QDiaChi(Class<? extends DiaChi> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.hoaDon = inits.isInitialized("hoaDon") ? new QHoaDon(forProperty("hoaDon"), inits.get("hoaDon")) : null;
-        this.trangThai = inits.isInitialized("trangThai") ? new QTrangThai(forProperty("trangThai")) : null;
+        this.khachHang = inits.isInitialized("khachHang") ? new QKhachHang(forProperty("khachHang")) : null;
     }
 
 }
