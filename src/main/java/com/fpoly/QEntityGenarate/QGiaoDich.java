@@ -5,10 +5,9 @@ import static com.querydsl.core.types.PathMetadataFactory.*;
 import com.querydsl.core.types.dsl.*;
 
 import com.querydsl.core.types.PathMetadata;
-import javax.annotation.Generated;
+import javax.annotation.processing.Generated;
 
 import com.fpoly.entity.GiaoDich;
-import com.fpoly.entity.HoaDon;
 import com.querydsl.core.types.Path;
 import com.querydsl.core.types.dsl.PathInits;
 
@@ -16,7 +15,7 @@ import com.querydsl.core.types.dsl.PathInits;
 /**
  * QGiaoDich is a Querydsl query type for GiaoDich
  */
-@Generated("com.querydsl.codegen.EntitySerializer")
+@Generated("com.querydsl.codegen.DefaultEntitySerializer")
 public class QGiaoDich extends EntityPathBase<GiaoDich> {
 
     private static final long serialVersionUID = -1047726916L;
@@ -27,7 +26,7 @@ public class QGiaoDich extends EntityPathBase<GiaoDich> {
 
     public final QBaseEntity _super = new QBaseEntity(this);
 
-    public final SetPath<HoaDon, QHoaDon> hoaDon = this.<HoaDon, QHoaDon>createSet("hoaDon", HoaDon.class, QHoaDon.class, PathInits.DIRECT2);
+    public final QHoaDon hoaDon;
 
     //inherited
     public final NumberPath<Long> id = _super.id;
@@ -41,12 +40,12 @@ public class QGiaoDich extends EntityPathBase<GiaoDich> {
     //inherited
     public final StringPath nguoiCapNhat = _super.nguoiCapNhat;
 
-    public final QNguoiDung nguoiDung;
+    public final NumberPath<Long> nguoiDung = createNumber("nguoiDung", Long.class);
 
     //inherited
     public final StringPath nguoiTao = _super.nguoiTao;
 
-    public final NumberPath<Integer> trangThai = createNumber("trangThai", Integer.class);
+    public final QTrangThai trangThai;
 
     public QGiaoDich(String variable) {
         this(GiaoDich.class, forVariable(variable), INITS);
@@ -66,7 +65,8 @@ public class QGiaoDich extends EntityPathBase<GiaoDich> {
 
     public QGiaoDich(Class<? extends GiaoDich> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.nguoiDung = inits.isInitialized("nguoiDung") ? new QNguoiDung(forProperty("nguoiDung")) : null;
+        this.hoaDon = inits.isInitialized("hoaDon") ? new QHoaDon(forProperty("hoaDon"), inits.get("hoaDon")) : null;
+        this.trangThai = inits.isInitialized("trangThai") ? new QTrangThai(forProperty("trangThai")) : null;
     }
 
 }

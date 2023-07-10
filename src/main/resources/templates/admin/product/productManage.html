@@ -5,7 +5,7 @@
 <head></head>
 
 <body>
-    <section layout:fragment="content">
+    <section layout:fragment="content" class="container-fluid">
         <div id="messageSuccess" th:if="${messageSuccess}" class="toast" role="alert" aria-live="assertive"
             aria-atomic="true" data-delay="3000">
             <div class="toast-header">
@@ -39,7 +39,7 @@
             <div class="toast-body" th:text="${messageDanger}"></div>
         </div>
         <!-- Begin Page Content -->
-        <div class="container-fluid">
+        <div>
             <!-- Page Heading -->
             <h1 class="h3 mb-2 text-gray-800">Quản lý sản phẩm</h1>
             <hr>

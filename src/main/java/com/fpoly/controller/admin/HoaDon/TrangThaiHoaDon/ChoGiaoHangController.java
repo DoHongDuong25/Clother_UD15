@@ -43,7 +43,7 @@ public class ChoGiaoHangController {
     public String getHoaDonChoLayHang(Model model,
                                       @RequestParam(defaultValue = "1") int page,
                                       @RequestParam(defaultValue = "3") int size) {
-        PageRequest pageable = PageRequest.of(page -1, size);
+        PageRequest pageable = PageRequest.of(page - 1, size);
         Page<HoaDon> ChoGiaoHang = hoaDonRepoditory2.findByTrangThaiHoaDonListTrangThai(2, pageable);
 
         model.addAttribute("ChoGiaoHang", ChoGiaoHang.getContent());

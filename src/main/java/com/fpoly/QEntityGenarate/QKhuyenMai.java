@@ -5,7 +5,7 @@ import static com.querydsl.core.types.PathMetadataFactory.*;
 import com.querydsl.core.types.dsl.*;
 
 import com.querydsl.core.types.PathMetadata;
-import javax.annotation.Generated;
+import javax.annotation.processing.Generated;
 
 import com.fpoly.entity.KhuyenMai;
 import com.querydsl.core.types.Path;
@@ -14,7 +14,7 @@ import com.querydsl.core.types.Path;
 /**
  * QKhuyenMai is a Querydsl query type for KhuyenMai
  */
-@Generated("com.querydsl.codegen.EntitySerializer")
+@Generated("com.querydsl.codegen.DefaultEntitySerializer")
 public class QKhuyenMai extends EntityPathBase<KhuyenMai> {
 
     private static final long serialVersionUID = -1910357079L;
@@ -47,6 +47,10 @@ public class QKhuyenMai extends EntityPathBase<KhuyenMai> {
     public final NumberPath<Integer> phanTramGiam = createNumber("phanTramGiam", Integer.class);
 
     public final StringPath tenKhuyenMai = createString("tenKhuyenMai");
+
+    public final BooleanPath trangThai = createBoolean("trangThai");
+
+    public final BooleanPath xoa = createBoolean("xoa");
 
     public QKhuyenMai(String variable) {
         super(KhuyenMai.class, forVariable(variable));

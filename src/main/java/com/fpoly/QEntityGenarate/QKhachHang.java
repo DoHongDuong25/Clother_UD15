@@ -5,16 +5,18 @@ import static com.querydsl.core.types.PathMetadataFactory.*;
 import com.querydsl.core.types.dsl.*;
 
 import com.querydsl.core.types.PathMetadata;
-import javax.annotation.Generated;
+import javax.annotation.processing.Generated;
 
+import com.fpoly.entity.DiaChi;
 import com.fpoly.entity.KhachHang;
 import com.querydsl.core.types.Path;
+import com.querydsl.core.types.dsl.PathInits;
 
 
 /**
  * QKhachHang is a Querydsl query type for KhachHang
  */
-@Generated("com.querydsl.codegen.EntitySerializer")
+@Generated("com.querydsl.codegen.DefaultEntitySerializer")
 public class QKhachHang extends EntityPathBase<KhachHang> {
 
     private static final long serialVersionUID = 1186222585L;
@@ -29,6 +31,8 @@ public class QKhachHang extends EntityPathBase<KhachHang> {
 
     //inherited
     public final NumberPath<Long> id = _super.id;
+
+    public final ListPath<DiaChi, QDiaChi> listDiaChi = this.<DiaChi, QDiaChi>createList("listDiaChi", DiaChi.class, QDiaChi.class, PathInits.DIRECT2);
 
     public final StringPath matKhau = createString("matKhau");
 

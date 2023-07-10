@@ -2,6 +2,7 @@ package com.fpoly.service.impl;
 
 import com.fpoly.convertor.HoaDonConvertor;
 import com.fpoly.dto.HoaDonDTO;
+import com.fpoly.entity.GiaoDich;
 import com.fpoly.entity.HoaDon;
 import com.fpoly.repository.HoaDonRepoditory2;
 import com.fpoly.repository.HoaDonRepository;
@@ -87,8 +88,14 @@ public class HoaDonServiceImpl implements HoaDonService {
 				hoaDonRepository.capNhatTrangThaiThanhHuyDon(hoaDon.getId());
 			}
 	}
+
     @Override
     public Page<HoaDon> findHoaDonByTrangThaiAndKhachHangId(int trangThai, Long khachHangId, Pageable pageable) {
         return hoaDonRepository2.findHoaDonByTrangThaiAndKhachHangId(trangThai, khachHangId, pageable);
+    }
+
+    @Override
+    public List<GiaoDich> timeLine(int trangThai, Long hoaDonId) {
+        return hoaDonRepository.timeLine(trangThai, hoaDonId);
     }
 }
