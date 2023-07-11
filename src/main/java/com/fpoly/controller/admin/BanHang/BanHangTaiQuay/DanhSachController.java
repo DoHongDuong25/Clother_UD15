@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.Date;
 import java.util.List;
@@ -29,8 +30,8 @@ public class DanhSachController {
 
     @RequestMapping("admin/BanHangTaiQuay")
     public String BanHangTaQuay(Model model) {
-        List<HoaDon> hoaDonLoai1 = hoaDonRepository.finHDByLoaiHD(1);
-        model.addAttribute("hoaDonLoai1", hoaDonLoai1);
+        List<HoaDon> danhSachBanHang = hoaDonRepository.finHDByLoaiHD(1);
+        model.addAttribute("danhSachBanHang", danhSachBanHang);
         return "admin/banHang/banHangTaiQuay/DanhSach";
     }
 
@@ -57,6 +58,8 @@ public class DanhSachController {
         hoaDon.setNguoiTao("hduong");
         hoaDon.setLoaiHoaDon(1);
         hoaDon.setTrangThai(trangThai);
+        hoaDon.setTongTienHoaDon(BigDecimal.valueOf(0));
+        hoaDon.setTongTienDonHang(BigDecimal.valueOf(0));
         hoaDonRepository.save(hoaDon);
 
         // Thêm mã hóa đơn vào redirectAttributes để truyền cho trang chuyển hướng
