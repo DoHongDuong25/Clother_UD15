@@ -28,6 +28,8 @@ public interface SanPhamChiTietService {
 
 	List<Long> getLstMauSacBySanPhamId(Long sanPhamId);
 
+	Optional<SanPhamChiTiet> getSanPhamChiTietByMauSacSizeSanPhamId(Long sanPhamId, Long mauSacId, Long kichCoId);
+
 //	List<SanPhamChiTietMauSacKichCo> getLstProductDetailsWithColorSize(Long id);
 
 }

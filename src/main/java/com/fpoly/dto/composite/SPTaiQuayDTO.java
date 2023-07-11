@@ -25,9 +25,13 @@ import lombok.NoArgsConstructor;
 public class SPTaiQuayDTO {
 	private List<ShowSanPhamTaiQuayDTO> lstShowSanPhamTaiQuayDTO;
 	
+	private Long hoaDonId;
+	
 	private Long kichCoId;
 	
 	private Long mauSacId;
+	
+	private Long sanPhamIdSPTQ;
 	
 	private Integer soLuong;
 }

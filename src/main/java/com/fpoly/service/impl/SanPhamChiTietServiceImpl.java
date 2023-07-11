@@ -70,6 +70,12 @@ public class SanPhamChiTietServiceImpl implements SanPhamChiTietService{
 		return sanPhamChiTietRepository.getLstMauSacBySanPhamId(sanPhamId);
 	}
 
+	@Override
+	public Optional<SanPhamChiTiet> getSanPhamChiTietByMauSacSizeSanPhamId(Long sanPhamId, Long mauSacId,
+			Long kichCoId) {
+		return sanPhamChiTietRepository.getSanPhamChiTietByMauSacSizeSanPhamId(sanPhamId, mauSacId, kichCoId);
+	}
+
 //	@Override
 //	public List<SanPhamChiTietMauSacKichCo> getLstProductDetailsWithColorSize(Long id) {
 //		return sanPhamChiTietRepository.getLstProductDetailsWithColorSize(id);

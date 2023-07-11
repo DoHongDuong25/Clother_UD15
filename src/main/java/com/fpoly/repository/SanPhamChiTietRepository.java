@@ -2,6 +2,7 @@ package com.fpoly.repository;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.domain.Page;
@@ -12,6 +13,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.fpoly.dto.search.SPAndSPCTSearchDto;
+import com.fpoly.entity.SanPham;
 import com.fpoly.entity.SanPhamChiTiet;
 
 @Repository
@@ -36,4 +38,7 @@ public interface SanPhamChiTietRepository extends JpaRepository<SanPhamChiTiet,L
 	
 	@Query(value = "SELECT DISTINCT s.mau_sac_id FROM san_pham_chi_tiet s WHERE s.san_pham_id = :id", nativeQuery = true)
 	List<Long> getLstMauSacBySanPhamId(@Param("id") Long sanPhamId);
+	
+	@Query(value = "SELECT * FROM san_pham_chi_tiet s WHERE s.san_pham_id = :sanPhamId AND s.mau_sac_id = :mauSacId AND s.kich_co_id = :kichCoId", nativeQuery = true)
+	Optional<SanPhamChiTiet> getSanPhamChiTietByMauSacSizeSanPhamId(@Param("sanPhamId") Long sanPhamId,@Param("mauSacId") Long mauSacId,@Param("kichCoId") Long kichCoId);
 }
