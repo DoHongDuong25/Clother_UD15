@@ -42,24 +42,24 @@
                     <td th:text="${hoaDonTaiQuay.maDon}"></td>
                     <td th:text="${hoaDonTaiQuay.hoaDonChiTiets.size()}"></td>
                     <!--            <td th:text="${hoaDonLoai1.tongTienHoaDon}"></td>-->
-                    <td th:text="${#numbers.formatDecimal(hoaDonTaiQuay.tongTienHoaDon, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></td>
-            <td th:text="${#dates.format(hoaDonTaiQuay.ngayTao, 'dd/MM/yyyy')}"></td>
-            <!-- <td th:text="${hoaDonTaiQuay.trangThai.name}"></td> -->
-            <td>
-                <div class="btn-group">
-                    <a th:href="@{'/banHang/' + ${hoaDonTaiQuay.id}}"
-                       class="btn btn-warning btn-sm"
-                       type="submit">
-                        <i class="fas fa-info-circle"></i>
-                    </a>
-                </div>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-</div>
+                    <td th:text="${#numbers.formatDecimal(hoaDonTaiQuay.tongTienHoaDon, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'">
+                    </td>
+                    <td th:text="${#dates.format(hoaDonTaiQuay.ngayTao, 'dd/MM/yyyy')}"></td>
+                    <!-- <td th:text="${hoaDonTaiQuay.trangThai.name}"></td> -->
+                    <td>
+                        <div class="btn-group">
+                            <a th:href="@{'/banHang/' + ${hoaDonTaiQuay.id}}" class="btn btn-warning btn-sm"
+                                type="submit">
+                                <i class="fas fa-info-circle"></i>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 
-<script th:src="@{/admin/js/banHang/banHangTaiQuay/danhSach.js}"></script>
+    <script th:src="@{/admin/js/banHang/banHangTaiQuay/danhSach.js}"></script>
 
 </body>
 

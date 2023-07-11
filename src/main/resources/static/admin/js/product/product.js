@@ -31,12 +31,6 @@ function flexUrlSubmit(url, method, formName) {
   document.getElementById("flexUrlTableForm" + formName).submit();
 }
 
-function flexUrlSubmitBanHangTaiQuay(url, method, formName) {
-  $("#flexUrlTableForm" + formName).attr("action", "/staff/product/" + url);
-  $("#flexUrlTableForm" + formName).attr("method", method);
-  document.getElementById("flexUrlTableForm" + formName).submit();
-}
-
 function toggleProductIds(source) {
   checkboxes = document.getElementsByName("productIds");
   for (var i = 0, n = checkboxes.length; i < n; i++) {
