@@ -4,6 +4,8 @@
 
 <head>
     <meta charset="UTF-8">
+    <title>Bán hàng tại quầy</title>
+    <link rel="icon" href="path_to_icon/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" th:href="@{/admin/css/banHang/banHangTaiQuay.css}">
 </head>
 
@@ -24,6 +26,7 @@
     <table class="table">
         <thead>
         <tr>
+            <th>STT</th>
             <th>Mã đơn</th>
             <th>Số sản phẩm</th>
             <th>Tổng số tiền</th>
@@ -34,15 +37,17 @@
         </thead>
 
         <tbody>
-        <tr th:each="hoaDonLoai1: ${hoaDonLoai1}">
-            <td th:text="${hoaDonLoai1.maDon}"></td>
-            <td th:text="${hoaDonLoai1.hoaDonChiTiets.size()}"></td>
-            <td th:text="${hoaDonLoai1.tongTienHoaDon}"></td>
-            <td th:text="${#dates.format(hoaDonLoai1.ngayTao, 'dd/MM/yyyy')}"></td>
-            <td th:text="${hoaDonLoai1.trangThai.name}"></td>
+        <tr th:each="hoaDonTaiQuay, stt: ${danhSachBanHang}">
+            <td th:text="${stt.count}"></td>
+            <td th:text="${hoaDonTaiQuay.maDon}"></td>
+            <td th:text="${hoaDonTaiQuay.hoaDonChiTiets.size()}"></td>
+<!--            <td th:text="${hoaDonLoai1.tongTienHoaDon}"></td>-->
+            <td th:text="${#numbers.formatDecimal(hoaDonTaiQuay.tongTienHoaDon, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></td>
+            <td th:text="${#dates.format(hoaDonTaiQuay.ngayTao, 'dd/MM/yyyy')}"></td>
+            <td th:text="${hoaDonTaiQuay.trangThai.name}"></td>
             <td>
                 <div class="btn-group">
-                    <a th:href="@{'/banHang/' + ${hoaDonLoai1.id}}"
+                    <a th:href="@{'/banHang/' + ${hoaDonTaiQuay.id}}"
                        class="btn btn-warning btn-sm"
                        type="submit">
                         <i class="fas fa-info-circle"></i>

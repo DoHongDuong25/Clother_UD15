@@ -279,6 +279,7 @@ body {
 .table {
     width: 100%;
     border-collapse: collapse;
+    background-color: white;
 }
 
 .table th,

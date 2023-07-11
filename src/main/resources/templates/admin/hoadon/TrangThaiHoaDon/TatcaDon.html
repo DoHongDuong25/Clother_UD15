@@ -46,7 +46,7 @@
     <table id="user-table-allHD" class="table">
         <thead>
         <tr>
-            <th data-field="state" data-checkbox="true"></th>
+            <th>STT</th>
             <th scope="col">Mã đơn</th>
             <th scope="col">Khách hàng</th>
             <th scope="col">Số điện thoại</th>
@@ -59,13 +59,14 @@
 
         </thead>
         <tbody>
-        <tr th:each="hoaDon : ${getAllHoaDon}">
-            <td></td>
+        <tr th:each="hoaDon, stt : ${getAllHoaDon}">
+            <td th:text="${stt.count}"></td>
             <th scope="row" th:text="${hoaDon.maDon}"></th>
             <td th:text="${hoaDon.khachHang.hoTen}"></td>
             <td th:text="${hoaDon.sdtNguoiNhan}"></td>
             <td th:text="${#dates.format(hoaDon.ngayTao, 'dd/MM/yyyy')}"></td>
-            <td th:text="${hoaDon.tongTienHoaDon}"></td>
+<!--            <td th:text="${hoaDon.tongTienHoaDon}"></td>-->
+            <td th:text="${#numbers.formatDecimal(hoaDon.tongTienHoaDon, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></td>
             <td th:text="${hoaDon.ghiChu}"></td>
             <td th:text="${hoaDon.trangThai.name}"></td>
             <td>
@@ -83,7 +84,7 @@
         </tr>
         </tbody>
     </table>
-    <div>
+    <div th:if="${!#lists.isEmpty(getAllHoaDon)}">
         <ul class="pagination" th:classappend="${totalPages > 0} ? '' : 'pagination-empty'">
             <li th:each="pageNumber : ${#numbers.sequence(1, totalPages)}">
                 <a th:href="@{/admin/DonHang/TatCaDon(page=${pageNumber})}" th:text="${pageNumber}"></a>
@@ -91,7 +92,8 @@
         </ul>
     </div>
     <div class="alert alert-warning container mt-3" th:if="${#lists.isEmpty(getAllHoaDon)}">
-        Không có dữ liệu
+        <img src="/admin/img/noData2.png" alt="Không có sản phẩm" style="width: 300px; height: 300px;">
+        <p class="empty-message" style="margin-top: 20px; font-size: 1.8em;">KHÔNG CÓ DỮ LIỆU</p>
     </div>
 </div>
 
