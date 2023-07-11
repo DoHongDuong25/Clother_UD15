@@ -20,6 +20,26 @@ $(document).ready(function () {
     });
 });
 
+$(document).ready(function () {
+    $('.btn-primary').click(function () {
+        var sanPhamId = $(this).attr('data-id');
+        console.log(sanPhamId);
+        var modal = $('#modalChiTiet');
+
+        $.ajax({
+            url: '/' + sanPhamId + '/mausac-kichco',
+            type: 'GET',
+            success: function (data) {
+                modal.find('.modal-body-spct').html(data);
+                modal.modal('show');
+            },
+            error: function () {
+            }
+        });
+    });
+});
+
+
 // $(document).ready(function () {
 //     $('#modalSanPham').on('show.bs.modal', function (event) {
 //         var button = $(event.relatedTarget);

@@ -34,12 +34,14 @@ public class DaGiaoHangController {
     @RequestMapping("admin/DonHang/DaGiaoHang")
     public String getHoaDonDaGiao(Model model,
                                   @RequestParam(defaultValue = "1") int page,
-                                  @RequestParam(defaultValue = "3") int size) {
+                                  @RequestParam(defaultValue = "5") int size) {
         PageRequest pageable = PageRequest.of(page -1, size);
         Page<HoaDon> DaGiao = hoaDonRepository2.findByTrangThaiHoaDonListTrangThai(4, pageable);
 
         model.addAttribute("DaGiao", DaGiao.getContent());
         model.addAttribute("pageDaGiao", DaGiao.getTotalPages());
+        model.addAttribute("page", page);
+        model.addAttribute("size", size);
         return "admin/hoadon/TrangThaiHoaDon/DaGiao";
     }
 }

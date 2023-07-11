@@ -27,4 +27,10 @@ public interface HoaDonRepoditory2 extends PagingAndSortingRepository<HoaDon, Lo
 
     @Query(value = "SELECT * FROM hoa_don WHERE trang_thai_id = ?", nativeQuery = true)
     Page<HoaDon> findHoaDonbyId(int trangThai, Pageable pageable);
+
+    @Query(value = "SELECT * FROM hoa_don WHERE loai_hoa_don = :loai", nativeQuery = true)
+    Page<HoaDon> finHDByLoaiHD(@Param("loai") Integer loai, Pageable pageable);
+
+    @Query(value = "select * from hoa_don where id = ?", nativeQuery = true)
+    Page<HoaDon> findByIDD(@Param("id") Long id, Pageable pageable);
 }

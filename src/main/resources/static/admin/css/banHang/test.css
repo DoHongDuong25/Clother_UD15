@@ -2,22 +2,11 @@
     display: flex;
 }
 
-.panel.sanPhamCT {
-    flex-grow: 1;
-    flex-shrink: 0;
-    width: 1050px;
-    height: 600px;
-    border: 1px solid #ddd; /* Màu sắc của border */
-    border-radius: 10px; /* Góc cong của border */
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Hiệu ứng đổ bóng */
-}
-
-.panel.hoaDon {
-    flex-grow: 0;
-    flex-shrink: 0;
-    height: 400px;
-    width: 400px;
-    margin-left: 10px;
+.tableSPCT {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    height: 500px;
 }
 
 .button-container {
@@ -173,7 +162,6 @@
     letter-spacing: 2px;
 }
 .primary-btn {
-    /*display: inline-block;*/
     font-size: 13px;
     font-weight: 700;
     text-transform: uppercase;
@@ -189,5 +177,5 @@
     margin-top: 10px;
 }
 h6{
-    text-align: center;
+    text-align: left;
 }

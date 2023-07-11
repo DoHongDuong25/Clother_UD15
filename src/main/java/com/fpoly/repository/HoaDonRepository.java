@@ -20,8 +20,6 @@ import java.util.List;
 public interface HoaDonRepository extends CrudRepository<HoaDon, Long> {
     @Query(value = "select * from hoa_don where trang_thai_id = ?1", nativeQuery = true)
     List<HoaDon> findByTrangThaiHoaDonListTrangThai(int trangThai);
-    @Query(value = "SELECT * FROM hoa_don WHERE loai_hoa_don = :loai", nativeQuery = true)
-    List<HoaDon> finHDByLoaiHD(@Param("loai") Integer loai);
 
     @Query(value = "select Max(id) from hoa_don", nativeQuery = true)
     Integer getMaxId();

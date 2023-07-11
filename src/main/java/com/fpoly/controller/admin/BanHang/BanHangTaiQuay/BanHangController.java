@@ -25,6 +25,9 @@ public class BanHangController {
     HoaDonRepository hoaDonRepository;
 
     @Autowired
+    HoaDonRepoditory2 hoaDonRepository2;
+
+    @Autowired
     SanPhamRepository sanPhamRepository;
 
     @Autowired

@@ -10,7 +10,7 @@
 </head>
 
 <body>
-<div class="container" layout:fragment="content">
+<div class="container-fluid" layout:fragment="content">
     <div class="tab-buttons">
         <button class="tab-button" onclick="redirectToTatCaDon()">Tất cả đơn</button>
         <button class="tab-button" onclick="redirectToChoxacNhan()">Chờ xác nhận</button>
@@ -49,7 +49,7 @@
         </thead>
         <tbody>
         <tr th:each="hoaDon, stt : ${DaHuy}">
-            <td th:text="${stt.count}"></td>
+            <td th:text="${(page - 1) * size + stt.count}"></td>
             <td scope="row" th:text="${hoaDon.maDon}"></td>
             <td th:text="${hoaDon.khachHang.hoTen}"></td>
             <td th:text="${hoaDon.sdtNguoiNhan}"></td>
@@ -71,9 +71,10 @@
         </tbody>
     </table>
     <div th:if="${!#lists.isEmpty(DaHuy)}">
-        <ul class="pagination" th:classappend="${pageDaHuy > 0} ? '' : 'pagination-empty'">
+        <ul class="pagination">
             <li th:each="pageNumber : ${#numbers.sequence(1, pageDaHuy)}">
-                <a th:href="@{/admin/DonHang/DaHuyHang(page=${pageNumber})}" th:text="${pageNumber}"></a>
+                <a th:href="@{/admin/DonHang/DaHuyHang(page=${pageNumber})}" th:text="${pageNumber}"
+                   th:class="${pageNumber == page ? 'active-page' : ''}"></a>
             </li>
         </ul>
     </div>

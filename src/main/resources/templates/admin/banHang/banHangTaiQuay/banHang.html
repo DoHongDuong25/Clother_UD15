@@ -1,129 +1,111 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-    layout:decorate="~{admin/layouts/index}">
+      layout:decorate="~{admin/layouts/index}">
 
 <head>
     <meta charset="UTF-8">
     <title>Bán hàng tại quầy</title>
-    <link rel="icon" href="path_to_favicon/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" th:href="@{/admin/css/banHang/banHangTaiQuay.css}">
     <link rel="stylesheet" th:href="@{/admin/css/banHang/test.css}">
     <script th:src="@{/admin/js/banHang/banHangTaiQuay/banHang.js}"></script>
-
-    <script th:inline="javascript">
-        $(document).ready(function () {
-            $('.btn-primary').click(function () {
-                var sanPhamId = $(this).attr('data-id');
-                console.log(sanPhamId);
-                var modal = $('#modalChiTiet');
-
-                $.ajax({
-                    url: '/' + sanPhamId + '/mausac-kichco',
-                    type: 'GET',
-                    success: function (data) {
-                        modal.find('.modal-body-spct').html(data);
-                        modal.modal('show');
-                    },
-                    error: function () {}
-                });
-            });
-        });
-    </script>
-
 </head>
 
 <body>
-    <div class="container-fluid" layout:fragment="content">
-        <div class="col-sm-12" th:each="hoaDon: ${hoaDon}">
-            <div class="row">
-                <div class="sanPhamCT col-sm-8">
-                    <div class="button-group">
-                        <button class="action-button" onclick="quayLai()">Danh sách
-                            <i class="fas fa-arrow-left"></i>
-                        </button>
+<div class="container-fluid" layout:fragment="content">
+    <div class="col-sm-12" th:each="hoaDon: ${hoaDon}">
+        <div class="row">
+            <div class="sanPhamCT col-sm-8">
+                <div class="button-group">
+                    <button class="action-button" onclick="quayLai()">Danh sách
+                        <i class="fas fa-arrow-left"></i>
+                    </button>
 
-                        <button type="submit" class="btn btn-primary" data-toggle="modal"
+                    <button type="submit" class="btn btn-primary" data-toggle="modal"
                             th:data-target="'#modalSanPham'">
-                            <i class="fas fa-fw fa-shopping-cart"></i>
-                            Thêm sản phẩm
-                        </button>
-                        <div class="modal fade" th:id="'modalSanPham'" tabindex="-1" aria-labelledby="exampleModalLabel"
-                            aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Thêm sản phẩm</h5>
-                                        <h1 th:text="${hoaDon.id}"></h1>
-                                    </div>
-                                    <div class="modal-body">
-
-                                    </div>
-
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary"
-                                            data-dismiss="modal">Đóng</button>
-                                    </div>
+                        <i class="fas fa-fw fa-shopping-cart"></i>
+                        Thêm sản phẩm
+                    </button>
+                    <div class="modal fade" th:id="'modalSanPham'" tabindex="-1" aria-labelledby="exampleModalLabel"
+                         aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Thêm sản phẩm</h5>
+                                    <h1 th:text="${hoaDon.id}"></h1>
                                 </div>
-                            </div>
-                        </div>
+                                <div class="modal-body">
 
-                        <div class="modal fade" id="modalChiTiet" tabindex="-1" aria-labelledby="exampleModalLabelct"
-                            aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabelct">Chi tiết sản phẩm</h5>
-                                        <h1 th:text="${hoaDon.id}"></h1>
-                                    </div>
-                                    <div class="modal-body-spct">
+                                </div>
 
-                                    </div>
-
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary"
-                                            data-dismiss="modal">Đóng</button>
-                                    </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                            data-dismiss="modal">Đóng
+                                    </button>
                                 </div>
                             </div>
                         </div>
                     </div>
 
+                    <div class="modal fade" id="modalChiTiet" tabindex="-1" aria-labelledby="exampleModalLabelct"
+                         aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabelct">Chi tiết sản phẩm</h5>
+                                    <h1 th:text="${hoaDon.id}"></h1>
+                                </div>
+                                <div class="modal-body-spct">
+
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                            data-dismiss="modal">Đóng
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tableSPCT">
                     <table class="custom-table">
                         <thead>
-                            <tr>
-                                <th data-field="state" data-checkbox="true"></th>
-                                <th scope="col">Sản phẩm</th>
-                                <th scope="col">Đơn giá</th>
-                                <th scope="col">Số lượng</th>
-                                <th scope="col">Thành tiền</th>
-                            </tr>
+                        <tr>
+                            <th>STT</th>
+                            <th scope="col">Sản phẩm</th>
+                            <th scope="col">Đơn giá</th>
+                            <th scope="col">Số lượng</th>
+                            <th scope="col">Thành tiền</th>
+                        </tr>
                         </thead>
 
                         <tbody>
-                            <tr th:each="hdct : ${hoaDon.hoaDonChiTiets}">
-                                <td></td>
-                                <td th:text="${hdct.sanPhamChiTiet.sanPham.getTenSanPham()}">
-                                </td>
-                                <td th:text="${hdct.donGia}"></td>
-                                <td th:text="${hdct.soLuong}"></td>
-                                <td th:text="${hdct.tongTien}"></td>
-                            </tr>
+                        <tr th:each="hdct, stt : ${hoaDon.hoaDonChiTiets}">
+                            <td th:text="${stt.count}"></td>
+                            <td th:text="${hdct.sanPhamChiTiet.sanPham.getTenSanPham()}"></td>
+                            <td th:text="${#numbers.formatDecimal(hdct.donGia, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></td>
+                            <td th:text="${hdct.soLuong}"></td>
+                            <td th:text="${#numbers.formatDecimal(hdct.tongTien, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></td>
+                        </tr>
 
-                            <tr th:if="${hoaDon.hoaDonChiTiets.isEmpty()}">
-                                <td colspan="5">
-                                    <div class="empty-content">
-                                        <img src="/admin/img/gioHangTrong.png" alt="Không có sản phẩm">
-                                        <p class="empty-message">Không có sản phẩm nào trong giỏ hàng</p>
-                                    </div>
-                                </td>
-                            </tr>
+                        <tr th:if="${hoaDon.hoaDonChiTiets.isEmpty()}">
+                            <td colspan="5">
+                                <div class="empty-content">
+                                    <img src="/admin/img/gioHangTrong.png" alt="Không có sản phẩm">
+                                    <p class="empty-message">Không có sản phẩm nào trong giỏ hàng</p>
+                                </div>
+                            </td>
+                        </tr>
                         </tbody>
                     </table>
                 </div>
+            </div>
 
-                <div class="hoaDon col-sm-4">
+            <div class="hoaDon col-sm-4">
+                <div class="thanhToan">
                     <div class="cart__discount">
-                        <h6>Mã giảm giá :</h6>
+                        <h6 class="title-thanhToan">Mã giảm giá :</h6>
                         <th:block th:if="${message_khuyenMai != null}">
                             <span class="text-danger">[[${message_khuyenMai}]]</span>
                         </th:block>
@@ -140,21 +122,24 @@
                         <ul>
                             <li>Mã đơn: <span th:text="${hoaDon.maDon}"></span></li>
                             <li>Ngày tạo: <span th:text="${#dates.format(hoaDon.ngayTao, 'dd/MM/yyyy')}"></span></li>
-                        <li>Tổng tiền hàng <span>[[*{#numbers.formatDecimal(tongTien, 0, 'COMMA', 2, 'POINT')}]] VNĐ</span></li>
-                        <span></span>
-                        <th:block th:if="*{soTienGiamGia != null}">
-                            <li>Giảm giá <span>-[[*{#numbers.formatDecimal(soTienGiamGia, 0, 'COMMA', 2, 'POINT')}]] VNĐ</span>
-                            </li>
+                            <li>Tổng tiền hàng
+                                <span>[[*{#numbers.formatDecimal(tongTien, 0, 'COMMA', 2, 'POINT')}]] VNĐ</span></li>
                             <span></span>
-                        </th:block>
-                        <th:block th:if="*{soTienGiamGia == null}">
-                            <li>Giảm giá <span>0 VNĐ</span></li>
-                        </th:block>
-                        <li>Tổng tiền hóa đơn : <span>[[*{#numbers.formatDecimal(thanhTien, 0, 'COMMA', 2, 'POINT')}]] VNĐ</span></li>
-                    </ul>
-                    <div class="btn-group">
-                        <button type="submit" class="primary-btn">Hủy đơn</button>
-                        <button type="submit" class="primary-btn">Thanh toán</button>
+                            <th:block th:if="*{soTienGiamGia != null}">
+                                <li>Giảm giá <span>-[[*{#numbers.formatDecimal(soTienGiamGia, 0, 'COMMA', 2, 'POINT')}]] VNĐ</span>
+                                </li>
+                                <span></span>
+                            </th:block>
+                            <th:block th:if="*{soTienGiamGia == null}">
+                                <li>Giảm giá <span>0 VNĐ</span></li>
+                            </th:block>
+                            <li>Tổng tiền hóa đơn : <span>[[*{#numbers.formatDecimal(thanhTien, 0, 'COMMA', 2, 'POINT')}]] VNĐ</span>
+                            </li>
+                        </ul>
+                        <div class="btn-group">
+                            <button type="submit" class="primary-btn">Hủy đơn</button>
+                            <button type="submit" class="primary-btn">Thanh toán</button>
+                        </div>
                     </div>
                 </div>
             </div>
