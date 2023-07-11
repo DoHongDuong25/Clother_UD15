@@ -17,7 +17,7 @@ import java.util.List;
 public class HoaDonChiTiet extends BaseEntity implements Serializable {
 
     @ManyToOne
-    @JoinColumn(name = "hoa_don_id", insertable = false, updatable = false)
+    @JoinColumn(name = "hoa_don_id")
     private HoaDon hoaDon;
 
     @ManyToOne

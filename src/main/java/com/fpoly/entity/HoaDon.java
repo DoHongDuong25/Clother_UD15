@@ -78,17 +78,12 @@ public class HoaDon extends BaseEntity implements Serializable {
         return loaiHoaDon2;
     }
 
-    @OneToMany(mappedBy = "hoaDon")
+    @OneToMany(mappedBy = "hoaDon",cascade = CascadeType.ALL)
     private List<HoaDonChiTiet> hoaDonChiTiets;
 
     @Override
     public String toString() {
-        return "HoaDon{" +
-                "khuyenMai=" + khuyenMai.getId() +
-                ", nguoiDung=" + nguoiDung.getId() +
-                ", khachHang=" + khachHang.getId() +
-//                ", giaoDich=" + giaoDiches.size() +
-                ", nguoiNhan='" + nguoiNhan + '\'' +
+        return "HoaDon{nguoiNhan='" + nguoiNhan + '\'' +
                 ", sdtNguoiNhan='" + sdtNguoiNhan + '\'' +
                 ", diaChiGiaoHang='" + diaChiGiaoHang + '\'' +
                 ", thoiGianGiaoHang='" + thoiGianGiaoHang + '\'' +

@@ -25,5 +25,4 @@ public class TrangThai {
     private Long id;
 
     private String name;
-
 }

@@ -85,7 +85,6 @@ public class SanPhamController {
 	@Autowired
 	private HinhAnhService hinhAnhService;
 
-//	private ProductDetailsWithColorSizeRepository productDetailsWithColorSizeRepository;
 
 	@GetMapping("/images/{filename:.+}")
 	@ResponseBody
@@ -223,8 +222,8 @@ public class SanPhamController {
 	
 	@PostMapping("/getData")
 	public String showSanPhamChiTiet(ModelMap model, @ModelAttribute("resultSP") SPTaiQuayDTO dto) {
-		System.out.println(dto.getMauSacId());
-		System.out.println(dto.getKichCoId());
+//		System.out.println(dto.getMauSacId());
+//		System.out.println(dto.getKichCoId());
 		return "redirect:/staff/product";
 	}
 	

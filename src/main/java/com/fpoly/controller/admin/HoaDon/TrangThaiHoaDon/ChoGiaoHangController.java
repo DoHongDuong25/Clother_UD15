@@ -65,6 +65,7 @@ public class ChoGiaoHangController {
             hoaDon.setNgayCapNhat(new Date());
             hoaDon.setNguoiCapNhat("hduong"); // Cập nhật người cập nhật (thay "hduong" bằng giá trị tương ứng)
             hoaDonRepository.save(hoaDon);
+
             GiaoDich gd = new GiaoDich();
             gd.setHoaDon(hoaDon);
             gd.setNguoiDung(hoaDon.getNguoiDung().getId());

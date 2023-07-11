@@ -30,7 +30,7 @@
                 <table class="custom-table">
                     <thead>
                     <tr>
-                        <th data-field="state" data-checkbox="true"></th>
+                        <th>STT</th>
                         <th scope="col">Sản phẩm</th>
                         <th scope="col">Đơn giá</th>
                         <th scope="col">Số lượng</th>
@@ -39,10 +39,9 @@
                     </thead>
 
                     <tbody>
-                    <tr th:each="hdct : ${hoaDon.hoaDonChiTiets}">
-                        <td></td>
-                        <td th:text="${hdct.sanPhamChiTiet.sanPham.getTenSanPham()}">
-                        </td>
+                    <tr th:each="hdct, stt : ${hoaDon.hoaDonChiTiets}">
+                        <td th:text="${stt.count}"></td>
+                        <td th:text="${hdct.sanPhamChiTiet.sanPham.getTenSanPham()}"></td>
                         <td th:text="${hdct.donGia}"></td>
                         <td th:text="${hdct.soLuong}"></td>
                         <td th:text="${hdct.tongTien}"></td>
@@ -192,47 +191,6 @@
                                         </select>
                                     </div>
                                 </div>
-                                <!-- --- -->
-                                <!-- <div class="row mt-3">
-                                    <div class="col-sm-3">
-                                        <label for="createdBy">Người tạo:</label>
-                                        <input type="text" class="form-control" name="createdBy" id="createdBy"
-                                            placeholder="Người tạo" th:field="*{nguoiTaoSPCT}">
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <label for="createdTime">Thời gian tạo:</label>
-                                        <div class="row">
-                                            <div class="col-sm-6">
-                                                <input type="date" class="form-control" name="minCreatedTime"
-                                                    id="minCreatedTime" th:field="*{ngayTaoMin}">
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <input type="date" class="form-control" name="maxCreatedTime"
-                                                    id="maxCreatedTime" th:field="*{ngayTaoMax}">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <label for="lastModifedBy">Người sửa đổi cuối:</label>
-                                        <input type="text" class="form-control" name="lastModifedTime" id="lastModifedTime"
-                                            placeholder="Người sửa đổi cuối" th:field="*{nguoiCapNhatSPCT}">
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <label for="lastModifedTime">Thời gian sửa đổi cuối:</label>
-                                        <div class="row">
-                                            <div class="col-sm-6">
-                                                <input type="date" class="form-control" name="minLastModifedTime"
-                                                    id="minLastModifedTime" placeholder="Người tạo"
-                                                    th:field="*{ngayCapNhatMin}">
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <input type="date" class="form-control" name="maxLastModifedTime"
-                                                    id="maxLastModifedTime" placeholder="Thời gian sửa đổi cuối"
-                                                    th:field="*{ngayCapNhatMax}">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> -->
                                 <div class="row mt-3">
                                     <div class="col-sm-3">
                                         <label>Giá:</label>
@@ -298,7 +256,7 @@
                                     <table width="100%" cellspacing="0">
                                         <thead class="text-center">
                                         <tr>
-                                            <th>#</th>
+                                            <th>STT</th>
                                             <th>Ảnh sản phẩm</th>
                                             <th>Tên sản phẩm</th>
                                             <th>Giá</th>
@@ -560,7 +518,7 @@
             </div>
         </div>
     </div>
-    <a data-toggle="modal" href="#myModal1" class="btn btn-primary">Launch modal</a>
+    <!--    <a data-toggle="modal" href="#myModal1" class="btn btn-primary">Launch modal</a>-->
 
     <script>
         function openModalSanPham() {
