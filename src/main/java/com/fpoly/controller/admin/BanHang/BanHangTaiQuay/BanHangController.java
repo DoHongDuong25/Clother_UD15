@@ -61,6 +61,9 @@ public class BanHangController {
 
     @Autowired
     HoaDonRepoditory2 hoaDonRepository2;
+
+    @Autowired
+    HoaDonChiTietRepository2 hoaDonChiTietRepository2;
     private SanPhamRepository sanPhamRepository;
 
     @Autowired
@@ -167,22 +170,27 @@ public class BanHangController {
             return dto;
         }).collect(Collectors.toList());
     }
+
     @PostMapping("/banHang/getData")
     public String showSanPhamChiTiet(ModelMap model, @ModelAttribute("resultSP") SPTaiQuayDTO dto) {
         Optional<SanPhamChiTiet> optSpct = sanPhamChiTietService.getSanPhamChiTietByMauSacSizeSanPhamId(dto.getSanPhamIdSPTQ(), dto.getMauSacId(), dto.getKichCoId());
         if (optSpct.isPresent()) {
-
             Optional<HoaDon> optHD = hoaDonRepository.findById(dto.getHoaDonId());
+            System.out.println(optSpct.get().getSanPham().getGia());
             if (optHD.isPresent()) {
                 HoaDon hoaDon = optHD.get();
 
-                // Tạo hóa đơn chi tiết
+                BigDecimal giaSP = optSpct.get().getSanPham().getGia();
+
+                int soLuong = dto.getSoLuong();
+
                 HoaDonChiTiet hoaDonChiTiet = new HoaDonChiTiet();
+                BigDecimal thanhTien = giaSP.multiply(BigDecimal.valueOf(soLuong));
                 hoaDonChiTiet.setSanPhamChiTiet(optSpct.get());
                 hoaDonChiTiet.setHoaDon(hoaDon);
-                hoaDonChiTiet.setDonGia(BigDecimal.valueOf(100000));
-                hoaDonChiTiet.setSoLuong(10);
-                hoaDonChiTiet.setTongTien(BigDecimal.valueOf(100000009));
+                hoaDonChiTiet.setDonGia(giaSP);
+                hoaDonChiTiet.setSoLuong(soLuong);
+                hoaDonChiTiet.setTongTien(thanhTien);
                 hoaDonChiTiet = hoaDonChiTietRepository.save(hoaDonChiTiet);
 
                 hoaDon.getHoaDonChiTiets().add(hoaDonChiTiet);
@@ -201,15 +209,30 @@ public class BanHangController {
         return "admin/banHang/banHangTaiQuay/banHang";
     }
 
-
     @RequestMapping("banHang/{id}")
-    public String banHang(@PathVariable("id") Long id, Model model, @ModelAttribute(name = "dataSearch") SPAndSPCTSearchDto dataSearch,
-                          @RequestParam("page") Optional<Integer> page, @RequestParam("size") Optional<Integer> size) {
+    public String banHang(@PathVariable("id") Long id,
+                          Model model,
+                          @ModelAttribute(name = "dataSearch") SPAndSPCTSearchDto dataSearch,
+                          @RequestParam("page") Optional<Integer> page,
+                          @RequestParam("size") Optional<Integer> size,
+
+                          @RequestParam(defaultValue = "1") int pageHDCT,
+                          @RequestParam(defaultValue = "5") int sizeHDCT) {
+
         HoaDon hoaDon = hoaDonRepository.findById(id).get();
         model.addAttribute("hoaDon", hoaDon);
+
+        //HÓA ĐƠN CHI TIẾT VÀ PHÂN TRANG HÓA ĐƠN CHI TIẾT
+        PageRequest pageableHDCT = PageRequest.of(pageHDCT - 1, sizeHDCT);
+        Page<HoaDonChiTiet> hoaDonChiTiet = hoaDonChiTietRepository2.findHDCTByHoaDonId(id, pageableHDCT);
+        model.addAttribute("hoaDonChiTiet", hoaDonChiTiet.getContent());
+        model.addAttribute("pageHoaDonChiTiet", hoaDonChiTiet.getTotalPages());
+        model.addAttribute("pageHDCT", pageHDCT);
+        model.addAttribute("sizeHDCT", sizeHDCT);
+
+
         int currentPage = page.orElse(1);
         int pageSize = size.orElse(5);
-
         Pageable pageable = PageRequest.of(currentPage - 1, pageSize);
         Page<SanPham> resultPage = null;
         SPTaiQuayDTO resultSP = new SPTaiQuayDTO();

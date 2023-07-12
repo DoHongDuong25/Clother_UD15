@@ -13,7 +13,6 @@ import java.util.List;
 
 @Repository
 public interface HoaDonChiTietRepository extends JpaRepository<HoaDonChiTiet,Long> {
-    List<HoaDonChiTiet> findByHoaDonId(Long hoaDonId);
     
     @Query(value = "SELECT count(*) FROM hoa_don_chi_tiet WHERE hoa_don_id = :id AND da_xoa=false", nativeQuery = true)
 	Integer countByHoaDonId(@Param("id") Long id);

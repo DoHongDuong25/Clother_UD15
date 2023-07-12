@@ -49,8 +49,6 @@ public class DanhSachController {
         return "admin/banHang/banHangTaiQuay/DanhSach";
     }
 
-
-
     @PostMapping("/TaoHoaDon")
     public String taoHoaDon(HoaDon hoaDon, RedirectAttributes redirectAttributes) {
         Integer maxId = hoaDonService.getMaxId();

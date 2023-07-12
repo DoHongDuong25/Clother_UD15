@@ -13,7 +13,7 @@
 
 <body>
 <div class="container-fluid" layout:fragment="content">
-    <div class="col-sm-12" th:each="hoaDon : ${hoaDon}">
+    <div class="col-sm-12" th:each="hoaDonBanHangTaiQuay : ${hoaDon}">
         <div class="row">
             <div class="sanPhamCT col-sm-8">
                 <div class="button-group">
@@ -26,37 +26,55 @@
                         Thêm sản phẩm
                     </button>
                 </div>
+                <div class="table-HoaDonChiTiet">
+                    <table class="custom-table">
+                        <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th scope="col">Sản phẩm</th>
+                            <th scope="col">Đơn giá</th>
+                            <th scope="col">Số lượng</th>
+                            <th scope="col">Thành tiền</th>
+                            <th scope="col">Thao tác</th>
+                        </tr>
+                        </thead>
 
-                <table class="custom-table">
-                    <thead>
-                    <tr>
-                        <th>STT</th>
-                        <th scope="col">Sản phẩm</th>
-                        <th scope="col">Đơn giá</th>
-                        <th scope="col">Số lượng</th>
-                        <th scope="col">Thành tiền</th>
-                    </tr>
-                    </thead>
+                        <tbody>
+                        <tr th:each="hoaDonCT, stt : ${hoaDonChiTiet}">
+                            <td th:text="${(pageHDCT - 1) * sizeHDCT + stt.count}"></td>
+                            <td th:text="${hoaDonCT.sanPhamChiTiet.sanPham.getTenSanPham()}"></td>
+                            <td th:text="${hoaDonCT.donGia}"></td>
+                            <td th:text="${hoaDonCT.soLuong}"></td>
+                            <td th:text="${hoaDonCT.tongTien}"></td>
+                            <td>
+                                <div class="btn-group">
+                                    <button class="action-button xoaHDCT" th:attr="data-id=${hoaDon.id}">
+                                        <i class="fa fa-trash" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
 
-                    <tbody>
-                    <tr th:each="hdct, stt : ${hoaDon.hoaDonChiTiets}">
-                        <td th:text="${stt.count}"></td>
-                        <td th:text="${hdct.sanPhamChiTiet.sanPham.getTenSanPham()}"></td>
-                        <td th:text="${hdct.donGia}"></td>
-                        <td th:text="${hdct.soLuong}"></td>
-                        <td th:text="${hdct.tongTien}"></td>
-                    </tr>
-
-                    <tr th:if="${hoaDon.hoaDonChiTiets.isEmpty()}">
-                        <td colspan="5">
-                            <div class="empty-content">
-                                <img src="/admin/img/gioHangTrong.png" alt="Không có sản phẩm">
-                                <p class="empty-message">Không có sản phẩm nào trong giỏ hàng</p>
-                            </div>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
+                        <tr th:if="${hoaDonChiTiet.isEmpty()}">
+                            <td colspan="5">
+                                <div class="empty-content">
+                                    <img src="/admin/img/gioHangTrong.png" alt="Không có sản phẩm">
+                                    <p class="empty-message">Không có sản phẩm nào trong giỏ hàng</p>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div th:if="${!#lists.isEmpty(hoaDonChiTiet)}">
+                        <ul class="pagination">
+                            <li th:each="pageNumber : ${#numbers.sequence(1, pageHoaDonChiTiet)}">
+                                <a th:href="@{/banHang/{id}(id=${hoaDon.id},pageHDCT=${pageNumber})}"
+                                   th:text="${pageNumber}"
+                                   th:class="${pageNumber == pageHDCT ? 'active-page' : ''}"></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             </div>
 
             <div class="hoaDon col-sm-4">
@@ -73,13 +91,15 @@
                         <button type="submit">ÁP DỤNG</button>
                     </form>
                 </div>
+
                 <div class="cart__total">
                     <h6>THÔNG TIN THANH TOÁN</h6>
                     <ul>
                         <li>Mã đơn: <span th:text="${hoaDon.maDon}"></span></li>
                         <li>Ngày tạo: <span th:text="${#dates.format(hoaDon.ngayTao, 'dd/MM/yyyy')}"></span></li>
-                        <li>Tổng tiền hàng <span>[[*{#numbers.formatDecimal(tongTien, 0, 'COMMA', 2, 'POINT')}]]
-                                    VNĐ</span></li>
+                        <li>Tổng tiền hàng:<span
+                                th:text="${#numbers.formatDecimal(hoaDon.tongTienDonHang, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></span>
+                        </li>
                         <span></span>
                         <th:block th:if="*{soTienGiamGia != null}">
                             <li>Giảm giá <span>-[[*{#numbers.formatDecimal(soTienGiamGia, 0, 'COMMA', 2, 'POINT')}]]
@@ -90,8 +110,9 @@
                         <th:block th:if="*{soTienGiamGia == null}">
                             <li>Giảm giá <span>0 VNĐ</span></li>
                         </th:block>
-                        <li>Tổng tiền hóa đơn : <span>[[*{#numbers.formatDecimal(thanhTien, 0, 'COMMA', 2,
-                                    'POINT')}]] VNĐ</span></li>
+                        <li>Tổng tiền hóa đơn: <span
+                                th:text="${#numbers.formatDecimal(hoaDon.tongTienHoaDon, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></span>
+                        </li>
                     </ul>
                     <div class="btn-group">
                         <button type="submit" class="primary-btn">Hủy đơn</button>
@@ -109,7 +130,6 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabelct">Chi tiết sản phẩm</h5>
-                    <h1 th:text="${hoaDon.id}"></h1>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -413,6 +433,12 @@
                                                                                        hidden>
                                                                             </label>
                                                                         </div>
+                                                                        <div>
+                                                                            <span>Số lượng</span>
+                                                                            <input type="number" name="soLuong" min="1"
+                                                                                   th:value="${resultSP.soLuong}"
+                                                                                   oninput="calculateTotal()">
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -518,7 +544,6 @@
             </div>
         </div>
     </div>
-    <!--    <a data-toggle="modal" href="#myModal1" class="btn btn-primary">Launch modal</a>-->
 
     <script>
         function openModalSanPham() {
