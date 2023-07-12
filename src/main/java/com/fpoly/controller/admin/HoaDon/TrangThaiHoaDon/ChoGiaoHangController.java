@@ -63,7 +63,7 @@ public class ChoGiaoHangController {
             tt.setId(3L);
             hoaDon.setTrangThai(tt);
             hoaDon.setNgayCapNhat(new Date());
-            hoaDon.setNguoiCapNhat("hduong"); // Cập nhật người cập nhật (thay "hduong" bằng giá trị tương ứng)
+            hoaDon.setNguoiCapNhat("hduong");
             hoaDonRepository.save(hoaDon);
 
             GiaoDich gd = new GiaoDich();
@@ -74,7 +74,6 @@ public class ChoGiaoHangController {
             gd.setNguoiCapNhat("ABC");
             gd.setNguoiTao("ABC");
             gd.setTrangThai(tt);
-//            System.out.println(gd);
             giaoDichRepository.save(gd);
             String message = "Xác nhận thành công";
             return ResponseEntity.ok(message);

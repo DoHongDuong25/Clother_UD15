@@ -10,13 +10,7 @@ import com.fpoly.dto.composite.HinhAnhSanPhamChiTietDTO;
 import com.fpoly.dto.composite.SPTaiQuayDTO;
 import com.fpoly.dto.composite.ShowSanPhamTaiQuayDTO;
 import com.fpoly.dto.search.SPAndSPCTSearchDto;
-import com.fpoly.entity.HinhAnh;
-import com.fpoly.entity.HoaDon;
-import com.fpoly.entity.HoaDonChiTiet;
-import com.fpoly.entity.KichCo;
-import com.fpoly.entity.MauSac;
-import com.fpoly.entity.SanPham;
-import com.fpoly.entity.SanPhamChiTiet;
+import com.fpoly.entity.*;
 import com.fpoly.repository.*;
 import com.fpoly.service.ChatLieuService;
 import com.fpoly.service.HinhAnhService;
@@ -47,10 +41,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -112,9 +103,7 @@ public class BanHangController {
     public ResponseEntity<Resource> serveFile(@PathVariable String filename) {
         Resource file = storageService.loadAsResource(filename);
 
-        return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"")
-                .body(file);
+        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"").body(file);
     }
 
     @ModelAttribute("lstMauSac")
@@ -176,32 +165,38 @@ public class BanHangController {
         Optional<SanPhamChiTiet> optSpct = sanPhamChiTietService.getSanPhamChiTietByMauSacSizeSanPhamId(dto.getSanPhamIdSPTQ(), dto.getMauSacId(), dto.getKichCoId());
         if (optSpct.isPresent()) {
             Optional<HoaDon> optHD = hoaDonRepository.findById(dto.getHoaDonId());
-            System.out.println(optSpct.get().getSanPham().getGia());
             if (optHD.isPresent()) {
                 HoaDon hoaDon = optHD.get();
-
                 BigDecimal giaSP = optSpct.get().getSanPham().getGia();
-
-                int soLuong = dto.getSoLuong();
+                Integer soLuong = dto.getSoLuong();
 
                 HoaDonChiTiet hoaDonChiTiet = new HoaDonChiTiet();
-                BigDecimal thanhTien = giaSP.multiply(BigDecimal.valueOf(soLuong));
                 hoaDonChiTiet.setSanPhamChiTiet(optSpct.get());
                 hoaDonChiTiet.setHoaDon(hoaDon);
                 hoaDonChiTiet.setDonGia(giaSP);
                 hoaDonChiTiet.setSoLuong(soLuong);
+                BigDecimal thanhTien = giaSP.multiply(BigDecimal.valueOf(soLuong));
                 hoaDonChiTiet.setTongTien(thanhTien);
+                hoaDonChiTiet.setDaXoa(false);
                 hoaDonChiTiet = hoaDonChiTietRepository.save(hoaDonChiTiet);
 
                 hoaDon.getHoaDonChiTiets().add(hoaDonChiTiet);
-                BigDecimal tongTien = hoaDon.getHoaDonChiTiets().stream()
-                        .map(HoaDonChiTiet::getTongTien)
-                        .reduce(BigDecimal.ZERO, BigDecimal::add);
-                hoaDon.setTongTienDonHang(tongTien);
-                hoaDon.setTongTienHoaDon(tongTien);
-                hoaDon.setTienShip(BigDecimal.valueOf(1));
+                hoaDonRepository.save(hoaDon);
+
+                if (hoaDon.getHoaDonChiTiets().isEmpty()) {
+                    hoaDon.setTongTienDonHang(thanhTien);
+                    hoaDon.setTongTienHoaDon(thanhTien);
+                } else {
+                    BigDecimal tongTienDonHang = hoaDon.getHoaDonChiTiets().stream().filter(hdct -> !hdct.isDaXoa()).map(HoaDonChiTiet::getTongTien).reduce(BigDecimal.ZERO, BigDecimal::add);
+
+                    hoaDon.setTongTienDonHang(tongTienDonHang);
+                    hoaDon.setTongTienHoaDon(tongTienDonHang);
+                }
+
+                hoaDon.setTienShip(BigDecimal.valueOf(0));
                 hoaDonRepository.save(hoaDon);
                 model.addAttribute("hoaDon", hoaDon);
+
                 return "redirect:/banHang/" + dto.getHoaDonId();
             }
         }
@@ -210,14 +205,9 @@ public class BanHangController {
     }
 
     @RequestMapping("banHang/{id}")
-    public String banHang(@PathVariable("id") Long id,
-                          Model model,
-                          @ModelAttribute(name = "dataSearch") SPAndSPCTSearchDto dataSearch,
-                          @RequestParam("page") Optional<Integer> page,
-                          @RequestParam("size") Optional<Integer> size,
+    public String banHang(@PathVariable("id") Long id, Model model, @ModelAttribute(name = "dataSearch") SPAndSPCTSearchDto dataSearch, @RequestParam("page") Optional<Integer> page, @RequestParam("size") Optional<Integer> size,
 
-                          @RequestParam(defaultValue = "1") int pageHDCT,
-                          @RequestParam(defaultValue = "5") int sizeHDCT) {
+                          @RequestParam(defaultValue = "1") int pageHDCT, @RequestParam(defaultValue = "5") int sizeHDCT) {
 
         HoaDon hoaDon = hoaDonRepository.findById(id).get();
         model.addAttribute("hoaDon", hoaDon);
@@ -294,5 +284,77 @@ public class BanHangController {
         }
         model.addAttribute("sanPhamPage", resultPage);
         return "admin/banHang/banHangTaiQuay/banHang";
+    }
+
+    @RequestMapping("/update-XoaSP/{id}")
+    public ResponseEntity<String> updateXoaSP(@PathVariable("id") Long id) {
+        Optional<HoaDonChiTiet> optionalHoaDon = hoaDonChiTietRepository.findById(id);
+        if (optionalHoaDon.isPresent()) {
+            HoaDonChiTiet hoaDonCT = optionalHoaDon.get();
+            hoaDonCT.setDaXoa(true);
+            hoaDonChiTietRepository.save(hoaDonCT);
+
+            HoaDon hoaDon = hoaDonCT.getHoaDon();
+            hoaDon.getHoaDonChiTiets().remove(hoaDonCT);
+
+            BigDecimal tongTien = hoaDon.getHoaDonChiTiets().stream().filter(hdct -> !hdct.isDaXoa()) // Lọc chỉ các hóa đơn chi tiết chưa bị xóa
+                    .map(HoaDonChiTiet::getTongTien).reduce(BigDecimal.ZERO, BigDecimal::add);
+
+            hoaDon.setTongTienDonHang(tongTien);
+            hoaDon.setTongTienHoaDon(tongTien);
+            hoaDon.setTienShip(BigDecimal.valueOf(1));
+            hoaDonRepository.save(hoaDon);
+
+            String message = "Xác nhận thành công";
+            return ResponseEntity.ok(message);
+        } else {
+            String errorMessage = "Không tìm thấy hóa đơn";
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PostMapping("/update-SoLuong/{id}")
+    public ResponseEntity<String> updateSoLuong(@PathVariable("id") Long id, @RequestParam("quantity") int quantity) {
+        Optional<HoaDonChiTiet> optionalHoaDonCT = hoaDonChiTietRepository.findById(id);
+        if (optionalHoaDonCT.isPresent()) {
+            HoaDonChiTiet hoaDonCT = optionalHoaDonCT.get();
+            hoaDonCT.setSoLuong(quantity);
+
+            BigDecimal donGia = hoaDonCT.getDonGia();
+            BigDecimal thanhTien = donGia.multiply(BigDecimal.valueOf(quantity));
+            hoaDonCT.setTongTien(thanhTien);
+
+            hoaDonChiTietRepository.save(hoaDonCT);
+
+            HoaDon hoaDon = hoaDonCT.getHoaDon();
+
+            BigDecimal tongTienHoaDon = hoaDon.getHoaDonChiTiets().stream().filter(hdct -> !hdct.isDaXoa()).map(HoaDonChiTiet::getTongTien).reduce(BigDecimal.ZERO, BigDecimal::add);
+
+            hoaDon.setTongTienDonHang(tongTienHoaDon);
+            hoaDon.setTongTienHoaDon(tongTienHoaDon);
+            hoaDon.setTienShip(BigDecimal.valueOf(1));
+            hoaDonRepository.save(hoaDon);
+
+            String message = "Lưu thành công";
+            return ResponseEntity.ok(message);
+        } else {
+            String errorMessage = "Không tìm thấy hóa đơn chi tiết";
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @RequestMapping("/HuyDon/{id}")
+    public ResponseEntity<String> huyDon(@PathVariable("id") Long id) {
+        Optional<HoaDon> otpHoaDOn = hoaDonRepository.findById(id);
+        if (otpHoaDOn.isPresent()) {
+            HoaDon hoaDon = otpHoaDOn.get();
+            hoaDon.setDaXoa(true);
+            hoaDonRepository.save(hoaDon);
+            String mss = "Hủy thành công";
+            return ResponseEntity.ok(mss);
+        } else {
+            String erro = "Không tìm thấy hóa đơn";
+            return ResponseEntity.notFound().build();
+        }
     }
 }

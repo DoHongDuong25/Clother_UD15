@@ -34,6 +34,5 @@ public class SPTaiQuayDTO {
 	private Long sanPhamIdSPTQ;
 	
 	private Integer soLuong;
-
 }
 

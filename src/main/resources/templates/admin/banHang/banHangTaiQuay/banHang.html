@@ -44,17 +44,48 @@
                             <td th:text="${(pageHDCT - 1) * sizeHDCT + stt.count}"></td>
                             <td th:text="${hoaDonCT.sanPhamChiTiet.sanPham.getTenSanPham()}"></td>
                             <td th:text="${hoaDonCT.donGia}"></td>
-                            <td th:text="${hoaDonCT.soLuong}"></td>
+                            <td>
+                                <div>
+                                    <button class="decrement-btn" th:data-id="${hoaDonCT.id}">-</button>
+                                    <input class="quantity-input" type="number" min="1" th:value="${hoaDonCT.soLuong}">
+                                    <button class="increment-btn" th:data-id="${hoaDonCT.id}">+</button>
+
+                                    <button class="save-btn" th:data-id="${hoaDonCT.id}" style="display: none;">Lưu</button>
+                                    <button class="cancel-btn" style="display: none;">Hủy</button>
+                                </div>
+                            </td>
                             <td th:text="${hoaDonCT.tongTien}"></td>
                             <td>
                                 <div class="btn-group">
-                                    <button class="action-button xoaHDCT" th:attr="data-id=${hoaDon.id}">
+                                    <button class="action-button xoaHDCT" th:attr="data-id=${hoaDonCT.id}">
                                         <i class="fa fa-trash" aria-hidden="true"></i>
                                     </button>
+                                    <br>
+                                    <div class="modal fade XoaHDCT" tabindex="-1" aria-labelledby="XoaHDCTModalLabel"
+                                         aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="XoaHDCTModalLabel">Xóa sản phẩm</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                            aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    Xác nhận xóa sản phẩm khỏi giỏ hàng
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-primary btn-dong-y">Đồng ý
+                                                    </button>
+                                                    <button type="button" class="btn btn-secondary btn-khong"
+                                                            data-bs-dismiss="modal">Không
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </td>
                         </tr>
-
                         <tr th:if="${hoaDonChiTiet.isEmpty()}">
                             <td colspan="5">
                                 <div class="empty-content">
@@ -115,7 +146,31 @@
                         </li>
                     </ul>
                     <div class="btn-group">
-                        <button type="submit" class="primary-btn">Hủy đơn</button>
+                        <button type="submit" class="primary-btn HuyDonBanTaiQuay" th:attr="data-id=${hoaDon.id}">Hủy đơn</button>
+                        <!--Modal hủy đơn-->
+                        <div class="modal fade HuyDonTaiQuay" tabindex="-1" aria-labelledby="HuyDonTaiQuayModalLabel"
+                             aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="HuyDonTaiQuayModalLabel">Xác nhận hủy hóa đơn</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Xác nhận hủy hóa đơn?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-primary btn-dong-y">Đồng ý</button>
+                                        <button type="button" class="btn btn-secondary btn-khong"
+                                                data-bs-dismiss="modal">Không
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
                         <button type="submit" class="primary-btn">Thanh toán</button>
                     </div>
                 </div>
@@ -282,11 +337,12 @@
                                             <th>Giá</th>
                                             <th>Thao tác</th>
                                         </tr>
-                                        <tr th:if="${!sanPhamPage.hasContent()}">
-                                            <td colspan="9">
-                                                <h4><i>Không có sản phẩm nào phù hợp</i></h4>
-                                            </td>
-                                        </tr>
+                                            <!--TẠM THỜI ĐANG LỖI ĐOẠN NÀY-->
+<!--                                        <tr th:if="${!sanPhamPage.hasContent()}">-->
+<!--                                            <td colspan="9">-->
+<!--                                                <h4><i>Không có sản phẩm nào phù hợp</i></h4>-->
+<!--                                            </td>-->
+<!--                                        </tr>-->
                                         </thead>
                                         <tbody class="text-center" th:object="${resultSP}">
                                         <input type="hidden" th:field="*{hoaDonId}">
@@ -435,7 +491,7 @@
                                                                         </div>
                                                                         <div>
                                                                             <span>Số lượng</span>
-                                                                            <input type="number" name="soLuong" min="1"
+                                                                            <input type="number" name="soLuong"
                                                                                    th:value="${resultSP.soLuong}"
                                                                                    oninput="calculateTotal()">
                                                                         </div>
@@ -453,8 +509,7 @@
                                                                     this.getAttribute('label-name1'), this.getAttribute('label-name2'))"
                                                                data-dismiss="modal">Đóng</a>
                                                             <a class="btn btn-outline-primary"
-                                                               onclick="flexUrlSubmitBanHangTaiQuay('/banHang/getData', 'post', 'BanHangTaiQuay')">Thêm
-                                                                sản phẩm</a>
+                                                               onclick="flexUrlSubmitBanHangTaiQuay('/banHang/getData', 'post', 'BanHangTaiQuay')">Thêm sản phẩm</a>
                                                         </div>
                                                     </div>
                                                 </div>

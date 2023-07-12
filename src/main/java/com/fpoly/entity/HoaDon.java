@@ -81,6 +81,9 @@ public class HoaDon extends BaseEntity implements Serializable {
     @OneToMany(mappedBy = "hoaDon",cascade = CascadeType.ALL)
     private List<HoaDonChiTiet> hoaDonChiTiets;
 
+    @Column(name = "da_xoa", columnDefinition = "BIT")
+    private boolean daXoa;
+
     @Override
     public String toString() {
         return "HoaDon{nguoiNhan='" + nguoiNhan + '\'' +

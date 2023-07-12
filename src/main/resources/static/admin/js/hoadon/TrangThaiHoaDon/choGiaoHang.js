@@ -27,10 +27,6 @@ $(document).ready(function () {
     $('.GiaoHang').click(function () {
         var hoaDonId = $(this).data('id');
 
-        // Lưu trạng thái tab hiện tại vào sessionStorage
-        var activeTab = $('.nav-link.active').attr('href');
-        sessionStorage.setItem('activeTab', activeTab);
-
         // Hiển thị modal xác nhận
         $('.giaoHangModal').modal('show');
 

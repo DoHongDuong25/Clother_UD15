@@ -34,7 +34,7 @@ public class HoaDonChiTiet extends BaseEntity implements Serializable {
     private BigDecimal tongTien;
 
     @Column(name = "da_xoa", columnDefinition = "BIT")
-    private String daXoa;
+    private boolean daXoa;
     
     @OneToMany(mappedBy = "hoaDonChiTiet", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<TraHang> traHangs = new ArrayList<TraHang>();

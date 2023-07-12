@@ -74,9 +74,9 @@ public class DanhSachController {
         hoaDon.setTrangThai(trangThai);
         hoaDon.setTongTienHoaDon(BigDecimal.valueOf(0));
         hoaDon.setTongTienDonHang(BigDecimal.valueOf(0));
+        hoaDon.setDaXoa(false);
         hoaDonRepository.save(hoaDon);
 
-        // Thêm mã hóa đơn vào redirectAttributes để truyền cho trang chuyển hướng
         redirectAttributes.addAttribute("id", hoaDon.getId());
 
         return "redirect:/banHang/{id}";

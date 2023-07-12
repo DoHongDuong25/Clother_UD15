@@ -356,3 +356,48 @@ td.product__cart__item
     margin-right: 30px;
 }
 
+.decrement-btn,
+.increment-btn,
+.save-btn,
+.cancel-btn {
+    display: inline-block;
+    padding: 8px 12px;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    background-color: #eaeaea;
+    color: #333;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.decrement-btn:hover,
+.increment-btn:hover,
+.save-btn:hover,
+.cancel-btn:hover {
+    background-color: #ddd;
+}
+
+.decrement-btn {
+    background-color: #f0f0f0;
+}
+
+.decrement-btn:hover {
+    background-color: #e0e0e0;
+}
+
+.quantity-input {
+    width: 40px;
+    padding: 6px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    text-align: center;
+}
+
+.save-btn {
+    padding: 8px 16px;
+}
