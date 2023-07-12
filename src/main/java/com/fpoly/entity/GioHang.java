@@ -27,7 +27,7 @@ public class GioHang extends BaseEntity implements Serializable {
     private Date ngayCapNhat;
 
     @OneToOne
-    @JoinColumn(name = "khach_hang_id", insertable = false, updatable = false)
+    @JoinColumn(name = "khach_hang_id")
     private KhachHang khachHang;
 
     @Column(name = "trang_thai",columnDefinition = "int not null")

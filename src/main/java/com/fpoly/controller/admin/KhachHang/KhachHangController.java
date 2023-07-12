@@ -9,6 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -20,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.fpoly.dto.DiaChiDTO;
 import com.fpoly.dto.KhachHangDTO;
+import com.fpoly.security.NguoiDungDetails;
 import com.fpoly.service.DiaChiService;
 import com.fpoly.service.KhachHangService;
 
@@ -45,6 +49,7 @@ public class KhachHangController {
     @SuppressWarnings("static-access")
     @RequestMapping("/danh-sach/{pageNumber}")
     public String layDanhSach(
+    		@AuthenticationPrincipal NguoiDungDetails userDetails,
             @PathVariable(name = "pageNumber") Integer page,
             @RequestParam(name = "input", required = false, defaultValue = "") String input,
             @RequestParam(name = "trangThai", required = false, defaultValue = "2") Integer trangThai,
@@ -183,7 +188,7 @@ public class KhachHangController {
             diaChiDTO.setLimit(5);
             Pageable pageable = PageRequest.of(page - 1, diaChiDTO.getLimit(), Sort.by(Sort.DEFAULT_DIRECTION.DESC, "id"));
             khachHangDTO = khachHangService.findById(id);
-            diaChiDTO.setListDiaChi(diaChiService.findAllDiaChiByMaKhachHang(khachHangDTO.getId(), pageable));
+            diaChiDTO.setListDiaChiDTO(diaChiService.findAllDiaChiByMaKhachHang(khachHangDTO.getId(), pageable));
             diaChiDTO.setTotalItems((int) diaChiService.countByMaKhachHang(khachHangDTO.getId()));
             diaChiDTO.setTotalPages((int) Math.ceil((double) diaChiDTO.getTotalItems() / diaChiDTO.getLimit()));
             if (diaChiId == null) {

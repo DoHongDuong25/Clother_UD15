@@ -92,23 +92,23 @@
 					<form class="col-md-6 pt-3 border-right " id="formSubmitKhachHang" method="get" th:object="${model}">
 						<div class="form-group pt-2">
 							<label for="email">Email <span class="text-danger">(*)</span>
-							</label> <input type="email" th:field="*{email}" name="email" class="form-control" id="email" aria-describedby="emailHelp">
+							</label> <input type="email" th:field="*{email}" name="email" class="form-control" id="emailKhachHang" aria-describedby="emailHelp">
 						</div>
 						<div class="form-group pt-2">
 							<label for="matKhau">Mật khẩu<span class="text-danger">(*)</span>
-							</label> <input type="text" th:field="*{matKhau}" name="matKhau" class="form-control" id="matKhau">
+							</label> <input type="text" th:field="*{matKhau}" name="matKhau" class="form-control" id="matKhauKhachHang">
 						</div>
 						<div class="form-group pt-2">
 							<label for="hoTen">Họ tên<span class="text-danger">(*)</span>
-							</label> <input type="text" class="form-control" name="hoTen" th:field="*{hoTen}" id="hoTen" aria-describedby="emailHelp">
+							</label> <input type="text" class="form-control" name="hoTen" th:field="*{hoTen}" id="hoTenKhachHang" aria-describedby="emailHelp">
 						</div>
 						<div class="form-group pt-2">
 							<label for="soDienThoai">Số điện thoại<span class="text-danger">(*)</span>
-							</label> <input type="text" class="form-control" name="soDienThoai" th:field="*{soDienThoai}" id="soDienThoai">
+							</label> <input type="text" class="form-control" name="soDienThoai" th:field="*{soDienThoai}" id="soDienThoaiKhachHang">
 						</div>
 						<div class="form-group pt-2">
 							<label for="trangThai">Trang thái<span class="text-danger">(*)</span>
-							</label> <select class="custom-select" id="trangThai" th:field="*{trangThai}">
+							</label> <select class="custom-select" id="trangThaiKhachHang" th:field="*{trangThai}">
 								<option value="1" selected="selected">Đang hoạt động</option>
 								<option value="0">Ngừng hoạt động</option>
 							</select>
@@ -139,7 +139,7 @@
 													<th>Thao tác</th>
 												</tr>
 											</thead>
-											<tbody th:each="item : *{listDiaChi}">
+											<tbody th:each="item : *{listDiaChiDTO}">
 												<tr>
 													<td><input type="checkbox" th:value="${item.id}" id="checkbox_${item.id}" /></td>
 													<td>[[${itemStat.index+1}]]</td>
@@ -237,34 +237,6 @@
 				</div>
 			</div>
 		</div>
-		<div class="modal fade bd-example-modal-lg" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="false">
-			<div class="modal-dialog modal-lg">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title " id="staticBackdropLabel">Thêm mới địa chỉ</h5>
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-					</div>
-					<div class="modal-body">
-						<form class="col-md-12" id="formSubmitDiaChi" th:object="${model}">
-							<div class="row pt-4">
-								<div class="col-md-6">
-									<div class="form-group pt-2">
-										<label for="city">Thành phố/Tỉnh<span class="text-danger">(*)</span></label> <select name="city" class="custom-select" id="city">
-											<option selected="selected">---Chọn thành phố---</option>
-										</select>
-									</div>
-									<div class="form-group pt-2">
-										<label for="ward">Xã/Phường<span class="text-danger">(*)</span></label> <select name="ward" class="custom-select" id="ward">
-											<option selected="selected">---Chọn xã---</option>
-										</select>
-									</div>
-									<div class="form-group pt-2">
-										<label for="hoTen">Họ tên<span class="text-danger">(*)</span></label> <input name="hoTen" type="text" class="form-control" id="hoTen">
-									</div>
-	</div>
-
 	<div class="modal fade bd-example-modal-lg" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="false">
 		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
@@ -301,20 +273,10 @@
 								<div class="form-group pt-2">
 									<label for="soNha">Số nhà<span class="text-danger">(*)</span></label> <input name="soNha" type="text" class="form-control" id="soNha">
 								</div>
-								<div class="col-md-6">
-									<div class="form-group pt-2">
-										<label for="district">Quận/Huyện<span class="text-danger">(*)</span></label> <select name="district" class="custom-select" id="district">
-											<option selected="selected">---Chọn thành huyện---</option>
-										</select>
-									</div>
-									<div class="form-group pt-2">
-										<label for="soNha">Số nhà<span class="text-danger">(*)</span></label> <input name="soNha" type="text" class="form-control" id="soNha">
-									</div>
 									<div class="form-group pt-2">
 										<label for="soDienThoai">Số điện thoại<span class="text-danger">(*)</span></label> <input name="soDienThoai" type="text" class="form-control" id="soDienThoai">
 									</div>
 								</div>
-							</div>
 							<input type="hidden" name="khachHangId" class="form-control" th:value="${model.id}">
 							<div class="form-group pt-2"></div>
 							<button type="submit" id="btnThemMoiDiaChi" class="btn btn-primary">Thêm</button>

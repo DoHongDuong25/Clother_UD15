@@ -1,6 +1,12 @@
 package com.fpoly.service;
 
+import com.fpoly.convertor.NguoiDungConvertor;
+import com.fpoly.convertor.NguoiDungVaiTroConvertor;
+import com.fpoly.dto.NguoiDungDTO;
+import com.fpoly.dto.NguoiDungVaiTroDTO;
 import com.fpoly.entity.NguoiDung;
+import com.fpoly.entity.NguoiDungVaiTro;
+import com.fpoly.entity.VaiTro;
 import com.fpoly.repository.INguoiDungPaginRespository;
 import com.fpoly.repository.NguoiDungRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +16,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -20,6 +27,12 @@ public class NguoiDungService {
     private static Map<Integer, NguoiDung> nguoiDungMap;
     private final INguoiDungPaginRespository iNguoiDungPaginRespository;
 
+    @Autowired
+    private NguoiDungConvertor nguoiDungConvertor ;
+    
+    @Autowired
+    private NguoiDungVaiTroConvertor nguoiDungVaiTroConvertor ;
+    
     @Autowired
     public NguoiDungService(NguoiDungRepository nguoiDungRepository, INguoiDungPaginRespository iNguoiDungPaginRespository) {
         this.nguoiDungRepository = nguoiDungRepository;
@@ -73,4 +86,25 @@ public class NguoiDungService {
         nguoiDungRepository.save(user);
     }
 
+	public NguoiDungDTO findByEmailAndTrangThaiAndDaXoa(String email) {
+		NguoiDungDTO nguoiDungDTO = null ;
+		try {
+			List<NguoiDungVaiTroDTO> listNguoiDungVaiTroDTO = new ArrayList<NguoiDungVaiTroDTO>();
+			if(email != null) {
+				nguoiDungDTO = new NguoiDungDTO() ;
+				NguoiDung nguoiDung = nguoiDungRepository.findByEmailAndTrangThaiAndDaXoa(email);
+				for (NguoiDungVaiTro nguoiDungVaiTro : nguoiDung.getListNguoiDungVaiTro()) {
+					NguoiDungVaiTroDTO nguoiDungVaiTroDTO = new NguoiDungVaiTroDTO();
+					nguoiDungVaiTroDTO = nguoiDungVaiTroConvertor.toDTO(nguoiDungVaiTro);
+					listNguoiDungVaiTroDTO.add(nguoiDungVaiTroDTO);
+				}
+				nguoiDungDTO = nguoiDungConvertor.toDTO(nguoiDung);
+				nguoiDungDTO.setListNguoiDungVaiTroDTO(listNguoiDungVaiTroDTO);
+				return nguoiDungDTO;
+			}
+		}catch(Exception e) {
+			return null ;
+		}
+		return null;
+	}
 }

@@ -44,7 +44,7 @@ public class DiaChiDTO extends BaseDTO<DiaChiDTO> {
 
     private int totalItems;
 
-    private List<DiaChiDTO> listDiaChi = new ArrayList<DiaChiDTO>();
+    private List<DiaChiDTO> listDiaChiDTO = new ArrayList<DiaChiDTO>();
 
     private Long khachHangId ;
 

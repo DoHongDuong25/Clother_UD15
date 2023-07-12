@@ -1,4 +1,38 @@
-.error{
+#emailKhachHang-error ,
+#matKhauKhachHang-error ,
+#hoTenKhachHang-error ,
+#soDienThoaiKhachHang-error {
+	color : red ;
+	font-size : 12px;
+	width: 100% ;
+	margin-top : 10px ;
+	padding-left: 10px ;
+}
+#emailKhachHang ,
+#matKhauKhachHang ,
+#hoTenKhachHang ,
+#soDienThoaiKhachHang {
+	color : black ;
+	font-size : 12px;
+	width: 100% ;
+	margin-top : 10px ;
+	padding-left: 10px ;
+}
+#emailKhachHang-error {
+	color : red ;
+	font-size : 12px;
+	width: 100% ;
+	margin-top : 10px ;
+	padding-left: 10px ;
+}
+#emailKhachHang-error {
+	color : red ;
+	font-size : 12px;
+	width: 100% ;
+	margin-top : 10px ;
+	padding-left: 10px ;
+}
+#emailKhachHang-error {
 	color : red ;
 	font-size : 12px;
 	width: 100% ;

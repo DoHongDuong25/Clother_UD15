@@ -41,5 +41,5 @@ public class KhachHangDTO extends BaseDTO<KhachHangDTO> {
 	    
 	    private List<KhachHangDTO> listKhachHangDTO = new ArrayList<KhachHangDTO>();
 	    
-		private List<DiaChiDTO> listDiaChi = new ArrayList<DiaChiDTO>();
+		private List<DiaChiDTO> listDiaChiDTO = new ArrayList<DiaChiDTO>();
 }

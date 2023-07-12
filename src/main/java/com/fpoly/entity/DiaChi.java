@@ -5,7 +5,6 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
-import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -40,7 +39,7 @@ public class DiaChi extends BaseEntity implements Serializable {
 	@Column(name="so_dien_thoai")
 	private String soDienThoai ;
 
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne
 	@JoinColumn(name="khach_hang_id")
 	private KhachHang khachHang ;
 

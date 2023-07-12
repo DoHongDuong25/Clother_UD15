@@ -23,19 +23,19 @@ public abstract class BaseEntity  {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id ;
 	
-	@Column
+	@Column(name="ngay_tao",updatable=false)
 	@CreatedDate
 	private Date ngayTao;
 	
-	@Column
+	@Column(name="nguoi_tao",updatable=false)
 	@CreatedBy
 	private String nguoiTao;
 	
-	@Column
+	@Column(name="ngay_cap_nhat",updatable=true)
 	@LastModifiedDate
 	private Date ngayCapNhat;
 	
-	@Column
+	@Column(name="nguoi_cap_nhat",updatable=true)
 	@LastModifiedBy
 	private String nguoiCapNhat;
 }

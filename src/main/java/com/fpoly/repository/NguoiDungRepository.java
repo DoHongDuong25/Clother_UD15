@@ -38,5 +38,9 @@ public interface NguoiDungRepository extends JpaRepository<NguoiDung, Long> {
 	@Query(value="UPDATE NguoiDung n SET n.trangThai = 2 WHERE n.id=?1")
 	void capNhatTrangThaiThanhKhongHoatDongTheoMa(Long id);
 
+    
+    @Query(value = "select * from nguoi_dung where trang_thai = 0 AND da_xoa=false AND email =:email", nativeQuery = true)
+	NguoiDung findByEmailAndTrangThaiAndDaXoa(@Param("email")String email);
+
 
 }

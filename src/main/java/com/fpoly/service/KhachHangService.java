@@ -42,6 +42,9 @@ List<KhachHangDTO> findAllByTrangThaiCoPhanTrang(Integer trangThai,Pageable page
 	void updateUserStatus(Long id, int trangThai);
 
 
+	KhachHangDTO findByEmail(String auth);
+
+
 
 
 	
