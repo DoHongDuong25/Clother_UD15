@@ -12,15 +12,6 @@
     margin-right: 0; /* Loại bỏ margin phải của nút cuối cùng */
 }
 
-#modalChiTiet .modal-dialog {
-    max-width: 1400px;
-    width: 1400px;
-}
-
-#modalChiTiet .modal-content {
-    height: 450px;
-}
-
 .pagination li {
     margin: 0 5px;
 }

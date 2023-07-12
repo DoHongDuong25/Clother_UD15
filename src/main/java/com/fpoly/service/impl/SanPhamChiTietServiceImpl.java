@@ -6,6 +6,8 @@ import java.util.Optional;
 import javax.transaction.Transactional;
 
 import org.springframework.context.annotation.Primary;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 
@@ -41,8 +43,8 @@ public class SanPhamChiTietServiceImpl implements SanPhamChiTietService{
 	}
 
 	@Override
-	public List<SanPhamChiTiet> searchProductDetailExist(SPAndSPCTSearchDto data) {
-		return sanPhamChiTietSearchRepository.searchProductDetailExist(data);
+	public Page<SanPhamChiTiet> searchProductDetailExist(SPAndSPCTSearchDto data, Pageable pageable) {
+		return sanPhamChiTietSearchRepository.searchProductDetailExist(data, pageable);
 	}
 
 	@Override
@@ -62,9 +64,22 @@ public class SanPhamChiTietServiceImpl implements SanPhamChiTietService{
 	public List<SanPhamChiTiet> getLstSanPhamChiTietAddImg(Long id) {
 		return sanPhamChiTietRepository.getLstSanPhamChiTietAddImg(id);
 	}
+	
+	@Override
+	public List<Long> getLstMauSacBySanPhamId(Long sanPhamId) {
+		return sanPhamChiTietRepository.getLstMauSacBySanPhamId(sanPhamId);
+	}
+
+	@Override
+	public Optional<SanPhamChiTiet> getSanPhamChiTietByMauSacSizeSanPhamId(Long sanPhamId, Long mauSacId,
+			Long kichCoId) {
+		return sanPhamChiTietRepository.getSanPhamChiTietByMauSacSizeSanPhamId(sanPhamId, mauSacId, kichCoId);
+	}
 
 //	@Override
 //	public List<SanPhamChiTietMauSacKichCo> getLstProductDetailsWithColorSize(Long id) {
 //		return sanPhamChiTietRepository.getLstProductDetailsWithColorSize(id);
 //	}
+	
+	
 }

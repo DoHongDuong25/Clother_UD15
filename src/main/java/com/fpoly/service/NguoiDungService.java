@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +26,7 @@ public class NguoiDungService {
     private static NguoiDungRepository nguoiDungRepository;
     private static Map<Integer, NguoiDung> nguoiDungMap;
     private final INguoiDungPaginRespository iNguoiDungPaginRespository;
+
     @Autowired
     private NguoiDungConvertor nguoiDungConvertor ;
     
@@ -57,13 +59,17 @@ public class NguoiDungService {
         Pageable pageable = PageRequest.of(page, size);
         return iNguoiDungPaginRespository.findAll(pageable);
     }
-    public Page<NguoiDung> getAll(int page, int size) {
+
+
+    public Page<NguoiDung> getAll(int page, int size){
         Pageable pageable = PageRequest.of(page, size);
         return iNguoiDungPaginRespository.GetAll(pageable);
     }
+
     public void saveNguoiDung(NguoiDung nguoiDung) {
         nguoiDungRepository.save(nguoiDung);
     }
+
     public NguoiDung getNguoiDungById(Long id) {
         if (id != null) {
             Optional<NguoiDung> optionalNguoiDung = nguoiDungRepository.findById(id);
@@ -73,9 +79,9 @@ public class NguoiDungService {
         }
         return null;
     }
+
     public void updateUserStatus(Long id, int trangThai) {
-        NguoiDung user = nguoiDungRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Người dùng không tồn tại"));
+        NguoiDung user = nguoiDungRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Người dùng không tồn tại"));
         user.setTrangThai(trangThai);
         nguoiDungRepository.save(user);
     }

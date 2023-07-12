@@ -32,10 +32,10 @@ function searchByIdDaHuy() {
     var found = false; // Biến kiểm tra xem đã tìm thấy kết quả hay chưa
 
     for (var i = 0; i < rows.length; i++) {
-        var orderIdCell = rows[i].getElementsByTagName("th")[0];
-        var customerNameCell = rows[i].getElementsByTagName("td")[0];
-        var phoneNumberCell = rows[i].getElementsByTagName("td")[1];
-        var totalPriceCell = rows[i].getElementsByTagName("td")[3];
+        var orderIdCell = rows[i].getElementsByTagName("td")[1];
+        var customerNameCell = rows[i].getElementsByTagName("td")[2];
+        var phoneNumberCell = rows[i].getElementsByTagName("td")[3];
+        var totalPriceCell = rows[i].getElementsByTagName("td")[5];
 
         if (orderIdCell && customerNameCell && phoneNumberCell && totalPriceCell) {
             var orderId = orderIdCell.textContent.trim().toLowerCase();
@@ -77,7 +77,7 @@ function searchByCreationDateDaHuy() {
     var rows = table.getElementsByTagName("tr");
 
     for (var i = 0; i < rows.length; i++) {
-        var creationDateCell = rows[i].getElementsByTagName("td")[2]; // Điều chỉnh chỉ mục nếu cần thiết
+        var creationDateCell = rows[i].getElementsByTagName("td")[4]; // Điều chỉnh chỉ mục nếu cần thiết
 
         if (creationDateCell) {
             var creationDate = creationDateCell.innerText;

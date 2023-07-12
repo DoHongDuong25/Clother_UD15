@@ -5,7 +5,7 @@ import static com.querydsl.core.types.PathMetadataFactory.*;
 import com.querydsl.core.types.dsl.*;
 
 import com.querydsl.core.types.PathMetadata;
-import javax.annotation.Generated;
+import javax.annotation.processing.Generated;
 
 import com.fpoly.entity.KieuDang;
 import com.fpoly.entity.SanPham;
@@ -16,7 +16,7 @@ import com.querydsl.core.types.dsl.PathInits;
 /**
  * QKieuDang is a Querydsl query type for KieuDang
  */
-@Generated("com.querydsl.codegen.EntitySerializer")
+@Generated("com.querydsl.codegen.DefaultEntitySerializer")
 public class QKieuDang extends EntityPathBase<KieuDang> {
 
     private static final long serialVersionUID = 1748597510L;

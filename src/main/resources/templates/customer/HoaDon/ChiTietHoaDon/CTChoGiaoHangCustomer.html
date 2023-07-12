@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zxx" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{customer/layouts/index}">
+<head>
+    <meta charset="UTF-8">
+    <title>Chờ giao hàng</title>
+    <link rel="stylesheet" th:href="@{/customer/css/HoaDon/ChiTietCustomer/ChiTiet.css}">
+</head>
+<body>
+<div class="container" layout:fragment="content">
+    <div class="row text-center justify-content-center mb-5">
+        <div class="col-xl-6 col-lg-8">
+            <h2 class="font-weight-bold">Chi tiết đơn hàng</h2>
+        </div>
+    </div>
+    <div th:object="${hoaDon}">
+        <p>Mã đơn: <span th:text="${hoaDon.maDon}"></span></p>
+        <p>Ngày tạo: <span th:text="${#dates.format(hoaDon.ngayTao, 'dd/MM/yyyy')}"></span></p>
+        <p>Tên khách hàng: <span th:text="${hoaDon.khachHang.hoTen}"></span></p>
+        <table class="table">
+            <thead>
+            <tr>
+                <th data-field="state" data-checkbox="true"></th>
+                <th scope="col">Tên sản phẩm</th>
+                <th scope="col">Đơn giá</th>
+                <th scope="col">Số lượng</th>
+                <th scope="col">Thành tiền</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr th:each="hdct : ${hoaDon.hoaDonChiTiets}">
+                <td></td>
+                <td
+                        th:text="${hdct.sanPhamChiTiet.sanPham.getTenSanPham()}">
+                </td>
+                <td th:text="${hdct.donGia}"></td>
+                <td th:text="${hdct.soLuong}"></td>
+<!--                <td th:text="${hdct.tongTien}"></td>-->
+                <td th:text="${#numbers.formatDecimal(hdct.tongTien, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></td>
+            </tr>
+            </tbody>
+        </table>
+
+        <p>Tổng tiền:
+<!--            <span th:text="${hoaDon.tongTienDonHang}"></span>-->
+            <td th:text="${#numbers.formatDecimal(hoaDon.tongTienHoaDon, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></td>
+        </p>
+    </div>
+
+    <div class="row text-center justify-content-center mb-5">
+        <div class="col-xl-6 col-lg-8">
+            <h2 class="font-weight-bold">Lịch sử đơn hàng</h2>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <div class="timeline-steps aos-init aos-animate" data-aos="fade-up">
+                <div class="timeline-step" th:each="TLChoXacNhan: ${timeLineChoXacNhan}">
+                    <div class="timeline-content" data-toggle="popover" data-trigger="hover" data-placement="top"
+                         title="" data-content="And here's some amazing content. It's very engaging. Right?"
+                         data-original-title="2003">
+                        <div class="inner-circle"></div>
+                        <p class="h6 mt-3 mb-1"><span
+                                th:text="${#dates.format(TLChoXacNhan.ngayTao, 'dd/MM/yyyy')}"></span></p>
+                        <p class="h6 text-muted mb-0 mb-lg-0">Chờ xác nhận đơn</span></p>
+                    </div>
+                </div>
+
+                <div class="timeline-step" th:each="TLChoGiaoHang: ${timeLineChoGiaoHang}">
+                    <div class="timeline-content" data-toggle="popover" data-trigger="hover" data-placement="top"
+                         title="" data-content="And here's some amazing content. It's very engaging. Right?"
+                         data-original-title="2003">
+                        <div class="inner-circle"></div>
+                        <p class="h6 mt-3 mb-1"><span
+                                th:text="${#dates.format(TLChoGiaoHang.ngayTao, 'dd/MM/yyyy')}"></span></p>
+                        <p class="h6 text-muted mb-0 mb-lg-0">Chờ giao hàng</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

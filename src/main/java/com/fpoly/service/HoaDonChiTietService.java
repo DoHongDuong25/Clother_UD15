@@ -41,10 +41,6 @@ public class HoaDonChiTietService {
         this.hoaDonChiTietRepository = hoaDonChiTietRepository;
     }
 
-    public List<HoaDonChiTiet> findByHoaDonId(Long hoaDonId) {
-        return hoaDonChiTietRepository.findByHoaDonId(hoaDonId);
-    }
-
 	public HoaDonChiTietDTO findByHoaDonId(String  maDonHang, Pageable pageable) {
 		List<HoaDonChiTietDTO> listHoaDonChiTietDTO = new ArrayList<HoaDonChiTietDTO>();
 		List<HoaDonChiTiet> listHoaDonChiTiet = new ArrayList<HoaDonChiTiet>();

@@ -5,7 +5,7 @@ import static com.querydsl.core.types.PathMetadataFactory.*;
 import com.querydsl.core.types.dsl.*;
 
 import com.querydsl.core.types.PathMetadata;
-import javax.annotation.Generated;
+import javax.annotation.processing.Generated;
 
 import com.fpoly.entity.PhongCach;
 import com.fpoly.entity.SanPham;
@@ -16,7 +16,7 @@ import com.querydsl.core.types.dsl.PathInits;
 /**
  * QPhongCach is a Querydsl query type for PhongCach
  */
-@Generated("com.querydsl.codegen.EntitySerializer")
+@Generated("com.querydsl.codegen.DefaultEntitySerializer")
 public class QPhongCach extends EntityPathBase<PhongCach> {
 
     private static final long serialVersionUID = 592882353L;
@@ -42,7 +42,7 @@ public class QPhongCach extends EntityPathBase<PhongCach> {
     //inherited
     public final StringPath nguoiTao = _super.nguoiTao;
 
-    public final SetPath<SanPham, QSanPham> sanPhams = this.<SanPham, QSanPham>createSet("sanPhams", SanPham.class, QSanPham.class, PathInits.DIRECT2);
+    public final ListPath<SanPham, QSanPham> sanPhams = this.<SanPham, QSanPham>createList("sanPhams", SanPham.class, QSanPham.class, PathInits.DIRECT2);
 
     public final StringPath tenPhongCach = createString("tenPhongCach");
 

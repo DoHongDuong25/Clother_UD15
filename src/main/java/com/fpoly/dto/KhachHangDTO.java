@@ -13,7 +13,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class KhachHangDTO extends BaseDTO<KhachHangDTO> {
-		
 	
 	    private String email;
 

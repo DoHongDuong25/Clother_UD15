@@ -1,20 +1,22 @@
 package com.fpoly.QEntityGenarate;
 
-import static com.querydsl.core.types.PathMetadataFactory.*;
-
-import com.querydsl.core.types.dsl.*;
-
-import com.querydsl.core.types.PathMetadata;
-import javax.annotation.Generated;
-
 import com.fpoly.entity.BaseEntity;
 import com.querydsl.core.types.Path;
+import com.querydsl.core.types.PathMetadata;
+import com.querydsl.core.types.dsl.DateTimePath;
+import com.querydsl.core.types.dsl.EntityPathBase;
+import com.querydsl.core.types.dsl.NumberPath;
+import com.querydsl.core.types.dsl.StringPath;
+
+import javax.annotation.processing.Generated;
+
+import static com.querydsl.core.types.PathMetadataFactory.forVariable;
 
 
 /**
  * QBaseEntity is a Querydsl query type for BaseEntity
  */
-@Generated("com.querydsl.codegen.SupertypeSerializer")
+@Generated("com.querydsl.codegen.DefaultSupertypeSerializer")
 public class QBaseEntity extends EntityPathBase<BaseEntity> {
 
     private static final long serialVersionUID = 1768552950L;

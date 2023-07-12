@@ -5,7 +5,7 @@ import static com.querydsl.core.types.PathMetadataFactory.*;
 import com.querydsl.core.types.dsl.*;
 
 import com.querydsl.core.types.PathMetadata;
-import javax.annotation.Generated;
+import javax.annotation.processing.Generated;
 
 import com.fpoly.entity.KichCo;
 import com.fpoly.entity.SanPhamChiTiet;
@@ -16,7 +16,7 @@ import com.querydsl.core.types.dsl.PathInits;
 /**
  * QKichCo is a Querydsl query type for KichCo
  */
-@Generated("com.querydsl.codegen.EntitySerializer")
+@Generated("com.querydsl.codegen.DefaultEntitySerializer")
 public class QKichCo extends EntityPathBase<KichCo> {
 
     private static final long serialVersionUID = -2040708367L;
@@ -42,7 +42,7 @@ public class QKichCo extends EntityPathBase<KichCo> {
     //inherited
     public final StringPath nguoiTao = _super.nguoiTao;
 
-    public final SetPath<SanPhamChiTiet, QSanPhamChiTiet> SanPhamChiTiets = this.<SanPhamChiTiet, QSanPhamChiTiet>createSet("SanPhamChiTiets", SanPhamChiTiet.class, QSanPhamChiTiet.class, PathInits.DIRECT2);
+    public final ListPath<SanPhamChiTiet, QSanPhamChiTiet> sanPhamChiTiets = this.<SanPhamChiTiet, QSanPhamChiTiet>createList("sanPhamChiTiets", SanPhamChiTiet.class, QSanPhamChiTiet.class, PathInits.DIRECT2);
 
     public final StringPath tenKichCo = createString("tenKichCo");
 

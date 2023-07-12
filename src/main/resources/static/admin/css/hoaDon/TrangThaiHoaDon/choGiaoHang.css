@@ -1,14 +1,8 @@
 .fas.fa-history:before {
     content: "\f1da"; /* Mã Unicode tương ứng với biểu tượng "fa-history" */
 }
-
-#modalChiTiet .modal-dialog {
-    max-width: 1400px;
-    width: 1400px;
-}
-
-#modalChiTiet .modal-content {
-    height: 450px;
+.table tbody tr:hover {
+    background-color: #e2e8f0;
 }
 
 .pagination {
@@ -285,6 +279,7 @@ body {
 .table {
     width: 100%;
     border-collapse: collapse;
+    background-color: white;
 }
 
 .table th,
@@ -477,4 +472,33 @@ h1:before {
     min-width: 3rem;
     border-radius: 6.25rem;
     opacity: .5
+}
+.pagination {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.pagination li {
+    margin: 0 5px;
+}
+
+.pagination a {
+    display: block;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    background-color: #f5f5f5;
+    color: #333;
+    text-decoration: none;
+}
+
+.pagination a:hover {
+    background-color: #ddd;
+}
+
+.pagination .active-page {
+    font-weight: bold;
+    background-color: #333;
+    color: #fff;
 }

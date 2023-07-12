@@ -10,7 +10,7 @@
 </head>
 
 <body>
-<div class="container" layout:fragment="content">
+<div class="container-fluid" layout:fragment="content">
     <div class="tab-buttons">
         <button class="tab-button" onclick="redirectToTatCaDon()">Tất cả đơn</button>
         <button class="tab-button" onclick="redirectToChoxacNhan()">Chờ xác nhận</button>
@@ -37,22 +37,25 @@
     <table id="user-table-DaGiao" class="table">
         <thead>
         <tr>
+            <th scope="col">STT</th>
             <th scope="col">Mã đơn</th>
             <th scope="col">Họ tên</th>
             <th scope="col">Số điện thoại</th>
             <th scope="col">Ngày tạo đơn</th>
             <th scope="col">Tổng tiền</th>
             <th scope="col">Ghi chú</th>
-            <th scope="col">Xem chi tiết</th>
+            <th scope="col">Thao tác</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="hoaDon : ${DaGiao}">
-            <th scope="row" th:text="${hoaDon.maDon}"></th>
+        <tr th:each="hoaDon, stt : ${DaGiao}">
+            <td th:text="${(page - 1) * size + stt.count}"></td>
+            <td scope="row" th:text="${hoaDon.maDon}"></td>
             <td th:text="${hoaDon.khachHang.hoTen}"></td>
             <td th:text="${hoaDon.sdtNguoiNhan}"></td>
             <td th:text="${#dates.format(hoaDon.ngayTao, 'dd/MM/yyyy')}"></td>
-            <td th:text="${hoaDon.tongTienHoaDon}"></td>
+<!--            <td th:text="${hoaDon.tongTienHoaDon}"></td>-->
+            <td th:text="${#numbers.formatDecimal(hoaDon.tongTienHoaDon, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></td>
             <td th:text="${hoaDon.ghiChu}"></td>
             <td>
                 <div class="button-group-a">
@@ -68,16 +71,18 @@
         </tr>
         </tbody>
     </table>
-    <div>
-        <ul class="pagination" th:classappend="${pageDaGiao > 0} ? '' : 'pagination-empty'">
-            <li th:each="pageNumber : ${#numbers.sequence(0, pageDaGiao - 1)}">
-                <a th:href="@{/admin/DonHang/DaGiaoHang(page=${pageNumber})}" th:text="${pageNumber}"></a>
+    <div th:if="${!#lists.isEmpty(DaGiao)}">
+        <ul class="pagination">
+            <li th:each="pageNumber : ${#numbers.sequence(1, pageDaGiao)}">
+                <a th:href="@{/admin/DonHang/DaGiaoHang(page=${pageNumber})}" th:text="${pageNumber}"
+                   th:class="${pageNumber == page ? 'active-page' : ''}"></a>
             </li>
         </ul>
     </div>
     <div class="alert alert-warning container mt-3 text-center" th:if="${#lists.isEmpty(DaGiao)}"
          style="background-color: transparent; border: none;">
-        <span style="font-size: 1.2em;">Không có dữ liệu</span>
+        <img src="/admin/img/noData2.png" alt="Không có sản phẩm" style="width: 300px; height: 300px;">
+        <p class="empty-message" style="margin-top: 20px; font-size: 1.8em;">KHÔNG CÓ DỮ LIỆU</p>
     </div>
 </div>
 

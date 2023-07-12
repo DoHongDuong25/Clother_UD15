@@ -5,7 +5,7 @@ import static com.querydsl.core.types.PathMetadataFactory.*;
 import com.querydsl.core.types.dsl.*;
 
 import com.querydsl.core.types.PathMetadata;
-import javax.annotation.Generated;
+import javax.annotation.processing.Generated;
 
 import com.fpoly.entity.HinhAnh;
 import com.fpoly.entity.LyDoTraHang;
@@ -16,7 +16,7 @@ import com.querydsl.core.types.dsl.PathInits;
 /**
  * QHinhAnh is a Querydsl query type for HinhAnh
  */
-@Generated("com.querydsl.codegen.EntitySerializer")
+@Generated("com.querydsl.codegen.DefaultEntitySerializer")
 public class QHinhAnh extends EntityPathBase<HinhAnh> {
 
     private static final long serialVersionUID = -1489804098L;
@@ -29,12 +29,16 @@ public class QHinhAnh extends EntityPathBase<HinhAnh> {
 
     public final BooleanPath coHienThi = createBoolean("coHienThi");
 
+    public final BooleanPath daXoa = createBoolean("daXoa");
+
     //inherited
     public final NumberPath<Long> id = _super.id;
 
-    public final BooleanPath isAnhChinh = createBoolean("isAnhChinh");
+    public final BooleanPath laAnhChinh = createBoolean("laAnhChinh");
 
     public final SetPath<LyDoTraHang, QLyDoTraHang> lyDoTraHang = this.<LyDoTraHang, QLyDoTraHang>createSet("lyDoTraHang", LyDoTraHang.class, QLyDoTraHang.class, PathInits.DIRECT2);
+
+    public final QMauSac mauSac;
 
     //inherited
     public final DateTimePath<java.util.Date> ngayCapNhat = _super.ngayCapNhat;
@@ -48,7 +52,7 @@ public class QHinhAnh extends EntityPathBase<HinhAnh> {
     //inherited
     public final StringPath nguoiTao = _super.nguoiTao;
 
-    public final QSanPhamChiTiet sanPhamChiTiet;
+    public final QSanPham sanPham;
 
     public final StringPath tenAnh = createString("tenAnh");
 
@@ -70,7 +74,8 @@ public class QHinhAnh extends EntityPathBase<HinhAnh> {
 
     public QHinhAnh(Class<? extends HinhAnh> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.sanPhamChiTiet = inits.isInitialized("sanPhamChiTiet") ? new QSanPhamChiTiet(forProperty("sanPhamChiTiet"), inits.get("sanPhamChiTiet")) : null;
+        this.mauSac = inits.isInitialized("mauSac") ? new QMauSac(forProperty("mauSac")) : null;
+        this.sanPham = inits.isInitialized("sanPham") ? new QSanPham(forProperty("sanPham"), inits.get("sanPham")) : null;
     }
 
 }

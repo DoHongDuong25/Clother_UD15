@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{admin/layouts/index.html}">
+
+<head>
+    <style>
+        .button-add-productDetail {
+            font-size: 18px;
+            color: #111111;
+            height: 40px;
+            width: 40px;
+            background: #f3f2ee;
+            border-radius: 50%;
+            line-height: 40px;
+            text-align: center;
+        }
+
+        .button-add-productDetail:hover {
+            font-size: 18px;
+            color: #111111;
+            height: 40px;
+            width: 40px;
+            background: #f3f2ee;
+            border-radius: 50%;
+            line-height: 40px;
+            text-align: center;
+            border: 1px solid;
+            box-shadow: inset 0 0 20px rgba(255, 255, 255, .5), 0 0 20px rgba(255, 255, 255, .2);
+            outline-color: rgba(255, 255, 255, 0);
+            outline-offset: 15px;
+        }
+
+        .product__details__option__color label input {
+            position: absolute;
+            visibility: hidden;
+        }
+
+        input[type=checkbox],
+        input[type=radio] {
+            box-sizing: border-box;
+            padding: 0;
+        }
+
+        .product__details__option__size label {
+            color: #111111;
+            font-size: 15px;
+            font-weight: 700;
+            text-transform: uppercase;
+            display: inline-block;
+            border: 1px solid #e5e5e5;
+            padding: 6px 15px;
+            margin-bottom: 0;
+            margin-right: 5px;
+            cursor: pointer;
+        }
+
+        button,
+        input,
+        optgroup,
+        select,
+        textarea {
+            margin: 0;
+            font-family: inherit;
+            font-size: inherit;
+            line-height: inherit;
+        }
+
+        .product__details__option__size label.label-active {
+            background: #111111;
+            color: #ffffff;
+            border-color: #111111;
+        }
+
+        *,
+        ::after,
+        ::before {
+            box-sizing: border-box;
+        }
+
+        button,
+        input {
+            overflow: visible;
+        }
+
+        button,
+        input,
+        optgroup,
+        select,
+        textarea {
+            margin: 0;
+            font-family: inherit;
+            font-size: inherit;
+            line-height: inherit;
+        }
+
+        .product__details__option__color {
+            display: inline-block;
+            position: relative;
+            top: 10px;
+        }
+
+        .product__details__option__color span {
+            color: #111111;
+            display: inline-block;
+            margin-right: 10px;
+            position: relative;
+            top: -9px;
+        }
+
+        .product__details__option__color label {
+            height: 30px;
+            width: 30px;
+            border-radius: 50%;
+            position: relative;
+            margin-right: 10px;
+            margin-bottom: 0;
+            display: inline-block;
+            cursor: pointer;
+        }
+
+
+
+        .product__details__option__color label input {
+            position: absolute;
+            visibility: hidden;
+        }
+
+        input[type=checkbox],
+        input[type=radio] {
+            box-sizing: border-box;
+            padding: 0;
+        }
+
+        button,
+        input {
+            overflow: visible;
+        }
+
+        input[type="radio"i] {
+            background-color: initial;
+            cursor: default;
+            appearance: auto;
+            box-sizing: border-box;
+            margin: 3px 3px 0px 5px;
+            padding: initial;
+            border: initial;
+        }
+
+        .product__details__option {
+            margin-bottom: 30px;
+        }
+
+        .shopping__cart__table table tbody tr td.product__cart__item {
+            width: 400px;
+        }
+
+        .shopping__cart__table table tbody tr td {
+            padding-bottom: 30px;
+            padding-top: 30px;
+        }
+
+        td {
+            display: table-cell;
+            vertical-align: inherit;
+        }
+
+        table {
+            border-collapse: collapse;
+        }
+
+        .shopping__cart__table table tbody tr td.product__cart__item .product__cart__item__pic {
+            float: left;
+            margin-right: 30px;
+        }
+    </style>
+</head>
+
+<body>
+    <section layout:fragment="content" class="container-fluid">
+        <div id="messageSuccess" th:if="${messageSuccess}" class="toast" role="alert" aria-live="assertive"
+            aria-atomic="true" data-delay="3000">
+            <div class="toast-header">
+                <svg class="bd-placeholder-img rounded mr-2" width="20" height="20" xmlns="http://www.w3.org/2000/svg"
+                    preserveAspectRatio="xMidYMid slice" focusable="false" role="img">
+                    <rect width="100%" height="100%" fill="#007aff"></rect>
+                </svg>
+                <!-- <img src="..." class="rounded mr-2" alt="..."> -->
+                <strong class="mr-auto">Thông báo hệ thống</strong>
+                <small>Now</small>
+                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="toast-body" th:text="${messageSuccess}"></div>
+        </div>
+        <div id="messageDanger" th:if="${messageDanger}" class="toast" role="alert" aria-live="assertive"
+            aria-atomic="true" data-delay="3000">
+            <div class="toast-header">
+                <svg class="bd-placeholder-img rounded mr-2" width="20" height="20" xmlns="http://www.w3.org/2000/svg"
+                    preserveAspectRatio="xMidYMid slice" focusable="false" role="img">
+                    <rect width="100%" height="100%" fill="red"></rect>
+                </svg>
+                <!-- <img src="..." class="rounded mr-2" alt="..."> -->
+                <strong class="mr-auto">Thông báo hệ thống</strong>
+                <small>Now</small>
+                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="toast-body" th:text="${messageDanger}"></div>
+        </div>
+        <!-- Begin Page Content -->
+        <div>
+            <!-- Page Heading -->
+            <h1 class="h3 mb-2 text-gray-800">Bán hàng tại quầy</h1>
+            <hr>
+
+            <form id="flexUrlTableFormBanHangTaiQuay" enctype="multipart/form-data">
+                <input type="number" name="page" id="inputPageProductManage" hidden>
+                <div class="card shadow mb-1 pt-sm-2 pb-sm-3" th:object="${dataSearch}">
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <label for="tenSanPham">Tên sản phẩm:</label>
+                                <input type="text" class="form-control" name="tenSanPham"
+                                    id="tenSanPhamSearchProductManage" placeholder="Tên sản phẩm"
+                                    th:field="*{tenSanPham}">
+                            </div>
+                            <div class="col-sm-3">
+                                <label for="kieuDangId">Tên kiểu dáng:</label>
+                                <select class="selectpicker" name="kieuDangId" id="kieuDangId" th:field="*{kieuDangIds}"
+                                    multiple>
+                                    <option th:each="item : ${lstKieuDang}" th:value="${item.id}"
+                                        th:text="${item.tenKieuDang}">
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="col-sm-3">
+                                <label for="chatLieuIds">Tên chất liệu:</label>
+                                <select class="selectpicker" name="chatLieuIds" id="chatLieuIds"
+                                    th:field="*{chatLieuIds}" multiple>
+                                    <option th:each="item : ${lstChatLieu}" th:value="${item.id}"
+                                        th:text="${item.tenChatLieu} "></option>
+                                </select>
+                            </div>
+                            <div class="col-sm-3">
+                                <label for="loaiSanPhamIds">Tên loại sản phẩm:</label>
+                                <select class="selectpicker" name="loaiSanPhamIds" id="loaiSanPhamIds"
+                                    th:field="*{loaiSanPhamIds}" multiple>
+                                    <option th:each="item : ${lstLoaiSanPham}" th:value="${item.id}"
+                                        th:text="${item.tenLoaiSanPham}">
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <!-- --- -->
+                        <div class="row mt-3">
+                            <div class="col-sm-3">
+                                <label for="phongCachIds">Tên phong cách:</label>
+                                <select class="selectpicker" name="phongCachIds" id="phongCachIds"
+                                    th:field="*{phongCachIds}" multiple>
+                                    <option th:each="item : ${lstPhongCach}" th:value="${item.id}"
+                                        th:text="${item.tenPhongCach}">
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="col-sm-3">
+                                <label for="kichCoIds">Tên kích cỡ:</label>
+                                <select class="selectpicker" name="kichCoIds" id="kichCoIds" th:field="*{kichCoIds}"
+                                    multiple>
+                                    <option th:each="item : ${lstKichCo}" th:value="${item.id}"
+                                        th:text="${item.tenKichCo}">
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="col-sm-3">
+                                <label for="mauSacIds">Tên màu sắc:</label>
+                                <select class="selectpicker" name="mauSacIds" id="mauSacIds" th:field="*{mauSacIds}"
+                                    multiple>
+                                    <option th:each="item, istat : ${lstMauSac}" th:value="${item.id}"
+                                        th:text="${item.tenMauSac}">
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="col-sm-3">
+                                <label for="hienThi">Loại hiển thị:</label>
+                                <select class="selectpicker" name="hienThi" id="hienThi" th:field="*{coHienThi}"
+                                    multiple>
+                                    <option value="1">Đang hiển thị</option>
+                                    <option value="0">Không hiển thị</option>
+                                </select>
+                            </div>
+                        </div>
+                        <!-- --- -->
+                        <!-- <div class="row mt-3">
+                            <div class="col-sm-3">
+                                <label for="createdBy">Người tạo:</label>
+                                <input type="text" class="form-control" name="createdBy" id="createdBy"
+                                    placeholder="Người tạo" th:field="*{nguoiTaoSPCT}">
+                            </div>
+                            <div class="col-sm-3">
+                                <label for="createdTime">Thời gian tạo:</label>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <input type="date" class="form-control" name="minCreatedTime"
+                                            id="minCreatedTime" th:field="*{ngayTaoMin}">
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <input type="date" class="form-control" name="maxCreatedTime"
+                                            id="maxCreatedTime" th:field="*{ngayTaoMax}">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <label for="lastModifedBy">Người sửa đổi cuối:</label>
+                                <input type="text" class="form-control" name="lastModifedTime" id="lastModifedTime"
+                                    placeholder="Người sửa đổi cuối" th:field="*{nguoiCapNhatSPCT}">
+                            </div>
+                            <div class="col-sm-3">
+                                <label for="lastModifedTime">Thời gian sửa đổi cuối:</label>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <input type="date" class="form-control" name="minLastModifedTime"
+                                            id="minLastModifedTime" placeholder="Người tạo"
+                                            th:field="*{ngayCapNhatMin}">
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <input type="date" class="form-control" name="maxLastModifedTime"
+                                            id="maxLastModifedTime" placeholder="Thời gian sửa đổi cuối"
+                                            th:field="*{ngayCapNhatMax}">
+                                    </div>
+                                </div>
+                            </div>
+                        </div> -->
+                        <div class="row mt-3">
+                            <div class="col-sm-3">
+                                <label>Giá:</label>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <input type="number" class="form-control" th:field="*{giaMin}" th:classappend="${#fields.hasErrors('giaMin')}?
+                                        is-invalid : ''" placeholder="Giá trị đầu">
+                                        <small id="giaMin" th:if="${#fields.hasErrors('giaMin')}" th:class="${#fields.hasErrors('giaMin')}?
+                                            invalid-feedback : ''" th:errors="*{giaMin}"></small>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <input type="number" class="form-control" th:field="*{giaMax}" th:classappend="${#fields.hasErrors('giaMax')}?
+                                        is-invalid : ''" placeholder="Giá trị đầu">
+                                        <small id="giaMax" th:if="${#fields.hasErrors('giaMax')}" th:class="${#fields.hasErrors('giaMax')}?
+                                            invalid-feedback : ''" th:errors="*{giaMax}"></small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <label>Số lượng sản phẩm:</label>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <input type="number" class="form-control" th:field="*{soLuongMin}"
+                                            th:classappend="${#fields.hasErrors('soLuongMin')}?
+                                        is-invalid : ''" placeholder="Giá trị đầu">
+                                        <small id="soLuongMin" th:if="${#fields.hasErrors('soLuongMin')}" th:class="${#fields.hasErrors('soLuongMin')}?
+                                            invalid-feedback : ''" th:errors="*{soLuongMin}"></small>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <input type="number" class="form-control" th:field="*{soLuongMax}"
+                                            th:classappend="${#fields.hasErrors('soLuongMax')}?
+                                        is-invalid : ''" placeholder="Giá trị cuối">
+                                        <small id="soLuongMax" th:if="${#fields.hasErrors('soLuongMax')}" th:class="${#fields.hasErrors('soLuongMax')}?
+                                            invalid-feedback : ''" th:errors="*{soLuongMax}"></small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 mt-3">
+                            <div class="float-right">
+                                <a class="btn btn-primary" onclick="flexUrlSubmitBanHangTaiQuay('', 'get', 'BanHangTaiQuay')">Tìm
+                                    kiếm</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- DataTales Example -->
+                <div class="card shadow mb-4 mt-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">
+                            <div class="btn-group-sm">
+                                <div class="float-right">
+                                    <a class="btn btn-primary mr-sm-1" th:href="@{/admin/product/add}">Thêm
+                                        mới sản phẩm</a>
+                                    <a class="btn btn-danger" onclick="showConfirmModalDialogDeleteAllbyId()">Xóa</a>
+                                </div>
+                            </div>
+                        </h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="table table-hover">
+                            <table width="100%" cellspacing="0">
+                                <thead class="text-center">
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Ảnh sản phẩm</th>
+                                        <th>Tên sản phẩm</th>
+                                        <th>Giá</th>
+                                        <th>Thao tác</th>
+                                    </tr>
+                                    <tr th:if="${!sanPhamPage.hasContent()}">
+                                        <td colspan="9">
+                                            <h4><i>Không có sản phẩm nào phù hợp</i></h4>
+                                        </td>
+                                    </tr>
+                                </thead>
+                                <tbody class="text-center" th:object="${resultSP}">
+                                    <tr th:each="item, istat : ${resultSP.lstShowSanPhamTaiQuayDTO}">
+                                        <td th:text="${sanPhamPage.number * sanPhamPage.size + istat.index + 1}">
+                                        </td>
+                                        <td>
+                                            <div class="col-sm-6 row offset-3">
+                                                <div th:id="'carouselExampleIndicators'+${istat.index}"
+                                                    class="carousel slide" data-ride="carousel">
+                                                    <ol class="carousel-indicators">
+                                                        <li th:data-target="'#carouselExampleIndicators'+${istat.index}"
+                                                            th:data-slide-to="${#numbers.formatInteger(istat.index+''+istatAC.index,5)}"
+                                                            th:class="${#numbers.formatInteger(istat.index+''+istatAC.index,5) == #numbers.formatInteger(istat.index+''+0,5)? 'active':''}"
+                                                            th:each="img, istatAC : ${item.anhChinhs}">
+                                                        </li>
+                                                    </ol>
+                                                    <div class="carousel-inner">
+                                                        <div th:class="${#numbers.formatInteger(istat.index+''+istatAC.index,5) == #numbers.formatInteger(istat.index+''+0,5)? 'carousel-item active' : 'carousel-item'}"
+                                                            th:each="img, istatAC : ${item.anhChinhs}">
+                                                            <img class="d-block h-100"
+                                                                th:src="${'/staff/product/images/'+img}"
+                                                                alt="First slide" width="150px">
+                                                        </div>
+                                                    </div>
+                                                    <a class="carousel-control-prev"
+                                                        th:href="'#carouselExampleIndicators'+${istat.index}"
+                                                        role="button" data-slide="prev">
+                                                        <span class="carousel-control-prev-icon"
+                                                            aria-hidden="true"></span>
+                                                        <span class="sr-only">Previous</span>
+                                                    </a>
+                                                    <a class="carousel-control-next"
+                                                        th:href="'#carouselExampleIndicators'+${istat.index}"
+                                                        role="button" data-slide="next">
+                                                        <span class="carousel-control-next-icon"
+                                                            aria-hidden="true"></span>
+                                                        <span class="sr-only">Next</span>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td th:text="${item.tenSanPham}"></td>
+                                        <td th:text="${item.gia}"></td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <a class="button-add-productDetail" id="info" data-toggle="popover"
+                                                    data-trigger="hover" data-placement="top"
+                                                    data-content="Chọn chi tiết sản phẩm" th:data-id="${istat.index}"
+                                                    onclick="openModalAddDetailProduct(this.getAttribute('data-id'))">
+                                                    <i class="fa fa-plus"></i></a>
+
+                                                <!-- <a class="btn btn-outline-primary btn-sm" data-toggle="popover"
+                                                        data-trigger="hover" data-placement="top"
+                                                        data-content="Cập nhật sản phẩm"
+                                                        th:href="@{'/admin/product/edit/' + ${item.id}}" disabled><img
+                                                            th:src="@{/admin/img/icons/edit.svg}"></a>
+    
+                                                    <a class="btn btn-outline-danger btn-sm" th:data-id="${item.id}"
+                                                        data-toggle="popover" data-trigger="hover" data-placement="top"
+                                                        data-content="Xóa sản phẩm" th:data-name="${item.tenSanPham}"
+                                                        onclick="showConfirmModalDialog(this.getAttribute('data-id'), this.getAttribute('data-name'))"><img
+                                                            th:src="@{/admin/img/icons/trash.svg}"></a> -->
+                                            </div>
+                                        </td>
+                                        <!-- Modal add productDetail -->
+                                        <div class="modal fade" th:id="'modalAddDetailProduct'+${istat.index}"
+                                            tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
+                                            aria-hidden="true">
+                                            <div class="modal-dialog modal-lg" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title">Chọn chi tiết sản phẩm</h5>
+                                                        <button type="button" class="close" data-dismiss="modal"
+                                                            aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="row">
+                                                            <div class="col-sm-7">
+                                                                <div th:id="'showHinhAnhSanPhamChiTiet'+${istat.index}"
+                                                                    class="carousel slide" data-bs-ride="carousel">
+                                                                    <div class="carousel-inner">
+                                                                        <div class="carousel-item"
+                                                                            th:classappend="${#numbers.formatInteger(istat.index+''+istatAC.index,5) == #numbers.formatInteger(istat.index+''+0,5)? 'active':''}"
+                                                                            th:each="img, istatAC : ${item.anhChinhs}">
+                                                                            <img th:src="${'/staff/product/images/'+img}"
+                                                                                class="w-100 img-responsive" alt="...">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <script th:inline="javascript">
+                                                                    $(document).ready(function () {
+                                                                        var myCarousel = document.querySelector('#showHinhAnhSanPhamChiTiet' + '[[${istat.index}]]')
+                                                                        var carousel = new bootstrap.Carousel(myCarousel, {
+                                                                            pause: true
+                                                                        })
+                                                                    })
+                                                                </script>
+                                                            </div>
+                                                            <div class="col-sm-5">
+                                                                <div class="product__details__option">
+                                                                    <div class="product__details__option__size">
+                                                                        <span>Size:</span>
+                                                                        <label class="img-thumbnail"
+                                                                            th:for="${kc.tenKichCo}+${istat.index}+${istatKC.index}"
+                                                                            onclick="labelActive(this.getAttribute('id'),this.getAttribute('name'), this.getAttribute('input-name'), this.getAttribute('input-id'))"
+                                                                            th:id="labelKC+${istat.index}+${istatKC.index}"
+                                                                            th:each="kc, istatKC : ${item.lstKichCo}"
+                                                                            th:name="labelKCName+${istat.index}"
+                                                                            th:input-name="inputKCName+${istat.index}"
+                                                                            th:input-id="${kc.tenKichCo}+${istat.index}+${istatKC.index}">
+                                                                            <!-- class="label-active" -->
+                                                                            [[${kc.tenKichCo}]]
+                                                                            <input type="radio" th:value="${kc.id}"
+                                                                                th:name="inputKCName+${istat.index}"
+                                                                                th:id="${kc.tenKichCo}+${istat.index}+${istatKC.index}"
+                                                                                th:field="*{kichCoId}" hidden>
+                                                                        </label>
+                                                                    </div>
+                                                                    <!--*: check lai id -->
+                                                                    <div class="product__details__option__color">
+                                                                        <span>Color:</span>
+                                                                        <label
+                                                                            onclick="chooseOptionColorLabel(this.getAttribute('id'),this.getAttribute('name'), this.getAttribute('input-name'), this.getAttribute('input-id'))"
+                                                                            th:for="${ms.tenMauSac}+${istat.index}+${istatMS.index}"
+                                                                            th:id="labelMS+${istat.index}+${istatMS.index}"
+                                                                            th:style="'background-color:'+ ${ms.maMauSac}   "
+                                                                            th:each="ms, istatMS : ${item.lstMauSac}"
+                                                                            th:name="labelMSName+${istat.index}"
+                                                                            th:input-name="inputMSName+${istat.index}"
+                                                                            th:input-id="${ms.tenMauSac}+${istat.index}+${istatMS.index}">
+                                                                            <input type="radio" th:value="${ms.id}"
+                                                                                th:name="inputMSName+${istat.index}"
+                                                                                th:id="${ms.tenMauSac}+${istat.index}+${istatMS.index}"
+                                                                                th:field="*{mauSacId}" hidden>
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <a type="button" class="btn btn-outline-dark" th:input-name1="inputMSName+${istat.index}"
+                                                        th:input-name2="inputKCName+${istat.index}" th:label-name1="labelMSName+${istat.index}" th:label-name2="labelKCName+${istat.index}" onclick="clearDataChoose(this.getAttribute('input-name1'), this.getAttribute('input-name2'),
+                                                        this.getAttribute('label-name1'), this.getAttribute('label-name2'))"
+                                                            data-dismiss="modal">Đóng</a>
+                                                            <a class="btn btn-outline-primary" onclick="flexUrlSubmitBanHangTaiQuay('getData', 'post', 'BanHangTaiQuay')">Thêm sản phẩm</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="card-footer text-muted">
+                            <div class="input-group mt-2 mb-3">
+                                <label class="input-group-text bg-white" for="inputGroupSelect01">kích thước
+                                    trang:</label>
+                                <select class="form-select" name="size" id="size" onchange="this.form.submit()">
+                                    <option th:selected="${sanPhamPage.size == 10}" value="10">10</option>
+                                    <option th:selected="${sanPhamPage.size == 30}" value="30">30</option>
+                                    <option th:selected="${sanPhamPage.size == 50}" value="50">50</option>
+                                    <option th:selected="${sanPhamPage.size == 70}" value="70">70</option>
+                                    <option th:selected="${sanPhamPage.size == 100}" value="100">100</option>
+                                </select>
+                            </div>
+
+                            <nav aria-label="Page navigation example" th:if="${sanPhamPage.totalPages >0}">
+                                <ul class="pagination justify-content-center">
+                                    <li th:class="${1 == sanPhamPage.number + 1}? 'page-item active' : 'page-item'">
+                                        <button id="firstPageProductManage" class="page-link">
+                                            Trang đầu
+                                        </button>
+                                    </li>
+                                    <li class="page-item disabled" th:if="${sanPhamPage.number + 1 - 2 > 1}">
+                                        <a class="page-link" href="#">...</a>
+                                    </li>
+                                    <li class="page-item active"
+                                        th:each="pageNumber : ${#numbers.sequence(sanPhamPage.number + 1 > 2 ? sanPhamPage.number + 1 - 2 : 1, sanPhamPage.number + 1 + 2 < sanPhamPage.totalPages ? sanPhamPage.number + 1 + 2 : sanPhamPage.totalPages)}"
+                                        th:class="${pageNumber == sanPhamPage.number + 1}? 'page-item active' : 'page-item'">
+                                        <button th:id="pageNumberProductManage+${pageNumber}" class="page-link"
+                                            th:text="${pageNumber}">
+                                        </button>
+                                        <script th:inline="javascript">
+                                            $(document).ready(function () {
+                                                $('#pageNumberProductManage[[${pageNumber}]]').on("click", function () {
+                                                    var num = parseInt("[[${pageNumber}]]");
+                                                    $('#inputPageProductManage').attr("value", num);
+                                                    $('#flexUrlTableFormProductManage').submit();
+                                                })
+                                            });
+                                        </script>
+                                    </li>
+                                    <li class="page-item disabled"
+                                        th:if="${sanPhamPage.number + 1 + 2 < sanPhamPage.totalPages}">
+                                        <a class="page-link" href="#">...</a>
+                                    </li>
+                                    <li
+                                        th:class="${ sanPhamPage.totalPages == sanPhamPage.number + 1}? 'page-item active' : 'page-item'">
+                                        <button class="page-link" id="lastPageProductManage">
+                                            Trang cuối
+                                        </button>
+                                    </li>
+                                    <script th:inline="javascript">
+                                        $(document).ready(function () {
+                                            $('#firstPageProductManage').on("click", function () {
+                                                var num = 1;
+                                                $('#inputPageProductManage').attr("value", num);
+                                                $('#flexUrlTableFormProductManage').submit();
+                                            })
+                                            $('#lastPageProductManage').on("click", function () {
+                                                var num = parseInt("[[${sanPhamPage.totalPages}]]");
+                                                $('#inputPageProductManage').attr("value", num);
+                                                $('#flexUrlTableFormProductManage').submit();
+                                            })
+                                        });
+                                    </script>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!-- Modal delete -->
+        <div class="modal fade" id="deleteModalId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Xác nhận xóa sản phẩm</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Bạn có muốn xóa "<span id="productName"></span>"?
+                    </div>
+                    <div class="modal-footer">
+                        <a type="button" class="btn btn-outline-dark" data-dismiss="modal">Đóng</a>
+                        <a id="yesOptionDeleteModalId" type="button" class="btn btn-danger">Xóa</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal isShow product -->
+        <div class="modal fade" id="isShowModalId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Xác nhận thay đổi trạng thái hiển thị sản phẩm</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Bạn có muốn thay đổi trạng thái hiển thị của sản phẩm đã chọn?
+                    </div>
+                    <div class="modal-footer">
+                        <a type="button" id="notChangeIsShow" class="btn btn-outline-dark" data-dismiss="modal">Đóng</a>
+                        <a id="yesOptionChangeIsShow" type="button" class="btn btn-danger">Đồng ý</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal delete all -->
+        <div class="modal fade" id="confirmationDeleteIds" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Xác nhận xóa hết sản phẩm</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Bạn có muốn xóa hết sản phẩm đã chọn?
+                    </div>
+                    <div class="modal-footer">
+                        <a type="button" class="btn btn-outline-dark" data-dismiss="modal">Đóng</a>
+                        <a onclick="flexUrlSubmit('deleteAllByIdsProductManage', 'post', 'ProductManage')" type="button"
+                            class="btn btn-danger">Xóa</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- modal show productDetail -->
+        <div class="modal fade" id="infoProductDetail" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
+            aria-hidden="true">
+            <div class="modal-dialog modal-xl" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Chi tiết sản phẩm</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="col-sm-12">
+                            <div class="row">
+                                <div class="col-sm-6 row">
+                                    <label>Người tạo: <p id="infoProductDetailContentString0"></p></label>
+                                </div>
+                                <div class="col-sm-6 row">
+                                    <label>Ngày tạo: <p id="infoProductDetailContentString1"></p></label>
+                                </div>
+                                <div class="col-sm-6 row">
+                                    <label>Người cập nhật cuối: <p id="infoProductDetailContentString2"></p></label>
+                                </div>
+                                <div class="col-sm-6 row">
+                                    <label>Ngày cập nhật cuối: <p id="infoProductDetailContentString3"></p></label>
+                                </div>
+                                <div class="col-sm-12 row">
+                                    <label>Mô tả: <p id="infoProductDetailContentString3"></p></label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <a type="button" class="btn btn-outline-dark" data-dismiss="modal">Đóng</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            $(document).ready(function () {
+                $('[data-toggle="popover"]').popover();
+            });
+            function openAddProduct() {
+                $('#banHangTaiQuayModal').modal("show");
+            }
+            function openModalAddDetailProduct(id) {
+                $('#modalAddDetailProduct' + id).modal("show");
+            }
+            function clearDataChoose(mauSacInputName,kichCoInputName, mauSacLabelName,kichCoLabelName){
+                var kichCoIdName = document.getElementsByName("kichCoId");
+                $(kichCoIdName).removeAttr("checked");
+                var mauSacIdName = document.getElementsByName("mauSacId");
+                $(mauSacIdName).removeAttr("checked");
+                var kichCoLabel = document.getElementsByName(kichCoLabelName);
+                $(kichCoLabel).removeClass("label-active");
+            }
+            function labelActive(labelId, labelName, inputName, inputId) {
+                var lstName = document.getElementsByName(labelName);
+                $(lstName).removeClass("label-active");
+                $('#' + labelId).addClass("label-active");
+                var lstInputName = document.getElementsByName(inputName);
+                $(lstInputName).removeAttr("checked");
+                $('#' + inputId).attr("checked", "true");
+            }
+            function chooseOptionColorLabel(labelId, labelName, inputName, inputId) {
+                var lstName = document.getElementsByName(labelName);
+                $(lstName).removeClass("label-active");
+                $('#' + labelId).addClass("label-active");
+                var lstInputName = document.getElementsByName(inputName);
+                $(lstInputName).removeAttr("checked");
+                $('#' + inputId).attr("checked", "true");
+            }
+        </script>
+        <script th:inline="javascript">
+            window.onload = function () {
+                var messageSuccess = '[[${messageSuccess}]]';
+                var messageDanger = '[[${messageDanger}]]';
+                $('#toastsCustomCss').attr("style", "position: absolute; top: 70px; right: 0;z-index: 1;");
+                if (messageSuccess.length !== 0) {
+                    $("#messageSuccess").toast("show");
+                }
+                if (messageDanger.length !== 0) {
+                    $("#messageDanger").toast("show");
+                }
+            }
+        </script>
+    </section>
+</body>
+
+</html>

@@ -1,5 +1,6 @@
 package com.fpoly.service;
 import com.fpoly.dto.HoaDonDTO;
+import com.fpoly.entity.GiaoDich;
 import com.fpoly.entity.HoaDon;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,4 +24,7 @@ public interface HoaDonService{
 
 	void capNhatTrangThaiHuyDon(String maDonHang);
 
+    Page<HoaDon> findHoaDonByTrangThaiAndKhachHangId(int trangThai, Long khachHangId, Pageable pageable);
+
+    List<GiaoDich> timeLine(int trangThai, Long hoaDonId);
 }

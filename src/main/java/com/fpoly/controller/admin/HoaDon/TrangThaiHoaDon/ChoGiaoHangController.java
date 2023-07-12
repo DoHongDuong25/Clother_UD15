@@ -40,12 +40,16 @@ public class ChoGiaoHangController {
     HoaDonService hoaDonService;
 
     @RequestMapping("admin/DonHang/ChoGiaoHang")
-    public String getHoaDonChoLayHang(Model model, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "3") int size) {
-        PageRequest pageable = PageRequest.of(page, size);
+    public String getHoaDonChoLayHang(Model model,
+                                      @RequestParam(defaultValue = "1") int page,
+                                      @RequestParam(defaultValue = "5") int size) {
+        PageRequest pageable = PageRequest.of(page - 1, size);
         Page<HoaDon> ChoGiaoHang = hoaDonRepoditory2.findByTrangThaiHoaDonListTrangThai(2, pageable);
 
         model.addAttribute("ChoGiaoHang", ChoGiaoHang.getContent());
         model.addAttribute("pageChoGiaoHang", ChoGiaoHang.getTotalPages());
+        model.addAttribute("page", page);
+        model.addAttribute("size", size);
         return "admin/hoadon/TrangThaiHoaDon/ChoGiaoHang";
     }
 
@@ -61,6 +65,7 @@ public class ChoGiaoHangController {
             hoaDon.setNgayCapNhat(new Date());
             hoaDon.setNguoiCapNhat("hduong"); // Cập nhật người cập nhật (thay "hduong" bằng giá trị tương ứng)
             hoaDonRepository.save(hoaDon);
+
             GiaoDich gd = new GiaoDich();
             gd.setHoaDon(hoaDon);
             gd.setNguoiDung(hoaDon.getNguoiDung().getId());

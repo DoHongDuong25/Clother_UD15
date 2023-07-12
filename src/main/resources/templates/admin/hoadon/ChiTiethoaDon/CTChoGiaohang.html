@@ -10,7 +10,7 @@
 </head>
 
 <body>
-<div class="container" layout:fragment="content">
+<div class="container-fluid" layout:fragment="content">
     <h1>CHI TIẾT HÓA ĐƠN</h1>
 
     <div th:object="${hoaDon}">
@@ -36,13 +36,15 @@
                 </td>
                 <td th:text="${hdct.donGia}"></td>
                 <td th:text="${hdct.soLuong}"></td>
-                <td th:text="${hdct.tongTien}"></td>
+<!--                <td th:text="${hdct.tongTien}"></td>-->
+                <td th:text="${#numbers.formatDecimal(hdct.tongTien, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></td>
             </tr>
             </tbody>
         </table>
 
         <p>Tổng tiền:
-            <span th:text="${hoaDon.tongTienDonHang}"></span>
+<!--            <span th:text="${hoaDon.tongTienDonHang}"></span>-->
+            <td th:text="${#numbers.formatDecimal(hoaDon.tongTienHoaDon, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></td>
         </p>
     </div>
 

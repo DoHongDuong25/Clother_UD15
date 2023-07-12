@@ -36,4 +36,11 @@ public class KichCoServiceImpl implements KichCoService{
 	public Optional<KichCo> findById(Long id) {
 		return kichCoRepository.findById(id);
 	}
+	
+	@Override
+	public List<KichCo> selectAllKichCoBySanPhamId(Long sanPhamId) {
+		return kichCoRepository.selectAllKichCoBySanPhamId(sanPhamId);
+	}
+	
+	
 }

@@ -21,7 +21,6 @@ public class HoaDonDTO extends BaseDTO<HoaDonDTO> {
 
     private Long giaoDichId;
 
-    
     private String nguoiNhan;
 
     private String sdtNguoiNhan;
@@ -49,9 +48,11 @@ public class HoaDonDTO extends BaseDTO<HoaDonDTO> {
     private Integer totalPages ;
     
     private Integer totalItems ;
+
+    private Integer trangThaiId;
     
     private List<HoaDonDTO> listHoaDonDTO = new ArrayList<HoaDonDTO>();
-    
+
     private String trangThai ;
-    
+
 }

@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin/layouts/index}">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Bán hàng tại quầy</title>
+    <link rel="icon" href="path_to_favicon/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" th:href="@{/admin/css/banHang/test.css}">
+    <link rel="stylesheet" th:href="@{/admin/css/banHang/banHangTaiQuay.css}">
+    <script th:src="@{/admin/js/banHang/banHangTaiQuay/banHang.js}"></script>
+</head>
+
+<body>
+<div class="container-fluid" layout:fragment="content">
+    <div class="col-sm-12" th:each="hoaDonBanHangTaiQuay : ${hoaDon}">
+        <div class="row">
+            <div class="sanPhamCT col-sm-8">
+                <div class="button-group">
+                    <button class="action-button" onclick="quayLai()">Danh sách
+                        <i class="fas fa-arrow-left"></i>
+                    </button>
+
+                    <button class="btn btn-primary" onclick="openModalSanPham()">
+                        <i class="fas fa-fw fa-shopping-cart"></i>
+                        Thêm sản phẩm
+                    </button>
+                </div>
+                <div class="table-HoaDonChiTiet">
+                    <table class="custom-table">
+                        <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th scope="col">Sản phẩm</th>
+                            <th scope="col">Đơn giá</th>
+                            <th scope="col">Số lượng</th>
+                            <th scope="col">Thành tiền</th>
+                            <th scope="col">Thao tác</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        <tr th:each="hoaDonCT, stt : ${hoaDonChiTiet}">
+                            <td th:text="${(pageHDCT - 1) * sizeHDCT + stt.count}"></td>
+                            <td th:text="${hoaDonCT.sanPhamChiTiet.sanPham.getTenSanPham()}"></td>
+                            <td th:text="${hoaDonCT.donGia}"></td>
+                            <td th:text="${hoaDonCT.soLuong}"></td>
+                            <td th:text="${hoaDonCT.tongTien}"></td>
+                            <td>
+                                <div class="btn-group">
+                                    <button class="action-button xoaHDCT" th:attr="data-id=${hoaDon.id}">
+                                        <i class="fa fa-trash" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr th:if="${hoaDonChiTiet.isEmpty()}">
+                            <td colspan="5">
+                                <div class="empty-content">
+                                    <img src="/admin/img/gioHangTrong.png" alt="Không có sản phẩm">
+                                    <p class="empty-message">Không có sản phẩm nào trong giỏ hàng</p>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div th:if="${!#lists.isEmpty(hoaDonChiTiet)}">
+                        <ul class="pagination">
+                            <li th:each="pageNumber : ${#numbers.sequence(1, pageHoaDonChiTiet)}">
+                                <a th:href="@{/banHang/{id}(id=${hoaDon.id},pageHDCT=${pageNumber})}"
+                                   th:text="${pageNumber}"
+                                   th:class="${pageNumber == pageHDCT ? 'active-page' : ''}"></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hoaDon col-sm-4">
+                <div class="cart__discount">
+                    <h6>Mã giảm giá :</h6>
+                    <th:block th:if="${message_khuyenMai != null}">
+                        <span class="text-danger">[[${message_khuyenMai}]]</span>
+                    </th:block>
+                    <th:block th:if="${message_khuyenMai_success != null}">
+                        <span class="text-success">[[${message_khuyenMai_success}]]</span>
+                    </th:block>
+                    <form th:action="@{/customer/gio-hang-chi-tiet/ap-dung-ma-giam-gia}" method="POST">
+                        <input type="text" placeholder="Coupon code">
+                        <button type="submit">ÁP DỤNG</button>
+                    </form>
+                </div>
+
+                <div class="cart__total">
+                    <h6>THÔNG TIN THANH TOÁN</h6>
+                    <ul>
+                        <li>Mã đơn: <span th:text="${hoaDon.maDon}"></span></li>
+                        <li>Ngày tạo: <span th:text="${#dates.format(hoaDon.ngayTao, 'dd/MM/yyyy')}"></span></li>
+                        <li>Tổng tiền hàng:<span
+                                th:text="${#numbers.formatDecimal(hoaDon.tongTienDonHang, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></span>
+                        </li>
+                        <span></span>
+                        <th:block th:if="*{soTienGiamGia != null}">
+                            <li>Giảm giá <span>-[[*{#numbers.formatDecimal(soTienGiamGia, 0, 'COMMA', 2, 'POINT')}]]
+                                        VNĐ</span>
+                            </li>
+                            <span></span>
+                        </th:block>
+                        <th:block th:if="*{soTienGiamGia == null}">
+                            <li>Giảm giá <span>0 VNĐ</span></li>
+                        </th:block>
+                        <li>Tổng tiền hóa đơn: <span
+                                th:text="${#numbers.formatDecimal(hoaDon.tongTienHoaDon, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></span>
+                        </li>
+                    </ul>
+                    <div class="btn-group">
+                        <button type="submit" class="primary-btn">Hủy đơn</button>
+                        <button type="submit" class="primary-btn">Thanh toán</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="modalSanPham" tabindex="-1" role="dialog"
+         aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabelct">Chi tiết sản phẩm</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="flexUrlTableFormBanHangTaiQuay" enctype="multipart/form-data">
+                        <input type="number" name="page" id="inputPageProductManage" hidden>
+                        <div class="card shadow mb-1 pt-sm-2 pb-sm-3" th:object="${dataSearch}">
+                            <div class="col-sm-12">
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <label for="tenSanPham">Tên sản phẩm:</label>
+                                        <input type="text" class="form-control" name="tenSanPham"
+                                               id="tenSanPhamSearchProductManage" placeholder="Tên sản phẩm"
+                                               th:field="*{tenSanPham}">
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <label for="kieuDangId">Tên kiểu dáng:</label>
+                                        <select class="selectpicker" name="kieuDangId" id="kieuDangId"
+                                                th:field="*{kieuDangIds}" multiple>
+                                            <option th:each="item : ${lstKieuDang}" th:value="${item.id}"
+                                                    th:text="${item.tenKieuDang}">
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <label for="chatLieuIds">Tên chất liệu:</label>
+                                        <select class="selectpicker" name="chatLieuIds" id="chatLieuIds"
+                                                th:field="*{chatLieuIds}" multiple>
+                                            <option th:each="item : ${lstChatLieu}" th:value="${item.id}"
+                                                    th:text="${item.tenChatLieu} "></option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <label for="loaiSanPhamIds">Tên loại sản phẩm:</label>
+                                        <select class="selectpicker" name="loaiSanPhamIds" id="loaiSanPhamIds"
+                                                th:field="*{loaiSanPhamIds}" multiple>
+                                            <option th:each="item : ${lstLoaiSanPham}" th:value="${item.id}"
+                                                    th:text="${item.tenLoaiSanPham}">
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <!-- --- -->
+                                <div class="row mt-3">
+                                    <div class="col-sm-3">
+                                        <label for="phongCachIds">Tên phong cách:</label>
+                                        <select class="selectpicker" name="phongCachIds" id="phongCachIds"
+                                                th:field="*{phongCachIds}" multiple>
+                                            <option th:each="item : ${lstPhongCach}" th:value="${item.id}"
+                                                    th:text="${item.tenPhongCach}">
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <label for="kichCoIds">Tên kích cỡ:</label>
+                                        <select class="selectpicker" name="kichCoIds" id="kichCoIds"
+                                                th:field="*{kichCoIds}" multiple>
+                                            <option th:each="item : ${lstKichCo}" th:value="${item.id}"
+                                                    th:text="${item.tenKichCo}">
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <label for="mauSacIds">Tên màu sắc:</label>
+                                        <select class="selectpicker" name="mauSacIds" id="mauSacIds"
+                                                th:field="*{mauSacIds}" multiple>
+                                            <option th:each="item, istat : ${lstMauSac}" th:value="${item.id}"
+                                                    th:text="${item.tenMauSac}">
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <label for="hienThi">Loại hiển thị:</label>
+                                        <select class="selectpicker" name="hienThi" id="hienThi"
+                                                th:field="*{coHienThi}" multiple>
+                                            <option value="1">Đang hiển thị</option>
+                                            <option value="0">Không hiển thị</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-sm-3">
+                                        <label>Giá:</label>
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <input type="number" class="form-control" th:field="*{giaMin}"
+                                                       th:classappend="${#fields.hasErrors('giaMin')}?
+                                                    is-invalid : ''" placeholder="Giá trị đầu">
+                                                <small id="giaMin" th:if="${#fields.hasErrors('giaMin')}" th:class="${#fields.hasErrors('giaMin')}?
+                                                        invalid-feedback : ''" th:errors="*{giaMin}"></small>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <input type="number" class="form-control" th:field="*{giaMax}"
+                                                       th:classappend="${#fields.hasErrors('giaMax')}?
+                                                    is-invalid : ''" placeholder="Giá trị đầu">
+                                                <small id="giaMax" th:if="${#fields.hasErrors('giaMax')}" th:class="${#fields.hasErrors('giaMax')}?
+                                                        invalid-feedback : ''" th:errors="*{giaMax}"></small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <label>Số lượng sản phẩm:</label>
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <input type="number" class="form-control" th:field="*{soLuongMin}"
+                                                       th:classappend="${#fields.hasErrors('soLuongMin')}?
+                                                    is-invalid : ''" placeholder="Giá trị đầu">
+                                                <small id="soLuongMin" th:if="${#fields.hasErrors('soLuongMin')}"
+                                                       th:class="${#fields.hasErrors('soLuongMin')}?
+                                                        invalid-feedback : ''" th:errors="*{soLuongMin}"></small>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <input type="number" class="form-control" th:field="*{soLuongMax}"
+                                                       th:classappend="${#fields.hasErrors('soLuongMax')}?
+                                                    is-invalid : ''" placeholder="Giá trị cuối">
+                                                <small id="soLuongMax" th:if="${#fields.hasErrors('soLuongMax')}"
+                                                       th:class="${#fields.hasErrors('soLuongMax')}?
+                                                        invalid-feedback : ''" th:errors="*{soLuongMax}"></small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 mt-3">
+                                    <div class="float-right">
+                                        <a class="btn btn-primary"
+                                           onclick="flexUrlSubmitBanHangTaiQuay('', 'get', 'BanHangTaiQuay')">Tìm
+                                            kiếm</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- DataTales Example -->
+                        <div class="card shadow mb-4 mt-4">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">
+                                    <div class="btn-group-sm">
+
+                                    </div>
+                                </h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="table table-hover">
+                                    <table width="100%" cellspacing="0">
+                                        <thead class="text-center">
+                                        <tr>
+                                            <th>STT</th>
+                                            <th>Ảnh sản phẩm</th>
+                                            <th>Tên sản phẩm</th>
+                                            <th>Giá</th>
+                                            <th>Thao tác</th>
+                                        </tr>
+                                        <tr th:if="${!sanPhamPage.hasContent()}">
+                                            <td colspan="9">
+                                                <h4><i>Không có sản phẩm nào phù hợp</i></h4>
+                                            </td>
+                                        </tr>
+                                        </thead>
+                                        <tbody class="text-center" th:object="${resultSP}">
+                                        <input type="hidden" th:field="*{hoaDonId}">
+                                        <tr th:each="item, istat : ${resultSP.lstShowSanPhamTaiQuayDTO}">
+                                            <td
+                                                    th:text="${sanPhamPage.number * sanPhamPage.size + istat.index + 1}">
+                                            </td>
+                                            <td>
+                                                <div class="col-sm-6 row offset-3">
+                                                    <div th:id="'carouselExampleIndicators'+${istat.index}"
+                                                         class="carousel slide" data-ride="carousel">
+                                                        <ol class="carousel-indicators">
+                                                            <li th:data-target="'#carouselExampleIndicators'+${istat.index}"
+                                                                th:data-slide-to="${#numbers.formatInteger(istat.index+''+istatAC.index,5)}"
+                                                                th:class="${#numbers.formatInteger(istat.index+''+istatAC.index,5) == #numbers.formatInteger(istat.index+''+0,5)? 'active':''}"
+                                                                th:each="img, istatAC : ${item.anhChinhs}">
+                                                            </li>
+                                                        </ol>
+                                                        <div class="carousel-inner">
+                                                            <div th:class="${#numbers.formatInteger(istat.index+''+istatAC.index,5) == #numbers.formatInteger(istat.index+''+0,5)? 'carousel-item active' : 'carousel-item'}"
+                                                                 th:each="img, istatAC : ${item.anhChinhs}">
+                                                                <img class="d-block h-100"
+                                                                     th:src="${'/staff/product/images/'+img}"
+                                                                     alt="First slide" width="150px">
+                                                            </div>
+                                                        </div>
+                                                        <a class="carousel-control-prev"
+                                                           th:href="'#carouselExampleIndicators'+${istat.index}"
+                                                           role="button" data-slide="prev">
+                                                                    <span class="carousel-control-prev-icon"
+                                                                          aria-hidden="true"></span>
+                                                            <span class="sr-only">Previous</span>
+                                                        </a>
+                                                        <a class="carousel-control-next"
+                                                           th:href="'#carouselExampleIndicators'+${istat.index}"
+                                                           role="button" data-slide="next">
+                                                                    <span class="carousel-control-next-icon"
+                                                                          aria-hidden="true"></span>
+                                                            <span class="sr-only">Next</span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <input type="radio" th:value="${item.sanPhamId}"
+                                                   th:name="inputSPName+${istat.index}"
+                                                   th:id="sanPhamId+${istat.index}" th:field="*{sanPhamIdSPTQ}"
+                                                   hidden>
+                                            <td th:text="${item.tenSanPham}"></td>
+                                            <td th:text="${item.gia}"></td>
+                                            <td style="display: grid; place-items: center;">
+
+                                                <a class="button-add-productDetail" id="info"
+                                                   data-toggle="popover" data-trigger="hover"
+                                                   data-placement="top" data-content="Chọn chi tiết sản phẩm"
+                                                   th:data-id="${istat.index}"
+                                                   style="display: grid; place-items: center;"
+                                                   onclick="openModalAddDetailProduct(this.getAttribute('data-id'))">
+                                                    <i class="fa fa-plus"></i></a>
+
+                                            </td>
+                                            <!-- Modal add productDetail -->
+                                            <div class="modal" th:id="'modalAddDetailProduct'+${istat.index}"
+                                                 tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
+                                                 aria-hidden="true">
+                                                <div class="modal-dialog modal-sm" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title">Chọn chi tiết sản phẩm</h5>
+                                                            <button type="button" class="close"
+                                                                    data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="container"></div>
+                                                        <div class="modal-body">
+                                                            <div class="row">
+                                                                <div class="col-sm-7">
+                                                                    <div th:id="'showHinhAnhSanPhamChiTiet'+${istat.index}"
+                                                                         class="carousel slide"
+                                                                         data-bs-ride="carousel">
+                                                                        <div class="carousel-inner">
+                                                                            <div class="carousel-item"
+                                                                                 th:classappend="${#numbers.formatInteger(istat.index+''+istatAC.index,5) == #numbers.formatInteger(istat.index+''+0,5)? 'active':''}"
+                                                                                 th:each="img, istatAC : ${item.anhChinhs}">
+                                                                                <img th:src="${'/staff/product/images/'+img}"
+                                                                                     class="w-100 img-responsive"
+                                                                                     alt="...">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <script th:inline="javascript">
+                                                                        $(document).ready(function () {
+                                                                            var myCarousel = document.querySelector('#showHinhAnhSanPhamChiTiet' + '[[${istat.index}]]')
+                                                                            var carousel = new bootstrap.Carousel(myCarousel, {
+                                                                                pause: true
+                                                                            })
+                                                                        })
+                                                                    </script>
+                                                                </div>
+                                                                <div class="col-sm-5">
+                                                                    <div class="product__details__option">
+                                                                        <div
+                                                                                class="product__details__option__size">
+                                                                            <span>Size:</span>
+                                                                            <label class="img-thumbnail"
+                                                                                   th:for="${kc.tenKichCo}+${istat.index}+${istatKC.index}"
+                                                                                   onclick="labelActive(this.getAttribute('id'),this.getAttribute('name'), this.getAttribute('input-name'), this.getAttribute('input-id'))"
+                                                                                   th:id="labelKC+${istat.index}+${istatKC.index}"
+                                                                                   th:each="kc, istatKC : ${item.lstKichCo}"
+                                                                                   th:name="labelKCName+${istat.index}"
+                                                                                   th:input-name="inputKCName+${istat.index}"
+                                                                                   th:input-id="${kc.tenKichCo}+${istat.index}+${istatKC.index}">
+                                                                                <!-- class="label-active" -->
+                                                                                [[${kc.tenKichCo}]]
+                                                                                <input type="radio"
+                                                                                       th:value="${kc.id}"
+                                                                                       th:name="inputKCName+${istat.index}"
+                                                                                       th:id="${kc.tenKichCo}+${istat.index}+${istatKC.index}"
+                                                                                       th:field="*{kichCoId}"
+                                                                                       hidden>
+                                                                            </label>
+                                                                        </div>
+                                                                        <!--*: check lai id -->
+                                                                        <div
+                                                                                class="product__details__option__color">
+                                                                            <span>Color:</span>
+                                                                            <label
+                                                                                    onclick="chooseOptionColorLabel(this.getAttribute('id'),this.getAttribute('name'), this.getAttribute('input-name'), this.getAttribute('input-id'),
+                                                                                        this.getAttribute('sp-name'),this.getAttribute('sp-id'))"
+                                                                                    th:for="${ms.tenMauSac}+${istat.index}+${istatMS.index}"
+                                                                                    th:id="labelMS+${istat.index}+${istatMS.index}"
+                                                                                    th:style="'background-color:'+ ${ms.maMauSac}   "
+                                                                                    th:each="ms, istatMS : ${item.lstMauSac}"
+                                                                                    th:name="labelMSName+${istat.index}"
+                                                                                    th:input-name="inputMSName+${istat.index}"
+                                                                                    th:input-id="${ms.tenMauSac}+${istat.index}+${istatMS.index}"
+                                                                                    th:sp-name="sanPhamIdSPTQ"
+                                                                                    th:sp-id="sanPhamId+${istat.index}">
+                                                                                <input type="radio"
+                                                                                       th:value="${ms.id}"
+                                                                                       th:name="inputMSName+${istat.index}"
+                                                                                       th:id="${ms.tenMauSac}+${istat.index}+${istatMS.index}"
+                                                                                       th:field="*{mauSacId}"
+                                                                                       hidden>
+                                                                            </label>
+                                                                        </div>
+                                                                        <div>
+                                                                            <span>Số lượng</span>
+                                                                            <input type="number" name="soLuong" min="1"
+                                                                                   th:value="${resultSP.soLuong}"
+                                                                                   oninput="calculateTotal()">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <a type="button" class="btn btn-outline-dark"
+                                                               th:input-name1="inputMSName+${istat.index}"
+                                                               th:input-name2="inputKCName+${istat.index}"
+                                                               th:label-name1="labelMSName+${istat.index}"
+                                                               th:label-name2="labelKCName+${istat.index}"
+                                                               onclick="clearDataChoose(this.getAttribute('input-name1'), this.getAttribute('input-name2'),
+                                                                    this.getAttribute('label-name1'), this.getAttribute('label-name2'))"
+                                                               data-dismiss="modal">Đóng</a>
+                                                            <a class="btn btn-outline-primary"
+                                                               onclick="flexUrlSubmitBanHangTaiQuay('/banHang/getData', 'post', 'BanHangTaiQuay')">Thêm
+                                                                sản phẩm</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="card-footer text-muted">
+                                    <div class="input-group mt-2 mb-3">
+                                        <label class="input-group-text bg-white" for="inputGroupSelect01">kích thước
+                                            trang:</label>
+                                        <select class="form-select" name="size" id="size"
+                                                onchange="this.form.submit()">
+                                            <option th:selected="${sanPhamPage.size == 10}" value="10">10</option>
+                                            <option th:selected="${sanPhamPage.size == 30}" value="30">30</option>
+                                            <option th:selected="${sanPhamPage.size == 50}" value="50">50</option>
+                                            <option th:selected="${sanPhamPage.size == 70}" value="70">70</option>
+                                            <option th:selected="${sanPhamPage.size == 100}" value="100">100
+                                            </option>
+                                        </select>
+                                    </div>
+
+                                    <nav aria-label="Page navigation example" th:if="${sanPhamPage.totalPages >0}">
+                                        <ul class="pagination justify-content-center">
+                                            <li
+                                                    th:class="${1 == sanPhamPage.number + 1}? 'page-item active' : 'page-item'">
+                                                <button id="firstPageProductManage" class="page-link">
+                                                    Trang đầu
+                                                </button>
+                                            </li>
+                                            <li class="page-item disabled"
+                                                th:if="${sanPhamPage.number + 1 - 2 > 1}">
+                                                <a class="page-link" href="#">...</a>
+                                            </li>
+                                            <li class="page-item active"
+                                                th:each="pageNumber : ${#numbers.sequence(sanPhamPage.number + 1 > 2 ? sanPhamPage.number + 1 - 2 : 1, sanPhamPage.number + 1 + 2 < sanPhamPage.totalPages ? sanPhamPage.number + 1 + 2 : sanPhamPage.totalPages)}"
+                                                th:class="${pageNumber == sanPhamPage.number + 1}? 'page-item active' : 'page-item'">
+                                                <button th:id="pageNumberProductManage+${pageNumber}"
+                                                        class="page-link" th:text="${pageNumber}">
+                                                </button>
+                                                <script th:inline="javascript">
+                                                    $(document).ready(function () {
+                                                        $('#pageNumberProductManage[[${pageNumber}]]').on("click", function () {
+                                                            var num = parseInt("[[${pageNumber}]]");
+                                                            $('#inputPageProductManage').attr("value", num);
+                                                            $('#flexUrlTableFormProductManage').submit();
+                                                        })
+                                                    });
+                                                </script>
+                                            </li>
+                                            <li class="page-item disabled"
+                                                th:if="${sanPhamPage.number + 1 + 2 < sanPhamPage.totalPages}">
+                                                <a class="page-link" href="#">...</a>
+                                            </li>
+                                            <li
+                                                    th:class="${ sanPhamPage.totalPages == sanPhamPage.number + 1}? 'page-item active' : 'page-item'">
+                                                <button class="page-link" id="lastPageProductManage">
+                                                    Trang cuối
+                                                </button>
+                                            </li>
+                                            <script th:inline="javascript">
+                                                $(document).ready(function () {
+                                                    $('#firstPageProductManage').on("click", function () {
+                                                        var num = 1;
+                                                        $('#inputPageProductManage').attr("value", num);
+                                                        $('#flexUrlTableFormProductManage').submit();
+                                                    })
+                                                    $('#lastPageProductManage').on("click", function () {
+                                                        var num = parseInt("[[${sanPhamPage.totalPages}]]");
+                                                        $('#inputPageProductManage').attr("value", num);
+                                                        $('#flexUrlTableFormProductManage').submit();
+                                                    })
+                                                });
+                                            </script>
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openModalSanPham() {
+            $('#modalSanPham').modal('show');
+        }
+
+        $(document).ready(function () {
+            $('[data-toggle="popover"]').popover();
+        });
+
+        function openAddProduct() {
+            $('#banHangTaiQuayModal').modal("show");
+        }
+
+        function openModalAddDetailProduct(id) {
+            $('#modalAddDetailProduct' + id).modal("show");
+        }
+
+        function clearDataChoose(mauSacInputName, kichCoInputName, mauSacLabelName, kichCoLabelName) {
+            var kichCoIdName = document.getElementsByName("kichCoId");
+            $(kichCoIdName).removeAttr("checked");
+            var mauSacIdName = document.getElementsByName("mauSacId");
+            $(mauSacIdName).removeAttr("checked");
+            var kichCoLabel = document.getElementsByName(kichCoLabelName);
+            $(kichCoLabel).removeClass("label-active");
+        }
+
+        function labelActive(labelId, labelName, inputName, inputId) {
+            var lstName = document.getElementsByName(labelName);
+            $(lstName).removeClass("label-active");
+            $('#' + labelId).addClass("label-active");
+            var lstInputName = document.getElementsByName(inputName);
+            $(lstInputName).removeAttr("checked");
+            $('#' + inputId).attr("checked", "true");
+        }
+
+        function chooseOptionColorLabel(labelId, labelName, inputName, inputId, spName, spId) {
+            var lstName = document.getElementsByName(labelName);
+            $(lstName).removeClass("label-active");
+            $('#' + labelId).addClass("label-active");
+            var lstInputName = document.getElementsByName(inputName);
+            $(lstInputName).removeAttr("checked");
+            $('#' + inputId).attr("checked", "true");
+            // choose san Pham id
+            var lstSPName = document.getElementsByName(spName);
+            $(lstInputName).removeAttr("checked");
+            $('#' + spId).attr("checked", "true");
+        }
+    </script>
+    <script th:inline="javascript">
+        window.onload = function () {
+            var messageSuccess = '[[${messageSuccess}]]';
+            var messageDanger = '[[${messageDanger}]]';
+            $('#toastsCustomCss').attr("style", "position: absolute; top: 70px; right: 0;z-index: 1;");
+            if (messageSuccess.length !== 0) {
+                $("#messageSuccess").toast("show");
+            }
+            if (messageDanger.length !== 0) {
+                $("#messageDanger").toast("show");
+            }
+        }
+    </script>
+
+</div>
+</body>
+
+</html>

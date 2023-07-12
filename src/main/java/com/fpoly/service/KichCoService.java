@@ -14,4 +14,6 @@ public interface KichCoService {
 
 	<S extends KichCo> S save(S entity);
 
+	List<KichCo> selectAllKichCoBySanPhamId(Long sanPhamId);
+
 }

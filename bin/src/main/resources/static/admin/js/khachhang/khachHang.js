@@ -72,7 +72,7 @@ function xacNhanChuyenDoiTrangThaiThanhHoatDong() {
 };
 function capNhatTrangThaiThanhHoatDong(ids) {
 	$.ajax({
-		url : 'http://localhost:8080/admin/api/khach-hang/trang-thai-dang-hoat-dong' ,
+		url : 'http://localhost:8080/admin/api/khach-hang/trang-thai-dang-hoat-dong',
 		type : 'DELETE' ,
 		contentType : 'application/json' ,
 		data : JSON.stringify(ids),
@@ -116,7 +116,7 @@ function xacNhanChuyenDoiTrangThaiThanhKhongHoatDong() {
 
 function capNhatTrangThaiThanhKhongHoatDong(ids) {
 	$.ajax({
-		url : 'http://localhost:8080/admin/api/khach-hang/trang-thai-khong-hoat-dong' ,
+		url : 'http://localhost:8080/admin/api/khach-hang/trang-thai-khong-hoat-dong',
 		type : 'DELETE' ,
 		contentType : 'application/json' ,
 		data : JSON.stringify(ids),

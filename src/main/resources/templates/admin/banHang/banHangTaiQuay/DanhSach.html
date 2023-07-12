@@ -4,54 +4,73 @@
 
 <head>
     <meta charset="UTF-8">
+    <title>Bán hàng tại quầy</title>
+    <link rel="icon" href="path_to_icon/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" th:href="@{/admin/css/banHang/banHangTaiQuay.css}">
 </head>
 
 <body>
-<div class="container" layout:fragment="content">
-    <input type="text" class="timKiem" placeholder="Tìm kiếm đơn hàng..." aria-label="Search"
-           aria-describedby="basic-addon2">
-    <button type="submit" class="search-button">
-        <i class="fas fa-search"></i>
-    </button>
+<div class="container-fluid" layout:fragment="content">
+    <div class="button-container">
+        <!--TÌM KIẾM HÓA ĐƠN-->
+        <div>
+            <input type="text" class="timKiem" placeholder="Tìm kiếm đơn hàng..." aria-label="Search"
+                   aria-describedby="basic-addon2">
+            <button type="submit" class="search-button">
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
 
-    <form id="form-tao-moi" th:action="@{/TaoHoaDon}" method="post">
-        <button type="submit" class="create-invoice-button">
-            Tạo hóa đơn
-        </button>
-    </form>
+        <!--TẠO HÓA ĐƠN-->
+        <form id="form-tao-moi" th:action="@{/TaoHoaDon}" method="post">
+            <button type="submit" class="create-invoice-button">
+                <i class="fas fa-plus"></i> Tạo hóa đơn
+            </button>
+        </form>
+    </div>
+    <div>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>STT</th>
+                <th>Mã đơn</th>
+                <th>Số sản phẩm</th>
+                <th>Tổng số tiền</th>
+                <th>Ngày tạo</th>
+                <th>Trạng thái</th>
+                <th>Thao tác</th>
+            </tr>
+            </thead>
 
-    <table class="table">
-        <thead>
-        <tr>
-            <th>Mã đơn</th>
-            <th>Số sản phẩm</th>
-            <th>Tổng số tiền</th>
-            <th>Ngày tạo</th>
-            <th>Trạng thái</th>
-            <th>Thao tác</th>
-        </tr>
-        </thead>
-
-        <tbody>
-        <tr th:each="hoaDonLoai1: ${hoaDonLoai1}">
-            <td th:text="${hoaDonLoai1.maDon}"></td>
-            <td th:text="${hoaDonLoai1.hoaDonChiTiets.size()}"></td>
-            <td th:text="${hoaDonLoai1.tongTienHoaDon}"></td>
-            <td th:text="${#dates.format(hoaDonLoai1.ngayTao, 'dd/MM/yyyy')}"></td>
-            <td th:text="${hoaDonLoai1.trangThai.name}"></td>
-            <td>
-                <div class="btn-group">
-                    <a th:href="@{'/banHang/' + ${hoaDonLoai1.id}}"
-                       class="btn btn-warning btn-sm"
-                       type="submit">
-                        <i class="fas fa-info-circle"></i>
-                    </a>
-                </div>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+            <tbody>
+            <tr th:each="hoaDonTaiQuay, stt: ${danhSachBanHang}">
+                <td th:text="${(page - 1) * size + stt.count}"></td>
+                <td th:text="${hoaDonTaiQuay.maDon}"></td>
+                <td th:text="${hoaDonTaiQuay.hoaDonChiTiets.size()}"></td>
+                <td th:text="${#numbers.formatDecimal(hoaDonTaiQuay.tongTienHoaDon, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></td>
+                <td th:text="${#dates.format(hoaDonTaiQuay.ngayTao, 'dd/MM/yyyy')}"></td>
+                <td th:text="${hoaDonTaiQuay.trangThai.name}"></td>
+                <td>
+                    <div class="btn-group">
+                        <a th:href="@{'/banHang/' + ${hoaDonTaiQuay.id}}"
+                           class="btn btn-warning btn-sm"
+                           type="submit">
+                            <i class="fas fa-info-circle"></i>
+                        </a>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div th:if="${!#lists.isEmpty(danhSachBanHang)}">
+            <ul class="pagination">
+                <li th:each="pageNumber : ${#numbers.sequence(1, pageDanhSachBanHang)}">
+                    <a th:href="@{/admin/BanHangTaiQuay(page=${pageNumber})}" th:text="${pageNumber}"
+                       th:class="${pageNumber == page ? 'active-page' : ''}"></a>
+                </li>
+            </ul>
+        </div>
+    </div>
 </div>
 
 <script th:src="@{/admin/js/banHang/banHangTaiQuay/danhSach.js}"></script>
