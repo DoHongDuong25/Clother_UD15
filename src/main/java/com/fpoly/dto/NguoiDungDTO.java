@@ -1,5 +1,10 @@
 package com.fpoly.dto;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.fpoly.entity.NguoiDungVaiTro;
+
 //import com.fpoly.entity.Role;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -26,5 +31,6 @@ public class NguoiDungDTO extends BaseDTO<NguoiDungDTO> {
 
 	private Boolean daXoa;
 	
+	private List<NguoiDungVaiTroDTO> listNguoiDungVaiTroDTO = new ArrayList<NguoiDungVaiTroDTO>() ;
 	
 }

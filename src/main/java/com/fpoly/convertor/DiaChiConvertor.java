@@ -22,10 +22,10 @@ public class DiaChiConvertor {
 		
 		public DiaChiDTO toDTO(DiaChi entity) {
 			DiaChiDTO dto = new DiaChiDTO();
-			entity.setId(dto.getId());
-			entity.setDiaChi(dto.getDiaChi());
-			entity.setHoTen(dto.getHoTen());
-			entity.setSoDienThoai(dto.getSoDienThoai());
+			dto.setId(entity.getId());
+			dto.setDiaChi(entity.getDiaChi());
+			dto.setHoTen(entity.getHoTen());
+			dto.setSoDienThoai(entity.getSoDienThoai());
 			return dto ;
 		}
 	

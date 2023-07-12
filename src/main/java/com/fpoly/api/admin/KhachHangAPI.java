@@ -21,7 +21,7 @@ public class KhachHangAPI {
     @Autowired
     private KhachHangService KhachHangService;
 
-    @PostMapping("/cap-nhat-trang-thai")
+    @PostMapping("/admin/api/cap-nhat-trang-thai")
     public ResponseEntity<String> updateStatus(@RequestParam("userId") Long id, @RequestParam("status") int trangThai) {
         try {
             KhachHangService.updateUserStatus(id, trangThai);

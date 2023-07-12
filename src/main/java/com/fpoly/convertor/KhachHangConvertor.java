@@ -19,7 +19,6 @@ public class KhachHangConvertor {
 			entity.setSoDienThoai(dto.getSoDienThoai());
 			entity.setSoLanMua(dto.getSoLanMua());
 			entity.setTrangThai(dto.getTrangThai());
-			
 			return entity ;
 		}
 		

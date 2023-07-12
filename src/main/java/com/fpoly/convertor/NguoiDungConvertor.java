@@ -3,6 +3,7 @@ package com.fpoly.convertor;
 import org.springframework.stereotype.Component;
 
 import com.fpoly.dto.KhachHangDTO;
+import com.fpoly.dto.NguoiDungDTO;
 import com.fpoly.entity.NguoiDung;
 
 @Component
@@ -44,4 +45,19 @@ public class NguoiDungConvertor {
 		
 		return entity ;
 	}
+	
+	
+	public NguoiDungDTO toDTO(NguoiDung entity) {
+		NguoiDungDTO dto = new NguoiDungDTO();
+		dto.setId(entity.getId());
+		dto.setDaXoa(entity.getDaXoa());
+		dto.setEmail(entity.getEmail());
+		dto.setMatKhau(entity.getMaNguoiDung());
+		dto.setSoDienThoai(entity.getSoDienThoai());
+		dto.setTenNguoiDung(entity.getTenNguoiDung());
+		dto.setTrangThai(entity.getTrangThai());
+		dto.setMatKhau(entity.getMatKhau());
+		return dto ;
+	}
+	
 }
