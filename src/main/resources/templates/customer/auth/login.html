@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="zxx" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Male_Fashion Template">
+    <meta name="keywords" content="Male_Fashion, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Đăng nhập</title>
+
+    <link rel="stylesheet" th:href="@{https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css}"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+	<link rel="stylesheet" th:href="@{/customer/css/font-awesome.min.css}" type="text/css">
+    <!--Fontawesome CDN-->
+    <link rel="stylesheet" th:href="@{https://use.fontawesome.com/releases/v5.3.1/css/all.css}"
+          integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <link rel="stylesheet" th:href="@{/customer/login/style.css}" type="text/css">
+    <!-- Google Font -->
+
+</head>
+
+<body>
+
+		<div class="container">
+		<div class="d-flex justify-content-center h-100">
+			<div class="card">
+				<div class="card-header">
+					<h3>Sign In</h3>
+					<div class="d-flex justify-content-end social_icon">
+						<span><i class="fab fa-facebook-square"></i></span> <span><i
+							class="fab fa-google-plus-square"></i></span> <span><i
+							class="fab fa-twitter-square"></i></span>
+					</div>
+				</div>
+				<div class="card-body">
+					<th:block th:if="${alert == 'danger'}">
+            			<i class="pull-left text-danger" th:text="${message}"></i>
+		            </th:block>
+		            <th:block th:if="${alert == 'success'}">
+		            	<i class="pull-left text-success" th:text="${message}"></i>
+		            </th:block>	
+		            <div th:if="${param.logout}">
+		            	<i class="pull-left text-success">Đăng xuất thành công !</i>
+		            </div>
+					<form th:action="@{/security/login}" method="post">
+						<div class="form-group">
+							<input type="email" class="form-control" id="userName"
+								name="username" placeholder="Tên đăng nhập">
+						</div>
+
+						<div class="form-group">
+							<input type="password" class="form-control" id="password"
+								name="password" placeholder="Mật khẩu">
+						</div>
+						<div class="row align-items-center remember">
+							<input type="checkbox" name="remember-me">Remember Me
+						</div>
+						<button type="submit" class="btn btn-primary">Đăng nhập</button>
+
+					</form>
+				</div>
+				<div class="card-footer">
+					<div class="d-flex justify-content-center links">
+						Bạn chưa có tài khoản ?<a th:href="@{/security/register/create}">Sign Up</a>
+					</div>
+					<div class="d-flex justify-content-center links">
+						<a th:href="@{/rest/customer/home}">Đi tớ trang chủ ?</a>
+					</div>
+					<div  class="d-flex justify-content-center links">
+						<a href="#" id="forget" 
+						>Quên mật khẩu ?</a>
+						
+						
+						
+						
+						
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		
+		<div class="modal top fade" id="my-modal" tabindex="-1" aria-labelledby="exampleModalLabel"
+     aria-hidden="true" data-mdb-backdrop="true" data-mdb-keyboard="true">
+    <div class="modal-dialog" style="width: 300px;">
+        <div class="modal-content text-center">
+        	<th:block th:if="${message_not_have_email != null}">
+            			<i class="pull-left text-danger" th:text="${message_not_have_email}"></i>
+		     </th:block>
+            <div class="modal-header h5 text-white bg-primary justify-content-center">
+                Password Reset
+            </div>
+            <div class="modal-body px-5">
+                <p class="py-2">
+                   Nhập địa chỉ email của bạn và chúng tôi sẽ gửi cho bạn một mã để đặt lại mật khẩu của bạn.
+                </p>
+                <form th:action="@{/security/forgot-password/code}" method="POST">
+                	<div class="form-outline">
+	                    <input type="email" id="typeEmail" th:name="email" class="form-control my-3" />
+	                    <label class="form-label" for="typeEmail">Địa chỉ Email</label>
+	                </div>
+                	<button type="submit" class="btn btn-primary w-100">Gửi mã</button>
+                </form>
+                <div class="d-flex justify-content-between mt-4">
+                    <a class="" th:href="@{/security/login/form}">Đăng nhập</a>
+                    <a class="" th:href="@{/security/register/create}">Đăng ký</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+		
+		
+		
+	</div>
+	
+	<script th:src="@{/customer/js/jquery-3.3.1.min.js}"></script>
+	<script th:src="@{/customer/js/bootstrap.min.js}"></script>
+	<script type="text/javascript">
+    $(function () {
+        $('#forget').click(function () {
+            $('#my-modal').modal('show');
+        });
+    });
+</script>
+</body>
+
+</html>

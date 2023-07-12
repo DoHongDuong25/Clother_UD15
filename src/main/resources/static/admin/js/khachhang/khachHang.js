@@ -2,7 +2,7 @@ $(document).ready(function() {
     $('.custom-control-input').click(function() {
         var userId = $(this).val();
         var status = $(this).is(':checked') ? 1 : 0 ;
-        $.post("/cap-nhat-trang-thai", { userId: userId, status: status }, function(data) {
+        $.post("/admin/api/cap-nhat-trang-thai", { userId: userId, status: status }, function(data) {
             Swal.fire({
                 icon: 'success',
                 title: 'Cập nhật trạng thái thành công',
@@ -259,7 +259,7 @@ function themKhachHang(data) {
 };
 function capNhatKhachHang(data) {
     $.ajax({
-        url : 'http://localhost:8080/admin/api/khach-hang' ,
+        url : "http://localhost:8080/admin/api/khach-hang" ,
         type : 'PUT' ,
         contentType : 'application/json' ,
         data : JSON.stringify(data) ,

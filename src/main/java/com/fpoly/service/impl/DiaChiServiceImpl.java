@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.UnexpectedRollbackException;
 
+import com.fpoly.convertor.DiaChiConvertor;
 import com.fpoly.dto.DiaChiDTO;
 import com.fpoly.entity.DiaChi;
 import com.fpoly.repository.DiaChiRepository;
@@ -26,6 +27,8 @@ public class DiaChiServiceImpl implements DiaChiService {
 	@Autowired
 	private KhachHangRepository khachHangRepository ;
 	
+	@Autowired
+	private DiaChiConvertor diaChoConvertor ;
 	
 	@SuppressWarnings("deprecation")
 	@Override
@@ -69,6 +72,7 @@ public class DiaChiServiceImpl implements DiaChiService {
 	public int countByMaKhachHang(Long id ) {
 		return diaChiRepository.countByMaKhachHang(id);
 	}
+	
 	@Override
 	public List<DiaChiDTO> findAllDiaChiByMaKhachHang(Long id, Pageable pageale) {
 		List<DiaChiDTO> listDiaChiDTO = new ArrayList<DiaChiDTO>();
@@ -77,10 +81,7 @@ public class DiaChiServiceImpl implements DiaChiService {
 		listDiaChiEntity = diaChiRepository.findAllByMaKhachHang(id,pageale).getContent();
 		for (DiaChi diaChi : listDiaChiEntity) {
 			diaChiDTO = new DiaChiDTO();
-			diaChiDTO.setId(diaChi.getId());
-			diaChiDTO.setDiaChi(diaChi.getDiaChi());
-			diaChiDTO.setSoDienThoai(diaChi.getSoDienThoai());
-			diaChiDTO.setHoTen(diaChi.getHoTen());
+			diaChiDTO = diaChoConvertor.toDTO(diaChi);
 			listDiaChiDTO.add(diaChiDTO);
 		}
 		return listDiaChiDTO;

@@ -15,119 +15,126 @@ import com.fpoly.convertor.NguoiDungConvertor;
 import com.fpoly.dto.DiaChiDTO;
 import com.fpoly.dto.KhachHangDTO;
 import com.fpoly.entity.DiaChi;
+import com.fpoly.entity.GioHang;
 import com.fpoly.entity.KhachHang;
 import com.fpoly.entity.NguoiDung;
+import com.fpoly.entity.NguoiDungVaiTro;
+import com.fpoly.entity.VaiTro;
+import com.fpoly.repository.GioHangRepository;
 import com.fpoly.repository.KhachHangRepository;
 import com.fpoly.repository.NguoiDungRepository;
+import com.fpoly.repository.NguoiDungVaiTroRepository;
+import com.fpoly.repository.VaiTroRepository;
 import com.fpoly.service.KhachHangService;
 
 @Service
-public class KhachHangServiceImpl implements KhachHangService{
+public class KhachHangServiceImpl implements KhachHangService {
 
 	@Autowired
-	private KhachHangRepository khachHangRepository ;
-	
-	@Autowired
-	private NguoiDungRepository nguoiDungRepository ;
-	
-	@Autowired 
-	private KhachHangConvertor khachHangConvertor ;
-	
-	@Autowired
-	private DiaChiConvertor diaChiConvertor ;
-	
-	@Autowired
-	private NguoiDungConvertor nguoiDungConvertor ;
-	
-	@Override
-	public List<KhachHangDTO> findAllByTrangThaiCoPhanTrang(Integer trangThai,Pageable pageable) {
-		List<KhachHangDTO> listKhachHangDTO = new ArrayList<KhachHangDTO>() ;
-		List<KhachHang> listKhachHang = new ArrayList<KhachHang>();
-		KhachHangDTO dto = null ;
-		DiaChiDTO diaChiDTO = null;
-		if(trangThai != null) {
-			 if(trangThai != 2) {
-				 listKhachHang = khachHangRepository.findAllByTrangThaiCoPhanTrang(trangThai, pageable).getContent();
-					for (KhachHang khachHang : listKhachHang) {
-						dto = new KhachHangDTO();
-						dto = khachHangConvertor.toDTO(khachHang);
-						List<DiaChiDTO> listDiaChiDTO = new ArrayList<DiaChiDTO>();
-						for (DiaChi diaChi : khachHang.getListDiaChi()) {
-							diaChiDTO = new DiaChiDTO();
-							diaChiDTO = diaChiConvertor.toDTO(diaChi);
-							listDiaChiDTO.add(diaChiDTO);
-						}
-						dto.setListDiaChi(listDiaChiDTO);
-						listKhachHangDTO.add(dto);
-					}
-			 }
-		}
-		return listKhachHangDTO ;
-	}
-	
-	@Override
-	public List<KhachHangDTO> findAllByInputVaTrangThaiCoPhanTrang(String input, Integer trangThai,
-			Pageable pageable) {
-		List<KhachHangDTO> listKhachHangDTO = new ArrayList<KhachHangDTO>() ;
-		List<KhachHang> listKhachHang = new ArrayList<KhachHang>();
-		KhachHangDTO dto = null ;
-		DiaChiDTO diaChiDTO = null;
-		if(trangThai != null) {
-			 if(trangThai != 2) {
-				 listKhachHang = khachHangRepository.
-						 findAllByTrangThaiVaSoDienThoaiCoPhanTrang(trangThai,input, pageable).getContent();
-					for (KhachHang khachHang : listKhachHang) {
-						dto = new KhachHangDTO();
-						dto = khachHangConvertor.toDTO(khachHang);
-						List<DiaChiDTO> listDiaChiDTO = new ArrayList<DiaChiDTO>();
-						for (DiaChi diaChi : khachHang.getListDiaChi()) {
-							diaChiDTO = new DiaChiDTO();
-							diaChiDTO = diaChiConvertor.toDTO(diaChi);
-							listDiaChiDTO.add(diaChiDTO);
-						}
-						dto.setListDiaChi(listDiaChiDTO);
-						listKhachHangDTO.add(dto);
-					}
-			 }
-		}
-		return listKhachHangDTO ;
-	}
-	
-	
-	
-	
-	
+	private KhachHangRepository khachHangRepository;
 
-	@SuppressWarnings("deprecation")
+	@Autowired
+	private NguoiDungRepository nguoiDungRepository;
+
+	@Autowired
+	private KhachHangConvertor khachHangConvertor;
+
+	@Autowired
+	private DiaChiConvertor diaChiConvertor;
+
+	@Autowired
+	private NguoiDungConvertor nguoiDungConvertor;
+	
+	@Autowired
+	private GioHangRepository gioHangRepository ;
+	
+	@Autowired
+	private VaiTroRepository vaiTroRepository ;
+	
+	@Autowired
+	private NguoiDungVaiTroRepository nguoiDungVaiTroRepository ;
+
+	@Override
+	public List<KhachHangDTO> findAllByTrangThaiCoPhanTrang(Integer trangThai, Pageable pageable) {
+		List<KhachHangDTO> listKhachHangDTO = new ArrayList<KhachHangDTO>();
+		List<KhachHang> listKhachHang = new ArrayList<KhachHang>();
+		KhachHangDTO dto = null;
+		DiaChiDTO diaChiDTO = null;
+		if (trangThai != null) {
+			if (trangThai != 2) {
+				listKhachHang = khachHangRepository.findAllByTrangThaiCoPhanTrang(trangThai, pageable).getContent();
+				for (KhachHang khachHang : listKhachHang) {
+					dto = new KhachHangDTO();
+					dto = khachHangConvertor.toDTO(khachHang);
+					List<DiaChiDTO> listDiaChiDTO = new ArrayList<DiaChiDTO>();
+					for (DiaChi diaChi : khachHang.getListDiaChi()) {
+						diaChiDTO = new DiaChiDTO();
+						diaChiDTO = diaChiConvertor.toDTO(diaChi);
+						listDiaChiDTO.add(diaChiDTO);
+					}
+					dto.setListDiaChiDTO(listDiaChiDTO);
+					listKhachHangDTO.add(dto);
+				}
+			}
+		}
+		return listKhachHangDTO;
+	}
+
+	@Override
+	public List<KhachHangDTO> findAllByInputVaTrangThaiCoPhanTrang(String input, Integer trangThai, Pageable pageable) {
+		List<KhachHangDTO> listKhachHangDTO = new ArrayList<KhachHangDTO>();
+		List<KhachHang> listKhachHang = new ArrayList<KhachHang>();
+		KhachHangDTO dto = null;
+		DiaChiDTO diaChiDTO = null;
+		if (trangThai != null) {
+			if (trangThai != 2) {
+				listKhachHang = khachHangRepository
+						.findAllByTrangThaiVaSoDienThoaiCoPhanTrang(trangThai, input, pageable).getContent();
+				for (KhachHang khachHang : listKhachHang) {
+					dto = new KhachHangDTO();
+					dto = khachHangConvertor.toDTO(khachHang);
+					List<DiaChiDTO> listDiaChiDTO = new ArrayList<DiaChiDTO>();
+					for (DiaChi diaChi : khachHang.getListDiaChi()) {
+						diaChiDTO = new DiaChiDTO();
+						diaChiDTO = diaChiConvertor.toDTO(diaChi);
+						listDiaChiDTO.add(diaChiDTO);
+					}
+					dto.setListDiaChiDTO(listDiaChiDTO);
+					listKhachHangDTO.add(dto);
+				}
+			}
+		}
+		return listKhachHangDTO;
+	}
+
 	@Override
 	@Transactional
 	public void capNhatTrangThaiThanhDangHoatDongTheoMa(long[] ids) {
 		for (long id : ids) {
-			KhachHang khachHangEntity = khachHangRepository.getOne(id);
+			KhachHang khachHangEntity = khachHangRepository.findById(id).get();
 			NguoiDung nguoiDungEntity = nguoiDungRepository.findByEmail(khachHangEntity.getEmail());
 			khachHangRepository.capNhatTrangThaiThanhHoatDongTheoMa(id);
 			nguoiDungRepository.capNhatTrangThaiThanhHoatDongTheoMa(nguoiDungEntity.getId());
 		}
 	}
-	
-	@SuppressWarnings("deprecation")
+
 	@Override
 	@Transactional
 	public void capNhatTrangThaiThanhKhongHoatDongTheoMa(long[] ids) {
 		for (long id : ids) {
-			KhachHang khachHangEntity = khachHangRepository.getOne(id);
+			KhachHang khachHangEntity = khachHangRepository.findById(id).get();
 			NguoiDung nguoiDungEntity = nguoiDungRepository.findByEmail(khachHangEntity.getEmail());
 			khachHangRepository.capNhatTrangThaiThanhKhongHoatDongTheoMa(id);
 			nguoiDungRepository.capNhatTrangThaiThanhKhongHoatDongTheoMa(nguoiDungEntity.getId());
 		}
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public KhachHangDTO findById(Long id) {
-		KhachHangDTO dto = new KhachHangDTO();
-		KhachHang entity = khachHangRepository.getOne(id);
-		if(entity != null) {
+		KhachHangDTO dto = null;
+		KhachHang entity = khachHangRepository.findById(id).get();
+		if (entity != null) {
+			dto = new KhachHangDTO();
 			dto = khachHangConvertor.toDTO(entity);
 			List<DiaChiDTO> listDiaChiDTO = new ArrayList<DiaChiDTO>();
 			for (DiaChi diaChi : entity.getListDiaChi()) {
@@ -135,150 +142,146 @@ public class KhachHangServiceImpl implements KhachHangService{
 				diaChiDTO = diaChiConvertor.toDTO(diaChi);
 				listDiaChiDTO.add(diaChiDTO);
 			}
-			dto.setListDiaChi(listDiaChiDTO);
+			dto.setListDiaChiDTO(listDiaChiDTO);
 		}
 		return dto;
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	@Transactional
 	public KhachHangDTO save(KhachHangDTO dto) {
 		KhachHangDTO khachHangDTO = new KhachHangDTO();
-		KhachHang khachHangEntity = null ;
-		NguoiDung nguoiDungEntity = null ;
+		KhachHang khachHangEntity = null;
+		NguoiDung nguoiDungEntity = null;
 		List<KhachHang> listKhachHang = khachHangRepository.findAll();
-					try {
-						//Cập nhật
-						if(dto.getId() != null){
-								 khachHangEntity = khachHangRepository.getOne(dto.getId());
-								 nguoiDungEntity = new NguoiDung();
-								NguoiDung  oldNguoiDungEntity = nguoiDungRepository.findByEmail(khachHangEntity.getEmail());
-								if(!dto.getEmail().equalsIgnoreCase(khachHangEntity.getEmail())) {
-									for (KhachHang khachHang : listKhachHang) {
-										if(khachHang.getEmail().equalsIgnoreCase(dto.getEmail())) {
-											return null ;
-										}
-									}
-								}
-									dto.setSoLanMua(khachHangEntity.getSoLanMua());
-									khachHangEntity = khachHangConvertor.toEntity(dto);
-									nguoiDungEntity = nguoiDungConvertor
-											.toEntityByKhachHangDTOAndOldNguoiDungEntity(dto, oldNguoiDungEntity);
-									
-						}else {
-							//Thêm mới
-							khachHangEntity = new KhachHang();
-							nguoiDungEntity = new NguoiDung();
-							for (KhachHang khachHang : listKhachHang) {
-								if(khachHang.getEmail().equalsIgnoreCase(dto.getEmail())) {
-									return null ;
-								}
-							}
-							dto.setSoLanMua(0);
-							khachHangEntity = khachHangConvertor.toEntity(dto);
-							nguoiDungEntity = nguoiDungConvertor.toEntityByKhachHangDTO(dto);
+		try {
+			// Cập nhật
+			if (dto.getId() != null) {
+				khachHangEntity = khachHangRepository.findById(dto.getId()).get();
+				nguoiDungEntity = new NguoiDung();
+				NguoiDung oldNguoiDungEntity = nguoiDungRepository.findByEmail(khachHangEntity.getEmail());
+				if (!dto.getEmail().equalsIgnoreCase(khachHangEntity.getEmail())) {
+					for (KhachHang khachHang : listKhachHang) {
+						if (khachHang.getEmail().equalsIgnoreCase(dto.getEmail())) {
+							return null;
 						}
-						khachHangEntity = khachHangRepository.save(khachHangEntity);
-						nguoiDungEntity = nguoiDungRepository.save(nguoiDungEntity);
-						khachHangDTO = khachHangConvertor.toDTO(khachHangEntity);
-						return khachHangDTO;
-					}catch(Exception e) {
-						e.printStackTrace();
 					}
-					return khachHangDTO ;
+				}
+				dto.setSoLanMua(khachHangEntity.getSoLanMua());
+				khachHangEntity = khachHangConvertor.toEntity(dto);
+				nguoiDungEntity = nguoiDungConvertor.toEntityByKhachHangDTOAndOldNguoiDungEntity(dto,
+						oldNguoiDungEntity);
+				nguoiDungEntity = nguoiDungRepository.save(nguoiDungEntity);
+
+			} else {
+				// Thêm mới
+				khachHangEntity = new KhachHang();
+				nguoiDungEntity = new NguoiDung();
+				for (KhachHang khachHang : listKhachHang) {
+					if (khachHang.getEmail().equalsIgnoreCase(dto.getEmail())) {
+						return null;
+					}
+				}
+				dto.setSoLanMua(0);
+				khachHangEntity = khachHangConvertor.toEntity(dto);
+				nguoiDungEntity = nguoiDungConvertor.toEntityByKhachHangDTO(dto);
+				nguoiDungEntity = nguoiDungRepository.save(nguoiDungEntity);
+				NguoiDungVaiTro nguoiDungVaiTro = new NguoiDungVaiTro();
+				nguoiDungVaiTro.setNguoiDung(nguoiDungEntity);
+				nguoiDungVaiTro.setVaiTro(vaiTroRepository.findByTenVaiTro("CUSTOMER"));
+				nguoiDungVaiTroRepository.save(nguoiDungVaiTro);
+				GioHang gioHang = new GioHang(null, null, khachHangEntity, 1, 0, null);
+				gioHangRepository.save(gioHang);
+			}
+			khachHangEntity = khachHangRepository.save(khachHangEntity);
+			khachHangDTO = khachHangConvertor.toDTO(khachHangEntity);
+			return khachHangDTO;
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
+		return khachHangDTO;
+	}
 
 	@Override
 	public List<KhachHangDTO> findAll(Pageable pageable) {
-		List<KhachHangDTO> listKhachHangDTO = new ArrayList<KhachHangDTO>() ;
+		List<KhachHangDTO> listKhachHangDTO = new ArrayList<KhachHangDTO>();
 		List<KhachHang> listKhachHang = new ArrayList<KhachHang>();
-		KhachHangDTO dto = null ;
+		KhachHangDTO dto = null;
 		DiaChiDTO diaChiDTO = null;
-		
- 		listKhachHang = khachHangRepository.findAll(pageable).getContent();
-		 for (KhachHang khachHang : listKhachHang) {
-			    dto = new KhachHangDTO();
-			    dto = khachHangConvertor.toDTO(khachHang);
-				List<DiaChiDTO> listDiaChiDTO = new ArrayList<DiaChiDTO>();
-				for (DiaChi diaChi : khachHang.getListDiaChi()) {
-					diaChiDTO = new DiaChiDTO();
-					diaChiDTO  = diaChiConvertor.toDTO(diaChi);
-					listDiaChiDTO.add(diaChiDTO);
-				}
-				dto.setListDiaChi(listDiaChiDTO);
-				listKhachHangDTO.add(dto);
-		 }
-		 
-		 return listKhachHangDTO ;
+
+		listKhachHang = khachHangRepository.findAll(pageable).getContent();
+		for (KhachHang khachHang : listKhachHang) {
+			dto = new KhachHangDTO();
+			dto = khachHangConvertor.toDTO(khachHang);
+			List<DiaChiDTO> listDiaChiDTO = new ArrayList<DiaChiDTO>();
+			for (DiaChi diaChi : khachHang.getListDiaChi()) {
+				diaChiDTO = new DiaChiDTO();
+				diaChiDTO = diaChiConvertor.toDTO(diaChi);
+				listDiaChiDTO.add(diaChiDTO);
+			}
+			dto.setListDiaChiDTO(listDiaChiDTO);
+			listKhachHangDTO.add(dto);
+		}
+
+		return listKhachHangDTO;
 	}
-
-
 
 	@Override
 	public List<KhachHangDTO> findAll() {
-		List<KhachHangDTO> listKhachHangDTO = new ArrayList<KhachHangDTO>() ;
+		List<KhachHangDTO> listKhachHangDTO = new ArrayList<KhachHangDTO>();
 		List<KhachHang> listKhachHang = new ArrayList<KhachHang>();
-		KhachHangDTO dto = null ;
+		KhachHangDTO dto = null;
 		DiaChiDTO diaChiDTO = null;
-		
+
 		listKhachHang = khachHangRepository.findAll();
-		 for (KhachHang khachHang : listKhachHang) {
-			    dto = new KhachHangDTO();
-			    dto = khachHangConvertor.toDTO(khachHang);
-				List<DiaChiDTO> listDiaChiDTO = new ArrayList<DiaChiDTO>();
-				for (DiaChi diaChi : khachHang.getListDiaChi()) {
-					diaChiDTO = new DiaChiDTO();
-					diaChiDTO  = diaChiConvertor.toDTO(diaChi);
-					listDiaChiDTO.add(diaChiDTO);
-				}
-				dto.setListDiaChi(listDiaChiDTO);
-				listKhachHangDTO.add(dto);
-		 }
-		 return listKhachHangDTO ;
+		for (KhachHang khachHang : listKhachHang) {
+			dto = new KhachHangDTO();
+			dto = khachHangConvertor.toDTO(khachHang);
+			List<DiaChiDTO> listDiaChiDTO = new ArrayList<DiaChiDTO>();
+			for (DiaChi diaChi : khachHang.getListDiaChi()) {
+				diaChiDTO = new DiaChiDTO();
+				diaChiDTO = diaChiConvertor.toDTO(diaChi);
+				listDiaChiDTO.add(diaChiDTO);
+			}
+			dto.setListDiaChiDTO(listDiaChiDTO);
+			listKhachHangDTO.add(dto);
+		}
+		return listKhachHangDTO;
 	}
 
-
-
 	@Override
-	public List<KhachHangDTO> findAllByInputCoPhanTrang(String soDienThoai,Pageable pageable) {
-		List<KhachHangDTO> listKhachHangDTO = new ArrayList<KhachHangDTO>() ;
+	public List<KhachHangDTO> findAllByInputCoPhanTrang(String soDienThoai, Pageable pageable) {
+		List<KhachHangDTO> listKhachHangDTO = new ArrayList<KhachHangDTO>();
 		List<KhachHang> listKhachHang = new ArrayList<KhachHang>();
-		KhachHangDTO dto = null ;
+		KhachHangDTO dto = null;
 		DiaChiDTO diaChiDTO = null;
-		if(soDienThoai != null) {
-			 listKhachHang = khachHangRepository.findAllBySoDienThoaiCoPhanTrang(soDienThoai, pageable).getContent();
+		if (soDienThoai != null) {
+			listKhachHang = khachHangRepository.findAllBySoDienThoaiCoPhanTrang(soDienThoai, pageable).getContent();
 			for (KhachHang khachHang : listKhachHang) {
 				dto = new KhachHangDTO();
 				dto = khachHangConvertor.toDTO(khachHang);
 				List<DiaChiDTO> listDiaChiDTO = new ArrayList<DiaChiDTO>();
-					for (DiaChi diaChi : khachHang.getListDiaChi()) {
-						diaChiDTO = new DiaChiDTO();
-						diaChiDTO = diaChiConvertor.toDTO(diaChi);
-						listDiaChiDTO.add(diaChiDTO);
-					}
-				dto.setListDiaChi(listDiaChiDTO);
-				listKhachHangDTO.add(dto);
+				for (DiaChi diaChi : khachHang.getListDiaChi()) {
+					diaChiDTO = new DiaChiDTO();
+					diaChiDTO = diaChiConvertor.toDTO(diaChi);
+					listDiaChiDTO.add(diaChiDTO);
 				}
+				dto.setListDiaChiDTO(listDiaChiDTO);
+				listKhachHangDTO.add(dto);
+			}
 		}
-		return listKhachHangDTO ;
+		return listKhachHangDTO;
 	}
-
-
 
 	@Override
 	public int countAll() {
 		return (int) khachHangRepository.count();
 	}
 
-
-
 	@Override
 	public int countByTrangThai(Integer trangThai) {
 		return khachHangRepository.countByTrangThai(trangThai);
 	}
-
-
 
 	@Override
 	public int countByInput(String input) {
@@ -287,21 +290,20 @@ public class KhachHangServiceImpl implements KhachHangService{
 
 	@Override
 	public int countByInputVaTrangThai(String input, Integer trangThai) {
-		return khachHangRepository.countByInputVaTrangThai(input,trangThai);
+		return khachHangRepository.countByInputVaTrangThai(input, trangThai);
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	@Transactional
 	public void capNhatTrangThaiTheoId(Long id) {
-		KhachHang entity = khachHangRepository.getOne(id);
+		KhachHang entity = khachHangRepository.findById(id).get();
 		NguoiDung nguoiDungEntity = nguoiDungRepository.findByEmail(entity.getEmail());
-		if(entity != null) {
-			if(entity.getTrangThai() == 1) {
+		if (entity != null) {
+			if (entity.getTrangThai() == 1) {
 				nguoiDungRepository.capNhatTrangThaiThanhKhongHoatDongTheoMa(nguoiDungEntity.getId());
 				khachHangRepository.capNhatTrangThaiThanhKhongHoatDongTheoMa(entity.getId());
 			}
-			if(entity.getTrangThai() == 0) {
+			if (entity.getTrangThai() == 0) {
 				nguoiDungRepository.capNhatTrangThaiThanhHoatDongTheoMa(nguoiDungEntity.getId());
 				khachHangRepository.capNhatTrangThaiThanhHoatDongTheoMa(entity.getId());
 			}
@@ -311,12 +313,21 @@ public class KhachHangServiceImpl implements KhachHangService{
 	@Override
 	public void updateUserStatus(Long id, int trangThai) {
 		KhachHang user = khachHangRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Khách hàng không tồn tại"));
-        user.setTrangThai(trangThai);
-        khachHangRepository.save(user);
+				.orElseThrow(() -> new IllegalArgumentException("Khách hàng không tồn tại"));
+		user.setTrangThai(trangThai);
+		khachHangRepository.save(user);
 	}
 
-	
+	@Override
+	public KhachHangDTO findByEmail(String auth) {
+		KhachHangDTO khachHangDT0 = new KhachHangDTO();
+		if(auth != null) {
+			KhachHang khachHang = khachHangRepository.findByEmail(auth);
+			khachHangDT0 = khachHangConvertor.toDTO(khachHang);
+		}
+		return khachHangDT0;
+	}
+
 //	@Autowired
 //	private KhachHangRepository khachHangRepository ;
 //	

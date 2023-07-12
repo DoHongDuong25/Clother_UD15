@@ -1,33 +1,24 @@
 package com.fpoly.entity;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
-import java.time.Instant;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import lombok.*;
-import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedBy;
-import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
 @Setter
@@ -36,7 +27,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Entity
 @Table(name = "nguoi_dung")
 @EntityListeners(AuditingEntityListener.class)
-public class NguoiDung extends BaseEntity implements Serializable{
+public class NguoiDung extends BaseEntity implements Serializable {
 
 	private static final long serialVersionUID = -6627502088104297623L;
 
@@ -52,7 +43,7 @@ public class NguoiDung extends BaseEntity implements Serializable{
 	@Column(name = "so_dien_thoai",columnDefinition = "nvarchar(20) null")
 	private String soDienThoai;
 
-	@Column(name = "mat_khau",columnDefinition = "nvarchar(20) null")
+	@Column(name = "mat_khau",columnDefinition = "nvarchar(255) null")
 	private String matKhau;
 	
 //	@Enumerated(EnumType.STRING)
@@ -61,6 +52,10 @@ public class NguoiDung extends BaseEntity implements Serializable{
 	@Column(name = "trang_thai", columnDefinition = "int default(0)")
 	private int trangThai;
 
+	@JsonIgnore
+	@OneToMany(mappedBy = "nguoiDung",fetch=FetchType.EAGER)
+	private List<NguoiDungVaiTro> listNguoiDungVaiTro ;
+	
 	public String TrangThai2(){
 		String TrangThai2;
 		if(trangThai == 0){
@@ -88,4 +83,6 @@ public class NguoiDung extends BaseEntity implements Serializable{
 				", giaoDichs=" + giaoDichs.size() +
 				'}';
 	}
+
+	
 }

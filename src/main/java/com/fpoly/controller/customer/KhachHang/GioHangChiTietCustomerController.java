@@ -1,6 +1,8 @@
 package com.fpoly.controller.customer.KhachHang;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,9 +11,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.fpoly.dto.GioHangDTO;
+import com.fpoly.dto.KhachHangDTO;
 import com.fpoly.dto.KhuyenMaiDTO;
+import com.fpoly.security.NguoiDungDetails;
 import com.fpoly.service.GioHangChiTietService;
 import com.fpoly.service.GioHangService;
+import com.fpoly.service.KhachHangService;
 import com.fpoly.service.KhuyenMaiService;
 
 @Controller
@@ -23,18 +28,32 @@ public class GioHangChiTietCustomerController {
 		@Autowired
 		private GioHangChiTietService gioHangChiTietService ;
 		
+//		@Autowired
+//		private NguoiDungService nguoiDungService ;
+		
 		@Autowired
 		private KhuyenMaiService khuyenMaiService ;
+		
+		@Autowired
+		private KhachHangService khachHangService ;
 	
 		@GetMapping("/customer/gio-hang-chi-tiet")
 		public String layGioHangChiTiet( Model model) {
-			 GioHangDTO gioHangDTO = gioHangService.findByKhachHangId((long) 1);
-			 if(gioHangDTO.getSoTienGiamGia() == null) {
-				 gioHangDTO.setThanhTien(gioHangDTO.getTongTien());
-			 }
+			 	GioHangDTO gioHangDTO = null ;
+			 	String auth = SecurityContextHolder.getContext().getAuthentication().getName();
+			 	KhachHangDTO khachHangDT0 = khachHangService.findByEmail(auth); 
+ 				 gioHangDTO = gioHangService.findByKhachHangId(khachHangDT0.getId());
+				 if(gioHangDTO != null) {
+					 if(gioHangDTO.getSoTienGiamGia() == null) {
+						 gioHangDTO.setSoTienGiamGia(0);
+						 gioHangDTO.setThanhTien(gioHangDTO.getTongTien());
+					 }
+				 }else {
+					 gioHangDTO = new GioHangDTO();
+					 gioHangDTO.setListGioHangChiTiets(null);
+				 }
 			 model.addAttribute("gioHangDTO",gioHangDTO);
 			return "/customer/khach-hang/gio-hang-chi-tiet";
-			
 		}
 		
 		@GetMapping("/customer/gio-hang-chi-tiet/xoa-gio-hang")
@@ -68,14 +87,14 @@ public class GioHangChiTietCustomerController {
 			}
 			gioHangChiTietService.capNhatSoLuongGioHangChiTiet(ids,soLuongs);
 			//Mốt là thay bằng spring security
-			gioHangService.capNhatTongTien((long) 1);
+			gioHangService.capNhatTongTien((long) 8);
 			return "redirect:/customer/gio-hang-chi-tiet";
 			
 		}
 		@PostMapping("/customer/gio-hang-chi-tiet/ap-dung-ma-giam-gia")
 		public String apMaGiamGia(@ModelAttribute("gioHangDTO") GioHangDTO result , Model model) {
 			//Thay bằng mã khách hàng
-			GioHangDTO gioHangDTO = gioHangService.findByKhachHangId((long) 1);
+			GioHangDTO gioHangDTO = gioHangService.findByKhachHangId((long) 8);
 			gioHangDTO.setMaGiamGia(result.getMaGiamGia());
 			if(!gioHangDTO.getMaGiamGia().equals("")) {
 				KhuyenMaiDTO khuyenMaiDTO = khuyenMaiService.timKhuyenMaiTheoTenKhuyenMai(result.getMaGiamGia());
