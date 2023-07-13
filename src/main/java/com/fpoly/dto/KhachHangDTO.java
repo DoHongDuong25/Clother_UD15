@@ -36,8 +36,17 @@ public class KhachHangDTO extends BaseDTO<KhachHangDTO> {
 	    
 	    private String input = "" ;
 	    
-	    @NotBlank(message="Bạn chưa chon file !")
-	    private String pathExcel ;
+	    @NotBlank(message="Chưa chọn thành phố !")
+	    private String city ;
+
+	    @NotBlank(message="Chưa chọn quận huyện !")
+	    private String district ;
+
+	    @NotBlank(message="Chưa chọn xã !")
+	    private String ward ;
+
+	    @NotBlank(message="Vui lòng nhập số nhà !")
+	    private String soNha ;
 	    
 	    private List<KhachHangDTO> listKhachHangDTO = new ArrayList<KhachHangDTO>();
 	    

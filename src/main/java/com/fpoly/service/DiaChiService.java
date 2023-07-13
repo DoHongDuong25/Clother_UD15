@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.data.domain.Pageable;
 
 import com.fpoly.dto.DiaChiDTO;
+import com.fpoly.dto.KhachHangDTO;
 
 public interface DiaChiService {
 
@@ -19,6 +20,8 @@ public interface DiaChiService {
 	DiaChiDTO findById(Long id);
 
 	void update(DiaChiDTO diaChiDTO);
+
+	void save(KhachHangDTO khachHangDTO);
 
 
 }

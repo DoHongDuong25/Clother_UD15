@@ -5,7 +5,7 @@ import static com.querydsl.core.types.PathMetadataFactory.*;
 import com.querydsl.core.types.dsl.*;
 
 import com.querydsl.core.types.PathMetadata;
-import javax.annotation.processing.Generated;
+import com.querydsl.core.annotations.Generated;
 
 import com.fpoly.entity.GioHangChiTiet;
 import com.querydsl.core.types.Path;
