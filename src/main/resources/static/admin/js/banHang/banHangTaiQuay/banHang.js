@@ -231,19 +231,6 @@ window.onload = function () {
     }
 }
 
-$(document).ready(function () {
-    $('#firstPageProductManage').on("click", function () {
-        var num = 1;
-        $('#inputPageProductManage').attr("value", num);
-        $('#flexUrlTableFormProductManage').submit();
-    })
-    $('#lastPageProductManage').on("click", function () {
-        var num = parseInt("[[${sanPhamPage.totalPages}]]");
-        $('#inputPageProductManage').attr("value", num);
-        $('#flexUrlTableFormProductManage').submit();
-    })
-});
-
 
 
 

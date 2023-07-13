@@ -16,16 +16,16 @@ import java.util.List;
 public interface HoaDonRepoditory2 extends PagingAndSortingRepository<HoaDon, Long> {
     Page<HoaDon> findAll(Pageable pageable);
 
-    @Query(value = "SELECT * FROM hoa_don WHERE loai_hoa_don = :loai and da_xoa = false", nativeQuery = true)
+    @Query(value = "SELECT * FROM hoa_don WHERE loai_hoa_don = :loai and da_xoa = false ORDER BY ngay_tao DESC", nativeQuery = true)
     Page<HoaDon> finHDByLoaiHD(@Param("loai") Integer loai, PageRequest pageable);
 
-    @Query(value = "SELECT * FROM hoa_don WHERE trang_thai_id = ?1", countQuery = "SELECT COUNT(*) FROM hoa_don WHERE trang_thai_id = ?1", nativeQuery = true)
+    @Query(value = "SELECT * FROM hoa_don WHERE trang_thai_id = ?1 ORDER BY ngay_tao DESC", countQuery = "SELECT COUNT(*) FROM hoa_don WHERE trang_thai_id = ?1", nativeQuery = true)
     Page<HoaDon> findByTrangThaiHoaDonListTrangThai(int trangThai, Pageable pageable);
 
     @Query(value = "SELECT * FROM hoa_don WHERE trang_thai_id = ? and khach_hang_id = ?", nativeQuery = true)
     Page<HoaDon> findHoaDonByTrangThaiAndKhachHangId(int trangThai, Long khachHangId, Pageable pageable);
 
-    @Query(value = "SELECT * FROM hoa_don WHERE trang_thai_id = ?", nativeQuery = true)
+    @Query(value = "SELECT * FROM hoa_don WHERE trang_thai_id = ? ORDER BY ngay_tao DESC", nativeQuery = true)
     Page<HoaDon> findHoaDonbyId(int trangThai, Pageable pageable);
 
     @Query(value = "SELECT * FROM hoa_don WHERE loai_hoa_don = :loai", nativeQuery = true)

@@ -50,7 +50,8 @@
                                     <input class="quantity-input" type="number" min="1" th:value="${hoaDonCT.soLuong}">
                                     <button class="increment-btn" th:data-id="${hoaDonCT.id}">+</button>
 
-                                    <button class="save-btn" th:data-id="${hoaDonCT.id}" style="display: none;">Lưu</button>
+                                    <button class="save-btn" th:data-id="${hoaDonCT.id}" style="display: none;">Lưu
+                                    </button>
                                     <button class="cancel-btn" style="display: none;">Hủy</button>
                                 </div>
                             </td>
@@ -146,7 +147,9 @@
                         </li>
                     </ul>
                     <div class="btn-group">
-                        <button type="submit" class="primary-btn HuyDonBanTaiQuay" th:attr="data-id=${hoaDon.id}">Hủy đơn</button>
+                        <button type="submit" class="primary-btn HuyDonBanTaiQuay" th:attr="data-id=${hoaDon.id}">Hủy
+                            đơn
+                        </button>
                         <!--Modal hủy đơn-->
                         <div class="modal fade HuyDonTaiQuay" tabindex="-1" aria-labelledby="HuyDonTaiQuayModalLabel"
                              aria-hidden="true">
@@ -493,7 +496,8 @@
                                                                         <div class="form-group">
                                                                             <label for="soLuongId">Số lượng:</label>
                                                                             <input type="number" class="form-control"
-                                                                                   th:name="inputSLName" oninput="getSoLuongInput(this.getAttribute('id'), this.getAttribute('inputSLName'))"
+                                                                                   th:name="inputSLName"
+                                                                                   oninput="getSoLuongInput(this.getAttribute('id'), this.getAttribute('inputSLName'))"
                                                                                    th:id="'soLuongInputId'+${istat.index}"
                                                                                    placeholder="Số lượng">
                                                                         </div>
@@ -511,7 +515,8 @@
                                                                     this.getAttribute('label-name1'), this.getAttribute('label-name2'))"
                                                                data-dismiss="modal">Đóng</a>
                                                             <a class="btn btn-outline-primary"
-                                                               onclick="flexUrlSubmitBanHangTaiQuay('/banHang/hoaDonChiTiet', 'post', 'BanHangTaiQuay')">Thêm sản phẩm</a>
+                                                               onclick="flexUrlSubmitBanHangTaiQuay('/banHang/hoaDonChiTiet', 'post', 'BanHangTaiQuay')">Thêm
+                                                                sản phẩm</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -601,77 +606,6 @@
             </div>
         </div>
     </div>
-
-    <script>
-        function openModalSanPham() {
-            $('#modalSanPham').modal('show');
-        }
-
-        $(document).ready(function () {
-            $('[data-toggle="popover"]').popover();
-        });
-
-        function openAddProduct() {
-            $('#banHangTaiQuayModal').modal("show");
-        }
-
-        function openModalAddDetailProduct(id) {
-            $('#modalAddDetailProduct' + id).modal("show");
-        }
-
-        function clearDataChoose(mauSacInputName, kichCoInputName, mauSacLabelName, kichCoLabelName) {
-            var kichCoIdName = document.getElementsByName("kichCoId");
-            $(kichCoIdName).removeAttr("checked");
-            var mauSacIdName = document.getElementsByName("mauSacId");
-            $(mauSacIdName).removeAttr("checked");
-            var kichCoLabel = document.getElementsByName(kichCoLabelName);
-            $(kichCoLabel).removeClass("label-active");
-        }
-
-        function labelActive(labelId, labelName, inputName, inputId) {
-            var lstName = document.getElementsByName(labelName);
-            $(lstName).removeClass("label-active");
-            $('#' + labelId).addClass("label-active");
-            var lstInputName = document.getElementsByName(inputName);
-            $(lstInputName).removeAttr("checked");
-            $('#' + inputId).attr("checked", "true");
-        }
-
-        function chooseOptionColorLabel(labelId, labelName, inputName, inputId, spName, spId) {
-            var lstName = document.getElementsByName(labelName);
-            $(lstName).removeClass("label-active");
-            $('#' + labelId).addClass("label-active");
-            var lstInputName = document.getElementsByName(inputName);
-            $(lstInputName).removeAttr("checked");
-            $('#' + inputId).attr("checked", "true");
-            // choose san Pham id
-            var lstSPName = document.getElementsByName(spName);
-            $(lstInputName).removeAttr("checked");
-            $('#' + spId).attr("checked", "true");
-        }
-
-        function getSoLuongInput(id, name){
-            var valueSoLuongName = document.getElementsByName(id);
-            $(valueSoLuongName).val(0);
-            var valueSoLuongId = document.getElementById(id).value;
-            var soLuong = document.getElementsByName('soLuong');
-            $(soLuong).val(valueSoLuongId);
-        }
-    </script>
-    <script th:inline="javascript">
-        window.onload = function () {
-            var messageSuccess = '[[${messageSuccess}]]';
-            var messageDanger = '[[${messageDanger}]]';
-            $('#toastsCustomCss').attr("style", "position: absolute; top: 70px; right: 0;z-index: 1;");
-            if (messageSuccess.length !== 0) {
-                $("#messageSuccess").toast("show");
-            }
-            if (messageDanger.length !== 0) {
-                $("#messageDanger").toast("show");
-            }
-        }
-    </script>
-
 </div>
 </body>
 
