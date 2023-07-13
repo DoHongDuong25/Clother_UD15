@@ -238,10 +238,11 @@ public class BanHangController {
 //		return "admin/product/banHangTaiQuay";
 //	}
 	
-	@PostMapping("/banHang/getData")
-	public String showSanPhamChiTiet(ModelMap model, @ModelAttribute("resultSP") SPTaiQuayDTO dto) {
+	@PostMapping("/banHang/hoaDonChiTiet")
+	public String addSanPhamChiTietVaoHDCT(ModelMap model, @ModelAttribute("resultSP") SPTaiQuayDTO dto) {
 		Optional<SanPhamChiTiet> optSpct = sanPhamChiTietService.getSanPhamChiTietByMauSacSizeSanPhamId(dto.getSanPhamIdSPTQ(), dto.getMauSacId(), dto.getKichCoId());
 		if(optSpct.isPresent()) {
+			System.out.println("sl: "+dto.getSoLuong());
 			System.out.println(optSpct.get().getId());
 		}
 		Optional<HoaDon> optHD = hoaDonRepository.findById(dto.getHoaDonId());
