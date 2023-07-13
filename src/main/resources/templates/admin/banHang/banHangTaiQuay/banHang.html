@@ -337,15 +337,16 @@
                                             <th>Giá</th>
                                             <th>Thao tác</th>
                                         </tr>
-                                            <!--TẠM THỜI ĐANG LỖI ĐOẠN NÀY-->
-<!--                                        <tr th:if="${!sanPhamPage.hasContent()}">-->
-<!--                                            <td colspan="9">-->
-<!--                                                <h4><i>Không có sản phẩm nào phù hợp</i></h4>-->
-<!--                                            </td>-->
-<!--                                        </tr>-->
+                                        <!--TẠM THỜI ĐANG LỖI ĐOẠN NÀY-->
+                                        <!--                                        <tr th:if="${!sanPhamPage.hasContent()}">-->
+                                        <!--                                            <td colspan="9">-->
+                                        <!--                                                <h4><i>Không có sản phẩm nào phù hợp</i></h4>-->
+                                        <!--                                            </td>-->
+                                        <!--                                        </tr>-->
                                         </thead>
                                         <tbody class="text-center" th:object="${resultSP}">
                                         <input type="hidden" th:field="*{hoaDonId}">
+                                        <input type="hidden" th:field="*{soLuong}">
                                         <tr th:each="item, istat : ${resultSP.lstShowSanPhamTaiQuayDTO}">
                                             <td
                                                     th:text="${sanPhamPage.number * sanPhamPage.size + istat.index + 1}">
@@ -466,7 +467,8 @@
                                                                             </label>
                                                                         </div>
                                                                         <!--*: check lai id -->
-                                                                        <div class="product__details__option__color">
+                                                                        <div
+                                                                                class="product__details__option__color">
                                                                             <span>Color:</span>
                                                                             <label
                                                                                     onclick="chooseOptionColorLabel(this.getAttribute('id'),this.getAttribute('name'), this.getAttribute('input-name'), this.getAttribute('input-id'),
@@ -487,12 +489,13 @@
                                                                                        th:field="*{mauSacId}"
                                                                                        hidden>
                                                                             </label>
-                                                                            <div class="col-lg-12">
-                                                                                <div class="form-group">
-                                                                                    <label for="soLuongId">Số lượng:</label>
-                                                                                    <input type="number" class="form-control" name="soLuongSanPhamHDCT" id="soLuongId" aria-describedby="soLuongId" placeholder="Số lượng">
-                                                                                </div>
-                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label for="soLuongId">Số lượng:</label>
+                                                                            <input type="number" class="form-control"
+                                                                                   th:name="inputSLName" oninput="getSoLuongInput(this.getAttribute('id'), this.getAttribute('inputSLName'))"
+                                                                                   th:id="'soLuongInputId'+${istat.index}"
+                                                                                   placeholder="Số lượng">
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -508,7 +511,7 @@
                                                                     this.getAttribute('label-name1'), this.getAttribute('label-name2'))"
                                                                data-dismiss="modal">Đóng</a>
                                                             <a class="btn btn-outline-primary"
-                                                               onclick="flexUrlSubmitBanHangTaiQuay('/banHang/getData', 'post', 'BanHangTaiQuay')">Thêm sản phẩm</a>
+                                                               onclick="flexUrlSubmitBanHangTaiQuay('/banHang/hoaDonChiTiet', 'post', 'BanHangTaiQuay')">Thêm sản phẩm</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -645,6 +648,14 @@
             var lstSPName = document.getElementsByName(spName);
             $(lstInputName).removeAttr("checked");
             $('#' + spId).attr("checked", "true");
+        }
+
+        function getSoLuongInput(id, name){
+            var valueSoLuongName = document.getElementsByName(id);
+            $(valueSoLuongName).val(0);
+            var valueSoLuongId = document.getElementById(id).value;
+            var soLuong = document.getElementsByName('soLuong');
+            $(soLuong).val(valueSoLuongId);
         }
     </script>
     <script th:inline="javascript">

@@ -164,5 +164,86 @@ $(document).ready(function () {
     });
 });
 
+function openModalSanPham() {
+    $('#modalSanPham').modal('show');
+}
+
+$(document).ready(function () {
+    $('[data-toggle="popover"]').popover();
+});
+
+function openAddProduct() {
+    $('#banHangTaiQuayModal').modal("show");
+}
+
+function openModalAddDetailProduct(id) {
+    $('#modalAddDetailProduct' + id).modal("show");
+}
+
+function clearDataChoose(mauSacInputName, kichCoInputName, mauSacLabelName, kichCoLabelName) {
+    var kichCoIdName = document.getElementsByName("kichCoId");
+    $(kichCoIdName).removeAttr("checked");
+    var mauSacIdName = document.getElementsByName("mauSacId");
+    $(mauSacIdName).removeAttr("checked");
+    var kichCoLabel = document.getElementsByName(kichCoLabelName);
+    $(kichCoLabel).removeClass("label-active");
+}
+
+function labelActive(labelId, labelName, inputName, inputId) {
+    var lstName = document.getElementsByName(labelName);
+    $(lstName).removeClass("label-active");
+    $('#' + labelId).addClass("label-active");
+    var lstInputName = document.getElementsByName(inputName);
+    $(lstInputName).removeAttr("checked");
+    $('#' + inputId).attr("checked", "true");
+}
+
+function chooseOptionColorLabel(labelId, labelName, inputName, inputId, spName, spId) {
+    var lstName = document.getElementsByName(labelName);
+    $(lstName).removeClass("label-active");
+    $('#' + labelId).addClass("label-active");
+    var lstInputName = document.getElementsByName(inputName);
+    $(lstInputName).removeAttr("checked");
+    $('#' + inputId).attr("checked", "true");
+    // choose san Pham id
+    var lstSPName = document.getElementsByName(spName);
+    $(lstInputName).removeAttr("checked");
+    $('#' + spId).attr("checked", "true");
+}
+
+function getSoLuongInput(id, name) {
+    var valueSoLuongName = document.getElementsByName(id);
+    $(valueSoLuongName).val(0);
+    var valueSoLuongId = document.getElementById(id).value;
+    var soLuong = document.getElementsByName('soLuong');
+    $(soLuong).val(valueSoLuongId);
+}
+
+window.onload = function () {
+    var messageSuccess = '[[${messageSuccess}]]';
+    var messageDanger = '[[${messageDanger}]]';
+    $('#toastsCustomCss').attr("style", "position: absolute; top: 70px; right: 0;z-index: 1;");
+    if (messageSuccess.length !== 0) {
+        $("#messageSuccess").toast("show");
+    }
+    if (messageDanger.length !== 0) {
+        $("#messageDanger").toast("show");
+    }
+}
+
+$(document).ready(function () {
+    $('#firstPageProductManage').on("click", function () {
+        var num = 1;
+        $('#inputPageProductManage').attr("value", num);
+        $('#flexUrlTableFormProductManage').submit();
+    })
+    $('#lastPageProductManage').on("click", function () {
+        var num = parseInt("[[${sanPhamPage.totalPages}]]");
+        $('#inputPageProductManage').attr("value", num);
+        $('#flexUrlTableFormProductManage').submit();
+    })
+});
+
+
 
 

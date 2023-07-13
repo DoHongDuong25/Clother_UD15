@@ -160,7 +160,7 @@ public class BanHangController {
         }).collect(Collectors.toList());
     }
 
-    @PostMapping("/banHang/getData")
+    @PostMapping("/banHang/hoaDonChiTiet")
     public String showSanPhamChiTiet(ModelMap model, @ModelAttribute("resultSP") SPTaiQuayDTO dto) {
         Optional<SanPhamChiTiet> optSpct = sanPhamChiTietService.getSanPhamChiTietByMauSacSizeSanPhamId(dto.getSanPhamIdSPTQ(), dto.getMauSacId(), dto.getKichCoId());
         if (optSpct.isPresent()) {
@@ -168,9 +168,7 @@ public class BanHangController {
             if (optHD.isPresent()) {
                 HoaDon hoaDon = optHD.get();
                 BigDecimal giaSP = optSpct.get().getSanPham().getGia();
-                Integer soLuong = dto.getSoLuongSanPhamHDCT();
-                System.out.println(optSpct.get().getId());
-                System.out.println(soLuong);
+                Integer soLuong = dto.getSoLuong();
 
                 HoaDonChiTiet hoaDonChiTiet = new HoaDonChiTiet();
                 hoaDonChiTiet.setSanPhamChiTiet(optSpct.get());

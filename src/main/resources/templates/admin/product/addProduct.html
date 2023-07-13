@@ -258,12 +258,12 @@
                         </div>
                         <div class="col-sm-12 mt-3 mb-3">
                             <div class="float-right">
-                                <a class="btn btn-primary" th:if="*{isEdit == false}"
+                                <a class="btn btn-primary text-light" th:if="*{isEdit == false}"
                                     onclick="flexUrlSubmit('generateProductDetails', 'post', 'AddProduct')">
                                     <span>Tạo sản phẩm <img th:src="@{/admin/img/icons/box-arrow-down.svg}"
                                             aria-label="chi tiết" /></span>
                                 </a>
-                                <a class="btn btn-primary" th:if="*{isEdit == true}"
+                                <a class="btn btn-primary text-light" th:if="*{isEdit == true}"
                                     onclick="flexUrlSubmit('add', 'get', 'AddProduct')">
                                     <span>Tạo mới sản phẩm <img th:src="@{/admin/img/icons/box-arrow-in-up.svg}"
                                             aria-label="chi tiết" /></span>
@@ -325,12 +325,12 @@
                         </div>
                         <div class="col-sm-12 mt-3 mb-3">
                             <div class="float-right">
-                                <a class="btn btn-primary" th:if="*{isEdit == false}"
+                                <a class="btn btn-primary text-light" th:if="*{isEdit == false}"
                                     onclick="flexUrlSubmit('generateProductDetails', 'post', 'AddProduct')">
                                     <span>Tạo sản phẩm <img th:src="@{/admin/img/icons/box-arrow-down.svg}"
                                             aria-label="chi tiết" /></span>
                                 </a>
-                                <a class="btn btn-primary" th:if="*{isEdit == true}"
+                                <a class="btn btn-primary text-light" th:if="*{isEdit == true}"
                                     onclick="flexUrlSubmit('add', 'get', 'AddProduct')">
                                     <span>Tạo mới sản phẩm <img th:src="@{/admin/img/icons/box-arrow-in-up.svg}"
                                             aria-label="chi tiết" /></span>
@@ -346,7 +346,7 @@
                         Bảng sản phẩm đã thêm mới
                         <div class="btn-group-sm">
                             <div class="float-right">
-                                <a class="btn btn-danger" onclick="showConfirmModalDialogDeleteAllbyId()">Xóa</a>
+                                <a class="btn btn-danger text-light" onclick="showConfirmModalDialogDeleteAllbyId()">Xóa</a>
                             </div>
                         </div>
                     </h6>
@@ -470,14 +470,14 @@
                     </div>
                 </div>
                 <div class="card-footer">
-                    <h6 class="m-0 font-weight-bold text-primary">
+                    <h6 class="m-0 font-weight-bold">
                         <div class="btn-group-sm">
                             <div class="float-right">
-                                <a class="btn btn-primary mr-sm-1" th:if="*{isCreatedImg == false}"
+                                <a class="btn btn-primary mr-sm-1 text-light" th:if="*{isCreatedImg == false}"
                                     onclick="flexUrlSubmit('addImageProductDetail', 'get','AddProduct')">Thêm ảnh
                                     sản
                                     phẩm</a>
-                                <a class="btn btn-primary mr-sm-1"
+                                <a class="btn btn-primary mr-sm-1 text-light"
                                     onclick="flexUrlSubmit('updateQuantityProductDetail', 'post', 'AddProduct')">Cập
                                     nhật</a>
                             </div>
@@ -626,11 +626,11 @@
                         <hr>
                         <div class="col-sm-12 mt-3 pb-5">
                             <div class="float-right">
-                                <a class="btn btn-primary"
+                                <a class="btn btn-primary text-light"
                                     onclick="flexUrlSubmit('saveImageProductDetail', 'post', 'AddProduct')">
                                     <span>Hoàn tất thêm ảnh sản phẩm <img th:src="@{/admin/img/icons/save.svg}"
                                             aria-label="chi tiết" /></span></a>
-                                <a class="btn btn-primary"
+                                <a class="btn btn-primary text-light"
                                     onclick="flexUrlSubmit('', 'post', 'AddProduct')">
                                     <span>Quay trở về trang chủ <img th:src="@{/admin/img/icons/save.svg}"
                                             aria-label="chi tiết" /></span></a>
@@ -666,7 +666,7 @@
                         <div class="modal-footer">
                             <a type="button" id="notChangeIsShow" class="btn btn-outline-dark"
                                 data-dismiss="modal">Đóng</a>
-                            <a id="yesOptionChangeIsShow" type="button" class="btn btn-danger"
+                            <a id="yesOptionChangeIsShow" type="button" class="btn btn-danger text-light"
                                 onclick="flexUrlSubmit('saveOptionValue', 'post', 'AddProduct')">Lưu</a>
                         </div>
                     </div>
@@ -692,7 +692,7 @@
                         <a type="button" class="btn
                                             btn-outline-dark" data-dismiss="modal">Đóng</a>
                         <a id="yesOptionDeleteModalId" type="button" class="btn
-                                            btn-danger">Xóa</a>
+                                            btn-danger text-light">Xóa</a>
                     </div>
                 </div>
             </div>
@@ -718,7 +718,7 @@
                     <div class="modal-footer">
                         <a type="button" id="notChangeIsShow" class="btn btn-outline-dark" data-dismiss="modal">Đóng</a>
                         <a id="yesOptionChangeIsShow" type="button" class="btn
-                                            btn-danger">Đồng ý</a>
+                                            btn-primary text-light">Đồng ý</a>
                     </div>
                 </div>
             </div>
@@ -740,7 +740,7 @@
                     <div class="modal-footer">
                         <a type="button" id="notChangeIsShow" class="btn btn-outline-dark" data-dismiss="modal">Đóng</a>
                         <a id="yesOptionChangeIsShow" type="button" class="btn
-                                            btn-danger">Đồng ý</a>
+                                            btn-primary text-light">Đồng ý</a>
                     </div>
                 </div>
             </div>
@@ -762,7 +762,7 @@
                     <div class="modal-footer">
                         <a type="button" class="btn btn-outline-dark" data-dismiss="modal">Đóng</a>
                         <a onclick="deleteAll('deleteAllByIds', 'AddProduct')" type="button"
-                            class="btn btn-danger">Xóa</a>
+                            class="btn btn-danger text-light">Xóa</a>
                     </div>
                 </div>
             </div>

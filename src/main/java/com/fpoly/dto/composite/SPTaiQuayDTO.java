@@ -33,6 +33,6 @@ public class SPTaiQuayDTO {
 	
 	private Long sanPhamIdSPTQ;
 	
-	private Integer soLuongSanPhamHDCT;
+	private Integer SoLuong;
 }
 
