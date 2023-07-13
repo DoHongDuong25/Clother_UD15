@@ -168,7 +168,9 @@ public class BanHangController {
             if (optHD.isPresent()) {
                 HoaDon hoaDon = optHD.get();
                 BigDecimal giaSP = optSpct.get().getSanPham().getGia();
-                Integer soLuong = dto.getSoLuong();
+                Integer soLuong = dto.getSoLuongSanPhamHDCT();
+                System.out.println(optSpct.get().getId());
+                System.out.println(soLuong);
 
                 HoaDonChiTiet hoaDonChiTiet = new HoaDonChiTiet();
                 hoaDonChiTiet.setSanPhamChiTiet(optSpct.get());

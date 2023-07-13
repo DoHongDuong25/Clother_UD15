@@ -466,8 +466,7 @@
                                                                             </label>
                                                                         </div>
                                                                         <!--*: check lai id -->
-                                                                        <div
-                                                                                class="product__details__option__color">
+                                                                        <div class="product__details__option__color">
                                                                             <span>Color:</span>
                                                                             <label
                                                                                     onclick="chooseOptionColorLabel(this.getAttribute('id'),this.getAttribute('name'), this.getAttribute('input-name'), this.getAttribute('input-id'),
@@ -488,12 +487,12 @@
                                                                                        th:field="*{mauSacId}"
                                                                                        hidden>
                                                                             </label>
-                                                                        </div>
-                                                                        <div>
-                                                                            <span>Số lượng</span>
-                                                                            <input type="number" name="soLuong"
-                                                                                   th:value="${resultSP.soLuong}"
-                                                                                   oninput="calculateTotal()">
+                                                                            <div class="col-lg-12">
+                                                                                <div class="form-group">
+                                                                                    <label for="soLuongId">Số lượng:</label>
+                                                                                    <input type="number" class="form-control" name="soLuongSanPhamHDCT" id="soLuongId" aria-describedby="soLuongId" placeholder="Số lượng">
+                                                                                </div>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
