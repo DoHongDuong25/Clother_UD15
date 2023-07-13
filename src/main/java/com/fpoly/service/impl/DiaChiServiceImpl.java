@@ -12,6 +12,7 @@ import org.springframework.transaction.UnexpectedRollbackException;
 
 import com.fpoly.convertor.DiaChiConvertor;
 import com.fpoly.dto.DiaChiDTO;
+import com.fpoly.dto.KhachHangDTO;
 import com.fpoly.entity.DiaChi;
 import com.fpoly.repository.DiaChiRepository;
 import com.fpoly.repository.KhachHangRepository;
@@ -117,6 +118,16 @@ public class DiaChiServiceImpl implements DiaChiService {
 			entity.setKhachHang(khachHangRepository.getOne(diaChiDTO.getKhachHangId()));
 			diaChiRepository.save(entity);
 		}
+	}
+	@Override
+	public void save(KhachHangDTO khachHangDTO) {
+			DiaChi diaChi = new DiaChi();
+			diaChi.setDiaChi(khachHangDTO.getCity()+"-"+khachHangDTO.getDistrict()+"-"
+			+khachHangDTO.getWard()+"-"+khachHangDTO.getSoNha());
+			diaChi.setHoTen(khachHangDTO.getHoTen());
+			diaChi.setSoDienThoai(khachHangDTO.getSoDienThoai());
+			diaChi.setKhachHang(khachHangRepository.findById(khachHangDTO.getId()).get());
+			diaChiRepository.save(diaChi);
 	}
 	
 

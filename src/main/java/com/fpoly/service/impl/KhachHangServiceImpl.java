@@ -26,6 +26,8 @@ import com.fpoly.repository.NguoiDungRepository;
 import com.fpoly.repository.NguoiDungVaiTroRepository;
 import com.fpoly.repository.VaiTroRepository;
 import com.fpoly.service.KhachHangService;
+import com.fpoly.service.MailService;
+import com.fpoly.util.RanDomUtil;
 
 @Service
 public class KhachHangServiceImpl implements KhachHangService {
@@ -54,6 +56,10 @@ public class KhachHangServiceImpl implements KhachHangService {
 	@Autowired
 	private NguoiDungVaiTroRepository nguoiDungVaiTroRepository ;
 
+	@Autowired
+	private MailService mailService ;
+	
+	
 	@Override
 	public List<KhachHangDTO> findAllByTrangThaiCoPhanTrang(Integer trangThai, Pageable pageable) {
 		List<KhachHangDTO> listKhachHangDTO = new ArrayList<KhachHangDTO>();
@@ -114,7 +120,10 @@ public class KhachHangServiceImpl implements KhachHangService {
 			KhachHang khachHangEntity = khachHangRepository.findById(id).get();
 			NguoiDung nguoiDungEntity = nguoiDungRepository.findByEmail(khachHangEntity.getEmail());
 			khachHangRepository.capNhatTrangThaiThanhHoatDongTheoMa(id);
-			nguoiDungRepository.capNhatTrangThaiThanhHoatDongTheoMa(nguoiDungEntity.getId());
+			if(nguoiDungEntity != null) {
+				nguoiDungRepository.capNhatTrangThaiThanhHoatDongTheoMa(nguoiDungEntity.getId());
+			}
+			
 		}
 	}
 
@@ -125,7 +134,10 @@ public class KhachHangServiceImpl implements KhachHangService {
 			KhachHang khachHangEntity = khachHangRepository.findById(id).get();
 			NguoiDung nguoiDungEntity = nguoiDungRepository.findByEmail(khachHangEntity.getEmail());
 			khachHangRepository.capNhatTrangThaiThanhKhongHoatDongTheoMa(id);
-			nguoiDungRepository.capNhatTrangThaiThanhKhongHoatDongTheoMa(nguoiDungEntity.getId());
+			if(nguoiDungEntity != null) {
+				nguoiDungRepository.capNhatTrangThaiThanhKhongHoatDongTheoMa(nguoiDungEntity.getId());
+			}
+			
 		}
 	}
 
@@ -300,32 +312,85 @@ public class KhachHangServiceImpl implements KhachHangService {
 		NguoiDung nguoiDungEntity = nguoiDungRepository.findByEmail(entity.getEmail());
 		if (entity != null) {
 			if (entity.getTrangThai() == 1) {
-				nguoiDungRepository.capNhatTrangThaiThanhKhongHoatDongTheoMa(nguoiDungEntity.getId());
+				if(nguoiDungEntity != null) {
+					nguoiDungRepository.capNhatTrangThaiThanhKhongHoatDongTheoMa(nguoiDungEntity.getId());
+				}
 				khachHangRepository.capNhatTrangThaiThanhKhongHoatDongTheoMa(entity.getId());
 			}
 			if (entity.getTrangThai() == 0) {
-				nguoiDungRepository.capNhatTrangThaiThanhHoatDongTheoMa(nguoiDungEntity.getId());
+				if(nguoiDungEntity != null) {
+					nguoiDungRepository.capNhatTrangThaiThanhHoatDongTheoMa(nguoiDungEntity.getId());
+				}
 				khachHangRepository.capNhatTrangThaiThanhHoatDongTheoMa(entity.getId());
 			}
 		}
 	}
 
 	@Override
+	@Transactional
 	public void updateUserStatus(Long id, int trangThai) {
 		KhachHang user = khachHangRepository.findById(id)
 				.orElseThrow(() -> new IllegalArgumentException("Khách hàng không tồn tại"));
 		user.setTrangThai(trangThai);
-		khachHangRepository.save(user);
+		user = khachHangRepository.save(user);
+		NguoiDung nguoiDung = nguoiDungRepository.findByEmail(user.getEmail());
+		if(nguoiDung != null) {
+			if(user.getTrangThai() == 1) {
+				nguoiDungRepository
+				.capNhatTrangThaiThanhHoatDongTheoMa(nguoiDung.getId());
+			}
+			if(user.getTrangThai() == 0) {
+				nguoiDungRepository
+				.capNhatTrangThaiThanhKhongHoatDongTheoMa(nguoiDung.getId());
+			}
+		}else {
+			return ;
+		}
 	}
 
 	@Override
 	public KhachHangDTO findByEmail(String auth) {
 		KhachHangDTO khachHangDT0 = new KhachHangDTO();
-		if(auth != null) {
 			KhachHang khachHang = khachHangRepository.findByEmail(auth);
-			khachHangDT0 = khachHangConvertor.toDTO(khachHang);
+			if(khachHang != null) {
+				 khachHangDT0 = khachHangConvertor.toDTO(khachHang);
+				 return khachHangDT0 ;
+			}
+		return null;
+	}
+
+	@Override
+	public KhachHangDTO findByEmailAndTrangThai(String email, int trangThai) {
+		KhachHang khachHang = khachHangRepository.findByEmailAndTrangThai(email,trangThai) ;
+		if(khachHang != null) {
+			return khachHangConvertor.toDTO(khachHang);
 		}
-		return khachHangDT0;
+		return null ;
+	}
+
+	@Override
+	@Transactional
+	public KhachHangDTO register(KhachHangDTO khachHangDTO) {
+		char[] password = RanDomUtil.randomFull();
+		KhachHang entity = new KhachHang();
+		khachHangDTO.setSoLanMua(0);
+		khachHangDTO.setTrangThai(1);
+		khachHangDTO.setMatKhau(new String(password));
+		entity = khachHangConvertor.toEntity(khachHangDTO);
+		mailService.sendMail("duongnvph17448@fpt.edu.vn",
+				khachHangDTO.getEmail(), 
+											"Bạn đã đăng ký tài khoản thành công !", 
+											"Họ tên  : "+khachHangDTO.getHoTen() +"\n" +
+							        		 		 "Số điện thoại  :"+khachHangDTO.getSoDienThoai()
+							        		 		 +"Mật khẩu : " + new String(password));
+		NguoiDung nguoiDung = nguoiDungConvertor.toEntityByKhachHangDTO(khachHangDTO);
+		NguoiDungVaiTro nguoiDungVaiTro = new NguoiDungVaiTro();
+		nguoiDungVaiTro.setNguoiDung(nguoiDung);
+		nguoiDungVaiTro.setVaiTro(vaiTroRepository.findByTenVaiTro("CUSTOMER"));
+		nguoiDungVaiTroRepository.save(nguoiDungVaiTro);
+		nguoiDungRepository.save(nguoiDung);
+		khachHangRepository.save(entity);
+		return khachHangConvertor.toDTO(entity);
 	}
 
 //	@Autowired
