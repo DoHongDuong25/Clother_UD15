@@ -26,16 +26,17 @@ function redirectToDahuy() {
 $(document).ready(function () {
     $('.XacNhanDon').click(function () {
         var hoaDonId = $(this).data('id');
+        var modalId = $(this).data('target');
 
         // Lưu trạng thái tab hiện tại vào sessionStorage
         var activeTab = $('.nav-link.active').attr('href');
         sessionStorage.setItem('activeTab', activeTab);
 
         // Hiển thị modal xác nhận
-        $('.xacNhanModal').modal('show');
+        $(modalId).modal('show');
 
         // Xử lý sự kiện khi bấm nút Đồng ý
-        $('.xacNhanModal .btn-dong-y').click(function () {
+        $(modalId + ' .btn-dong-y').click(function () {
             // Gửi yêu cầu xác nhận đơn hàng bằng Ajax
             $.get('/updateXacNhan/' + hoaDonId, function (response) {
                 // Hiển thị thông báo xác nhận thành công với SweetAlert2
@@ -54,16 +55,17 @@ $(document).ready(function () {
             });
 
             // Đóng modal
-            $('.xacNhanModal').modal('hide');
+            $(modalId).modal('hide');
         });
 
         // Xử lý sự kiện khi bấm nút Không
-        $('.xacNhanModal .btn-khong').click(function () {
+        $(modalId + ' .btn-khong').click(function () {
             // Đóng modal
-            $('.xacNhanModal').modal('hide');
+            $(modalId).modal('hide');
         });
     });
 });
+
 
 <!-- JS XÁC NHẬN TẤT CẢ-->
 $(document).ready(function () {
@@ -128,15 +130,16 @@ $(document).ready(function () {
 $(document).ready(function () {
     $('.HuyDon').click(function () {
         var hoaDonId = $(this).data('id');
+        var modalId = $(this).data('target');
 
         // Hiển thị modal xác nhận
-        $('.huyModal').modal('show');
+        $(modalId).modal('show');
 
         // Xử lý sự kiện khi bấm nút Đồng ý
-        $('.huyModal .btn-dong-y').click(function () {
-            // Gửi yêu cầu xác nhận đơn hàng bằng Ajax
+        $(modalId + ' .btn-dong-y').click(function () {
+            // Gửi yêu cầu hủy đơn hàng bằng Ajax
             $.get('/updateHuyDon/' + hoaDonId, function (response) {
-                // Lưu trạng thái đã xác nhận vào sessionStorage
+                // Hiển thị thông báo hủy thành công với SweetAlert2
                 Swal.fire({
                     icon: 'error',
                     title: 'Đã hủy thành công',
@@ -152,16 +155,17 @@ $(document).ready(function () {
             });
 
             // Đóng modal
-            $('.huyModal').modal('hide');
+            $(modalId).modal('hide');
         });
 
         // Xử lý sự kiện khi bấm nút Không
-        $('.huyModal .btn-khong').click(function () {
+        $(modalId + ' .btn-khong').click(function () {
             // Đóng modal
-            $('.huyModal').modal('hide');
+            $(modalId).modal('hide');
         });
     });
 });
+
 
 <!-- JS HỦY TẤT CẢ-->
 $(document).ready(function () {

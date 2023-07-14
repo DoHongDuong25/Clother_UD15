@@ -7,6 +7,37 @@
     <title>Bán hàng tại quầy</title>
     <link rel="icon" href="path_to_icon/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" th:href="@{/admin/css/banHang/banHangTaiQuay.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+    <script th:inline="javascript">
+        $(document).ready(function () {
+            $('.HuyDonDanhSach').click(function () {
+                let hoaDonId = $(this).data('id');
+                let modalId = $(this).data('target');
+
+                $(modalId).modal('show');
+
+                $(modalId + ' .btn-dong-y').click(function () {
+                    $.get('/HuyDon/' + hoaDonId, function (response) {
+                        Swal.fire({
+                            icon: 'success', title: 'Đã hủy hóa đơn thành công', showConfirmButton: false, timer: 2000
+                        }).then(function () {
+                            sessionStorage.setItem('isConfirmed', true);
+                            window.location.href = "/admin/BanHangTaiQuay";
+                        });
+                    });
+
+                    $(modalId).modal('hide');
+                });
+
+                $(modalId + ' .btn-khong').click(function () {
+                    // Đóng modal
+                    $(modalId).modal('hide');
+                });
+            });
+        });
+    </script>
+
 </head>
 
 <body>
@@ -57,6 +88,37 @@
                            type="submit">
                             <i class="fas fa-info-circle"></i>
                         </a>
+
+                        <button type="submit" class="primary-btn HuyDonDanhSach" th:attr="data-id=${hoaDonTaiQuay.id}"
+                                th:data-target="'#modalHuyDonDanhSach-' + ${hoaDonTaiQuay.id}">
+                            <i class="fas fa-times"></i> Hủy đơn
+                        </button>
+
+                        <div class="modal fade HuyDonDanhSacha" th:id="'modalHuyDonDanhSach-' + ${hoaDonTaiQuay.id}" tabindex="-1" aria-labelledby="HuyDonDanhSachModalLabel"
+                             aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="HuyDonDanhSachModalLabel">Xác nhận hủy hóa đơn</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Xác nhận hủy hóa đơn?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-primary btn-dong-y">Đồng ý</button>
+                                        <button type="button" class="btn btn-secondary btn-khong"
+                                                data-bs-dismiss="modal">Không
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="primary-btn thanhToanBanTaiQuay" th:attr="data-id=${hoaDonTaiQuay.id}">
+                            <i class="fas fa-dollar-sign"></i> Thanh toán
+                        </button>
                     </div>
                 </td>
             </tr>
@@ -74,6 +136,7 @@
 </div>
 
 <script th:src="@{/admin/js/banHang/banHangTaiQuay/danhSach.js}"></script>
+
 
 </body>
 

@@ -3,6 +3,7 @@ package com.fpoly.restController.BanHang.BanHangTaiQuay;
 import com.fpoly.entity.HoaDon;
 import com.fpoly.entity.HoaDonChiTiet;
 import com.fpoly.entity.SanPhamChiTiet;
+import com.fpoly.entity.TrangThai;
 import com.fpoly.repository.HoaDonChiTietRepository;
 import com.fpoly.repository.HoaDonRepository;
 import com.fpoly.repository.SanPhamChiTietRepository;
@@ -112,10 +113,12 @@ public class banHangRestController {
     //HỦY ĐƠN HÀNG VÀ CẬP NHẬT LẠI SỐ LƯỢNG SẢN PHẨM
     @RequestMapping("/HuyDon/{id}")
     public ResponseEntity<String> huyDon(@PathVariable("id") Long id) {
-        Optional<HoaDon> otpHoaDOn = hoaDonRepository.findById(id);
-        if (otpHoaDOn.isPresent()) {
-            HoaDon hoaDon = otpHoaDOn.get();
-            hoaDon.setDaXoa(true);
+        Optional<HoaDon> otpHoaDon = hoaDonRepository.findById(id);
+        if (otpHoaDon.isPresent()) {
+            TrangThai trangThai = new TrangThai();
+            trangThai.setId(8l);
+            HoaDon hoaDon = otpHoaDon.get();
+            hoaDon.setTrangThai(trangThai);
             hoaDonRepository.save(hoaDon);
 
             // Cập nhật số lượng sản phẩm chi tiết và tổng tiền cho toàn bộ hóa đơn chi tiết
@@ -146,6 +149,24 @@ public class banHangRestController {
             return ResponseEntity.ok(mss);
         } else {
             String erro = "Không tìm thấy hóa đơn";
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @RequestMapping("/thanhToan/{id}")
+    public ResponseEntity<String> thanhToan(@PathVariable("id") Long id) {
+        Optional<HoaDon> optHoaDon = hoaDonRepository.findById(id);
+        if (optHoaDon.isPresent()) {
+            TrangThai trangThai = new TrangThai();
+            trangThai.setId(7l);
+            HoaDon hoaDon = optHoaDon.get();
+            hoaDon.setTrangThai(trangThai);
+            hoaDonRepository.save(hoaDon);
+
+            String mss = "Thanh toán thành công";
+            return ResponseEntity.ok(mss);
+        } else {
+            String error = "Không tìm thấy hóa đơn";
             return ResponseEntity.notFound().build();
         }
     }

@@ -27,26 +27,38 @@ $(document).ready(function () {
 $(document).ready(function () {
     $('.xoaHDCT').click(function () {
         let hoaDonCTId = $(this).data('id');
+        let modalId = $(this).data('target');
 
-        $('.XoaHDCT').modal('show');
+        // Hiển thị modal xác nhận
+        $(modalId).modal('show');
 
-        $('.XoaHDCT .btn-dong-y').click(function () {
+        // Xử lý sự kiện khi bấm nút Đồng ý
+        $(modalId + ' .btn-dong-y').click(function () {
+            // Gửi yêu cầu xóa sản phẩm bằng Ajax
             $.get('/update-XoaSP/' + hoaDonCTId, function (response) {
+                // Hiển thị thông báo xóa sản phẩm thành công với SweetAlert2
                 Swal.fire({
-                    icon: 'success', title: 'Đã xóa sản phẩm thành công', showConfirmButton: false, timer: 2000
+                    icon: 'success',
+                    title: 'Đã xóa sản phẩm thành công',
+                    showConfirmButton: false,
+                    timer: 2000
                 }).then(function () {
+                    // Lưu trạng thái đã xác nhận vào sessionStorage
                     sessionStorage.setItem('isConfirmed', true);
 
+                    // Tải lại trang
                     location.reload();
                 });
             });
 
-            $('.XoaHDCT').modal('hide');
+            // Đóng modal
+            $(modalId).modal('hide');
         });
 
-        $('.XoaHDCT .btn-khong').click(function () {
+        // Xử lý sự kiện khi bấm nút Không
+        $(modalId + ' .btn-khong').click(function () {
             // Đóng modal
-            $('.XoaHDCT').modal('hide');
+            $(modalId).modal('hide');
         });
     });
 });
@@ -77,6 +89,35 @@ $(document).ready(function () {
         });
     });
 });
+
+$(document).ready(function () {
+    $('.thanhToanBanTaiQuay').click(function () {
+        let hoaDonid = $(this).data('id');
+
+        $('.thanhToanTaiQuay').modal('show');
+
+        $('.thanhToanTaiQuay .btn-dong-y').click(function () {
+            $.get('/thanhToan/' + hoaDonid, function (response) {
+                swal.fire({
+                    icon: 'success',
+                    title: 'Đã thanh toán hóa đơn ' + hoaDonid + ' thành công',
+                    showConfirmButton: false,
+                    timer: 2000
+                }).then(function () {
+                    sessionStorage.setItem('isConfirmed', true);
+
+                    window.location.href = "/admin/BanHangTaiQuay";
+                });
+            });
+
+            $('.thanhToanTaiQuay .btn-khong').modal('hide');
+        });
+
+        $('.thanhToanTaiQuay .btn-khong').click(function () {
+            $('.thanhToanTaiQuay').modal('hide');
+        });
+    });
+})
 
 $(document).ready(function () {
     // Xử lý sự kiện khi trang được tải lần đầu
@@ -187,6 +228,8 @@ function clearDataChoose(mauSacInputName, kichCoInputName, mauSacLabelName, kich
     $(mauSacIdName).removeAttr("checked");
     var kichCoLabel = document.getElementsByName(kichCoLabelName);
     $(kichCoLabel).removeClass("label-active");
+
+    resetModalData();
 }
 
 function labelActive(labelId, labelName, inputName, inputId) {
@@ -231,8 +274,8 @@ window.onload = function () {
         $("#messageDanger").toast("show");
     }
 }
-$(document).ready(function() {
-    $('.img-thumbnail').click(function() {
+$(document).ready(function () {
+    $('.img-thumbnail').click(function () {
         var itemSanPhamId = $(this).closest('.modal-content').find('.modal-title').data('id');
         var tenKichCo = $(this).text().trim();
 
@@ -241,27 +284,21 @@ $(document).ready(function() {
 
         // Gửi yêu cầu Ajax đến controller để lấy số lượng sản phẩm chi tiết dựa trên sản phẩm ID và tên kích cỡ
         $.ajax({
-            type: 'GET',
-            url: '/banHang/laySoLuongSanPhamChiTiet',
-            data: {
-                sanPhamId: itemSanPhamId,
-                tenKichCo: tenKichCo
-            },
-            success: function(response) {
+            type: 'GET', url: '/banHang/laySoLuongSanPhamChiTiet', data: {
+                sanPhamId: itemSanPhamId, tenKichCo: tenKichCo
+            }, success: function (response) {
                 var soLuongSanPhamChiTiet = response.soLuongSanPhamChiTiet;
                 console.log(soLuongSanPhamChiTiet);
 
                 // Hiển thị số lượng sản phẩm chi tiết
                 $('#soLuongHienCo' + itemSanPhamId).text(soLuongSanPhamChiTiet);
-            },
-            error: function() {
+            }, error: function () {
                 // Xử lý khi có lỗi xảy ra trong yêu cầu Ajax
                 alert('Đã xảy ra lỗi khi gửi yêu cầu đến server.');
             }
         });
     });
 });
-
 
 
 

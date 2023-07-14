@@ -41,7 +41,7 @@ public class DanhSachController {
                                 @RequestParam(defaultValue = "5") int size,
                                 Model model) {
         PageRequest pageable = PageRequest.of(page - 1, size);
-        Page<HoaDon> danhSachBanHang = hoaDonRepoditory2.finHDByLoaiHD(1, pageable);
+        Page<HoaDon> danhSachBanHang = hoaDonRepoditory2.finHDByLoaiHDTaiQuay(1, pageable);
         model.addAttribute("danhSachBanHang", danhSachBanHang.getContent());
         model.addAttribute("pageDanhSachBanHang", danhSachBanHang.getTotalPages());
         model.addAttribute("page", page);

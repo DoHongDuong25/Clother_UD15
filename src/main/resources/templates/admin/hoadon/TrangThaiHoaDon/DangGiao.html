@@ -85,11 +85,12 @@
             <td>
                 <div class="button-group">
                     <!--UPDATE GIAO HÀNG THÀNH CÔNG-->
-                    <button class="action-button DaGiao" th:attr="data-id=${hoaDon.id}">
+                    <button class="action-button DaGiao" th:attr="data-id=${hoaDon.id}"
+                            th:data-target="'#modalDaGiao-' + ${hoaDon.id}">
                         <i class="fas fa-check-circle"></i>
                     </button>
                     <br>
-                    <div class="modal fade giaoHangTCModal" tabindex="-1" aria-labelledby="giaoHangTCModalLabel"
+                    <div class="modal fade giaoHangTCModal" th:id="'modalDaGiao-' + ${hoaDon.id}" tabindex="-1" aria-labelledby="giaoHangTCModalLabel"
                          aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered">
                             <div class="modal-content">

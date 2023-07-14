@@ -97,9 +97,9 @@
     vertical-align: middle;
 }
 
-.modal-backdrop {
-    background-color: transparent !important;
-}
+/*.modal-backdrop {*/
+/*    background-color: transparent !important;*/
+/*}*/
 
 .empty-content {
     display: flex;

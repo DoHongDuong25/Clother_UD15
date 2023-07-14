@@ -59,11 +59,12 @@
                             <td th:text="${hoaDonCT.tongTien}"></td>
                             <td>
                                 <div class="btn-group">
-                                    <button class="action-button xoaHDCT" th:attr="data-id=${hoaDonCT.id}">
+                                    <button class="action-button xoaHDCT" th:attr="data-id=${hoaDonCT.id}"
+                                            th:data-target="'#modalXoaHDCT-' + ${hoaDonCT.id}">
                                         <i class="fa fa-trash" aria-hidden="true"></i>
                                     </button>
                                     <br>
-                                    <div class="modal fade XoaHDCT" tabindex="-1" aria-labelledby="XoaHDCTModalLabel"
+                                    <div class="modal fade XoaHDCT" th:id="'modalXoaHDCT-' + ${hoaDonCT.id}" tabindex="-1" aria-labelledby="XoaHDCTModalLabel"
                                          aria-hidden="true">
                                         <div class="modal-dialog modal-dialog-centered">
                                             <div class="modal-content">
@@ -175,7 +176,33 @@
                         </div>
 
 
-                        <button type="submit" class="primary-btn">Thanh toán</button>
+                        <button type="submit" class="primary-btn thanhToanBanTaiQuay" th:attr="data-id=${hoaDon.id}">
+                            Thanh toán
+                        </button>
+                        <!--Modal hủy đơn-->
+                        <div class="modal fade thanhToanTaiQuay" tabindex="-1"
+                             aria-labelledby="thanhToanTaiQuayModalLabel"
+                             aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="thanhToanTaiQuayModalLabel">Xác nhận thanh toán hóa
+                                            đơn</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Xác nhận thanh toán hóa đơn?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-primary btn-dong-y">Đồng ý</button>
+                                        <button type="button" class="btn btn-secondary btn-khong"
+                                                data-bs-dismiss="modal">Không
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -417,8 +444,11 @@
                                                 <div class="modal-dialog modal-sm" role="document">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h5 class="modal-title" th:data-id="${item.sanPhamId}" th:id="'modalTitle' + ${istat.index}">Chọn chi tiết sản phẩm <span th:text="${item.tenSanPham}"></span></h5>
-                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <h5 class="modal-title" th:data-id="${item.sanPhamId}"
+                                                                th:id="'modalTitle' + ${istat.index}">Chọn chi tiết sản
+                                                                phẩm <span th:text="${item.tenSanPham}"></span></h5>
+                                                            <button type="button" class="close" data-dismiss="modal"
+                                                                    aria-label="Close">
                                                                 <span aria-hidden="true">&times;</span>
                                                             </button>
                                                         </div>
@@ -426,10 +456,15 @@
                                                         <div class="modal-body">
                                                             <div class="row">
                                                                 <div class="col-sm-7">
-                                                                    <div th:id="'showHinhAnhSanPhamChiTiet' + ${istat.index}" class="carousel slide" data-bs-ride="carousel">
+                                                                    <div th:id="'showHinhAnhSanPhamChiTiet' + ${istat.index}"
+                                                                         class="carousel slide" data-bs-ride="carousel">
                                                                         <div class="carousel-inner">
-                                                                            <div class="carousel-item" th:classappend="${#numbers.formatInteger(istat.index+''+istatAC.index,5) == #numbers.formatInteger(istat.index+''+0,5)? 'active':''}" th:each="img, istatAC : ${item.anhChinhs}">
-                                                                                <img th:src="${'/staff/product/images/'+img}" class="w-100 img-responsive" alt="...">
+                                                                            <div class="carousel-item"
+                                                                                 th:classappend="${#numbers.formatInteger(istat.index+''+istatAC.index,5) == #numbers.formatInteger(istat.index+''+0,5)? 'active':''}"
+                                                                                 th:each="img, istatAC : ${item.anhChinhs}">
+                                                                                <img th:src="${'/staff/product/images/'+img}"
+                                                                                     class="w-100 img-responsive"
+                                                                                     alt="...">
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -489,16 +524,22 @@
                                                                         </div>
                                                                         <div class="form-group">
                                                                             <label for="soLuongId">Số lượng:</label>
-                                                                            <input type="number" class="form-control"
+                                                                            <input type="number"
+                                                                                   class="form-control tyuiop"
                                                                                    th:name="inputSLName"
                                                                                    oninput="getSoLuongInput(this.getAttribute('id'), this.getAttribute('inputSLName'))"
                                                                                    th:id="'soLuongInputId'+${istat.index}"
                                                                                    placeholder="Số lượng">
                                                                         </div>
-                                                                        <small id="soLuongError" class="text-danger"></small>
+                                                                        <small id="soLuongError"
+                                                                               class="text-danger"></small>
                                                                     </div>
                                                                 </div>
-                                                                <p>Số lượng hiện có: <span th:id="'soLuongHienCo' + ${item.sanPhamId}"></span></p>
+
+                                                                <p>Số lượng hiện có: <span class="qwer"
+                                                                                           th:id="'soLuongHienCo' + ${item.sanPhamId}"></span>
+                                                                </p>
+
                                                             </div>
                                                         </div>
                                                         <div class="modal-footer">
@@ -514,6 +555,7 @@
                                                             <a class="btn btn-outline-primary"
                                                                onclick="flexUrlSubmitBanHangTaiQuay('/banHang/hoaDonChiTiet', 'post', 'BanHangTaiQuay')">Thêm
                                                                 sản phẩm</a>
+
                                                         </div>
                                                     </div>
                                                 </div>
