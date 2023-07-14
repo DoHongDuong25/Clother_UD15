@@ -231,10 +231,9 @@ window.onload = function () {
         $("#messageDanger").toast("show");
     }
 }
-
 $(document).ready(function() {
     $('.img-thumbnail').click(function() {
-        var itemSanPhamId = $('#asdf').data('id');
+        var itemSanPhamId = $(this).closest('.modal-content').find('.modal-title').data('id');
         var tenKichCo = $(this).text().trim();
 
         console.log(itemSanPhamId);
@@ -250,9 +249,10 @@ $(document).ready(function() {
             },
             success: function(response) {
                 var soLuongSanPhamChiTiet = response.soLuongSanPhamChiTiet;
+                console.log(soLuongSanPhamChiTiet);
 
                 // Hiển thị số lượng sản phẩm chi tiết
-                $('#soLuongHienCo').text('Số lượng hiện có: ' + soLuongSanPhamChiTiet);
+                $('#soLuongHienCo' + itemSanPhamId).text(soLuongSanPhamChiTiet);
             },
             error: function() {
                 // Xử lý khi có lỗi xảy ra trong yêu cầu Ajax
@@ -261,6 +261,7 @@ $(document).ready(function() {
         });
     });
 });
+
 
 
 
