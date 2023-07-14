@@ -417,9 +417,8 @@
                                                 <div class="modal-dialog modal-sm" role="document">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h5 id="asdf" class="modal-title" th:data-id="${item.sanPhamId}">Chọn chi tiết sản phẩm <span th:text="${item.tenSanPham}"></span></h5>
-                                                            <button type="button" class="close"
-                                                                    data-dismiss="modal" aria-label="Close">
+                                                            <h5 class="modal-title" th:data-id="${item.sanPhamId}" th:id="'modalTitle' + ${istat.index}">Chọn chi tiết sản phẩm <span th:text="${item.tenSanPham}"></span></h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                 <span aria-hidden="true">&times;</span>
                                                             </button>
                                                         </div>
@@ -427,16 +426,10 @@
                                                         <div class="modal-body">
                                                             <div class="row">
                                                                 <div class="col-sm-7">
-                                                                    <div th:id="'showHinhAnhSanPhamChiTiet'+${istat.index}"
-                                                                         class="carousel slide"
-                                                                         data-bs-ride="carousel">
+                                                                    <div th:id="'showHinhAnhSanPhamChiTiet' + ${istat.index}" class="carousel slide" data-bs-ride="carousel">
                                                                         <div class="carousel-inner">
-                                                                            <div class="carousel-item"
-                                                                                 th:classappend="${#numbers.formatInteger(istat.index+''+istatAC.index,5) == #numbers.formatInteger(istat.index+''+0,5)? 'active':''}"
-                                                                                 th:each="img, istatAC : ${item.anhChinhs}">
-                                                                                <img th:src="${'/staff/product/images/'+img}"
-                                                                                     class="w-100 img-responsive"
-                                                                                     alt="...">
+                                                                            <div class="carousel-item" th:classappend="${#numbers.formatInteger(istat.index+''+istatAC.index,5) == #numbers.formatInteger(istat.index+''+0,5)? 'active':''}" th:each="img, istatAC : ${item.anhChinhs}">
+                                                                                <img th:src="${'/staff/product/images/'+img}" class="w-100 img-responsive" alt="...">
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -451,30 +444,25 @@
                                                                 </div>
                                                                 <div class="col-sm-5">
                                                                     <div class="product__details__option">
-                                                                        <div
-                                                                                class="product__details__option__size">
+                                                                        <div class="product__details__option__size">
                                                                             <span>Size:</span>
                                                                             <label class="img-thumbnail"
                                                                                    th:for="${kc.tenKichCo}+${istat.index}+${istatKC.index}"
                                                                                    onclick="labelActive(this.getAttribute('id'),this.getAttribute('name'), this.getAttribute('input-name'), this.getAttribute('input-id'))"
-                                                                                   th:id="labelKC+${istat.index}+${istatKC.index}"
+                                                                                   th:id="'labelKC' + ${istat.index} + ${istatKC.index}"
                                                                                    th:each="kc, istatKC : ${item.lstKichCo}"
-                                                                                   th:name="labelKCName+${istat.index}"
-                                                                                   th:input-name="inputKCName+${istat.index}"
-                                                                                   th:input-id="${kc.tenKichCo}+${istat.index}+${istatKC.index}">
-                                                                                <!-- class="label-active" -->
+                                                                                   th:name="'labelKCName' + ${istat.index}"
+                                                                                   th:input-name="'inputKCName' + ${istat.index}"
+                                                                                   th:input-id="'inputKCId' + ${istat.index} + ${istatKC.index}">
                                                                                 [[${kc.tenKichCo}]]
                                                                                 <input type="radio"
                                                                                        th:value="${kc.id}"
-                                                                                       th:name="inputKCName+${istat.index}"
-                                                                                       th:id="${kc.tenKichCo}+${istat.index}+${istatKC.index}"
+                                                                                       th:name="'inputKCName' + ${istat.index}"
+                                                                                       th:id="'inputKCId' + ${istat.index} + ${istatKC.index}"
                                                                                        th:field="*{kichCoId}"
                                                                                        hidden>
                                                                             </label>
                                                                         </div>
-                                                                        <p>Số lượng hiện có: <span
-                                                                                id="soLuongHienCo"></span></p>
-
                                                                         <!--*: check lai id -->
                                                                         <div
                                                                                 class="product__details__option__color">
@@ -507,8 +495,10 @@
                                                                                    th:id="'soLuongInputId'+${istat.index}"
                                                                                    placeholder="Số lượng">
                                                                         </div>
+                                                                        <small id="soLuongError" class="text-danger"></small>
                                                                     </div>
                                                                 </div>
+                                                                <p>Số lượng hiện có: <span th:id="'soLuongHienCo' + ${item.sanPhamId}"></span></p>
                                                             </div>
                                                         </div>
                                                         <div class="modal-footer">

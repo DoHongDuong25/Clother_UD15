@@ -55,242 +55,175 @@ import com.fpoly.service.StorageService;
 @Controller
 @RequestMapping("/staff/product")
 public class SanPhamController {
-	@Autowired
-	private SanPhamChiTietService sanPhamChiTietService;
+    @Autowired
+    private SanPhamChiTietService sanPhamChiTietService;
 
-	@Autowired
-	private SanPhamService sanPhamService;
+    @Autowired
+    private SanPhamService sanPhamService;
 
-	@Autowired
-	private MauSacService mauSacService;
+    @Autowired
+    private MauSacService mauSacService;
 
-	@Autowired
-	private ChatLieuService chatLieuService;
+    @Autowired
+    private ChatLieuService chatLieuService;
 
-	@Autowired
-	private KichCoService kichCoService;
+    @Autowired
+    private KichCoService kichCoService;
 
-	@Autowired
-	private LoaiSanPhamService loaiSanPhamService;
+    @Autowired
+    private LoaiSanPhamService loaiSanPhamService;
 
-	@Autowired
-	private PhongCachService phongCachService;
+    @Autowired
+    private PhongCachService phongCachService;
 
-	@Autowired
-	private KieuDangService kieuDangService;
+    @Autowired
+    private KieuDangService kieuDangService;
 
-	@Autowired
-	private StorageService storageService;
+    @Autowired
+    private StorageService storageService;
 
-	@Autowired
-	private HinhAnhService hinhAnhService;
+    @Autowired
+    private HinhAnhService hinhAnhService;
 
 
-	@GetMapping("/images/{filename:.+}")
-	@ResponseBody
-	public ResponseEntity<Resource> serveFile(@PathVariable String filename) {
-		Resource file = storageService.loadAsResource(filename);
+    @GetMapping("/images/{filename:.+}")
+    @ResponseBody
+    public ResponseEntity<Resource> serveFile(@PathVariable String filename) {
+        Resource file = storageService.loadAsResource(filename);
 
-		return ResponseEntity.ok()
-				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"")
-				.body(file);
-	}
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"")
+                .body(file);
+    }
 
-	@ModelAttribute("lstMauSac")
-	public List<MauSacDTO> getLstMauSac() {
-		return mauSacService.selectAllMauSacExist().stream().map(item -> {
-			MauSacDTO dto = new MauSacDTO();
-			BeanUtils.copyProperties(item, dto);
-			return dto;
-		}).collect(Collectors.toList());
-	}
+    @ModelAttribute("lstMauSac")
+    public List<MauSacDTO> getLstMauSac() {
+        return mauSacService.selectAllMauSacExist().stream().map(item -> {
+            MauSacDTO dto = new MauSacDTO();
+            BeanUtils.copyProperties(item, dto);
+            return dto;
+        }).collect(Collectors.toList());
+    }
 
-	@ModelAttribute("lstKieuDang")
-	public List<KieuDangDTO> getLstKieuDang() {
-		return kieuDangService.selectAllKieuDangExist().stream().map(item -> {
-			KieuDangDTO dto = new KieuDangDTO();
-			BeanUtils.copyProperties(item, dto);
-			return dto;
-		}).collect(Collectors.toList());
-	}
+    @ModelAttribute("lstKieuDang")
+    public List<KieuDangDTO> getLstKieuDang() {
+        return kieuDangService.selectAllKieuDangExist().stream().map(item -> {
+            KieuDangDTO dto = new KieuDangDTO();
+            BeanUtils.copyProperties(item, dto);
+            return dto;
+        }).collect(Collectors.toList());
+    }
 
-	@ModelAttribute("lstChatLieu")
-	public List<ChatLieuDTO> getLstChatLieu() {
-		return chatLieuService.selectAllChatLieuExist().stream().map(item -> {
-			ChatLieuDTO dto = new ChatLieuDTO();
-			BeanUtils.copyProperties(item, dto);
-			return dto;
-		}).collect(Collectors.toList());
-	}
+    @ModelAttribute("lstChatLieu")
+    public List<ChatLieuDTO> getLstChatLieu() {
+        return chatLieuService.selectAllChatLieuExist().stream().map(item -> {
+            ChatLieuDTO dto = new ChatLieuDTO();
+            BeanUtils.copyProperties(item, dto);
+            return dto;
+        }).collect(Collectors.toList());
+    }
 
-	@ModelAttribute("lstKichCo")
-	public List<KichCoDTO> getLstKichCo() {
-		return kichCoService.selectAllKichCoExist().stream().map(item -> {
-			KichCoDTO dto = new KichCoDTO();
-			BeanUtils.copyProperties(item, dto);
-			return dto;
-		}).collect(Collectors.toList());
-	}
+    @ModelAttribute("lstKichCo")
+    public List<KichCoDTO> getLstKichCo() {
+        return kichCoService.selectAllKichCoExist().stream().map(item -> {
+            KichCoDTO dto = new KichCoDTO();
+            BeanUtils.copyProperties(item, dto);
+            return dto;
+        }).collect(Collectors.toList());
+    }
 
-	@ModelAttribute("lstLoaiSanPham")
-	public List<LoaiSanPhamDTO> getLstLoaiHang() {
-		return loaiSanPhamService.selectAllLoaiHangExist().stream().map(item -> {
-			LoaiSanPhamDTO dto = new LoaiSanPhamDTO();
-			BeanUtils.copyProperties(item, dto);
-			return dto;
-		}).collect(Collectors.toList());
-	}
+    @ModelAttribute("lstLoaiSanPham")
+    public List<LoaiSanPhamDTO> getLstLoaiHang() {
+        return loaiSanPhamService.selectAllLoaiHangExist().stream().map(item -> {
+            LoaiSanPhamDTO dto = new LoaiSanPhamDTO();
+            BeanUtils.copyProperties(item, dto);
+            return dto;
+        }).collect(Collectors.toList());
+    }
 
-	@ModelAttribute("lstPhongCach")
-	public List<PhongCachDTO> getLstPhongCach() {
-		return phongCachService.selectAllPhongCachExist().stream().map(item -> {
-			PhongCachDTO dto = new PhongCachDTO();
-			BeanUtils.copyProperties(item, dto);
-			return dto;
-		}).collect(Collectors.toList());
-	}
+    @ModelAttribute("lstPhongCach")
+    public List<PhongCachDTO> getLstPhongCach() {
+        return phongCachService.selectAllPhongCachExist().stream().map(item -> {
+            PhongCachDTO dto = new PhongCachDTO();
+            BeanUtils.copyProperties(item, dto);
+            return dto;
+        }).collect(Collectors.toList());
+    }
 
-	@GetMapping("")
-	public String showSanPhamChiTiet(ModelMap model, @ModelAttribute(name = "dataSearch") SPAndSPCTSearchDto dataSearch,
-			@RequestParam("page") Optional<Integer> page, @RequestParam("size") Optional<Integer> size) {
+    @GetMapping("")
+    public String showSanPhamChiTiet(ModelMap model, @ModelAttribute(name = "dataSearch") SPAndSPCTSearchDto dataSearch,
+                                     @RequestParam("page") Optional<Integer> page, @RequestParam("size") Optional<Integer> size) {
 
-		int currentPage = page.orElse(1);
-		int pageSize = size.orElse(5);
+        int currentPage = page.orElse(1);
+        int pageSize = size.orElse(5);
 
-		Pageable pageable = PageRequest.of(currentPage - 1, pageSize);
-		Page<SanPham> resultPage = null;
-		SPTaiQuayDTO resultSP = new SPTaiQuayDTO();
-		List<ShowSanPhamTaiQuayDTO> lstSSPTQ = new ArrayList<>();
-		
-		Optional<SPAndSPCTSearchDto> optDataSearch = Optional.of(dataSearch);
-		if (optDataSearch.isPresent()) {
-			resultPage = sanPhamService.searchProductExist(dataSearch, pageable);
-			for (SanPham sp : resultPage.getContent()) {
-				ShowSanPhamTaiQuayDTO ssptq = new ShowSanPhamTaiQuayDTO();
-				List<Long> mauSacIds = sanPhamChiTietService.getLstMauSacBySanPhamId(sp.getId());
-				List<HinhAnh> lstHinhAnh = hinhAnhService.getHinhAnhChinhBySanPhamIdAndMauSacIds(sp.getId(), mauSacIds);  
-				List<String> lstHinhAnhStr = new ArrayList<>();
-				for (HinhAnh ha : lstHinhAnh) {
-					lstHinhAnhStr.add(ha.getTenAnh());
-				}
-				
-				ssptq.setAnhChinhs(lstHinhAnhStr);
-				ssptq.setSanPhamId(sp.getId());
-				ssptq.setGia(sp.getGia());
-				ssptq.setTenSanPham(sp.getTenSanPham());
-				List<HinhAnhSanPhamChiTietDTO> lstHASPCT = new ArrayList<>();
-				List<SanPhamChiTiet> lstSPCT = sanPhamChiTietService.getLstSanPhamChiTietBySanPhamId(sp.getId());
-				for (SanPhamChiTiet spct : lstSPCT) {
-					HinhAnhSanPhamChiTietDTO haspct = new HinhAnhSanPhamChiTietDTO();
-					Optional<HinhAnh> optHA = hinhAnhService.getHinhAnhChinhBySanPhamIdAndMauSacId(sp.getId(), spct.getMauSac().getId());
-					if (optHA.isPresent()) {
-						haspct.setAnhChinh(optHA.get().getTenAnh());
-					}
-					haspct.setMauSacId(spct.getMauSac().getId());
-					lstHASPCT.add(haspct);
-				}
-				ssptq.setHinhAnhSanPhamChiTietDTO(lstHASPCT);
-				List<KichCo> lstKichCo = kichCoService.selectAllKichCoBySanPhamId(sp.getId());
-				List<MauSac> lstMauSac = mauSacService.getAllMauSacExistBySPId(sp.getId());
-				ssptq.setLstKichCo(lstKichCo);
-				ssptq.setLstMauSac(lstMauSac);
-				lstSSPTQ.add(ssptq);
-			}
-			resultSP.setLstShowSanPhamTaiQuayDTO(lstSSPTQ);
-			model.addAttribute("dataSearch", dataSearch);
-			model.addAttribute("resultSP", resultSP);
-		}
+        Pageable pageable = PageRequest.of(currentPage - 1, pageSize);
+        Page<SanPham> resultPage = null;
+        SPTaiQuayDTO resultSP = new SPTaiQuayDTO();
+        List<ShowSanPhamTaiQuayDTO> lstSSPTQ = new ArrayList<>();
 
-		int totalPages = resultPage.getTotalPages();
-		if (totalPages > 0) {
-			int start = Math.max(1, currentPage - 2);
-			int end = Math.min(currentPage + 2, totalPages);
-			if (totalPages > 5) {
-				if (end == totalPages) {
-					start = end - 5;
-				} else if (start == 1) {
-					end = start + 5;
-				}
-			}
-			List<Integer> pageNumbers = IntStream.rangeClosed(start, end).boxed().collect(Collectors.toList());
-			model.addAttribute("pageNumbers", pageNumbers);
-		}
-		model.addAttribute("sanPhamPage", resultPage);
-		
-		return "admin/product/banHangTaiQuay";
-	}
-	
-	@PostMapping("/getData")
-	public String showSanPhamChiTiet(ModelMap model, @ModelAttribute("resultSP") SPTaiQuayDTO dto) {
+        Optional<SPAndSPCTSearchDto> optDataSearch = Optional.of(dataSearch);
+        if (optDataSearch.isPresent()) {
+            resultPage = sanPhamService.searchProductExist(dataSearch, pageable);
+            for (SanPham sp : resultPage.getContent()) {
+                ShowSanPhamTaiQuayDTO ssptq = new ShowSanPhamTaiQuayDTO();
+                List<Long> mauSacIds = sanPhamChiTietService.getLstMauSacBySanPhamId(sp.getId());
+                List<HinhAnh> lstHinhAnh = hinhAnhService.getHinhAnhChinhBySanPhamIdAndMauSacIds(sp.getId(), mauSacIds);
+                List<String> lstHinhAnhStr = new ArrayList<>();
+                for (HinhAnh ha : lstHinhAnh) {
+                    lstHinhAnhStr.add(ha.getTenAnh());
+                }
+
+                ssptq.setAnhChinhs(lstHinhAnhStr);
+                ssptq.setSanPhamId(sp.getId());
+                ssptq.setGia(sp.getGia());
+                ssptq.setTenSanPham(sp.getTenSanPham());
+                List<HinhAnhSanPhamChiTietDTO> lstHASPCT = new ArrayList<>();
+                List<SanPhamChiTiet> lstSPCT = sanPhamChiTietService.getLstSanPhamChiTietBySanPhamId(sp.getId());
+                for (SanPhamChiTiet spct : lstSPCT) {
+                    HinhAnhSanPhamChiTietDTO haspct = new HinhAnhSanPhamChiTietDTO();
+                    Optional<HinhAnh> optHA = hinhAnhService.getHinhAnhChinhBySanPhamIdAndMauSacId(sp.getId(), spct.getMauSac().getId());
+                    if (optHA.isPresent()) {
+                        haspct.setAnhChinh(optHA.get().getTenAnh());
+                    }
+                    haspct.setMauSacId(spct.getMauSac().getId());
+                    lstHASPCT.add(haspct);
+                }
+                ssptq.setHinhAnhSanPhamChiTietDTO(lstHASPCT);
+                List<KichCo> lstKichCo = kichCoService.selectAllKichCoBySanPhamId(sp.getId());
+                List<MauSac> lstMauSac = mauSacService.getAllMauSacExistBySPId(sp.getId());
+                ssptq.setLstKichCo(lstKichCo);
+                ssptq.setLstMauSac(lstMauSac);
+                lstSSPTQ.add(ssptq);
+            }
+            resultSP.setLstShowSanPhamTaiQuayDTO(lstSSPTQ);
+            model.addAttribute("dataSearch", dataSearch);
+            model.addAttribute("resultSP", resultSP);
+        }
+
+        int totalPages = resultPage.getTotalPages();
+        if (totalPages > 0) {
+            int start = Math.max(1, currentPage - 2);
+            int end = Math.min(currentPage + 2, totalPages);
+            if (totalPages > 5) {
+                if (end == totalPages) {
+                    start = end - 5;
+                } else if (start == 1) {
+                    end = start + 5;
+                }
+            }
+            List<Integer> pageNumbers = IntStream.rangeClosed(start, end).boxed().collect(Collectors.toList());
+            model.addAttribute("pageNumbers", pageNumbers);
+        }
+        model.addAttribute("sanPhamPage", resultPage);
+
+        return "admin/product/banHangTaiQuay";
+    }
+
+    @PostMapping("/getData")
+    public String showSanPhamChiTiet(ModelMap model, @ModelAttribute("resultSP") SPTaiQuayDTO dto) {
 //		System.out.println(dto.getMauSacId());
 //		System.out.println(dto.getKichCoId());
-		return "redirect:/staff/product";
-	}
-	
-	//test trang mau~, ko dung` den
-//	@GetMapping("/a")
-//	public String showSanPhamChiTietq(ModelMap model, @ModelAttribute(name = "dataSearch") SPAndSPCTSearchDto dataSearch,
-//			@RequestParam("page") Optional<Integer> page, @RequestParam("size") Optional<Integer> size) {
-//
-//		int currentPage = page.orElse(1);
-//		int pageSize = size.orElse(5);
-//
-//		Pageable pageable = PageRequest.of(currentPage - 1, pageSize);
-//		Page<SanPham> resultPage = null;
-//		List<SPTaiQuayDTO> resultListSP = new ArrayList<>();
-//		Optional<SPAndSPCTSearchDto> optDataSearch = Optional.of(dataSearch);
-//		if (optDataSearch.isPresent()) {
-//			resultPage = sanPhamService.searchProductExist(dataSearch, pageable);
-//			for (SanPham sp : resultPage.getContent()) {
-//				SPTaiQuayDTO sptq = new SPTaiQuayDTO();
-//				List<Long> mauSacIds = sanPhamChiTietService.getLstMauSacBySanPhamId(sp.getId());
-//				List<HinhAnh> lstHinhAnh = hinhAnhService.getHinhAnhChinhBySanPhamIdAndMauSacIds(sp.getId(), mauSacIds);  
-//				List<String> lstHinhAnhStr = new ArrayList<>();
-//				for (HinhAnh ha : lstHinhAnh) {
-//					lstHinhAnhStr.add(ha.getTenAnh());
-//				}
-//				
-//				sptq.setAnhChinhs(lstHinhAnhStr);
-//				sptq.setSanPhamId(sp.getId());
-//				sptq.setGia(sp.getGia());
-//				sptq.setTenSanPham(sp.getTenSanPham());
-//				List<HinhAnhSanPhamChiTietDTO> lstHASPCT = new ArrayList<>();
-//				List<SanPhamChiTiet> lstSPCT = sanPhamChiTietService.getLstSanPhamChiTietBySanPhamId(sp.getId());
-//				for (SanPhamChiTiet spct : lstSPCT) {
-//					HinhAnhSanPhamChiTietDTO haspct = new HinhAnhSanPhamChiTietDTO();
-//					Optional<HinhAnh> optHA = hinhAnhService.getHinhAnhChinhBySanPhamIdAndMauSacId(sp.getId(), spct.getMauSac().getId());
-//					if (optHA.isPresent()) {
-//						haspct.setAnhChinh(optHA.get().getTenAnh());
-//					}
-//					haspct.setMauSacId(spct.getMauSac().getId());
-//					lstHASPCT.add(haspct);
-//				}
-//				sptq.setHinhAnhSanPhamChiTietDTO(lstHASPCT);
-//				List<KichCo> lstKichCo = kichCoService.selectAllKichCoBySanPhamId(sp.getId());
-//				List<MauSac> lstMauSac = mauSacService.getAllMauSacExistBySPId(sp.getId());
-//				sptq.setLstKichCo(lstKichCo);
-//				sptq.setLstMauSac(lstMauSac);
-//				resultListSP.add(sptq);
-//			}
-//			model.addAttribute("dataSearch", dataSearch);
-//			model.addAttribute("resultListSP", resultListSP);
-//		}
-//
-//		int totalPages = resultPage.getTotalPages();
-//		if (totalPages > 0) {
-//			int start = Math.max(1, currentPage - 2);
-//			int end = Math.min(currentPage + 2, totalPages);
-//			if (totalPages > 5) {
-//				if (end == totalPages) {
-//					start = end - 5;
-//				} else if (start == 1) {
-//					end = start + 5;
-//				}
-//			}
-//			List<Integer> pageNumbers = IntStream.rangeClosed(start, end).boxed().collect(Collectors.toList());
-//			model.addAttribute("pageNumbers", pageNumbers);
-//		}
-//		model.addAttribute("sanPhamPage", resultPage);
-//		return "customer/home/home";
-//	}
+        return "redirect:/staff/product";
+    }
 }
