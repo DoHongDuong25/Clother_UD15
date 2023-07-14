@@ -10,17 +10,19 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.fpoly.service.KhachHangService;
+
 @CrossOrigin("*")
 @Controller
 public class DangNhapController {
-//	@Autowired
-//	private KhachHangService khachHangService ;
+	@Autowired
+	private KhachHangService khachHangService ;
 	
 	@Autowired
 	private HttpServletRequest request ;
 	
-//	@Autowired
-//	private HttpSession session ;
+	@Autowired
+	private HttpSession session ;
 	
 	
     @RequestMapping("/security/login/form")
@@ -55,16 +57,16 @@ public class DangNhapController {
 		return "/customer/auth/login";
 	}
 	
-//	@SuppressWarnings("deprecation")
-//	@RequestMapping("/security/forgot-password/code")
-//	public String getEmail(@RequestParam("email") String email , Model model) {
-//		session.putValue("email",email);
-//		if(khachHangService.findByEmail(email) == null ) {
-//			return "/customer/auth/login";
-//		}else {
-//			String code = khachHangService.sendCode(email);
-//			session.putValue("code",code);
-//			return "redirect:/security/forgot-password?email="+email;
-//		}
-//	}
+	@SuppressWarnings("deprecation")
+	@RequestMapping("/security/forgot-password/code")
+	public String getEmail(@RequestParam("email") String email , Model model) {
+		session.putValue("email",email);
+		if(khachHangService.findByEmail(email) == null ) {
+			return "/customer/auth/login";
+		}else {
+			String code = khachHangService.sendCode(email);
+			session.putValue("code",code);
+			return "redirect:/security/forgot-password";
+		}
+	}
 }

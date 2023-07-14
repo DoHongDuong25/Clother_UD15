@@ -5,10 +5,10 @@ import static com.querydsl.core.types.PathMetadataFactory.*;
 import com.querydsl.core.types.dsl.*;
 
 import com.querydsl.core.types.PathMetadata;
-import javax.annotation.processing.Generated;
 
 import com.fpoly.entity.ChatLieu;
 import com.fpoly.entity.SanPham;
+import com.querydsl.core.annotations.Generated;
 import com.querydsl.core.types.Path;
 import com.querydsl.core.types.dsl.PathInits;
 

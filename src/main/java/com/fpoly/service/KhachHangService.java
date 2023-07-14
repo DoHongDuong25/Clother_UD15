@@ -45,6 +45,18 @@ List<KhachHangDTO> findAllByTrangThaiCoPhanTrang(Integer trangThai,Pageable page
 	KhachHangDTO findByEmail(String auth);
 
 
+	KhachHangDTO findByEmailAndTrangThai(String email, int i);
+
+
+	KhachHangDTO register(KhachHangDTO khachHangDTO);
+
+
+	String sendCode(String email);
+
+
+	void updatePassword(String email,KhachHangDTO khachHangDTO);
+
+
 
 
 	

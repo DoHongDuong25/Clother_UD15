@@ -25,9 +25,8 @@ public class KhachHangConvertor {
 		public KhachHangDTO toDTO(KhachHang entity) {
 			KhachHangDTO dto = new KhachHangDTO();
 			if(entity.getId() != null) {
-				dto.setId(dto.getId());
+				dto.setId(entity.getId());
 			}
-			dto.setId(entity.getId());
 			dto.setEmail(entity.getEmail());
 			dto.setHoTen(entity.getHoTen());
 			dto.setMatKhau(entity.getMatKhau());

@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import com.fpoly.dto.KhachHangDTO;
 import com.fpoly.entity.KhachHang;
 
 @Repository
@@ -61,4 +62,7 @@ public interface KhachHangRepository extends JpaRepository<KhachHang,Long> {
 			+ "OR ho_ten LIKE %:input% "
 			,nativeQuery=true)
 	int countByInputVaTrangThai(@Param("input")String input, @Param("trangThai")Integer trangThai);
+
+	@Query(value="SELECT * FROM khach_hang  WHERE email =:email AND trang_thai =:trangThai ",nativeQuery=true)
+	KhachHang findByEmailAndTrangThai(@Param("email")String email, @Param("trangThai") int i);
 }
