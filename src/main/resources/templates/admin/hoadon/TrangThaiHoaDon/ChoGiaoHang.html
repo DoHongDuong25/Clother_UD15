@@ -87,11 +87,12 @@
             <td>
                 <!--UPDATE TRẠNG THÁI HÓA ĐƠN-->
                 <div class="button-group">
-                    <button class="action-button GiaoHang" th:attr="data-id=${hoaDon.id}">
+                    <button class="action-button GiaoHang" th:attr="data-id=${hoaDon.id}"
+                            th:data-target="'#modalGiaoHang-' + ${hoaDon.id}">
                         <i class="fas fa-truck"></i>
                     </button>
                     <br>
-                    <div class="modal fade giaoHangModal" tabindex="-1" aria-labelledby="giaoHangModalLabel"
+                    <div class="modal fade giaoHangModal" th:id="'modalGiaoHang-' + ${hoaDon.id}" tabindex="-1" aria-labelledby="giaoHangModalLabel"
                          aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered">
                             <div class="modal-content">

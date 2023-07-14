@@ -26,19 +26,16 @@ function redirectToDahuy() {
 $(document).ready(function () {
     $('.DaGiao').click(function () {
         var hoaDonId = $(this).data('id');
-
-        // Lưu trạng thái tab hiện tại vào sessionStorage
-        var activeTab = $('.nav-link.active').attr('href');
-        sessionStorage.setItem('activeTab', activeTab);
+        var modalId = $(this).data('target');
 
         // Hiển thị modal xác nhận
-        $('.giaoHangTCModal').modal('show');
+        $(modalId).modal('show');
 
         // Xử lý sự kiện khi bấm nút Đồng ý
-        $('.giaoHangTCModal .btn-dong-y').click(function () {
-            // Gửi yêu cầu xác nhận đơn hàng bằng Ajax
+        $(modalId + ' .btn-dong-y').click(function () {
+            // Gửi yêu cầu xác nhận đơn hàng đã giao bằng Ajax
             $.get('/updateGiaoHangThanhCong/' + hoaDonId, function (response) {
-                // Lưu trạng thái đã xác nhận vào sessionStorage
+                // Hiển thị thông báo xác nhận thành công với SweetAlert2
                 Swal.fire({
                     icon: 'success',
                     title: 'Xác nhận đơn hàng đã giao thành công',
@@ -54,16 +51,17 @@ $(document).ready(function () {
             });
 
             // Đóng modal
-            $('.giaoHangTCModal').modal('hide');
+            $(modalId).modal('hide');
         });
 
         // Xử lý sự kiện khi bấm nút Không
-        $('.giaoHangTCModal .btn-khong').click(function () {
+        $(modalId + ' .btn-khong').click(function () {
             // Đóng modal
-            $('.giaoHangTCModal').modal('hide');
+            $(modalId).modal('hide');
         });
     });
 });
+
 
 <!-- JS HOÀN THÀNH TẤT CẢ-->
 $(document).ready(function () {

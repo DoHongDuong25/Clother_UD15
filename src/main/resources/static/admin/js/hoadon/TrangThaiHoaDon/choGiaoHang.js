@@ -26,15 +26,16 @@ function redirectToDahuy() {
 $(document).ready(function () {
     $('.GiaoHang').click(function () {
         var hoaDonId = $(this).data('id');
+        var modalId = $(this).data('target');
 
         // Hiển thị modal xác nhận
-        $('.giaoHangModal').modal('show');
+        $(modalId).modal('show');
 
         // Xử lý sự kiện khi bấm nút Đồng ý
-        $('.giaoHangModal .btn-dong-y').click(function () {
-            // Gửi yêu cầu xác nhận đơn hàng bằng Ajax
+        $(modalId + ' .btn-dong-y').click(function () {
+            // Gửi yêu cầu giao hàng cho đơn vị vận chuyển bằng Ajax
             $.get('/updateGiaoHang/' + hoaDonId, function (response) {
-                // Lưu trạng thái đã xác nhận vào sessionStorage
+                // Hiển thị thông báo giao hàng thành công với SweetAlert2
                 Swal.fire({
                     icon: 'success',
                     title: 'Đã chuyển hàng cho đơn vị vận chuyển thành công',
@@ -50,16 +51,17 @@ $(document).ready(function () {
             });
 
             // Đóng modal
-            $('.giaoHangModal').modal('hide');
+            $(modalId).modal('hide');
         });
 
         // Xử lý sự kiện khi bấm nút Không
-        $('.giaoHangModal .btn-khong').click(function () {
+        $(modalId + ' .btn-khong').click(function () {
             // Đóng modal
-            $('.giaoHangModal').modal('hide');
+            $(modalId).modal('hide');
         });
     });
 });
+
 
 <!-- JS GIAO TẤT CẢ-->
 $(document).ready(function () {

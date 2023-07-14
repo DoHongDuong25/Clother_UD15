@@ -16,6 +16,9 @@ import java.util.List;
 public interface HoaDonRepoditory2 extends PagingAndSortingRepository<HoaDon, Long> {
     Page<HoaDon> findAll(Pageable pageable);
 
+    @Query(value = "SELECT * FROM hoa_don WHERE loai_hoa_don = :loai and trang_thai_id = 6 and da_xoa = false ORDER BY ngay_tao DESC", nativeQuery = true)
+    Page<HoaDon> finHDByLoaiHDTaiQuay(@Param("loai") Integer loai, PageRequest pageable);
+
     @Query(value = "SELECT * FROM hoa_don WHERE loai_hoa_don = :loai and da_xoa = false ORDER BY ngay_tao DESC", nativeQuery = true)
     Page<HoaDon> finHDByLoaiHD(@Param("loai") Integer loai, PageRequest pageable);
 
