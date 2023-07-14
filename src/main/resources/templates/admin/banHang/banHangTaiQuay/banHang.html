@@ -9,6 +9,7 @@
     <link rel="stylesheet" th:href="@{/admin/css/banHang/test.css}">
     <link rel="stylesheet" th:href="@{/admin/css/banHang/banHangTaiQuay.css}">
     <script th:src="@{/admin/js/banHang/banHangTaiQuay/banHang.js}"></script>
+
 </head>
 
 <body>
@@ -50,7 +51,8 @@
                                     <input class="quantity-input" type="number" min="1" th:value="${hoaDonCT.soLuong}">
                                     <button class="increment-btn" th:data-id="${hoaDonCT.id}">+</button>
 
-                                    <button class="save-btn" th:data-id="${hoaDonCT.id}" style="display: none;">Lưu</button>
+                                    <button class="save-btn" th:data-id="${hoaDonCT.id}" style="display: none;">Lưu
+                                    </button>
                                     <button class="cancel-btn" style="display: none;">Hủy</button>
                                 </div>
                             </td>
@@ -146,7 +148,9 @@
                         </li>
                     </ul>
                     <div class="btn-group">
-                        <button type="submit" class="primary-btn HuyDonBanTaiQuay" th:attr="data-id=${hoaDon.id}">Hủy đơn</button>
+                        <button type="submit" class="primary-btn HuyDonBanTaiQuay" th:attr="data-id=${hoaDon.id}">Hủy
+                            đơn
+                        </button>
                         <!--Modal hủy đơn-->
                         <div class="modal fade HuyDonTaiQuay" tabindex="-1" aria-labelledby="HuyDonTaiQuayModalLabel"
                              aria-hidden="true">
@@ -337,15 +341,17 @@
                                             <th>Giá</th>
                                             <th>Thao tác</th>
                                         </tr>
-                                            <!--TẠM THỜI ĐANG LỖI ĐOẠN NÀY-->
-<!--                                        <tr th:if="${!sanPhamPage.hasContent()}">-->
-<!--                                            <td colspan="9">-->
-<!--                                                <h4><i>Không có sản phẩm nào phù hợp</i></h4>-->
-<!--                                            </td>-->
-<!--                                        </tr>-->
+                                        <!--TẠM THỜI ĐANG LỖI ĐOẠN NÀY-->
+                                        <!--                                        <tr th:if="${!sanPhamPage.hasContent()}">-->
+                                        <!--                                            <td colspan="9">-->
+                                        <!--                                                <h4><i>Không có sản phẩm nào phù hợp</i></h4>-->
+                                        <!--                                            </td>-->
+                                        <!--                                        </tr>-->
                                         </thead>
                                         <tbody class="text-center" th:object="${resultSP}">
                                         <input type="hidden" th:field="*{hoaDonId}">
+                                        <input type="hidden" th:field="*{soLuong}">
+
                                         <tr th:each="item, istat : ${resultSP.lstShowSanPhamTaiQuayDTO}">
                                             <td
                                                     th:text="${sanPhamPage.number * sanPhamPage.size + istat.index + 1}">
@@ -388,7 +394,8 @@
                                             </td>
                                             <input type="radio" th:value="${item.sanPhamId}"
                                                    th:name="inputSPName+${istat.index}"
-                                                   th:id="sanPhamId+${istat.index}" th:field="*{sanPhamIdSPTQ}"
+                                                   th:id="sanPhamId+${istat.index}"
+                                                   th:field="*{sanPhamIdSPTQ}"
                                                    hidden>
                                             <td th:text="${item.tenSanPham}"></td>
                                             <td th:text="${item.gia}"></td>
@@ -410,7 +417,7 @@
                                                 <div class="modal-dialog modal-sm" role="document">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h5 class="modal-title">Chọn chi tiết sản phẩm</h5>
+                                                            <h5 id="asdf" class="modal-title" th:data-id="${item.sanPhamId}">Chọn chi tiết sản phẩm <span th:text="${item.tenSanPham}"></span></h5>
                                                             <button type="button" class="close"
                                                                     data-dismiss="modal" aria-label="Close">
                                                                 <span aria-hidden="true">&times;</span>
@@ -465,6 +472,9 @@
                                                                                        hidden>
                                                                             </label>
                                                                         </div>
+                                                                        <p>Số lượng hiện có: <span
+                                                                                id="soLuongHienCo"></span></p>
+
                                                                         <!--*: check lai id -->
                                                                         <div
                                                                                 class="product__details__option__color">
@@ -489,11 +499,13 @@
                                                                                        hidden>
                                                                             </label>
                                                                         </div>
-                                                                        <div>
-                                                                            <span>Số lượng</span>
-                                                                            <input type="number" name="soLuong"
-                                                                                   th:value="${resultSP.soLuong}"
-                                                                                   oninput="calculateTotal()">
+                                                                        <div class="form-group">
+                                                                            <label for="soLuongId">Số lượng:</label>
+                                                                            <input type="number" class="form-control"
+                                                                                   th:name="inputSLName"
+                                                                                   oninput="getSoLuongInput(this.getAttribute('id'), this.getAttribute('inputSLName'))"
+                                                                                   th:id="'soLuongInputId'+${istat.index}"
+                                                                                   placeholder="Số lượng">
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -508,8 +520,10 @@
                                                                onclick="clearDataChoose(this.getAttribute('input-name1'), this.getAttribute('input-name2'),
                                                                     this.getAttribute('label-name1'), this.getAttribute('label-name2'))"
                                                                data-dismiss="modal">Đóng</a>
+
                                                             <a class="btn btn-outline-primary"
-                                                               onclick="flexUrlSubmitBanHangTaiQuay('/banHang/getData', 'post', 'BanHangTaiQuay')">Thêm sản phẩm</a>
+                                                               onclick="flexUrlSubmitBanHangTaiQuay('/banHang/hoaDonChiTiet', 'post', 'BanHangTaiQuay')">Thêm
+                                                                sản phẩm</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -599,69 +613,6 @@
             </div>
         </div>
     </div>
-
-    <script>
-        function openModalSanPham() {
-            $('#modalSanPham').modal('show');
-        }
-
-        $(document).ready(function () {
-            $('[data-toggle="popover"]').popover();
-        });
-
-        function openAddProduct() {
-            $('#banHangTaiQuayModal').modal("show");
-        }
-
-        function openModalAddDetailProduct(id) {
-            $('#modalAddDetailProduct' + id).modal("show");
-        }
-
-        function clearDataChoose(mauSacInputName, kichCoInputName, mauSacLabelName, kichCoLabelName) {
-            var kichCoIdName = document.getElementsByName("kichCoId");
-            $(kichCoIdName).removeAttr("checked");
-            var mauSacIdName = document.getElementsByName("mauSacId");
-            $(mauSacIdName).removeAttr("checked");
-            var kichCoLabel = document.getElementsByName(kichCoLabelName);
-            $(kichCoLabel).removeClass("label-active");
-        }
-
-        function labelActive(labelId, labelName, inputName, inputId) {
-            var lstName = document.getElementsByName(labelName);
-            $(lstName).removeClass("label-active");
-            $('#' + labelId).addClass("label-active");
-            var lstInputName = document.getElementsByName(inputName);
-            $(lstInputName).removeAttr("checked");
-            $('#' + inputId).attr("checked", "true");
-        }
-
-        function chooseOptionColorLabel(labelId, labelName, inputName, inputId, spName, spId) {
-            var lstName = document.getElementsByName(labelName);
-            $(lstName).removeClass("label-active");
-            $('#' + labelId).addClass("label-active");
-            var lstInputName = document.getElementsByName(inputName);
-            $(lstInputName).removeAttr("checked");
-            $('#' + inputId).attr("checked", "true");
-            // choose san Pham id
-            var lstSPName = document.getElementsByName(spName);
-            $(lstInputName).removeAttr("checked");
-            $('#' + spId).attr("checked", "true");
-        }
-    </script>
-    <script th:inline="javascript">
-        window.onload = function () {
-            var messageSuccess = '[[${messageSuccess}]]';
-            var messageDanger = '[[${messageDanger}]]';
-            $('#toastsCustomCss').attr("style", "position: absolute; top: 70px; right: 0;z-index: 1;");
-            if (messageSuccess.length !== 0) {
-                $("#messageSuccess").toast("show");
-            }
-            if (messageDanger.length !== 0) {
-                $("#messageDanger").toast("show");
-            }
-        }
-    </script>
-
 </div>
 </body>
 

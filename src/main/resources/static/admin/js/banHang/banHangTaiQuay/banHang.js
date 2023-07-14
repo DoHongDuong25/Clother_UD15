@@ -164,5 +164,109 @@ $(document).ready(function () {
     });
 });
 
+function openModalSanPham() {
+    $('#modalSanPham').modal('show');
+}
+
+$(document).ready(function () {
+    $('[data-toggle="popover"]').popover();
+});
+
+function openAddProduct() {
+    $('#banHangTaiQuayModal').modal("show");
+}
+
+function openModalAddDetailProduct(id) {
+    $('#modalAddDetailProduct' + id).modal("show");
+}
+
+function clearDataChoose(mauSacInputName, kichCoInputName, mauSacLabelName, kichCoLabelName) {
+    var kichCoIdName = document.getElementsByName("kichCoId");
+    $(kichCoIdName).removeAttr("checked");
+    var mauSacIdName = document.getElementsByName("mauSacId");
+    $(mauSacIdName).removeAttr("checked");
+    var kichCoLabel = document.getElementsByName(kichCoLabelName);
+    $(kichCoLabel).removeClass("label-active");
+}
+
+function labelActive(labelId, labelName, inputName, inputId) {
+    var lstName = document.getElementsByName(labelName);
+    $(lstName).removeClass("label-active");
+    $('#' + labelId).addClass("label-active");
+    var lstInputName = document.getElementsByName(inputName);
+    $(lstInputName).removeAttr("checked");
+    $('#' + inputId).attr("checked", "true");
+}
+
+function chooseOptionColorLabel(labelId, labelName, inputName, inputId, spName, spId) {
+    var lstName = document.getElementsByName(labelName);
+    $(lstName).removeClass("label-active");
+    $('#' + labelId).addClass("label-active");
+    var lstInputName = document.getElementsByName(inputName);
+    $(lstInputName).removeAttr("checked");
+    $('#' + inputId).attr("checked", "true");
+    // choose san Pham id
+    var lstSPName = document.getElementsByName(spName);
+    $(lstInputName).removeAttr("checked");
+    $('#' + spId).attr("checked", "true");
+}
+
+function getSoLuongInput(id, name) {
+    var valueSoLuongName = document.getElementsByName(id);
+    $(valueSoLuongName).val(0);
+    var valueSoLuongId = document.getElementById(id).value;
+    var soLuong = document.getElementsByName('soLuong');
+    $(soLuong).val(valueSoLuongId);
+}
+
+
+window.onload = function () {
+    var messageSuccess = '[[${messageSuccess}]]';
+    var messageDanger = '[[${messageDanger}]]';
+    $('#toastsCustomCss').attr("style", "position: absolute; top: 70px; right: 0;z-index: 1;");
+    if (messageSuccess.length !== 0) {
+        $("#messageSuccess").toast("show");
+    }
+    if (messageDanger.length !== 0) {
+        $("#messageDanger").toast("show");
+    }
+}
+
+$(document).ready(function() {
+    $('.img-thumbnail').click(function() {
+        var itemSanPhamId = $('#asdf').data('id');
+        var tenKichCo = $(this).text().trim();
+
+        console.log(itemSanPhamId);
+        console.log(tenKichCo);
+
+        // Gửi yêu cầu Ajax đến controller để lấy số lượng sản phẩm chi tiết dựa trên sản phẩm ID và tên kích cỡ
+        $.ajax({
+            type: 'GET',
+            url: '/banHang/laySoLuongSanPhamChiTiet',
+            data: {
+                sanPhamId: itemSanPhamId,
+                tenKichCo: tenKichCo
+            },
+            success: function(response) {
+                var soLuongSanPhamChiTiet = response.soLuongSanPhamChiTiet;
+
+                // Hiển thị số lượng sản phẩm chi tiết
+                $('#soLuongHienCo').text('Số lượng hiện có: ' + soLuongSanPhamChiTiet);
+            },
+            error: function() {
+                // Xử lý khi có lỗi xảy ra trong yêu cầu Ajax
+                alert('Đã xảy ra lỗi khi gửi yêu cầu đến server.');
+            }
+        });
+    });
+});
+
+
+
+
+
+
+
 
 
