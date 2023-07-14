@@ -219,6 +219,7 @@ function getSoLuongInput(id, name) {
     $(soLuong).val(valueSoLuongId);
 }
 
+
 window.onload = function () {
     var messageSuccess = '[[${messageSuccess}]]';
     var messageDanger = '[[${messageDanger}]]';
@@ -230,6 +231,41 @@ window.onload = function () {
         $("#messageDanger").toast("show");
     }
 }
+
+$(document).ready(function() {
+    $('.img-thumbnail').click(function() {
+        var itemSanPhamId = $('#asdf').data('id');
+        var tenKichCo = $(this).text().trim();
+
+        console.log(itemSanPhamId);
+        console.log(tenKichCo);
+
+        // Gửi yêu cầu Ajax đến controller để lấy số lượng sản phẩm chi tiết dựa trên sản phẩm ID và tên kích cỡ
+        $.ajax({
+            type: 'GET',
+            url: '/banHang/laySoLuongSanPhamChiTiet',
+            data: {
+                sanPhamId: itemSanPhamId,
+                tenKichCo: tenKichCo
+            },
+            success: function(response) {
+                var soLuongSanPhamChiTiet = response.soLuongSanPhamChiTiet;
+
+                // Hiển thị số lượng sản phẩm chi tiết
+                $('#soLuongHienCo').text('Số lượng hiện có: ' + soLuongSanPhamChiTiet);
+            },
+            error: function() {
+                // Xử lý khi có lỗi xảy ra trong yêu cầu Ajax
+                alert('Đã xảy ra lỗi khi gửi yêu cầu đến server.');
+            }
+        });
+    });
+});
+
+
+
+
+
 
 
 

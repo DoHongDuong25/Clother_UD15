@@ -9,6 +9,7 @@
     <link rel="stylesheet" th:href="@{/admin/css/banHang/test.css}">
     <link rel="stylesheet" th:href="@{/admin/css/banHang/banHangTaiQuay.css}">
     <script th:src="@{/admin/js/banHang/banHangTaiQuay/banHang.js}"></script>
+
 </head>
 
 <body>
@@ -350,6 +351,7 @@
                                         <tbody class="text-center" th:object="${resultSP}">
                                         <input type="hidden" th:field="*{hoaDonId}">
                                         <input type="hidden" th:field="*{soLuong}">
+
                                         <tr th:each="item, istat : ${resultSP.lstShowSanPhamTaiQuayDTO}">
                                             <td
                                                     th:text="${sanPhamPage.number * sanPhamPage.size + istat.index + 1}">
@@ -392,7 +394,8 @@
                                             </td>
                                             <input type="radio" th:value="${item.sanPhamId}"
                                                    th:name="inputSPName+${istat.index}"
-                                                   th:id="sanPhamId+${istat.index}" th:field="*{sanPhamIdSPTQ}"
+                                                   th:id="sanPhamId+${istat.index}"
+                                                   th:field="*{sanPhamIdSPTQ}"
                                                    hidden>
                                             <td th:text="${item.tenSanPham}"></td>
                                             <td th:text="${item.gia}"></td>
@@ -414,7 +417,7 @@
                                                 <div class="modal-dialog modal-sm" role="document">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h5 class="modal-title">Chọn chi tiết sản phẩm</h5>
+                                                            <h5 id="asdf" class="modal-title" th:data-id="${item.sanPhamId}">Chọn chi tiết sản phẩm <span th:text="${item.tenSanPham}"></span></h5>
                                                             <button type="button" class="close"
                                                                     data-dismiss="modal" aria-label="Close">
                                                                 <span aria-hidden="true">&times;</span>
@@ -469,6 +472,9 @@
                                                                                        hidden>
                                                                             </label>
                                                                         </div>
+                                                                        <p>Số lượng hiện có: <span
+                                                                                id="soLuongHienCo"></span></p>
+
                                                                         <!--*: check lai id -->
                                                                         <div
                                                                                 class="product__details__option__color">
@@ -514,6 +520,7 @@
                                                                onclick="clearDataChoose(this.getAttribute('input-name1'), this.getAttribute('input-name2'),
                                                                     this.getAttribute('label-name1'), this.getAttribute('label-name2'))"
                                                                data-dismiss="modal">Đóng</a>
+
                                                             <a class="btn btn-outline-primary"
                                                                onclick="flexUrlSubmitBanHangTaiQuay('/banHang/hoaDonChiTiet', 'post', 'BanHangTaiQuay')">Thêm
                                                                 sản phẩm</a>

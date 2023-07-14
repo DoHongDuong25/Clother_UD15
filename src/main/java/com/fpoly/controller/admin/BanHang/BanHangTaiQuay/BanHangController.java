@@ -58,11 +58,7 @@ public class BanHangController {
     private SanPhamRepository sanPhamRepository;
 
     @Autowired
-    private banHangService banHangService;
-
-    @Autowired
-    private banHangRepository banHangRepository;
-
+    SanPhamChiTietRepository sanPhamChiTietRepository;
 
     @Autowired
     HoaDonChiTietRepository hoaDonChiTietRepository;
@@ -170,6 +166,7 @@ public class BanHangController {
                 BigDecimal giaSP = optSpct.get().getSanPham().getGia();
                 Integer soLuong = dto.getSoLuong();
 
+                //LƯU HÓA ĐƠN CHI TIẾT
                 HoaDonChiTiet hoaDonChiTiet = new HoaDonChiTiet();
                 hoaDonChiTiet.setSanPhamChiTiet(optSpct.get());
                 hoaDonChiTiet.setHoaDon(hoaDon);
@@ -180,6 +177,7 @@ public class BanHangController {
                 hoaDonChiTiet.setDaXoa(false);
                 hoaDonChiTiet = hoaDonChiTietRepository.save(hoaDonChiTiet);
 
+                //LƯU HÓA ĐƠN LẦN 1
                 hoaDon.getHoaDonChiTiets().add(hoaDonChiTiet);
                 hoaDonRepository.save(hoaDon);
 
@@ -193,10 +191,20 @@ public class BanHangController {
                     hoaDon.setTongTienHoaDon(tongTienDonHang);
                 }
 
+                //LƯU HÓA ĐƠN LẦN 2
                 hoaDon.setTienShip(BigDecimal.valueOf(0));
                 hoaDonRepository.save(hoaDon);
-                model.addAttribute("hoaDon", hoaDon);
 
+                //CẬP NHẬT SỐ LƯỢNG SẢN PHẨM CHI TIẾT
+                SanPhamChiTiet sanPhamChiTiet = optSpct.get();
+                Integer soLuongSPCTBanDau = optSpct.get().getSoLuong();
+                Integer soLuongNhapVao = dto.getSoLuong();
+                Integer soLuongcapNhat = soLuongSPCTBanDau - soLuongNhapVao;
+
+                sanPhamChiTiet.setSoLuong(soLuongcapNhat);
+                sanPhamChiTietRepository.save(sanPhamChiTiet);
+
+                model.addAttribute("hoaDon", hoaDon);
                 return "redirect:/banHang/" + dto.getHoaDonId();
             }
         }
@@ -204,10 +212,26 @@ public class BanHangController {
         return "admin/banHang/banHangTaiQuay/banHang";
     }
 
-    @RequestMapping("banHang/{id}")
-    public String banHang(@PathVariable("id") Long id, Model model, @ModelAttribute(name = "dataSearch") SPAndSPCTSearchDto dataSearch, @RequestParam("page") Optional<Integer> page, @RequestParam("size") Optional<Integer> size,
+    @RequestMapping("/banHang/laySoLuongSanPhamChiTiet")
+    @ResponseBody
+    public Map<String, Object> laySoLuongSanPhamChiTiet(@RequestParam("tenKichCo") String tenKichCo, @RequestParam("sanPhamId") Long sanPhamId) {
+        Map<String, Object> response = new HashMap<>();
 
-                          @RequestParam(defaultValue = "1") int pageHDCT, @RequestParam(defaultValue = "5") int sizeHDCT) {
+        Integer soLuongSanPhamChiTiet = sanPhamChiTietRepository.laySoLuongSanPhamChiTiet(tenKichCo, sanPhamId);
+
+        response.put("soLuongSanPhamChiTiet", soLuongSanPhamChiTiet);
+        return response;
+    }
+
+    @RequestMapping("banHang/{id}")
+    public String banHang(@PathVariable("id") Long id,
+                          @ModelAttribute(name = "dataSearch") SPAndSPCTSearchDto dataSearch,
+                          @RequestParam("page") Optional<Integer> page,
+                          @RequestParam("size") Optional<Integer> size,
+
+                          @RequestParam(defaultValue = "1") int pageHDCT,
+                          @RequestParam(defaultValue = "5") int sizeHDCT,
+                          Model model) {
 
         HoaDon hoaDon = hoaDonRepository.findById(id).get();
         model.addAttribute("hoaDon", hoaDon);
@@ -286,6 +310,7 @@ public class BanHangController {
         return "admin/banHang/banHangTaiQuay/banHang";
     }
 
+    //XÓA SẢN PHẨM TRONG ĐƠN HÀNG
     @RequestMapping("/update-XoaSP/{id}")
     public ResponseEntity<String> updateXoaSP(@PathVariable("id") Long id) {
         Optional<HoaDonChiTiet> optionalHoaDon = hoaDonChiTietRepository.findById(id);
@@ -297,13 +322,24 @@ public class BanHangController {
             HoaDon hoaDon = hoaDonCT.getHoaDon();
             hoaDon.getHoaDonChiTiets().remove(hoaDonCT);
 
-            BigDecimal tongTien = hoaDon.getHoaDonChiTiets().stream().filter(hdct -> !hdct.isDaXoa()) // Lọc chỉ các hóa đơn chi tiết chưa bị xóa
+            BigDecimal tongTien = hoaDon.getHoaDonChiTiets()
+                    .stream()
+                    .filter(hdct -> !hdct.isDaXoa()) // Lọc chỉ các hóa đơn chi tiết chưa bị xóa
                     .map(HoaDonChiTiet::getTongTien).reduce(BigDecimal.ZERO, BigDecimal::add);
 
             hoaDon.setTongTienDonHang(tongTien);
             hoaDon.setTongTienHoaDon(tongTien);
             hoaDon.setTienShip(BigDecimal.valueOf(1));
             hoaDonRepository.save(hoaDon);
+
+            //CẬP NHẬT SỐ LƯỢNG SẢN PHẨM CHI TIẾT
+            SanPhamChiTiet sanPhamChiTiet = optionalHoaDon.get().getSanPhamChiTiet();
+            Integer soLuongSPCTBanDau = optionalHoaDon.get().getSanPhamChiTiet().getSoLuong();
+            Integer soLuongNhapVao = optionalHoaDon.get().getSoLuong();
+            Integer soLuongcapNhat = soLuongSPCTBanDau + soLuongNhapVao;
+
+            sanPhamChiTiet.setSoLuong(soLuongcapNhat);
+            sanPhamChiTietRepository.save(sanPhamChiTiet);
 
             String message = "Xác nhận thành công";
             return ResponseEntity.ok(message);
@@ -313,6 +349,7 @@ public class BanHangController {
         }
     }
 
+    //UPDATE SỐ LƯỢNG CỦA HÓA ĐƠN CHI TIẾT
     @PostMapping("/update-SoLuong/{id}")
     public ResponseEntity<String> updateSoLuong(@PathVariable("id") Long id, @RequestParam("quantity") int quantity) {
         Optional<HoaDonChiTiet> optionalHoaDonCT = hoaDonChiTietRepository.findById(id);
@@ -328,7 +365,10 @@ public class BanHangController {
 
             HoaDon hoaDon = hoaDonCT.getHoaDon();
 
-            BigDecimal tongTienHoaDon = hoaDon.getHoaDonChiTiets().stream().filter(hdct -> !hdct.isDaXoa()).map(HoaDonChiTiet::getTongTien).reduce(BigDecimal.ZERO, BigDecimal::add);
+            BigDecimal tongTienHoaDon = hoaDon.getHoaDonChiTiets()
+                    .stream()
+                    .filter(hdct -> !hdct.isDaXoa())
+                    .map(HoaDonChiTiet::getTongTien).reduce(BigDecimal.ZERO, BigDecimal::add);
 
             hoaDon.setTongTienDonHang(tongTienHoaDon);
             hoaDon.setTongTienHoaDon(tongTienHoaDon);
@@ -343,6 +383,7 @@ public class BanHangController {
         }
     }
 
+    //HỦY ĐƠN HÀNG VÀ CẬP NHẬT LẠI SỐ LƯỢNG SẢN PHẨM
     @RequestMapping("/HuyDon/{id}")
     public ResponseEntity<String> huyDon(@PathVariable("id") Long id) {
         Optional<HoaDon> otpHoaDOn = hoaDonRepository.findById(id);
@@ -350,6 +391,31 @@ public class BanHangController {
             HoaDon hoaDon = otpHoaDOn.get();
             hoaDon.setDaXoa(true);
             hoaDonRepository.save(hoaDon);
+
+            // Cập nhật số lượng sản phẩm chi tiết và tổng tiền cho toàn bộ hóa đơn chi tiết
+            for (HoaDonChiTiet hoaDonCT : hoaDon.getHoaDonChiTiets()) {
+                hoaDonCT.setDaXoa(true);
+                hoaDonChiTietRepository.save(hoaDonCT);
+
+                SanPhamChiTiet sanPhamChiTiet = hoaDonCT.getSanPhamChiTiet();
+                Integer soLuongSPCTBanDau = sanPhamChiTiet.getSoLuong();
+                Integer soLuongNhapVao = hoaDonCT.getSoLuong();
+                Integer soLuongcapNhat = soLuongSPCTBanDau + soLuongNhapVao;
+
+                sanPhamChiTiet.setSoLuong(soLuongcapNhat);
+                sanPhamChiTietRepository.save(sanPhamChiTiet);
+            }
+
+            BigDecimal tongTien = hoaDon.getHoaDonChiTiets()
+                    .stream()
+                    .filter(hdct -> !hdct.isDaXoa()) // Lọc chỉ các hóa đơn chi tiết chưa bị xóa
+                    .map(HoaDonChiTiet::getTongTien).reduce(BigDecimal.ZERO, BigDecimal::add);
+
+            hoaDon.setTongTienDonHang(tongTien);
+            hoaDon.setTongTienHoaDon(tongTien);
+            hoaDon.setTienShip(BigDecimal.valueOf(1));
+            hoaDonRepository.save(hoaDon);
+
             String mss = "Hủy thành công";
             return ResponseEntity.ok(mss);
         } else {

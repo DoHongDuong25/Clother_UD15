@@ -30,6 +30,4 @@ public interface SanPhamChiTietService {
 
 	Optional<SanPhamChiTiet> getSanPhamChiTietByMauSacSizeSanPhamId(Long sanPhamId, Long mauSacId, Long kichCoId);
 
-//	List<SanPhamChiTietMauSacKichCo> getLstProductDetailsWithColorSize(Long id);
-
 }
