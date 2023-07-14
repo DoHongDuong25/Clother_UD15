@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.data.domain.Pageable;
 
 import com.fpoly.dto.KhachHangDTO;
-import com.fpoly.entity.KhachHang;
 
 public interface KhachHangService {
 
@@ -50,6 +49,12 @@ List<KhachHangDTO> findAllByTrangThaiCoPhanTrang(Integer trangThai,Pageable page
 
 
 	KhachHangDTO register(KhachHangDTO khachHangDTO);
+
+
+	String sendCode(String email);
+
+
+	void updatePassword(String email,KhachHangDTO khachHangDTO);
 
 
 
