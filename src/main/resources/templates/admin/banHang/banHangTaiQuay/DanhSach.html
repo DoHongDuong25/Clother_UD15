@@ -83,43 +83,38 @@
                 <td th:text="${hoaDonTaiQuay.trangThai.name}"></td>
                 <td>
                     <div class="btn-group">
-                        <a th:href="@{'/banHang/' + ${hoaDonTaiQuay.id}}"
-                           class="btn btn-warning btn-sm"
-                           type="submit">
+                        <a th:href="@{'/banHang/' + ${hoaDonTaiQuay.id}}" class="btn btn-warning btn-sm" type="submit">
                             <i class="fas fa-info-circle"></i>
                         </a>
+                    </div>
 
+                    <div class="btn-group">
                         <button type="submit" class="primary-btn HuyDonDanhSach" th:attr="data-id=${hoaDonTaiQuay.id}"
-                                th:data-target="'#modalHuyDonDanhSach-' + ${hoaDonTaiQuay.id}">
-                            <i class="fas fa-times"></i> Hủy đơn
+                                th:data-target="'#modalHuyDonDanhSach-' + ${hoaDonTaiQuay.id}"
+                                style="background-color: #e74c3c; color: #fff; border: none; border-radius: 4px; padding: 8px 16px; font-size: 14px; margin-right: 5px; width: 100%;">
+                            <i class="fas fa-times" style="margin-right: 8px;"></i> Hủy đơn
                         </button>
 
-                        <div class="modal fade HuyDonDanhSacha" th:id="'modalHuyDonDanhSach-' + ${hoaDonTaiQuay.id}" tabindex="-1" aria-labelledby="HuyDonDanhSachModalLabel"
-                             aria-hidden="true">
+                        <div class="modal fade HuyDonDanhSacha" th:id="'modalHuyDonDanhSach-' + ${hoaDonTaiQuay.id}"
+                             tabindex="-1" aria-labelledby="HuyDonDanhSachModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h5 class="modal-title" id="HuyDonDanhSachModalLabel">Xác nhận hủy hóa đơn</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                aria-label="Close"></button>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
                                         Xác nhận hủy hóa đơn?
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-primary btn-dong-y">Đồng ý</button>
-                                        <button type="button" class="btn btn-secondary btn-khong"
-                                                data-bs-dismiss="modal">Không
-                                        </button>
+                                        <button type="button" class="btn btn-secondary btn-khong" data-bs-dismiss="modal">Không</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
-                        <button type="submit" class="primary-btn thanhToanBanTaiQuay" th:attr="data-id=${hoaDonTaiQuay.id}">
-                            <i class="fas fa-dollar-sign"></i> Thanh toán
-                        </button>
                     </div>
+
                 </td>
             </tr>
             </tbody>
