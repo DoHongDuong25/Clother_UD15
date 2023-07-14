@@ -37,18 +37,31 @@
 					</p>
 				</th:block>
 				<form th:action="@{/security/register/create}" method="post" th:object="${khachHangDTO}">
+					<small th:if="${#fields.hasErrors('hoTen')}" th:errors="*{hoTen}" class="text-danger"></small>
 					<input class="text" type="text" name="hoTen" placeholder="Họ tên ?" th:field="*{hoTen}" required=""> 
+					
+					<small th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="text-danger"></small>
 					<input class="text email" type="email" name="email" placeholder="Email ?" th:field="*{email}" required=""> 
+					
+					<small th:if="${#fields.hasErrors('soDienThoai')}" th:errors="*{soDienThoai}" class="text-danger"></small>
 					<input class="text w3lpass" type="text" name="soDienThoai" placeholder="Số điện thoại" th:field="*{soDienThoai}" required=""> 
+					
+					<small th:if="${#fields.hasErrors('city')}" th:errors="*{city}" class="text-danger"></small>
 					<select class="custom-select select-address" th:field="*{city}" id="city" >
 						<option class="select-items" value="" selected="selected">chọn thành phố</option>
 					</select> 
+					
+					<small th:if="${#fields.hasErrors('district')}" th:errors="*{district}" class="text-danger"></small>
 					<select class="custom-select select-address" th:field="*{district}" id="district">
 						<option class="select-items" value=""  selected="selected">chọn quận</option>
 					</select> 
+					
+					<small th:if="${#fields.hasErrors('ward')}" th:errors="*{ward}" class="text-danger"></small>
 					<select class="custom-select select-address" th:field="*{ward}" id="ward">
 						<option class="select-items" value="" selected="selected">chọn phường</option>
 					</select> 
+					
+					<small th:if="${#fields.hasErrors('soNha')}" th:errors="*{soNha}" class="text-danger"></small>
 					<input class="custom-select" type="text" placeholder="Số nhà" th:field="*{soNha}" required="">
 					<div class="wthree-text pt-3">
 						<label class="anim"> <input type="checkbox" class="checkbox" name="trangThai" th:field="*{trangThai}" th:value="*{trangThai}" th:checked="*{trangThai == 1}" required=""> <span>Tôi đồng ý với điều khoản !</span>

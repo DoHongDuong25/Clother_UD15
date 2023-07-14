@@ -1,8 +1,11 @@
 package com.fpoly.controller.customer;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,31 +34,33 @@ public class DangKyController {
 	@RequestMapping("/security/register/create")
 	public String registerForm(Model model) {
 		model.addAttribute("khachHangDTO",new KhachHangDTO());
-		model.addAttribute("diaChiDTO",new DiaChiDTO());
 		return "/customer/auth/register";
 	}
 	
 	@SuppressWarnings("unlikely-arg-type")
 	@PostMapping("/security/register/create")
-	public String register( @ModelAttribute("khachHangDTO") KhachHangDTO khachHangDTO ,
-			Model md) {
-		KhachHangDTO khachHangDTO2 = KhachHangService.findByEmail(khachHangDTO.getEmail()) ;
-			if(khachHangDTO2   != null) {
-				if(KhachHangService.findByEmailAndTrangThai(khachHangDTO.getEmail(),0) != null) {
-					md.addAttribute("messageError","Tài khoản đã bị vô hiệu hóa vui lòng liên hệ 0965221785 !");
-					return "/customer/auth/register";
-				}
-				md.addAttribute("messageError","Email đã được đăng ký !");
+	public String register( @Valid @ModelAttribute("khachHangDTO") KhachHangDTO khachHangDTO , BindingResult result ,
+			Model md ) {
+			if(result.hasErrors()) {
 				return "/customer/auth/register";
 			}else {
-				if(!khachHangDTO.getEmail().equals(KhachHangService.findByEmail(khachHangDTO.getEmail()))) {
-					KhachHangService.register(khachHangDTO);
-					khachHangDTO.setId(KhachHangService.findByEmail(khachHangDTO.getEmail()).getId());
-					diaChiService.save(khachHangDTO);
-					md.addAttribute("message","Đăng ký thành công !");
+				if(KhachHangService.findByEmail(khachHangDTO.getEmail())   != null) {
+					if(KhachHangService.findByEmailAndTrangThai(khachHangDTO.getEmail(),0) != null) {
+						md.addAttribute("messageError","Tài khoản đã bị vô hiệu hóa vui lòng liên hệ 0965221785 !");
+						return "/customer/auth/register";
+					}
+					md.addAttribute("messageError","Email đã được đăng ký !");
+					return "/customer/auth/register";
+				}else {
+					if(!khachHangDTO.getEmail().equals(KhachHangService.findByEmail(khachHangDTO.getEmail()))) {
+						KhachHangService.register(khachHangDTO);
+						khachHangDTO.setId(KhachHangService.findByEmail(khachHangDTO.getEmail()).getId());
+						diaChiService.save(khachHangDTO);
+						md.addAttribute("message","Đăng ký thành công !");
+					}
 				}
+			return "/customer/auth/register";
 			}
-		return "/customer/auth/register";
 	}
 	
 	

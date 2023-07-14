@@ -372,11 +372,11 @@ public class KhachHangServiceImpl implements KhachHangService {
 	@Transactional
 	public KhachHangDTO register(KhachHangDTO khachHangDTO) {
 		char[] password = RanDomUtil.randomFull();
-		KhachHang entity = new KhachHang();
+		KhachHang khachHang = new KhachHang();
 		khachHangDTO.setSoLanMua(0);
 		khachHangDTO.setTrangThai(1);
 		khachHangDTO.setMatKhau(new String(password));
-		entity = khachHangConvertor.toEntity(khachHangDTO);
+		khachHang = khachHangConvertor.toEntity(khachHangDTO);
 		mailService.sendMail("duongnvph17448@fpt.edu.vn",
 				khachHangDTO.getEmail(), 
 											"Bạn đã đăng ký tài khoản thành công !", 
@@ -389,8 +389,41 @@ public class KhachHangServiceImpl implements KhachHangService {
 		nguoiDungVaiTro.setVaiTro(vaiTroRepository.findByTenVaiTro("CUSTOMER"));
 		nguoiDungVaiTroRepository.save(nguoiDungVaiTro);
 		nguoiDungRepository.save(nguoiDung);
-		khachHangRepository.save(entity);
-		return khachHangConvertor.toDTO(entity);
+		khachHang = khachHangRepository.save(khachHang);
+		GioHang gioHang = new GioHang();
+		gioHang.setTongTien(0);
+		gioHang.setTrangThai(1);
+		gioHang.setKhachHang(khachHang);
+		gioHangRepository.save(gioHang);
+		return khachHangConvertor.toDTO(khachHang);
+	}
+
+	@Override
+	public String sendCode(String email) {
+		String code = "";
+		KhachHang entity = khachHangRepository.findByEmail(email);
+		code = new String(RanDomUtil.randomNumber());
+		if(entity.getEmail() != null) {
+			mailService.sendMail("duongnvph17448@fpt.edu.vn",
+					entity.getEmail(), 
+					"Your code reset password", 
+	        		 "Code : " + code);
+		}
+		return code;
+	}
+
+	@Override
+	public void updatePassword(String email,KhachHangDTO khachHangDTO) {
+		KhachHang khachHang = khachHangRepository.findByEmailAndTrangThai(email, 1);
+		NguoiDung nguoiDung = nguoiDungRepository.findByEmailAndTrangThaiAndDaXoa(email);
+		if(nguoiDung != null) {
+			nguoiDung.setMatKhau(khachHangDTO.getMatKhau());
+		}
+		if(khachHang != null) {
+			khachHang.setMatKhau(khachHangDTO.getMatKhau());
+		}
+		nguoiDungRepository.save(nguoiDung);
+		khachHangRepository.save(khachHang);
 	}
 
 //	@Autowired
